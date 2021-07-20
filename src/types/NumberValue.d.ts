@@ -1,0 +1,1 @@
+type NumberValue = string | number;

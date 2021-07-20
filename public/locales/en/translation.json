@@ -1,0 +1,176 @@
+{
+  "title": "NFTmart",
+  "langEn": "English",
+  "langZn": "中文",
+  "Login": "Login",
+  "quickAreaOwned": "Owned",
+  "quickAreaCreated": "Created",
+  "quickAreaCollections": "Collections",
+  "quickAreaSwitch": "Switch Account",
+  "quickAreaProfileEdit": "Edit Profile",
+  
+  "ClickToCopy": "Click to copy",
+  "ViewInScan": "View in Scan",
+  "Address": "Address",
+  "Balance": "Balance",
+  "componentCollectionTitle": "Title",
+  "componentCollectionTitleTooltip": "The name of this NFT",
+  "componentCollectionPrice": "Price",
+  "componentCollectionPriceTooltip": "The offer price of this NFT",
+  "componentCollectionPledge": "Pledge",
+  "componentCollectionPledge.tooltip": "The pledge of this asset",
+  "navHome": "Home",
+  "navBrowing": "Browsing",
+  "navAuction": "Auction",
+  "navActive": "Active",
+  "navExploreAll": "All",
+  "navListSale": "Listing",
+  "navLatestCreate": "Not for sale",
+  "navLatestStrike": "Sold Recently",
+  "navCreate": "Create",
+  "Buy": "Buy",
+  "Add": "Add",
+  "home": {
+    "Hottest": "Hottest",
+    "Expensive": "Expensive",
+    "Cheapest": "Cheapest"
+  },
+  "type": {
+    "Mona Lisa": "none"
+  },
+  "banner": {
+    "titleOne": "Professional",
+    "titleTwo": "NFT Market Place",
+    "content": "The first NFT decentralized trading platform established using an independent public",
+    "button": "CREATE"
+  },
+  "extension": {
+    "dowload": "Please download Polkadot extension",
+    "login": "Connect wallet",
+    "account": "Please use Polkadot extension create or import your account",
+    "select": "Select Account"
+  },
+  "common": {
+    "save": "Save"
+  },
+  "Home": {
+    "title": "NFTmart",
+    "more": "more"
+  },
+  "Collection": {
+    "title": "Collection",
+    "Editprofile": "Edit profile",
+    "AddItem": "Add Item"
+  },
+  "Browsing": {
+    "title": "Browsing",
+    "collectionPlaceholder": "Filter Collections",
+    "Collections": "Collections",
+    "Status": "Status",
+    "buyNow": "Buy Now",
+    "onAuction": "On Auction",
+    "newListing": "New Listing",
+    "hasOffers": "Has Offers"
+  },
+  "Create": {
+    "title": "General Settings",
+    "createCollection": "Create NFT",
+    "logo": "*Logo image",
+    "logoRule": "This image will also be used for navigation. 300 x 300 recommended.",
+    "featured": "Featured image",
+    "featuredRule": "This image will be used for featuring your collection on the homepage, category pages, or other promotional areas of NFTMart. 600 x 400 recommended.",
+    "name": "*Name",
+    "nameRule": "Only letters, numbers, and hyphens are supported,50 characters or less.",
+    "url": "URL",
+    "urlRule": "Customize your URL on NFTMart. Must only contain lowercase letters, numbers, and hyphens, 50 characterscters or less.",
+    "description": "Description",
+    "descriptionRule": "Markdown syntax is supported. 1000 characterscters or less.",
+    "create": "Create",
+    "collection": "Create new collection",
+    "nft": "Create a new nft",
+    "Required": "Required",
+    "submit": "Submit"
+  },
+  "Detail": {
+    "title": "Detail",
+    "Detail": "Detail",
+    "Properties": "Properties",
+    "About": "About",
+    "Offers": "Offers",
+    "PriceHistory": "Price History",
+    "Event": "Event",
+    "UnitPrice": "UnitPrice",
+    "Quantity": "Quantity",
+    "From": "From",
+    "To": "To",
+    "Date": "Date",
+    "BuyNow": "Buy Now",
+    "Checkout": "Checkout",
+    "Item": "Item",
+    "Subtotal": "Subtotal",
+    "Total": "Total",
+    "Balance": "Balance",
+    "CheckoutSub": "Check out",
+    "submit": "Submit"
+  },
+  "SellSetting": {
+    "title": "SellSetting",
+    "formTitle": "Select your sell method",
+    "Sellatafixedprice": "Sell at a fixed price",
+    "DutchAuction": "Dutch auction",
+    "Sellatadecliningprice": "Sell at a declining price",
+    "EnglishAuction": "English Auction",
+    "Auctiontothehighestbidder": "Auction to the highest bidder",
+    "Price": "Price",
+    "SetPrice": "Set Price",
+    "PriceExplain": "Will be on sale until you transfer this item or cancel it.",
+    "Pledge": "Pledge",
+    "PledgeExplain": "When it's cancled or sold,the bonded goes back to you.",
+    "Atleast": "At least ",
+    "Intructions": "Intructions",
+    "IntructionsExplain": "NFTmart is a fully decentralized NFT exchange, all your operations will be on the blockchain, and anyone can buy your NFT through the blockchain, not just through the NFTmart.io website. ",
+    "Summary": "Summary",
+    "Listing": "Listing",
+    "ListingExplainone": "Your item will be listed for ",
+    "ListingExplaintwo": ",After the deal,you will get",
+    "PostYourListing": "Post Your Listing",
+    "Bounties": "Bounties",
+    "BountiesExplain": "Reward the person who introducess the buyer.",
+    "Royalties": "Royalties",
+    "RoyaltiesExplain": "Royalties will be automatically paid to the beneficiary of the copyright of the item in the following proportion:",
+    "Tothebeneficiary": "To the beneficiary",
+    "Tax": "Tax",
+    "TaxExplain": "Listing is free!At the time of sale, a transaction tax will be levied.",
+    "ToNFTMartTreasury": "To NFTMart Treasury"
+  },
+  "Account": {
+    "title": "Account",
+    "Mywallet": "My wallet",
+    "Offers": "Offers",
+    "collections": "Collections",
+    "OffersMade": "Offers Made",
+    "OffresReceived": "Offres Received",
+    "Item": "Item:",
+    "UnitPrice": "UnitPrice",
+    "Quantity": "Quantity:",
+    "From": "From:",
+    "Expiration": "Expiration"
+  },
+  "ProfileEdit": {
+    "title": "Edit Profile",
+    "nickname": "Name:",
+    "placeholder": "Enter",
+    "avator": "Avatar:",
+    "email": "Email:",
+    "twitter": "Twitter:"
+  },
+  "Trx": {
+    "inblock": "Transaction in block",
+    "broadcasting": "Transaction is broadcasting",
+    "finalize": "Transaction finalized",
+    "failed": "Transaction failed"
+  },
+  "Footer": {
+    "PrivacyPolicy": "PrivacyPolicy"
+  }
+}
