@@ -70,17 +70,35 @@ const Connect: FC = () => {
       <Box display="flex">
         <Container width="1180px">
           {!injected ? (
-            <Center h="100vh" w="100vw">
+            <Center h="100vh" w="100%">
               <Box display="flex" flexDirection="column" alignItems="center">
-                <Heading as="h4" size="md">
+                <Heading
+                  as="h4"
+                  size="md"
+                  width="561px"
+                  fontSize="24px"
+                  fontFamily="TTHoves-Medium, TTHoves"
+                  fontWeight="500"
+                  color="#191A24"
+                  lineHeight="36px"
+                  textAlign="center"
+                >
                   {t('extension.dowload')}
                 </Heading>
                 <Box alt="waleet_logo" as="img" src={Polkadot.default} width="160px" margin="30px auto" />
                 <Button
-                  width="160px"
                   variant="primary"
                   onClick={() => window.open(POLKADOT_EXTENSION, '_blank')}
                   isFullWidth
+                  width="132px"
+                  height="48px"
+                  background="#000000"
+                  borderRadius="4px"
+                  fontSize="16px"
+                  fontFamily="TTHoves-Medium, TTHoves"
+                  fontWeight="500"
+                  color="#FFFFFF"
+                  lineHeight="18px"
                 >
                   {t('download')}
                 </Button>

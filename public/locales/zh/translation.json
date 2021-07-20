@@ -171,6 +171,9 @@
     "finalize": "交易确认",
     "failed": "交易失败"
   },
+  "copy": {
+    "success": "复制成功"
+  },
   "Footer": {
     "PrivacyPolicy": "隐私政策"
   }
