@@ -86,8 +86,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const [selectedCollectionArr, setSelectedCollectionArr] = useState<string[]>([]);
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
 
-  const { data, isLoading } = useNfts({});
-
   const [selectTabId, setSelectTabId] = useState(Number(search.id) || 0);
   const handletabSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectTabId(Number(event.currentTarget.id));
@@ -103,7 +101,11 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   const { data: nftsData, isLoading: nftsIsLoading } = useNftsPersonal(
     {
-      ownerId: address, categoryId: selectedCategoryId, collectionId: selectedCollectionArr, status: selectedStatusArr,
+      ownerId: address,
+      categoryId: selectedCategoryId,
+      collectionId: selectedCollectionArr,
+      status: selectedStatusArr,
+      sortBy: selectedSort,
     },
   );
 
