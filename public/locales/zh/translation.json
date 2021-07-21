@@ -91,6 +91,7 @@
     "nft": "创建一个新的NFT",
     "Required": "必填",
     "Confirmclipping": "确认裁剪",
+    "Success": "成功",
     "submit": "提交"
   },
   "Detail": {
@@ -113,6 +114,14 @@
     "Total": "总额",
     "Balance":"余额",
     "CheckoutSub": "结账",
+    "Cancel": "取消",
+    "Setting": "售卖设置",
+    "BackToEdit": "返回修改",
+    "Save": "保存",
+    "SaveExplain": "* 项目保存在链上后将不会被修改，请仔细确认",
+    "Ownedby": "拥有者",
+    "Fixedprice": "一口价",
+    "FixedpriceExplain": "*您可以使用固定价格立即购买此商品",
     "submit": "Submit"
   },
   "SellSetting": {
@@ -143,6 +152,7 @@
     "Tothebeneficiary": "给受益人",
     "Tax": "交易税",
     "TaxExplain": "上架免费，成交后按比例收取交易税。",
+    "categories": "类别",
     "ToNFTMartTreasury": "到NFTMart国库"
   },
   "Account": {

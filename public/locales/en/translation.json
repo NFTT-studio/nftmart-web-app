@@ -91,6 +91,7 @@
     "nft": "Create a new nft",
     "Required": "Required",
     "Confirmclipping": "Confirm clipping",
+    "Success": "Success",
     "submit": "Submit"
   },
   "Detail": {
@@ -113,6 +114,14 @@
     "Total": "Total",
     "Balance": "Balance",
     "CheckoutSub": "Check out",
+    "Cancel": "Cancel",
+    "Setting": "Setting",
+    "BackToEdit": "Back to edit",
+    "Save": "Save",
+    "SaveExplain": "* Item will not be modified after saved on the chain, please carefully confirm",
+    "Ownedby": "Owned by",
+    "Fixedprice": "Fixed price",
+    "FixedpriceExplain": "*You can buy this item immediately using Fixed Price",
     "submit": "Submit"
   },
   "SellSetting": {
@@ -143,6 +152,7 @@
     "Tothebeneficiary": "To the beneficiary",
     "Tax": "Tax",
     "TaxExplain": "Listing is free!At the time of sale, a transaction tax will be levied.",
+    "categories": "Categories",
     "ToNFTMartTreasury": "To NFTMart Treasury"
   },
   "Account": {

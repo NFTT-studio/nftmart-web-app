@@ -135,7 +135,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       color="#191A24"
                       lineHeight="20px"
                     >
-                      Back to edit
+                      {t('Detail.BackToEdit')}
                     </Text>
                   </Flex>
                   <Flex h="100%" alignItems="center">
@@ -156,7 +156,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color: '#FFFFFF',
                       }}
                     >
-                      Cancel
+                      {t('Detail.Cancel')}
                     </Button>
                     <Button
                       ml="10px"
@@ -176,7 +176,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                       onClick={() => history.push(`/sellSetting/${nftId}`)}
                     >
-                      Setting
+                      {t('Detail.Setting')}
                     </Button>
                   </Flex>
                 </Flex>
@@ -212,7 +212,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       color="#191A24"
                       lineHeight="20px"
                     >
-                      Back to edit
+                      {t('Detail.BackToEdit')}
                     </Text>
                   </Flex>
                   <Flex h="100%" alignItems="center">
@@ -223,7 +223,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       color="#999999"
                       lineHeight="22px"
                     >
-                      * Item will not be modified after saved on the chain, please carefully confirm
+                      {t('Detail.SaveExplain')}
                     </Text>
                     <Button
                       ml="30px"
@@ -242,7 +242,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                       onClick={() => history.push(`/sellSetting/${nftId}`)}
                     >
-                      Save
+                      {t('Detail.Save')}
                     </Button>
                   </Flex>
                 </Flex>
@@ -397,7 +397,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   color="#000000"
                   lineHeight="16px"
                 >
-                  Owned by
+                  {t('Detail.Ownedby')}
                   <Link
                     href={`/account/${nftData?.nftInfo?.owner_id}/wallet`}
                     color="#3D00FF"
@@ -560,7 +560,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 fontWeight="400"
                 color="#999999"
               >
-                {!isPerson ? '*You can buy this item immediately using Fixed Price' : '-'}
+                {isPerson ? t('Detail.FixedpriceExplain') : '-'}
               </Text>
 
               <Flex flexDirection="row" justifyContent="flex-end" alignItems="center">
@@ -572,7 +572,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   display="flex"
                   flexDirection="row"
                 >
-                  Fixed price
+                  {t('Detail.Fixedprice')}
                   <Text
                     m="0 3px"
                     fontSize="14px"

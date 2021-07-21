@@ -79,7 +79,7 @@ const CreateCollection: FC = () => {
             });
           } else {
             toast({
-              title: 'success',
+              title: t('Create.Success'),
               status: 'success',
               position: 'top',
               duration: 3000,
