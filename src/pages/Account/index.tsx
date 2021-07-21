@@ -374,7 +374,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       fontWeight="400"
                       color="#999999"
                     >
-                      1,291 results
+                      {nftsData?.pageInfo.totalNum}
+                      {' '}
+                      results
                     </Text>
                     <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
                   </Flex>

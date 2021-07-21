@@ -95,7 +95,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const offerLength = nftData?.nftInfo?.offers.length;
   const lastOffer = nftData?.nftInfo?.offers[offerLength - 1];
   const ownerId = nftData?.nftInfo?.owner_id;
-  const orderId = lastOffer.order_id;
+  const orderId = lastOffer?.order_id;
   return (
     <MainContainer title={t('Detail.title')}>
       {isLoginAddress ? (
@@ -174,59 +174,32 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   width="100%"
                   h="100%"
                   maxWidth="1360px"
-                  justifyContent="space-between"
+                  justifyContent="flex-end"
                 >
                   <Flex h="100%" alignItems="center">
-                    <Image
-                      mr="10px"
-                      w="12px"
-                      h="12px"
-                      src={IconLeft.default}
-                    />
-                    <Text
-                      fontSize="14px"
-                      fontFamily="PingFangSC-Regular, PingFang SC"
-                      fontWeight="400"
-                      color="#191A24"
-                      lineHeight="20px"
-                    >
-                      {t('Detail.BackToEdit')}
-                    </Text>
-                  </Flex>
-                  <Flex h="100%" alignItems="center">
-                    <Text
-                      fontSize="14px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#999999"
-                      lineHeight="22px"
-                    >
-                      {t('Detail.SaveExplain')}
-                    </Text>
                     <Button
-                      ml="30px"
-                      width="96px"
+                      ml="10px"
+                      width="110px"
                       height="40px"
-                      background="#000000"
+                      background="#FFFFFF"
                       borderRadius="4px"
                       fontSize="14px"
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
-                      color="#FFFFFF"
+                      color="#000000"
                       lineHeight="16px"
+                      border="1px solid #000000"
                       _hover={{
                         background: '#000000',
                         color: '#FFFFFF',
                       }}
                       onClick={() => history.push(`/sellSetting/${nftId}`)}
                     >
-                      {t('Detail.Save')}
+                      {t('Detail.Setting')}
                     </Button>
                   </Flex>
                 </Flex>
-
               </Flex>
-
             )}
         </>
       ) : ''}
@@ -1001,7 +974,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         flexDirection="column"
                         justifyContent="center"
                         alignItems="center"
-
                       >
                         <Image
                           w="150px"
@@ -1191,7 +1163,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         flexDirection="column"
                         justifyContent="center"
                         alignItems="center"
-
                       >
                         <Image
                           w="150px"
