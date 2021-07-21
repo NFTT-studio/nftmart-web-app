@@ -414,7 +414,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 color="#000000"
                 lineHeight="18px"
               >
-                Categories
+                {t('SellSetting.categories')}
               </Text>
               <RadioGroup
                 color={colors.text.gray}

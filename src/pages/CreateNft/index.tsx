@@ -85,7 +85,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       mint(formValue, {
         success: () => {
           toast({
-            title: t('create.detailtoast.success'),
+            title: t('Create.Success'),
             status: 'success',
             position: 'top',
             duration: 3000,
