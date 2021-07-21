@@ -11,7 +11,6 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 import { takeOrder } from '../../../polkaSDK/api/takeOrder';
 import { useAppSelector } from '../../../hooks/redux';
 
@@ -26,12 +25,9 @@ interface Props {
 const CreateCard: FC<Props> = (({
   price, nftName, collectionName, logoUrl, orderId, ownerId,
 }) => {
-  const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
-  if (!account) {
-    history.push('/connect');
-  }
+
   const { t } = useTranslation();
   const cancelRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);

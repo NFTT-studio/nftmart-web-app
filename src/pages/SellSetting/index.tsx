@@ -78,8 +78,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { data: collectionsData } = useCollectionsSinger(collectionsId);
   const [Submitting, setSubmitting] = useState(false);
 
-  console.log(categoriesData?.categories, 111);
-
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectId(Number(event.currentTarget.id));
   };
@@ -422,19 +420,18 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 color={colors.text.gray}
                 onChange={(value: string) => {
                   formik.values.categoryId = value;
-                  console.log(value, formik.values.categoryId);
                 }}
               >
                 <Stack direction="row" spacing={6}>
                   {categoriesData
-                                && categoriesData?.categories?.map((item) => (
-                                  <Radio
-                                    key={item.id}
-                                    value={item.id}
-                                  >
-                                    {item.name}
-                                  </Radio>
-                                ))}
+                    && categoriesData?.categories?.map((item) => (
+                      <Radio
+                        key={item.id}
+                        value={item.id}
+                      >
+                        {item.name}
+                      </Radio>
+                    ))}
                 </Stack>
               </RadioGroup>
               <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>

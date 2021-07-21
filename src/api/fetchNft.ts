@@ -14,7 +14,7 @@ type NftData = {
     name: string
     nftMartUrl: string
     url: string
-    offers: []
+    offers: any[]
     order_status: string
     owner_id: string
     price: string
