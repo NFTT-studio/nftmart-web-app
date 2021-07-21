@@ -1,7 +1,7 @@
 export interface ClassMetadata {
+  logoUrl: string;
+  featuredUrl: string;
   name: string;
-  description: string;
-  url: string;
-  externalUrl?: string;
-  bannerUrl?: string;
+  stub?: string;
+  description?: string;
 }

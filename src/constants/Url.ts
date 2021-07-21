@@ -1,6 +1,6 @@
 import { statusArr } from './Status';
 
-export const NODE_URL = 'ws://81.70.132.13:9966/';
+export const NODE_URL = 'wss://staging-ws.nftmart.io';
 export const PINATA_POST_SERVER = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
 export const POLKADOT_EXTENSION = 'https://polkadot.js.org/extension/';
 export const GRAPHQL_ENDPOINT = 'https://api.subquery.network/sq/subqns/nftmart-beta-4';

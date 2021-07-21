@@ -1,6 +1,9 @@
-import React, { useCallback } from 'react';
-import { useHistory, RouteComponentProps } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import {
+  useHistory, RouteComponentProps, Link as RouterLink,
+} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
 import * as Yup from 'yup';
 import {
   useFormik,
@@ -11,6 +14,7 @@ import {
   Flex,
   Image,
   Text,
+  Link,
 } from '@chakra-ui/react';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import Upload from '../../components/Upload';
@@ -46,13 +50,14 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const { account } = chainState;
 
   const { data: collectionsData } = useCollectionsSinger(collectionId);
+  const [Submitting, setSubmitting] = useState(false);
 
   const schema = Yup.object().shape({
     logoUrl: Yup.string().required(t('Create.Required')),
     name: Yup.string()
       .max(50, t('Create.nameRule'))
       .required(t('Create.Required')),
-    nftMartUrl: Yup.string().max(50, t('Create.urlRule')),
+    stub: Yup.string().max(50, t('Create.urlRule')),
     description: Yup.string().max(1000, t('Create.descriptionRule')),
   });
 
@@ -72,10 +77,11 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       logoUrl: '',
       featuredUrl: '',
       name: '',
-      nftMartUrl: '',
+      stub: '',
       description: '',
     },
     onSubmit: (formValue, formAction) => {
+      setSubmitting(true);
       mint(formValue, {
         success: () => {
           toast({
@@ -84,7 +90,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             position: 'top',
             duration: 3000,
           });
-          formAction.setSubmitting(false);
+          setSubmitting(false);
           formAction.resetForm();
         },
         error: (error: string) => {
@@ -95,7 +101,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             duration: 3000,
             description: error,
           });
-          formAction.setSubmitting(false);
+          setSubmitting(false);
         },
       });
     },
@@ -111,42 +117,46 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
         justifyContent="center"
         alignItems="center"
       >
-        <Flex
-          w="1360px"
-          height="40px"
-          flexDirection="row"
-          justifyContent="felx-start"
-          alignItems="center"
+        <Link
+          as={RouterLink}
+          to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
         >
-          <Image
-            mr="20px"
-            w="12px"
-            h="12px"
-            src={IconLeft.default}
-          />
-          <Image
-            m="0 20px 0 10px"
-            w="auto"
-            h="40px"
-            src={`${PINATA_SERVER}${collectionsData?.collection?.metadata.logoUrl}`}
-          />
           <Flex
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="flex-start"
+            w="1360px"
+            height="40px"
+            flexDirection="row"
+            justifyContent="felx-start"
+            alignItems="center"
           >
-            <Text
-              fontSize="12px"
-              fontFamily="TTHoves-Regular, TTHoves"
-              fontWeight="400"
-              color="#999999"
-              lineHeight="14px"
+            <Image
+              mr="20px"
+              w="12px"
+              h="12px"
+              src={IconLeft.default}
+            />
+            <Image
+              m="0 20px 0 10px"
+              w="auto"
+              h="40px"
+              src={`${PINATA_SERVER}${collectionsData?.collection?.metadata.logoUrl}`}
+            />
+            <Flex
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="flex-start"
             >
-              {collectionsData?.collection?.metadata.name}
-            </Text>
+              <Text
+                fontSize="12px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#999999"
+                lineHeight="14px"
+              >
+                {collectionsData?.collection?.metadata.name}
+              </Text>
+            </Flex>
           </Flex>
-        </Flex>
-
+        </Link>
       </Flex>
       <Flex
         w="600px"
@@ -182,7 +192,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
               formik.setFieldValue('logoUrl', v);
             }}
           />
-          <label htmlFor="featuredUrl">
+          {/* <label htmlFor="featuredUrl">
             {' '}
             <EditFormTitle text={t('Create.featured')} />
             <EditFromSubTitle text={t('Create.featuredRule')} />
@@ -195,7 +205,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             onChange={(v: any) => {
               formik.setFieldValue('featuredUrl', v);
             }}
-          />
+          /> */}
           <label htmlFor="name">
             {' '}
             <EditFormTitle text={t('Create.name')} />
@@ -205,12 +215,12 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           {formik.errors.name && formik.touched.name ? (
             <div style={{ color: 'red' }}>{formik.errors.name}</div>
           ) : null}
-          <label htmlFor="nftMartUrl">
+          <label htmlFor="stub">
             {' '}
             <EditFormTitle text={t('Create.url')} />
             <EditFromSubTitle text={t('Create.urlRule')} />
           </label>
-          <LeftAddonInput id="nftMartUrl" value={formik.values.nftMartUrl} onChange={formik.handleChange} />
+          <LeftAddonInput id="stub" value={formik.values.stub} onChange={formik.handleChange} />
           <label htmlFor="description">
             {' '}
             <EditFormTitle text={t('Create.description')} />
@@ -221,7 +231,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             w="600px"
             justifyContent="center"
           >
-            <SubmitButton text={t('Create.submit')} />
+            <SubmitButton text={t('Create.submit')} isSubmitting={Submitting} />
           </Flex>
         </form>
         <LoginDetector />

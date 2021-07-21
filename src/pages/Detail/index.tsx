@@ -48,6 +48,7 @@ import {
 } from '../../assets/images';
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
+import { useAppSelector } from '../../hooks/redux';
 import {
   PINATA_SERVER,
 } from '../../constants';
@@ -70,6 +71,9 @@ const OfferssArr = [1, 2, 3];
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
 
 const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
+  const chainState = useAppSelector((state) => state.chain);
+  const { account } = chainState;
+  const [isPerson, setIsPerson] = useState(false);
   const { nftId } = match.params;
   const { t } = useTranslation();
   const collectionsId = nftId.split('-')[0];
@@ -78,6 +82,13 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { data: nftData, isLoading: nftDataIsLoading } = useNft(nftId);
   const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
   const history = useHistory();
+  useEffect(() => {
+    if (nftData?.nftInfo.owner_id === account?.address) {
+      setIsPerson(true);
+      console.log(nftData);
+      console.log(nftData?.nftInfo.status, 'selling');
+    }
+  }, [nftData]);
 
   if (nftDataIsLoading || collectionsDateIsLoading || !nftData) {
     return <Spinner />;
@@ -93,149 +104,155 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   return (
     <MainContainer title={t('Detail.title')}>
-      {1
-        ? (
-          <Flex
-            w="100vw"
-            background="#F9F9F9"
-            justifyContent="center"
-            h="80px"
-            alignItems="center"
-          >
-            <Flex
-              width="100%"
-              h="100%"
-              maxWidth="1360px"
-              justifyContent="space-between"
-            >
-              <Flex h="100%" alignItems="center">
-                <Image
-                  mr="10px"
-                  w="12px"
-                  h="12px"
-                  src={IconLeft.default}
-                />
-                <Text
-                  fontSize="14px"
-                  fontFamily="PingFangSC-Regular, PingFang SC"
-                  fontWeight="400"
-                  color="#191A24"
-                  lineHeight="20px"
+      {isPerson ? (
+        <>
+          { nftData?.nftInfo.status === 'selling'
+            ? (
+              <Flex
+                w="100vw"
+                background="#F9F9F9"
+                justifyContent="center"
+                h="80px"
+                alignItems="center"
+              >
+                <Flex
+                  width="100%"
+                  h="100%"
+                  maxWidth="1360px"
+                  justifyContent="space-between"
                 >
-                  Back to edit
-                </Text>
-              </Flex>
-              <Flex h="100%" alignItems="center">
-                <Button
-                  ml="30px"
-                  width="110px"
-                  height="40px"
-                  background="#FFFFFF"
-                  borderRadius="4px"
-                  fontSize="14px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  color="#000000"
-                  lineHeight="16px"
-                  border="1px solid #000000"
-                  _hover={{
-                    background: '#000000',
-                    color: '#FFFFFF',
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  ml="10px"
-                  width="110px"
-                  height="40px"
-                  background="#FFFFFF"
-                  borderRadius="4px"
-                  fontSize="14px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  color="#000000"
-                  lineHeight="16px"
-                  border="1px solid #000000"
-                  _hover={{
-                    background: '#000000',
-                    color: '#FFFFFF',
-                  }}
-                  onClick={() => history.push(`/sellSetting/${nftId}`)}
-                >
-                  Setting
-                </Button>
-              </Flex>
-            </Flex>
+                  <Flex h="100%" alignItems="center">
+                    <Image
+                      mr="10px"
+                      w="12px"
+                      h="12px"
+                      src={IconLeft.default}
+                    />
+                    <Text
+                      fontSize="14px"
+                      fontFamily="PingFangSC-Regular, PingFang SC"
+                      fontWeight="400"
+                      color="#191A24"
+                      lineHeight="20px"
+                    >
+                      Back to edit
+                    </Text>
+                  </Flex>
+                  <Flex h="100%" alignItems="center">
+                    <Button
+                      ml="30px"
+                      width="110px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#000000"
+                      lineHeight="16px"
+                      border="1px solid #000000"
+                      _hover={{
+                        background: '#000000',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      ml="10px"
+                      width="110px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#000000"
+                      lineHeight="16px"
+                      border="1px solid #000000"
+                      _hover={{
+                        background: '#000000',
+                        color: '#FFFFFF',
+                      }}
+                      onClick={() => history.push(`/sellSetting/${nftId}`)}
+                    >
+                      Setting
+                    </Button>
+                  </Flex>
+                </Flex>
 
-          </Flex>
-
-        )
-        : (
-          <Flex
-            w="100vw"
-            background="#F9F9F9"
-            justifyContent="center"
-            h="80px"
-            alignItems="center"
-          >
-            <Flex
-              width="100%"
-              h="100%"
-              maxWidth="1360px"
-              justifyContent="space-between"
-            >
-              <Flex h="100%" alignItems="center">
-                <Image
-                  mr="10px"
-                  w="12px"
-                  h="12px"
-                  src={IconLeft.default}
-                />
-                <Text
-                  fontSize="14px"
-                  fontFamily="PingFangSC-Regular, PingFang SC"
-                  fontWeight="400"
-                  color="#191A24"
-                  lineHeight="20px"
-                >
-                  Back to edit
-                </Text>
               </Flex>
-              <Flex h="100%" alignItems="center">
-                <Text
-                  fontSize="14px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  color="#999999"
-                  lineHeight="22px"
+
+            )
+            : (
+              <Flex
+                w="100vw"
+                background="#F9F9F9"
+                justifyContent="center"
+                h="80px"
+                alignItems="center"
+              >
+                <Flex
+                  width="100%"
+                  h="100%"
+                  maxWidth="1360px"
+                  justifyContent="space-between"
                 >
-                  * Item will not be modified after saved on the chain, please carefully confirm
-                </Text>
-                <Button
-                  ml="30px"
-                  width="96px"
-                  height="40px"
-                  background="#000000"
-                  borderRadius="4px"
-                  fontSize="14px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  color="#FFFFFF"
-                  lineHeight="16px"
-                  _hover={{
-                    background: '#000000',
-                    color: '#FFFFFF',
-                  }}
-                >
-                  Save
-                </Button>
+                  <Flex h="100%" alignItems="center">
+                    <Image
+                      mr="10px"
+                      w="12px"
+                      h="12px"
+                      src={IconLeft.default}
+                    />
+                    <Text
+                      fontSize="14px"
+                      fontFamily="PingFangSC-Regular, PingFang SC"
+                      fontWeight="400"
+                      color="#191A24"
+                      lineHeight="20px"
+                    >
+                      Back to edit
+                    </Text>
+                  </Flex>
+                  <Flex h="100%" alignItems="center">
+                    <Text
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#999999"
+                      lineHeight="22px"
+                    >
+                      * Item will not be modified after saved on the chain, please carefully confirm
+                    </Text>
+                    <Button
+                      ml="30px"
+                      width="96px"
+                      height="40px"
+                      background="#000000"
+                      borderRadius="4px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#FFFFFF"
+                      lineHeight="16px"
+                      _hover={{
+                        background: '#000000',
+                        color: '#FFFFFF',
+                      }}
+                      onClick={() => history.push(`/sellSetting/${nftId}`)}
+                    >
+                      Save
+                    </Button>
+                  </Flex>
+                </Flex>
+
               </Flex>
-            </Flex>
 
-          </Flex>
+            )}
+        </>
+      ) : '' }
 
-        )}
       <Container
         mt="40px"
         display="flex"
@@ -543,8 +560,9 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 fontWeight="400"
                 color="#999999"
               >
-                *You can buy this item immediately using Fixed Price
+                {!isPerson ? '*You can buy this item immediately using Fixed Price' : '-'}
               </Text>
+
               <Flex flexDirection="row" justifyContent="flex-end" alignItems="center">
                 <Text
                   fontSize="14px"
@@ -566,8 +584,28 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   </Text>
                   NMT
                 </Text>
-                <Card price={price} logoUrl={logoUrl} nftName={nftName} collectionName={collectionName} orderId={lastOffer?.order_id} ownerId={ownerId} />
+                {!isPerson
+                  ? (
+                    <Card price={price} logoUrl={logoUrl} nftName={nftName} collectionName={collectionName} orderId={lastOffer?.order_id} ownerId={ownerId} />
+                  ) : (
+                    <Button
+                      ml="40px"
+                      width="109px"
+                      height="35px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      border="1px solid #3D00FF"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#3D00FF"
+                      isDisabled
+                    >
+                      {t('Detail.BuyNow')}
+                    </Button>
+                  )}
               </Flex>
+
             </Flex>
           </Flex>
         </Flex>
