@@ -40,8 +40,9 @@ const NftCard: FC<NftCardProps> = ({
       whileTap={{ scale: 0.98 }}
       display="flex"
       flexDirection="column"
-      onClick={() => history.push(`/nft/${nft.nft.nft_id}`)}
+      onClick={() => history.push(`/item/${nft.nft.nft_id}`)}
     >
+
       {nft?.metadata && (
         <LazyLoadImage
           wrapperProps={{

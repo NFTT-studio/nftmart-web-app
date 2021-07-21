@@ -8,10 +8,10 @@ import { ClassMetadata } from '../types/ClassMetadata';
 
 const noop = () => null;
 const defaultClassMetadata: ClassMetadata = {
+  logoUrl: '', // class img url of class
+  featuredUrl: '', //  url of class
   name: '', // name of nft asset
-  bannerUrl: '', // banner media url of class
-  url: '', // class img url of class
-  externalUrl: '', // website url
+  stub: '', // website url
   description: '', // nft desc
 };
 export const createClass = async ({

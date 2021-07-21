@@ -5,10 +5,12 @@ import {
 
 interface Props {
   text: string
+  isSubmitting:boolean
 }
 
-const SubmitButton: FC<Props> = ({ text }) => (
+const SubmitButton: FC<Props> = ({ text, isSubmitting }) => (
   <Button
+    isLoading={isSubmitting}
     mt="30px"
     w="96px"
     height="40px"

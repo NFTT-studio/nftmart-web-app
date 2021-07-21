@@ -1,9 +1,10 @@
 /* eslint-disable react/no-children-prop */
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import {
   useFormik,
+  FormikProps,
 } from 'formik';
 
 import {
@@ -30,14 +31,17 @@ const CreateCollection: FC = () => {
 
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
+  const [Submitting, setSubmitting] = useState(false);
 
   const create = useCallback((formValue, cb) => {
     createClass({
       address: account!.address,
       metadata: {
-        name: formValue.name, // name of nft asset
-        url: formValue.logoUrl, // class img url of class
-        description: formValue.description, // nft desc
+        logoUrl: formValue.logoUrl,
+        featuredUrl: formValue.featuredUrl,
+        name: formValue.name,
+        stub: formValue.stub,
+        description: formValue.description,
       },
       cb,
     });
@@ -48,7 +52,7 @@ const CreateCollection: FC = () => {
     name: Yup.string()
       .max(50, t('Create.nameRule'))
       .required(t('Create.Required')),
-    nftMartUrl: Yup.string().max(50, t('Create.urlRule')),
+    stub: Yup.string().max(50, t('Create.urlRule')),
     description: Yup.string().max(1000, t('Create.descriptionRule')),
   });
 
@@ -57,10 +61,12 @@ const CreateCollection: FC = () => {
       logoUrl: '',
       featuredUrl: '',
       name: '',
-      nftMartUrl: '',
+      stub: '',
       description: '',
     },
     onSubmit: (values, formActions) => {
+      setSubmitting(true);
+      console.log(values);
       create(values, {
         success: (err: any) => {
           if (err.dispatchError) {
@@ -79,7 +85,7 @@ const CreateCollection: FC = () => {
               duration: 3000,
             });
           }
-          formActions.setSubmitting(false);
+          setSubmitting(false);
           formActions.resetForm();
         },
         error: (err: any) => {
@@ -90,7 +96,7 @@ const CreateCollection: FC = () => {
             duration: 3000,
             description: err,
           });
-          formActions.setSubmitting(false);
+          setSubmitting(false);
           formActions.resetForm();
         },
       });
@@ -151,16 +157,16 @@ const CreateCollection: FC = () => {
         {formik.errors.name && formik.touched.name ? (
           <div style={{ color: 'red' }}>{formik.errors.name}</div>
         ) : null}
-        <label htmlFor="nftMartUrl">
+        <label htmlFor="stub">
           {' '}
           <EditFormTitle text={t('Create.url')} />
           <EditFromSubTitle
             text={t('Create.urlRule')}
           />
         </label>
-        <LeftAddonInput id="nftMartUrl" value={formik.values.nftMartUrl} onChange={formik.handleChange} />
-        {formik.errors.nftMartUrl && formik.touched.nftMartUrl ? (
-          <div style={{ color: 'red' }}>{formik.errors.nftMartUrl}</div>
+        <LeftAddonInput id="stub" value={formik.values.stub} onChange={formik.handleChange} />
+        {formik.errors.stub && formik.touched.stub ? (
+          <div style={{ color: 'red' }}>{formik.errors.stub}</div>
         ) : null}
         <label htmlFor="description">
           {' '}
@@ -175,7 +181,7 @@ const CreateCollection: FC = () => {
           w="600px"
           justifyContent="center"
         >
-          <SubmitButton text={t('Create.submit')} />
+          <SubmitButton text={t('Create.submit')} isSubmitting={Submitting} />
         </Flex>
       </form>
       <LoginDetector />

@@ -25,7 +25,7 @@ const CollectionSelector: FC<CollectionSelectorProps> = (({ selectedArr, collect
     h="234px"
     overflowY="scroll"
   >
-    {collectionArr.map((collection) => (
+    {collectionArr?.map((collection) => (
       <Button
         key={collection.id}
         id={collection.id}

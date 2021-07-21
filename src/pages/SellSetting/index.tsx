@@ -17,21 +17,27 @@ import {
   AccordionPanel,
   AccordionIcon,
   InputGroup,
-  InputLeftAddon,
+  Link,
   Input,
   InputRightAddon,
   Switch,
   Progress,
+  RadioGroup,
+  Radio,
+  Stack,
   useToast,
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 
 import { useTranslation } from 'react-i18next';
-import { useLocation, useHistory, RouteComponentProps } from 'react-router-dom';
+import {
+  useLocation, useHistory, RouteComponentProps, Link as RouterLink,
+} from 'react-router-dom';
 import MainContainer from '../../layout/MainContainer';
 import colors from '../../themes/colors';
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
+import useCategories from '../../hooks/reactQuery/useCategories';
 
 import {
   IconSummary,
@@ -68,7 +74,11 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const collectionsId = nftId.split('-')[0];
 
   const { data: nftData, isLoading } = useNft(nftId);
+  const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
   const { data: collectionsData } = useCollectionsSinger(collectionsId);
+  const [Submitting, setSubmitting] = useState(false);
+
+  console.log(categoriesData?.categories, 111);
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectId(Number(event.currentTarget.id));
@@ -82,9 +92,11 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const formik = useFormik({
     initialValues: {
       price: '',
-      categoryId: '0',
+      categoryId: '',
     },
     onSubmit: (formValue, formAction) => {
+      console.log(formValue);
+      setSubmitting(true);
       const orderParams = {
         address: account!.address,
         categoryId: formValue.categoryId,
@@ -100,7 +112,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               position: 'top',
               duration: 3000,
             });
-            formAction.setSubmitting(false);
             formAction.resetForm();
           },
           error: (error: string) => {
@@ -111,12 +122,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               duration: 3000,
               description: error,
             });
-            formAction.setSubmitting(false);
           },
         },
       };
-      createOrder(orderParams as any);
+      createOrder(orderParams as any).then(() => {
+        setSubmitting(false);
+      });
     },
+    validationSchema: schema,
   });
 
   return (
@@ -129,52 +142,56 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         justifyContent="center"
         alignItems="center"
       >
-        <Flex
-          w="1360px"
-          height="40px"
-          flexDirection="row"
-          justifyContent="felx-start"
-          alignItems="center"
+        <Link
+          as={RouterLink}
+          to={`/item/${nftData?.nftInfo?.id}`}
         >
-          <Image
-            mr="20px"
-            w="12px"
-            h="12px"
-            src={IconLeft.default}
-          />
-          <Image
-            m="0 20px 0 10px"
-            w="auto"
-            h="40px"
-            src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.logoUrl}`}
-          />
           <Flex
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="flex-start"
+            w="1360px"
+            height="40px"
+            flexDirection="row"
+            justifyContent="felx-start"
+            alignItems="center"
           >
-            <Text
-              fontSize="12px"
-              fontFamily="TTHoves-Regular, TTHoves"
-              fontWeight="400"
-              color="#999999"
-              lineHeight="14px"
+            <Image
+              mr="20px"
+              w="12px"
+              h="12px"
+              src={IconLeft.default}
+            />
+            <Image
+              m="0 20px 0 10px"
+              w="auto"
+              h="40px"
+              src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.logoUrl}`}
+            />
+            <Flex
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="flex-start"
             >
-              {collectionsData?.collection?.metadata.name}
-            </Text>
-            <Text
-              mt="5px"
-              fontSize="14px"
-              fontFamily="TTHoves-Medium, TTHoves"
-              fontWeight="500"
-              color="#191A24"
-              lineHeight="16px"
-            >
-              {nftData?.nftInfo?.metadata.name}
-            </Text>
+              <Text
+                fontSize="12px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#999999"
+                lineHeight="14px"
+              >
+                {collectionsData?.collection?.metadata.name}
+              </Text>
+              <Text
+                mt="5px"
+                fontSize="14px"
+                fontFamily="TTHoves-Medium, TTHoves"
+                fontWeight="500"
+                color="#191A24"
+                lineHeight="16px"
+              >
+                {nftData?.nftInfo?.metadata.name}
+              </Text>
+            </Flex>
           </Flex>
-        </Flex>
-
+        </Link>
       </Flex>
       <Container
         display="flex"
@@ -390,6 +407,36 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   />
                 </InputGroup>
               </Flex> */}
+              <Text
+                mt="20px"
+                mb="8px"
+                fontSize="16px"
+                fontFamily="TTHoves-Medium, TTHoves"
+                fontWeight="500"
+                color="#000000"
+                lineHeight="18px"
+              >
+                categories
+              </Text>
+              <RadioGroup
+                color={colors.text.gray}
+                onChange={(value: string) => {
+                  formik.values.categoryId = value;
+                  console.log(value, formik.values.categoryId);
+                }}
+              >
+                <Stack direction="row" spacing={6}>
+                  {categoriesData
+                                && categoriesData?.categories?.map((item) => (
+                                  <Radio
+                                    key={item.id}
+                                    value={item.id}
+                                  >
+                                    {item.name}
+                                  </Radio>
+                                ))}
+                </Stack>
+              </RadioGroup>
               <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                 <AccordionItem width="100%" border="none">
                   <AccordionButton
@@ -441,7 +488,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 </AccordionItem>
               </Accordion>
             </Flex>
-            <Flex width="560px">
+            <Flex width="560px" ml="16px">
               <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                 <AccordionItem width="100%" border="none">
                   <AccordionButton
@@ -513,6 +560,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         </Text>
                       </Flex>
                       <Button
+                        isLoading={Submitting}
                         mt="40px"
                         width="182px"
                         height="40px"

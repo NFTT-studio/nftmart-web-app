@@ -67,7 +67,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
       placement="bottom"
       size="sm"
       variant="menu"
-      trigger="hover"
+      // trigger="hover"
       isOpen={opening}
       onOpen={() => setOpening(true)}
       onClose={() => setOpening(false)}

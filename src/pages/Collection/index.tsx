@@ -64,7 +64,13 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(classId);
 
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
-  const { data: nftData, isLoading } = useNftsPersonal({ ownerId, classId });
+  const { data: nftData, isLoading } = useNftsPersonal(
+    {
+      ownerId,
+      classId,
+      sortBy: selectedSort,
+    },
+  );
   const history = useHistory();
   function handleCreate() {
     history.push(`/profile/nft/create/${classId}`);
@@ -167,7 +173,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             color="#191A24"
             lineHeight="16px"
           >
-            {collectionsData?.collection.metadata.description}
+            {collectionsData?.collection?.metadata.description}
           </Text>
           <Flex mt="24px">
             {/* <Flex mr="20px">
