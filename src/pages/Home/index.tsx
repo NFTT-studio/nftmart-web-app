@@ -166,7 +166,7 @@ const Home = () => {
               </Flex>
             )
             : null}
-          {expensiveNftsData?.orders ? (
+          {expensiveNftsData?.orders.length ? (
             <Flex width="100%" flexDirection="column" mt="40px">
               <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="21px">
                 <Box as="img" src={iconExpensive.default} alt="" w="18px" h="18px" mr="8px" />
@@ -197,7 +197,7 @@ const Home = () => {
               </Stack>
             </Flex>
           ) : null}
-          {expensiveNftsData?.orders
+          {expensiveNftsData?.orders.length
             ? (
               <Flex width="100%" flexDirection="column" mt="40px">
                 <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="21px">

@@ -30,6 +30,7 @@
   "navCreate": "创建",
   "Buy":"购买",
   "Add":"添加",
+  "switchAccounts":"切换账号",
   "home":{
     "Hottest": "热门",
     "Expensive": "最昂贵",
@@ -88,7 +89,8 @@
     "create": "创建",
     "collection": "创建新作品集",
     "nft": "创建一个新的NFT",
-    "Required": "Required",
+    "Required": "必填",
+    "Confirmclipping": "确认裁剪",
     "submit": "提交"
   },
   "Detail": {
@@ -170,6 +172,9 @@
     "broadcasting": "交易正在广播中",
     "finalize": "交易确认",
     "failed": "交易失败"
+  },
+  "copy": {
+    "success": "复制成功"
   },
   "Footer": {
     "PrivacyPolicy": "隐私政策"

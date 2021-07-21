@@ -125,7 +125,7 @@ const CreateCollection: FC = () => {
         {formik.errors.logoUrl && formik.touched.logoUrl ? (
           <div style={{ color: 'red' }}>{formik.errors.logoUrl}</div>
         ) : null}
-        <label htmlFor="featuredUrl">
+        {/* <label htmlFor="featuredUrl">
           {' '}
           <EditFormTitle text={t('Create.featured')} />
           <EditFromSubTitle text={t('Create.featuredRule')} />
@@ -141,7 +141,7 @@ const CreateCollection: FC = () => {
           onChange={(v: any) => {
             formik.setFieldValue('featuredUrl', v);
           }}
-        />
+        /> */}
         <label htmlFor="name">
           {' '}
           <EditFormTitle text={t('Create.name')} />

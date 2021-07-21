@@ -30,6 +30,7 @@
   "navCreate": "Create",
   "Buy": "Buy",
   "Add": "Add",
+  "switchAccounts":"Switch accounts",
   "home": {
     "Hottest": "Hottest",
     "Expensive": "Expensive",
@@ -45,7 +46,7 @@
     "button": "CREATE"
   },
   "extension": {
-    "dowload": "Please download Polkadot extension",
+    "dowload": "You will need to install the Polkadot {.js} extension to use NFTMart",
     "login": "Connect wallet",
     "account": "Please use Polkadot extension create or import your account",
     "select": "Select Account"
@@ -89,6 +90,7 @@
     "collection": "Create new collection",
     "nft": "Create a new nft",
     "Required": "Required",
+    "Confirmclipping": "Confirm clipping",
     "submit": "Submit"
   },
   "Detail": {
@@ -169,6 +171,9 @@
     "broadcasting": "Transaction is broadcasting",
     "finalize": "Transaction finalized",
     "failed": "Transaction failed"
+  },
+  "copy": {
+    "success": "Copy success"
   },
   "Footer": {
     "PrivacyPolicy": "PrivacyPolicy"

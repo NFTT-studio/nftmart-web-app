@@ -374,12 +374,27 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   fontFamily="PingFangSC-Regular, PingFang SC"
                   fontWeight="400"
                   color="#5C74FF"
+                  cursor="pointer"
                   onClick={() => handleCopy()}
                 >
                   {t('ClickToCopy')}
                 </Text>
               </Flex>
             ) : ''}
+            <Link
+              w="100%"
+              textAlign="center"
+              mt="10px"
+              fontSize="12px"
+              fontFamily="PingFangSC-Regular, PingFang SC"
+              fontWeight="400"
+              color="#5C74FF"
+              cursor="pointer"
+              as={RouterLink}
+              to="/connect"
+            >
+              {t('switchAccounts')}
+            </Link>
 
           </PopoverBody>
         </PopoverContent>
