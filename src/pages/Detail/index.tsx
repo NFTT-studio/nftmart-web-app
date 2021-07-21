@@ -21,6 +21,7 @@ import { RouteComponentProps, useHistory } from 'react-router-dom';
 import MainContainer from '../../layout/MainContainer';
 import PriceHistoryChart from './PriceHistoryChart';
 import Card from './Card';
+import CancelDialog from './CancelDialog';
 
 import {
   IconDetailsocllections,
@@ -48,11 +49,12 @@ import {
 } from '../../assets/images';
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
-import { useAppSelector } from '../../hooks/redux';
 import {
   PINATA_SERVER,
 } from '../../constants';
 import { priceStringDivUnit } from '../../utils/format';
+import useIsLoginAddress from '../../hooks/utils/useIsLoginAddress';
+import { SELLING } from '../../constants/Status';
 
 const propertiesArr = [1, 2, 3, 4, 5, 6];
 const ICONS = [
@@ -71,24 +73,16 @@ const OfferssArr = [1, 2, 3];
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
 
 const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
-  const chainState = useAppSelector((state) => state.chain);
-  const { account } = chainState;
-  const [isPerson, setIsPerson] = useState(false);
   const { nftId } = match.params;
   const { t } = useTranslation();
   const collectionsId = nftId.split('-')[0];
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
-
+  const [isShowCancel, setIsShowCancel] = useState(false);
   const { data: nftData, isLoading: nftDataIsLoading } = useNft(nftId);
   const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
   const history = useHistory();
-  useEffect(() => {
-    if (nftData?.nftInfo.owner_id === account?.address) {
-      setIsPerson(true);
-      console.log(nftData);
-      console.log(nftData?.nftInfo.status, 'selling');
-    }
-  }, [nftData]);
+
+  const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
 
   if (nftDataIsLoading || collectionsDateIsLoading || !nftData) {
     return <Spinner />;
@@ -101,12 +95,12 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const offerLength = nftData?.nftInfo?.offers.length;
   const lastOffer = nftData?.nftInfo?.offers[offerLength - 1];
   const ownerId = nftData?.nftInfo?.owner_id;
-
+  const orderId = lastOffer.order_id;
   return (
     <MainContainer title={t('Detail.title')}>
-      {isPerson ? (
+      {isLoginAddress ? (
         <>
-          { nftData?.nftInfo.status === 'selling'
+          {nftData?.nftInfo.status === SELLING
             ? (
               <Flex
                 w="100vw"
@@ -119,25 +113,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   width="100%"
                   h="100%"
                   maxWidth="1360px"
-                  justifyContent="space-between"
+                  justifyContent="flex-end"
                 >
-                  <Flex h="100%" alignItems="center">
-                    <Image
-                      mr="10px"
-                      w="12px"
-                      h="12px"
-                      src={IconLeft.default}
-                    />
-                    <Text
-                      fontSize="14px"
-                      fontFamily="PingFangSC-Regular, PingFang SC"
-                      fontWeight="400"
-                      color="#191A24"
-                      lineHeight="20px"
-                    >
-                      Back to edit
-                    </Text>
-                  </Flex>
                   <Flex h="100%" alignItems="center">
                     <Button
                       ml="30px"
@@ -155,6 +132,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         background: '#000000',
                         color: '#FFFFFF',
                       }}
+                      onClick={() => setIsShowCancel(true)}
                     >
                       Cancel
                     </Button>
@@ -251,7 +229,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
             )}
         </>
-      ) : '' }
+      ) : ''}
 
       <Container
         mt="40px"
@@ -560,7 +538,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 fontWeight="400"
                 color="#999999"
               >
-                {!isPerson ? '*You can buy this item immediately using Fixed Price' : '-'}
+                {!isLoginAddress ? '*You can buy this item immediately using Fixed Price' : '-'}
               </Text>
 
               <Flex flexDirection="row" justifyContent="flex-end" alignItems="center">
@@ -584,9 +562,9 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   </Text>
                   NMT
                 </Text>
-                {!isPerson
+                {!isLoginAddress
                   ? (
-                    <Card price={price} logoUrl={logoUrl} nftName={nftName} collectionName={collectionName} orderId={lastOffer?.order_id} ownerId={ownerId} />
+                    <Card price={price} logoUrl={logoUrl} nftName={nftName} collectionName={collectionName} orderId={orderId} ownerId={ownerId} />
                   ) : (
                     <Button
                       ml="40px"
@@ -1464,6 +1442,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             </AccordionItem>
           </Accordion>
         </Flex>
+        <CancelDialog isShowCancel={isShowCancel} setIsShowCancel={setIsShowCancel} orderId={orderId} />
       </Container>
     </MainContainer>
 

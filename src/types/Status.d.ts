@@ -1,1 +1,1 @@
-type Status = 'Created' | 'Cancelled' | 'Completed'
+type Status = WAITING | SELLING

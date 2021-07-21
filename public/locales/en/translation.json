@@ -8,7 +8,6 @@
   "quickAreaCollections": "Collections",
   "quickAreaSwitch": "Switch Account",
   "quickAreaProfileEdit": "Edit Profile",
-  
   "ClickToCopy": "Click to copy",
   "ViewInScan": "View in Scan",
   "Address": "Address",
@@ -30,7 +29,7 @@
   "navCreate": "Create",
   "Buy": "Buy",
   "Add": "Add",
-  "switchAccounts":"Switch accounts",
+  "switchAccounts": "Switch accounts",
   "home": {
     "Hottest": "Hottest",
     "Expensive": "Expensive",
@@ -52,7 +51,9 @@
     "select": "Select Account"
   },
   "common": {
-    "save": "Save"
+    "save": "Save",
+    "yes": "YES",
+    "no": "NO"
   },
   "Home": {
     "title": "NFTmart",
@@ -113,7 +114,9 @@
     "Total": "Total",
     "Balance": "Balance",
     "CheckoutSub": "Check out",
-    "submit": "Submit"
+    "submit": "Submit",
+    "Cancel": "Cancel",
+    "cancelDesc": "Do you want to cancel this order?"
   },
   "SellSetting": {
     "title": "SellSetting",

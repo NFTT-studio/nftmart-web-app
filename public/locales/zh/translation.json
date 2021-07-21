@@ -8,7 +8,6 @@
   "quickAreaCollections": "作品集",
   "quickAreaSwitch": "切换账号",
   "quickAreaProfileEdit": "修改资料",
-  
   "ClickToCopy": "点击拷贝",
   "ViewInScan": "查看",
   "Address": "地址",
@@ -28,10 +27,10 @@
   "navLatestCreate": "Not for sale",
   "navLatestStrike": "Sold Recently",
   "navCreate": "创建",
-  "Buy":"购买",
-  "Add":"添加",
-  "switchAccounts":"切换账号",
-  "home":{
+  "Buy": "购买",
+  "Add": "添加",
+  "switchAccounts": "切换账号",
+  "home": {
     "Hottest": "热门",
     "Expensive": "最昂贵",
     "Cheapest": "最便宜"
@@ -41,10 +40,10 @@
     "Editprofile": "修改资料",
     "AddItem": "添加作品"
   },
-  "type":{
+  "type": {
     "Mona Lisa": "待配置"
   },
-  "banner":{
+  "banner": {
     "titleOne": "专业的",
     "titleTwo": "NFT 交易市场",
     "content": "首个使用独立主链开发的NFT交易平台",
@@ -57,7 +56,9 @@
     "select": "选择账户"
   },
   "common": {
-    "save": "保存"
+    "save": "保存",
+    "yes": "是",
+    "no": "否"
   },
   "Home": {
     "title": "NFTmart",
@@ -111,9 +112,11 @@
     "Item": "作品",
     "Subtotal": "明细",
     "Total": "总额",
-    "Balance":"余额",
+    "Balance": "余额",
     "CheckoutSub": "结账",
-    "submit": "Submit"
+    "submit": "Submit",
+    "Cancel": "取消",
+    "cancelDesc": "你想要取消这个订单吗?"
   },
   "SellSetting": {
     "title": "SellSetting",
@@ -158,7 +161,6 @@
     "From": "出价人",
     "Expiration": "有效期"
   },
-
   "ProfileEdit": {
     "title": "资料修改",
     "nickname": "昵称：",
@@ -167,7 +169,7 @@
     "email": "邮箱：",
     "twitter": "Twitter："
   },
-  "Trx":{
+  "Trx": {
     "inblock": "交易区块正在确认中",
     "broadcasting": "交易正在广播中",
     "finalize": "交易确认",
