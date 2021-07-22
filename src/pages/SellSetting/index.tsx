@@ -26,6 +26,8 @@ import {
   Radio,
   Stack,
   useToast,
+  Modal,
+  ModalOverlay,
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 
@@ -38,6 +40,7 @@ import colors from '../../themes/colors';
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import useCategories from '../../hooks/reactQuery/useCategories';
+import LoginDetector from '../../components/LoginDetector';
 
 import {
   IconSummary,
@@ -76,7 +79,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { data: nftData, isLoading } = useNft(nftId);
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
   const { data: collectionsData } = useCollectionsSinger(collectionsId);
-  const [Submitting, setSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectId(Number(event.currentTarget.id));
@@ -94,7 +97,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     },
     onSubmit: (formValue, formAction) => {
       console.log(formValue);
-      setSubmitting(true);
+      setIsSubmitting(true);
       const orderParams = {
         address: account!.address,
         categoryId: formValue.categoryId,
@@ -110,22 +113,22 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               position: 'top',
               duration: 3000,
             });
+            setIsSubmitting(false);
             formAction.resetForm();
           },
           error: (error: string) => {
             toast({
-              title: 'success',
+              title: 'error',
               status: 'error',
               position: 'top',
               duration: 3000,
               description: error,
             });
+            setIsSubmitting(false);
           },
         },
       };
-      createOrder(orderParams as any).then(() => {
-        setSubmitting(false);
-      });
+      createOrder(orderParams as any);
     },
     validationSchema: schema,
   });
@@ -557,7 +560,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         </Text>
                       </Flex>
                       <Button
-                        isLoading={Submitting}
+                        isLoading={isSubmitting}
                         mt="40px"
                         width="182px"
                         height="40px"
@@ -778,6 +781,10 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             </Flex>
           </Flex>
         </form>
+        <LoginDetector />
+        <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+          <ModalOverlay />
+        </Modal>
       </Container>
     </MainContainer>
 

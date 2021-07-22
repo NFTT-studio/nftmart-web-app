@@ -7,36 +7,47 @@ import {
   AlertDialogOverlay,
   AlertDialogCloseButton,
   Button,
+  Modal,
+  ModalOverlay,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { deleteOrder } from '../../../polkaSDK/api/deleteOrder';
 import { useAppSelector } from '../../../hooks/redux';
 
 interface Props {
   isShowCancel: boolean,
   setIsShowCancel: React.Dispatch<React.SetStateAction<boolean>>,
-  orderId: string
+  orderId: string,
+  nftId: string,
 }
 
 const CancelDialog: FC<Props> = (({
   isShowCancel,
   setIsShowCancel,
   orderId,
+  nftId,
 }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const cancelRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
+  const history = useHistory();
   const onCancel = () => {
+    setIsSubmitting(true);
     deleteOrder({
       address: account?.address,
       orderId,
       cb: {
         success: () => {
           setIsShowCancel(false);
+          setIsSubmitting(false);
+          history.push('/');
         },
         error: (error: string) => {
           alert('error');
+          setIsSubmitting(false);
         },
       },
     });
@@ -85,6 +96,7 @@ const CancelDialog: FC<Props> = (({
               {t('common.no')}
             </Button>
             <Button
+              isLoading={isSubmitting}
               bg="#000000"
               color="#FFFFFF"
               fontSize="14px"
@@ -100,6 +112,9 @@ const CancelDialog: FC<Props> = (({
           </Flex>
         </Flex>
       </AlertDialogContent>
+      <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+        <ModalOverlay />
+      </Modal>
     </AlertDialog>
   );
 });

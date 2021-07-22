@@ -80,6 +80,12 @@ export * as Iconprice from './icon_price.png';
 export * as IconOffersDetail from './icon_offers_detail.png';
 export * as IconSummary from './icon_Summary.png';
 export * as IconIntructions from './Icon_Intructions.png';
+export * as IconTrue from './icon_true.png';
+export * as IconMap from './icon_map.png';
+export * as IconWarning from './icon_warning.png';
+export * as IconLoding from './icon_loding.png';
+export * as IconFalses from './icon_falses.png';
+export * as IconClose from './icon_close.png';
 
 // empty
 export * as Emptyimg from './empty.png';

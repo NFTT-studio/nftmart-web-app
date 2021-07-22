@@ -14,7 +14,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, useLocation, useHistory } from 'react-router-dom';
 import { parse } from 'search-params';
-import console from 'console';
 import MainContainer from '../../layout/MainContainer';
 import NftCard from '../../components/NftCard';
 import { useAppSelector } from '../../hooks/redux';
@@ -31,7 +30,6 @@ import {
 } from '../../assets/images';
 import SortBy from '../../components/SortBy';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
-import CreateCard from '../Account/CreateCard';
 import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
 
@@ -102,7 +100,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             maxWidth="1360px"
             justifyContent="flex-end"
           >
-            <Button
+            {/* <Button
               mr="10px"
               width="137px"
               height="40px"
@@ -120,7 +118,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               }}
             >
               {t('Collection.Editprofile')}
-            </Button>
+            </Button> */}
             <Button
               width="137px"
               height="40px"
@@ -303,7 +301,6 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
         columns={5}
         spacing={4}
       >
-        {isPerson && classId && <CreateCard collectionId={classId as string} />}
         {nftData.nfts.map((nft) => <Flex mb="16px"><NftCard nft={nft} /></Flex>)}
       </SimpleGrid>
     </MainContainer>
