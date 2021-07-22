@@ -14,6 +14,8 @@ import {
   AccordionIcon,
   Link,
   Spinner,
+  Modal,
+  ModalOverlay,
 } from '@chakra-ui/react';
 
 import { useTranslation } from 'react-i18next';
@@ -86,6 +88,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const [isShowCancel, setIsShowCancel] = useState(false);
   const [isShowBuy, setIsShowBuy] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: nftData, isLoading: nftDataIsLoading } = useNft(nftId);
   const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
 
@@ -101,7 +104,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const nftName = nftData?.nftInfo?.metadata.name;
 
   const offerLength = nftData?.nftInfo?.offers.length;
-  const lastOffer = nftData?.nftInfo?.offers[offerLength - 1];
+  const lastOffer = nftData?.nftInfo?.offers[0];
   const ownerId = nftData?.nftInfo?.owner_id;
   const orderId = lastOffer?.order_id;
 
@@ -1427,8 +1430,11 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           </Accordion>
         </Flex>
         {isShowBuy && <BuyDialog isShowBuy={isShowBuy} setIsShowBuy={setIsShowBuy} price={price} logoUrl={logoUrl} nftName={nftName} collectionName={collectionName} orderId={orderId} ownerId={ownerId} />}
-        {isShowCancel && <CancelDialog isShowCancel={isShowCancel} setIsShowCancel={setIsShowCancel} orderId={orderId} />}
+        {isShowCancel && <CancelDialog isShowCancel={isShowCancel} setIsShowCancel={setIsShowCancel} orderId={orderId} nftId={nftId} />}
       </Container>
+      <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+        <ModalOverlay />
+      </Modal>
     </MainContainer>
 
   );

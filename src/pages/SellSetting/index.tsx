@@ -26,18 +26,22 @@ import {
   Radio,
   Stack,
   useToast,
+  Modal,
+  ModalOverlay,
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
+import {
+  useHistory, RouteComponentProps, Link as RouterLink,
+} from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
-import {
-  useLocation, useHistory, RouteComponentProps, Link as RouterLink,
-} from 'react-router-dom';
+
 import MainContainer from '../../layout/MainContainer';
 import colors from '../../themes/colors';
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import useCategories from '../../hooks/reactQuery/useCategories';
+import LoginDetector from '../../components/LoginDetector';
 
 import {
   IconSummary,
@@ -68,6 +72,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   ];
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
+  const history = useHistory();
 
   const [selectId, setSelectId] = useState(0);
   const { nftId } = match.params;
@@ -76,15 +81,15 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { data: nftData, isLoading } = useNft(nftId);
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
   const { data: collectionsData } = useCollectionsSinger(collectionsId);
-  const [Submitting, setSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectId(Number(event.currentTarget.id));
   };
 
   const schema = Yup.object().shape({
-    price: Yup.number().moreThan(0).required(t('VerificationRequired')),
-    categoryId: Yup.string().required(t('VerificationRequired')),
+    price: Yup.number().moreThan(0).required(t('Create.Required')),
+    categoryId: Yup.string().required(t('Create.Required')),
   });
 
   const formik = useFormik({
@@ -93,8 +98,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       categoryId: '',
     },
     onSubmit: (formValue, formAction) => {
-      console.log(formValue);
-      setSubmitting(true);
+      setIsSubmitting(true);
       const orderParams = {
         address: account!.address,
         categoryId: formValue.categoryId,
@@ -110,22 +114,25 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               position: 'top',
               duration: 3000,
             });
+            setIsSubmitting(false);
             formAction.resetForm();
+            setTimeout(() => {
+              history.push('/');
+            }, 1000);
           },
           error: (error: string) => {
             toast({
-              title: 'success',
+              title: 'error',
               status: 'error',
               position: 'top',
               duration: 3000,
               description: error,
             });
+            setIsSubmitting(false);
           },
         },
       };
-      createOrder(orderParams as any).then(() => {
-        setSubmitting(false);
-      });
+      createOrder(orderParams as any);
     },
     validationSchema: schema,
   });
@@ -340,6 +347,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   />
                 </InputGroup>
               </Flex>
+              {formik.errors.price && formik.touched.price ? (
+                <div style={{ color: 'red' }}>{formik.errors.price}</div>
+              ) : null}
               {/* <Flex
                 w="100%"
                 h="80px"
@@ -434,6 +444,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     ))}
                 </Stack>
               </RadioGroup>
+              {formik.errors.categoryId && formik.touched.categoryId ? (
+                <div style={{ color: 'red' }}>{formik.errors.price}</div>
+              ) : null}
               <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                 <AccordionItem width="100%" border="none">
                   <AccordionButton
@@ -557,7 +570,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         </Text>
                       </Flex>
                       <Button
-                        isLoading={Submitting}
+                        isLoading={isSubmitting}
                         mt="40px"
                         width="182px"
                         height="40px"
@@ -778,6 +791,10 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             </Flex>
           </Flex>
         </form>
+        <LoginDetector />
+        <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+          <ModalOverlay />
+        </Modal>
       </Container>
     </MainContainer>
 

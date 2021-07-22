@@ -44,7 +44,7 @@ const Browsing = () => {
 
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
-  const [selectedCollectionIdArr, setSelectedCollectionIdArr] = useState<string[]>([]);
+  const [selectedCollection, setSelectedCollectionIdArr] = useState();
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
 
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
@@ -52,7 +52,7 @@ const Browsing = () => {
   const { data: nftsData, isLoading: nftsIsLoading } = useNfts(
     {
       categoryId: selectedCategoryId,
-      collectionId: selectedCollectionIdArr,
+      collectionId: selectedCollection,
       status: selectedStatusArr,
       sortBy: selectedSort,
     },
@@ -74,12 +74,7 @@ const Browsing = () => {
   };
 
   const handleSelectCollection: MouseEventHandler<HTMLButtonElement> = (event) => {
-    const clickedCollection = event.currentTarget.id;
-    setSelectedCollectionIdArr(
-      selectedCollectionIdArr.indexOf(clickedCollection) > -1
-        ? without(selectedCollectionIdArr, event.currentTarget.id)
-        : union(selectedCollectionIdArr, [event.currentTarget.id]),
-    );
+    setSelectedCollectionIdArr(event.currentTarget.id);
   };
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -104,16 +99,6 @@ const Browsing = () => {
       setCollectionsArr(collectionsData.collections);
     }
   }, [collectionsData]);
-
-  if (categoriesIsLoading || collectionsIsLoading || nftsIsLoading) {
-    return (
-      <MainContainer title={t('Browsing.title')}>
-        <Center height="100%" width="100%" minHeight="900px">
-          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
-        </Center>
-      </MainContainer>
-    );
-  }
 
   return (
     <MainContainer title={t('Browsing.title')}>
@@ -170,7 +155,7 @@ const Browsing = () => {
             ? (
               <CollectionSelector
                 collectionArr={collectionsArr}
-                selectedArr={selectedCollectionIdArr}
+                selectedArr={selectedCollection}
                 handleSelect={handleSelectCollection}
               />
             ) : <Image w="100%" h="auto" mr="" src={Emptyimg.default} alt="" />}
@@ -178,6 +163,12 @@ const Browsing = () => {
         </Flex>
 
         <Flex width="1088px" flexDirection="column" justifyContent="flex-start">
+          {categoriesIsLoading || collectionsIsLoading || nftsIsLoading
+            ? (
+              <Center height="100%">
+                <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+              </Center>
+            ) : null}
           <Flex h="36px">
             {categoriesData
               ? (

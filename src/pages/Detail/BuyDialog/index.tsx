@@ -9,6 +9,8 @@ import {
   AlertDialogOverlay,
   AlertDialogCloseButton,
   useDisclosure,
+  Modal,
+  ModalOverlay,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { takeOrder } from '../../../polkaSDK/api/takeOrder';
@@ -32,10 +34,12 @@ const BuyDialog: FC<Props> = (({
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
   const { data } = useAccount(account!.address);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation();
   const cancelRef = useRef<HTMLDivElement>(null);
 
   const onSubmit = () => {
+    setIsSubmitting(true);
     takeOrder({
       address: account?.address,
       orderId,
@@ -43,9 +47,11 @@ const BuyDialog: FC<Props> = (({
       cb: {
         success: () => {
           alert('success');
+          setIsSubmitting(false);
         },
         error: (error: string) => {
           alert('error');
+          setIsSubmitting(false);
         },
       },
     });
@@ -241,6 +247,7 @@ const BuyDialog: FC<Props> = (({
             </Text>
             <Flex w="100%" justifyContent="center" pt="10px">
               <Button
+                isLoading={isSubmitting}
                 bg="#000000"
                 color="#FFFFFF"
                 fontSize="14px"
@@ -254,7 +261,9 @@ const BuyDialog: FC<Props> = (({
               </Button>
             </Flex>
           </Flex>
-
+          <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+            <ModalOverlay />
+          </Modal>
         </AlertDialogContent>
       </AlertDialog>
     </>

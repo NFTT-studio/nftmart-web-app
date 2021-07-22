@@ -83,7 +83,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
-  const [selectedCollectionArr, setSelectedCollectionArr] = useState<string[]>([]);
+  const [selectedCollection, setSelectedCollectionArr] = useState();
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
 
   const [selectTabId, setSelectTabId] = useState(Number(search.id) || 0);
@@ -103,7 +103,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     {
       ownerId: address,
       categoryId: selectedCategoryId,
-      collectionId: selectedCollectionArr,
+      collectionId: selectedCollection,
       status: selectedStatusArr,
       sortBy: selectedSort,
     },
@@ -123,11 +123,8 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   };
 
   const handleSelectCollection: MouseEventHandler<HTMLButtonElement> = (event) => {
-    const clickedCollection = event.currentTarget.id;
     setSelectedCollectionArr(
-      selectedCollectionArr.indexOf(clickedCollection) > -1
-        ? without(selectedCollectionArr, event.currentTarget.id)
-        : union(selectedCollectionArr, [event.currentTarget.id]),
+      event.currentTarget.id,
     );
   };
 
@@ -151,14 +148,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     }
     setCollections(collectionsData.collections.filter(checkAdult));
   };
-
-  if (categoriesIsLoading || nftsIsLoading) {
-    return (
-      <Center height="100vh">
-        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
-      </Center>
-    );
-  }
 
   return (
     <MainContainer title={t('Home.title')}>
@@ -344,13 +333,18 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
                   <CollectionSelector
                     collectionArr={collections}
-                    selectedArr={selectedCollectionArr}
+                    selectedArr={selectedCollection}
                     handleSelect={handleSelectCollection}
                   />
                 </Flex>
 
                 <Flex width="1088px" flexDirection="column" justifyContent="flex-start">
-
+                  {categoriesIsLoading || nftsIsLoading
+                    ? (
+                      <Center height="15vh">
+                        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                      </Center>
+                    ) : null}
                   <Flex h="36px">
                     {categoriesData ? (
                       <CategorySelector
@@ -446,7 +440,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
                   <CollectionSelector
                     collectionArr={collectionsData!.list}
-                    selectedArr={selectedCollectionArr}
+                    selectedArr={selectedCollection}
                     handleSelect={handleSelectCollection}
                   />
                 </Flex>

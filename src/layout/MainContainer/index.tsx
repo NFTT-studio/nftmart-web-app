@@ -22,7 +22,7 @@ const MainContainer = ({ children, title }: Props) => {
   }, [location?.pathname, location?.search]);
   return (
     <>
-      <Helmet>{title && <title>{t(title)}</title>}</Helmet>
+      <Helmet>{title && <title>{title}</title>}</Helmet>
       <Center
         as="main"
         maxWidth="1360px"

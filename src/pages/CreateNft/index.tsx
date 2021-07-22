@@ -15,6 +15,8 @@ import {
   Image,
   Text,
   Link,
+  Modal,
+  ModalOverlay,
 } from '@chakra-ui/react';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import Upload from '../../components/Upload';
@@ -50,7 +52,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const { account } = chainState;
 
   const { data: collectionsData } = useCollectionsSinger(collectionId);
-  const [Submitting, setSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const schema = Yup.object().shape({
     logoUrl: Yup.string().required(t('Create.Required')),
@@ -81,7 +83,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       description: '',
     },
     onSubmit: (formValue, formAction) => {
-      setSubmitting(true);
+      setIsSubmitting(true);
       mint(formValue, {
         success: () => {
           toast({
@@ -90,7 +92,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             position: 'top',
             duration: 3000,
           });
-          setSubmitting(false);
+          setIsSubmitting(false);
           formAction.resetForm();
         },
         error: (error: string) => {
@@ -101,7 +103,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             duration: 3000,
             description: error,
           });
-          setSubmitting(false);
+          setIsSubmitting(false);
         },
       });
     },
@@ -231,10 +233,13 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             w="600px"
             justifyContent="center"
           >
-            <SubmitButton text={t('Create.submit')} isSubmitting={Submitting} />
+            <SubmitButton text={t('Create.submit')} isSubmitting={isSubmitting} />
           </Flex>
         </form>
         <LoginDetector />
+        <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+          <ModalOverlay />
+        </Modal>
       </Flex>
     </MainContainer>
   );
