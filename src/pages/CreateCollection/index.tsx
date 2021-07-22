@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import {
   useFormik,
-  FormikProps,
 } from 'formik';
 
 import {
   useToast,
   Flex,
-  Text,
+  Modal,
+  ModalOverlay,
 } from '@chakra-ui/react';
 import useParams from '../../hooks/url/useParams';
 import Upload from '../../components/Upload';
@@ -31,7 +31,7 @@ const CreateCollection: FC = () => {
 
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
-  const [Submitting, setSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const create = useCallback((formValue, cb) => {
     createClass({
@@ -65,8 +65,7 @@ const CreateCollection: FC = () => {
       description: '',
     },
     onSubmit: (values, formActions) => {
-      setSubmitting(true);
-      console.log(values);
+      setIsSubmitting(true);
       create(values, {
         success: (err: any) => {
           if (err.dispatchError) {
@@ -85,7 +84,7 @@ const CreateCollection: FC = () => {
               duration: 3000,
             });
           }
-          setSubmitting(false);
+          setIsSubmitting(false);
           formActions.resetForm();
         },
         error: (err: any) => {
@@ -96,7 +95,7 @@ const CreateCollection: FC = () => {
             duration: 3000,
             description: err,
           });
-          setSubmitting(false);
+          setIsSubmitting(false);
           formActions.resetForm();
         },
       });
@@ -181,9 +180,12 @@ const CreateCollection: FC = () => {
           w="600px"
           justifyContent="center"
         >
-          <SubmitButton text={t('Create.submit')} isSubmitting={Submitting} />
+          <SubmitButton text={t('Create.submit')} isSubmitting={isSubmitting} />
         </Flex>
       </form>
+      <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+        <ModalOverlay />
+      </Modal>
       <LoginDetector />
     </Flex>
   );
