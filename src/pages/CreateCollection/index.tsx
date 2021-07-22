@@ -7,9 +7,8 @@ import * as Yup from 'yup';
 import {
   useFormik,
 } from 'formik';
-
+import { toast } from 'react-toastify';
 import {
-  useToast,
   Flex,
   Modal,
   ModalOverlay,
@@ -27,10 +26,10 @@ import LoginDetector from '../../components/LoginDetector';
 import { createClass } from '../../polkaSDK/api/createClass';
 import { useAppSelector } from '../../hooks/redux';
 import MyModal from '../../components/MyModal';
+import MyToast, { ToastBody } from '../../components/MyToast';
 
 const CreateCollection: FC = () => {
   const { t } = useTranslation();
-  const toast = useToast();
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
@@ -45,7 +44,6 @@ const CreateCollection: FC = () => {
       setIsShowModal(true);
     }
   }, [account, whiteList]);
-
   const create = useCallback((formValue, cb) => {
     createClass({
       address: account!.address,
@@ -82,32 +80,15 @@ const CreateCollection: FC = () => {
       create(values, {
         success: (err: any) => {
           if (err.dispatchError) {
-            toast({
-              title: 'error',
-              status: 'error',
-              position: 'top',
-              duration: 3000,
-              description: t('create.create.error'),
-            });
+            toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
           } else {
-            toast({
-              title: t('Create.Success'),
-              status: 'success',
-              position: 'top',
-              duration: 3000,
-            });
+            toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
           }
           setIsSubmitting(false);
           formActions.resetForm();
         },
         error: (err: any) => {
-          toast({
-            title: 'error',
-            status: 'error',
-            position: 'top',
-            duration: 3000,
-            description: err,
-          });
+          toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
           setIsSubmitting(false);
           formActions.resetForm();
         },
@@ -207,6 +188,7 @@ const CreateCollection: FC = () => {
         message="Please contact our team"
         onClose={onCloseModal}
       />
+      <MyToast isCloseable />
       <LoginDetector />
     </Flex>
   );

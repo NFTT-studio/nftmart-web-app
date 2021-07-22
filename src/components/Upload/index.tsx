@@ -9,9 +9,9 @@ import {
   FormLabel,
   CircularProgress,
   CircularProgressLabel,
-  useToast,
   Flex,
 } from '@chakra-ui/react';
+import { toast } from 'react-toastify';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import axios from 'axios';
@@ -29,6 +29,7 @@ import { t } from '../../i18n';
 import {
   IconUpload,
 } from '../../assets/images';
+import MyToast, { ToastBody } from '../MyToast';
 
 interface INavProps {
   imgUrl: string;
@@ -122,7 +123,6 @@ const Upload: FC<UploadProps> = ({
   const [showCrop, setShowCrop] = useState(false);
   const [fileUrl, setFileUrl] = useState('');
   const [progresses, setProgresses] = useState(0);
-  const toast = useToast();
 
   const saveToIpfs = useCallback(async (files: any[]) => {
     if (REACT_APP_PINATA_ENABLE === 'true') {
@@ -193,24 +193,12 @@ const Upload: FC<UploadProps> = ({
         .toLowerCase();
 
       if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'gif' && fileType !== 'jpeg') {
-        toast({
-          title: t('createUploadFiletype'),
-          status: 'warning',
-          position: 'top',
-          duration: 3000,
-        });
-
+        toast(<ToastBody title={t('createUploadFiletype')} message="" type="warning" />);
         setLoadingStatus(false);
         return;
       }
       if (currentFile.size >= MAX_FILE_SIZE) {
-        toast({
-          title: t('createUploadOverflow'),
-          status: 'warning',
-          position: 'top',
-          duration: 3000,
-        });
-
+        toast(<ToastBody title={t('createUploadOverflow')} message="" type="warning" />);
         setLoadingStatus(false);
         return;
       }
@@ -365,6 +353,7 @@ const Upload: FC<UploadProps> = ({
         {/* 切图编辑时不触发input点击事件 */}
         {showCrop ? imgWrap : ''}
       </Box>
+      <MyToast isCloseable />
     </Box>
   );
 };

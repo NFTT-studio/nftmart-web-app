@@ -8,9 +8,8 @@ import * as Yup from 'yup';
 import {
   useFormik,
 } from 'formik';
-
+import { toast } from 'react-toastify';
 import {
-  useToast,
   Flex,
   Image,
   Text,
@@ -38,10 +37,11 @@ import {
 } from '../../assets/images';
 import { mintNft } from '../../polkaSDK/api/mintNft';
 import MyModal from '../../components/MyModal';
+import MyToast, { ToastBody } from '../../components/MyToast';
 
 const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
   const { t } = useTranslation();
-  const toast = useToast();
+
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
   const { collectionId } = match.params;
@@ -92,23 +92,12 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       setIsSubmitting(true);
       mint(formValue, {
         success: () => {
-          toast({
-            title: t('Create.Success'),
-            status: 'success',
-            position: 'top',
-            duration: 3000,
-          });
+          toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
           setIsSubmitting(false);
           formAction.resetForm();
         },
         error: (error: string) => {
-          toast({
-            title: 'error',
-            status: 'error',
-            position: 'top',
-            duration: 3000,
-            description: error,
-          });
+          toast(<ToastBody title="Error" message={error} type="error" />);
           setIsSubmitting(false);
         },
       });
@@ -250,6 +239,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           message="Please contact our team"
           onClose={onCloseModal}
         />
+        <MyToast isCloseable />
         <LoginDetector />
         <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
           <ModalOverlay />

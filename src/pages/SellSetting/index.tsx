@@ -3,7 +3,7 @@
 /* eslint-disable max-len */
 import React, { useState, MouseEventHandler } from 'react';
 import {
-  Field, FieldProps, Form, Formik, useFormik,
+  useFormik,
 } from 'formik';
 import {
   Flex,
@@ -20,15 +20,13 @@ import {
   Link,
   Input,
   InputRightAddon,
-  Switch,
-  Progress,
   RadioGroup,
   Radio,
   Stack,
-  useToast,
   Modal,
   ModalOverlay,
 } from '@chakra-ui/react';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import {
   useHistory, RouteComponentProps, Link as RouterLink,
@@ -46,8 +44,6 @@ import LoginDetector from '../../components/LoginDetector';
 import {
   IconSummary,
   IconIntructions,
-  Emptyimg,
-  IconDetailsCollection,
   IconLeft,
 } from '../../assets/images';
 import {
@@ -55,10 +51,10 @@ import {
 } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
 import { createOrder } from '../../polkaSDK/api/createOrder';
+import MyToast, { ToastBody } from '../../components/MyToast';
 
 const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { t } = useTranslation();
-  const toast = useToast();
   const ButtonArr = [
     {
       id: 0, title: t('SellSetting.SetPrice'), subtitle: t('SellSetting.Sellatafixedprice'), isDisabled: false,
@@ -108,12 +104,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         tokenId: nftData?.nftInfo.token_id,
         cb: {
           success: () => {
-            toast({
-              title: 'success',
-              status: 'success',
-              position: 'top',
-              duration: 3000,
-            });
+            toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
             setIsSubmitting(false);
             formAction.resetForm();
             setTimeout(() => {
@@ -121,13 +112,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             }, 1000);
           },
           error: (error: string) => {
-            toast({
-              title: 'error',
-              status: 'error',
-              position: 'top',
-              duration: 3000,
-              description: error,
-            });
+            toast(<ToastBody title="Error" message="" type="error" />);
             setIsSubmitting(false);
           },
         },
@@ -796,6 +781,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           <ModalOverlay />
         </Modal>
       </Container>
+      <MyToast isCloseable />
     </MainContainer>
 
   );

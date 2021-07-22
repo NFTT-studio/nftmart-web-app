@@ -7,7 +7,8 @@ type collections = {
       id: string,
       description: string,
       logoUrl: string,
-    }
+    },
+    id: string
   }
 }
 
