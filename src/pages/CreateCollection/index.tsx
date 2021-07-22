@@ -1,5 +1,7 @@
 /* eslint-disable react/no-children-prop */
-import React, { FC, useCallback, useState } from 'react';
+import React, {
+  FC, useCallback, useState, useEffect,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import {
@@ -12,6 +14,7 @@ import {
   Modal,
   ModalOverlay,
 } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
 import useParams from '../../hooks/url/useParams';
 import Upload from '../../components/Upload';
 import EditFormTitle from '../../components/EditFormTitle';
@@ -23,15 +26,25 @@ import SubmitButton from '../../components/SubmitButton';
 import LoginDetector from '../../components/LoginDetector';
 import { createClass } from '../../polkaSDK/api/createClass';
 import { useAppSelector } from '../../hooks/redux';
+import MyModal from '../../components/MyModal';
 
 const CreateCollection: FC = () => {
-  // TODO: whitelist validate
   const { t } = useTranslation();
   const toast = useToast();
-
+  const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
-  const { account } = chainState;
+  const { account, whiteList } = chainState;
+  const [isShowModal, setIsShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const onCloseModal = () => {
+    setIsShowModal(false);
+    history.push('/');
+  };
+  useEffect(() => {
+    if (!account || whiteList.indexOf(account?.address) < 0) {
+      setIsShowModal(true);
+    }
+  }, [account, whiteList]);
 
   const create = useCallback((formValue, cb) => {
     createClass({
@@ -186,6 +199,14 @@ const CreateCollection: FC = () => {
       <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
         <ModalOverlay />
       </Modal>
+      <MyModal
+        isOpen={isShowModal}
+        type="warning"
+        isCloseable
+        title="You are not in the whitelist"
+        message="Please contact our team"
+        onClose={onCloseModal}
+      />
       <LoginDetector />
     </Flex>
   );

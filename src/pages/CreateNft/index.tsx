@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import {
   useHistory, RouteComponentProps, Link as RouterLink,
 } from 'react-router-dom';
@@ -34,14 +34,10 @@ import {
   PINATA_SERVER,
 } from '../../constants';
 import {
-  IconDetailsocllections,
-  IconDetailsRefresh,
-  IconDetailshaSre,
-  IconDetailsCollection,
-  Emptyimg,
   IconLeft,
 } from '../../assets/images';
 import { mintNft } from '../../polkaSDK/api/mintNft';
+import MyModal from '../../components/MyModal';
 
 const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
   const { t } = useTranslation();
@@ -49,8 +45,18 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
   const { collectionId } = match.params;
-  const { account } = chainState;
+  const { account, whiteList } = chainState;
+  const [isShowModal, setIsShowModal] = useState(false);
 
+  const onCloseModal = () => {
+    setIsShowModal(false);
+    history.push('/');
+  };
+  useEffect(() => {
+    if (!account || whiteList.indexOf(account?.address) < 0) {
+      setIsShowModal(true);
+    }
+  }, [account, whiteList]);
   const { data: collectionsData } = useCollectionsSinger(collectionId);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -236,6 +242,14 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             <SubmitButton text={t('Create.submit')} isSubmitting={isSubmitting} />
           </Flex>
         </form>
+        <MyModal
+          isOpen={isShowModal}
+          type="warning"
+          isCloseable
+          title="You are not in the whitelist"
+          message="Please contact our team"
+          onClose={onCloseModal}
+        />
         <LoginDetector />
         <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
           <ModalOverlay />
