@@ -31,7 +31,7 @@ export const renderBalanceText = (balanceText: string) => {
   const [integer, decimal] = value.toString().split('.');
 
   return (
-    <Flex>
+    <Flex display="inline-flex">
       <Text fontSize="sm" fontWeight="bold" color={Colors.Primary}>
         {integer}
         {decimal ? '.' : ''}

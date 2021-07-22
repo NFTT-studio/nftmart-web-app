@@ -13,6 +13,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { takeOrder } from '../../../polkaSDK/api/takeOrder';
 import { useAppSelector } from '../../../hooks/redux';
+import useAccount from '../../../hooks/reactQuery/useAccount';
+import { renderBalanceText } from '../../../components/Balance';
 
 interface Props {
   price: string,
@@ -20,18 +22,19 @@ interface Props {
   collectionName: string,
   logoUrl: string,
   ownerId: string,
-  orderId: string
+  orderId: string,
+  isShowBuy: boolean,
+  setIsShowBuy: React.Dispatch<React.SetStateAction<boolean>>,
 }
-const CreateCard: FC<Props> = (({
-  price, nftName, collectionName, logoUrl, orderId, ownerId,
+const BuyDialog: FC<Props> = (({
+  price, nftName, collectionName, logoUrl, orderId, ownerId, isShowBuy, setIsShowBuy,
 }) => {
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
-
+  const { data } = useAccount(account!.address);
   const { t } = useTranslation();
   const cancelRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const onClose = () => setIsOpen(false);
+
   const onSubmit = () => {
     takeOrder({
       address: account?.address,
@@ -51,26 +54,11 @@ const CreateCard: FC<Props> = (({
   return (
 
     <>
-      <Button
-        ml="40px"
-        width="109px"
-        height="35px"
-        background="#FFFFFF"
-        borderRadius="4px"
-        border="1px solid #3D00FF"
-        fontSize="14px"
-        fontFamily="TTHoves-Regular, TTHoves"
-        fontWeight="400"
-        color="#3D00FF"
-        onClick={() => setIsOpen(true)}
-      >
-        {t('Detail.BuyNow')}
-      </Button>
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
-        onClose={onClose}
-        isOpen={isOpen}
+        onClose={() => setIsShowBuy(false)}
+        isOpen={isShowBuy}
         isCentered
       >
         <AlertDialogOverlay />
@@ -247,7 +235,9 @@ const CreateCard: FC<Props> = (({
               lineHeight="20px"
             >
               {t('Detail.Balance')}
-              : 2,023,482 NMT
+              :
+              {' '}
+              {data && renderBalanceText(data!.balance.free)}
             </Text>
             <Flex w="100%" justifyContent="center" pt="10px">
               <Button
@@ -270,4 +260,4 @@ const CreateCard: FC<Props> = (({
     </>
   );
 });
-export default CreateCard;
+export default BuyDialog;

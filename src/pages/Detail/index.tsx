@@ -20,7 +20,6 @@ import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import MainContainer from '../../layout/MainContainer';
 import PriceHistoryChart from './PriceHistoryChart';
-import Card from './Card';
 import CancelDialog from './CancelDialog';
 
 import {
@@ -55,6 +54,8 @@ import {
 import { priceStringDivUnit } from '../../utils/format';
 import useIsLoginAddress from '../../hooks/utils/useIsLoginAddress';
 import { SELLING } from '../../constants/Status';
+import { useAppSelector } from '../../hooks/redux';
+import BuyDialog from './BuyDialog';
 
 const propertiesArr = [1, 2, 3, 4, 5, 6];
 const ICONS = [
@@ -73,14 +74,20 @@ const OfferssArr = [1, 2, 3];
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
 
 const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
-  const { nftId } = match.params;
+  const chainState = useAppSelector((state) => state.chain);
   const { t } = useTranslation();
+  const history = useHistory();
+
+  const { account } = chainState;
+  const { nftId } = match.params;
   const collectionsId = nftId.split('-')[0];
+
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+
   const [isShowCancel, setIsShowCancel] = useState(false);
+  const [isShowBuy, setIsShowBuy] = useState(false);
   const { data: nftData, isLoading: nftDataIsLoading } = useNft(nftId);
   const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
-  const history = useHistory();
 
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
 
@@ -92,10 +99,18 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
   const collectionName = collectionsData?.collection?.metadata?.name;
   const nftName = nftData?.nftInfo?.metadata.name;
+
   const offerLength = nftData?.nftInfo?.offers.length;
   const lastOffer = nftData?.nftInfo?.offers[offerLength - 1];
   const ownerId = nftData?.nftInfo?.owner_id;
   const orderId = lastOffer?.order_id;
+
+  const handleBuy = () => {
+    if (!account) {
+      history.push(`/connect?callbackUrl=item/${nftId}`);
+    }
+    setIsShowBuy(true);
+  };
   return (
     <MainContainer title={t('Detail.title')}>
       {isLoginAddress ? (
@@ -536,9 +551,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   NMT
                 </Text>
                 {!isLoginAddress
-                  ? (
-                    <Card price={price} logoUrl={logoUrl} nftName={nftName} collectionName={collectionName} orderId={orderId} ownerId={ownerId} />
-                  ) : (
+                  && (
                     <Button
                       ml="40px"
                       width="109px"
@@ -550,7 +563,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
                       color="#3D00FF"
-                      isDisabled
+                      onClick={handleBuy}
                     >
                       {t('Detail.BuyNow')}
                     </Button>
@@ -1413,7 +1426,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             </AccordionItem>
           </Accordion>
         </Flex>
-        <CancelDialog isShowCancel={isShowCancel} setIsShowCancel={setIsShowCancel} orderId={orderId} />
+        {isShowBuy && <BuyDialog isShowBuy={isShowBuy} setIsShowBuy={setIsShowBuy} price={price} logoUrl={logoUrl} nftName={nftName} collectionName={collectionName} orderId={orderId} ownerId={ownerId} />}
+        {isShowCancel && <CancelDialog isShowCancel={isShowCancel} setIsShowCancel={setIsShowCancel} orderId={orderId} />}
       </Container>
     </MainContainer>
 
