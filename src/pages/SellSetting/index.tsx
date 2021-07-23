@@ -137,7 +137,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           to={`/item/${nftData?.nftInfo?.id}`}
         >
           <Flex
-            w="1360px"
+            w="1364px"
             height="40px"
             flexDirection="row"
             justifyContent="felx-start"

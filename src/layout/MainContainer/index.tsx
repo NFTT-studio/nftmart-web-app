@@ -22,10 +22,13 @@ const MainContainer = ({ children, title }: Props) => {
   }, [location?.pathname, location?.search]);
   return (
     <>
-      <Helmet>{title && <title>{title}</title>}</Helmet>
+      <Helmet>
+        {title && <title>{title}</title>}
+        <link rel="canonical" href="../" />
+      </Helmet>
       <Center
         as="main"
-        maxWidth="1360px"
+        maxWidth="1364px"
         width="100%"
         minHeight="100%"
         pt="80px"

@@ -59,12 +59,12 @@ const CreateCollection: FC = () => {
   }, []);
 
   const schema = Yup.object().shape({
-    logoUrl: Yup.string().required(t('Create.Required')),
+    logoUrl: Yup.string().required(t('Collection.Required')),
     name: Yup.string()
-      .max(50, t('Create.nameRule'))
-      .required(t('Create.Required')),
-    stub: Yup.string().max(50, t('Create.urlRule')),
-    description: Yup.string().max(1000, t('Create.descriptionRule')),
+      .max(50, t('Collection.nameRule'))
+      .required(t('Collection.Required')),
+    stub: Yup.string().max(50, t('Collection.urlRule')),
+    description: Yup.string().max(1000, t('Collection.descriptionRule')),
   });
 
   const formik = useFormik({
@@ -79,10 +79,11 @@ const CreateCollection: FC = () => {
       setIsSubmitting(true);
       create(values, {
         success: (err: any) => {
+          console.log(err);
           if (err.dispatchError) {
             toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
           } else {
-            toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
+            toast(<ToastBody title="Success" message={t('Collection.Success')} type="success" />);
           }
           setIsSubmitting(false);
           formActions.resetForm();
@@ -108,8 +109,8 @@ const CreateCollection: FC = () => {
       <form onSubmit={formik.handleSubmit}>
         <label htmlFor="logoUrl">
           {' '}
-          <EditFormTitle text={t('Create.logo')} />
-          <EditFromSubTitle text={t('Create.logoRule')} />
+          <EditFormTitle text={t('Collection.logo')} />
+          <EditFromSubTitle text={t('Collection.logoRule')} />
         </label>
 
         <Upload
@@ -126,8 +127,8 @@ const CreateCollection: FC = () => {
         ) : null}
         {/* <label htmlFor="featuredUrl">
           {' '}
-          <EditFormTitle text={t('Create.featured')} />
-          <EditFromSubTitle text={t('Create.featuredRule')} />
+          <EditFormTitle text={t('Collection.featured')} />
+          <EditFromSubTitle text={t('Collection.featuredRule')} />
         </label>
         {formik.errors.featuredUrl && formik.touched.featuredUrl ? (
           <div style={{ color: 'red' }}>{formik.errors.featuredUrl}</div>
@@ -143,8 +144,8 @@ const CreateCollection: FC = () => {
         /> */}
         <label htmlFor="name">
           {' '}
-          <EditFormTitle text={t('Create.name')} />
-          <EditFromSubTitle text={t('Create.nameRule')} />
+          <EditFormTitle text={t('Collection.name')} />
+          <EditFromSubTitle text={t('Collection.nameRule')} />
         </label>
         <FormInput id="name" value={formik.values.name} onChange={formik.handleChange} />
         {formik.errors.name && formik.touched.name ? (
@@ -152,19 +153,24 @@ const CreateCollection: FC = () => {
         ) : null}
         <label htmlFor="stub">
           {' '}
-          <EditFormTitle text={t('Create.url')} />
+          <EditFormTitle text={t('Collection.url')} />
           <EditFromSubTitle
-            text={t('Create.urlRule')}
+            text={t('Collection.urlRule')}
           />
         </label>
-        <LeftAddonInput id="stub" value={formik.values.stub} onChange={formik.handleChange} />
+        <LeftAddonInput
+          id="stub"
+          value={formik.values.stub}
+          onChange={formik.handleChange}
+          url="https://nftmart.io/collection/"
+        />
         {formik.errors.stub && formik.touched.stub ? (
           <div style={{ color: 'red' }}>{formik.errors.stub}</div>
         ) : null}
         <label htmlFor="description">
           {' '}
-          <EditFormTitle text={t('Create.description')} />
-          <EditFromSubTitle text={t('Create.descriptionRule')} />
+          <EditFormTitle text={t('Collection.description')} />
+          <EditFromSubTitle text={t('Collection.descriptionRule')} />
         </label>
         <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} />
         {formik.errors.description && formik.touched.description ? (
@@ -174,7 +180,7 @@ const CreateCollection: FC = () => {
           w="600px"
           justifyContent="center"
         >
-          <SubmitButton text={t('Create.submit')} isSubmitting={isSubmitting} />
+          <SubmitButton text={t('Collection.submit')} isSubmitting={isSubmitting} />
         </Flex>
       </form>
       <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>

@@ -119,7 +119,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
         >
           <Flex
-            w="1360px"
+            w="1364px"
             height="40px"
             flexDirection="row"
             justifyContent="felx-start"
@@ -217,7 +217,12 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             <EditFormTitle text={t('Create.url')} />
             <EditFromSubTitle text={t('Create.urlRule')} />
           </label>
-          <LeftAddonInput id="stub" value={formik.values.stub} onChange={formik.handleChange} />
+          <LeftAddonInput
+            id="stub"
+            value={formik.values.stub}
+            onChange={formik.handleChange}
+            url="https://"
+          />
           <label htmlFor="description">
             {' '}
             <EditFormTitle text={t('Create.description')} />

@@ -8,10 +8,13 @@ import {
 interface Props {
   id: string
   value: string
+  url: string
   onChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
-const LeftAddonInput: FC<Props> = ({ id, value, onChange }) => (
+const LeftAddonInput: FC<Props> = ({
+  id, value, onChange, url,
+}) => (
   <InputGroup
     width="600px"
     height="40px"
@@ -24,7 +27,6 @@ const LeftAddonInput: FC<Props> = ({ id, value, onChange }) => (
     color="#999999"
   >
     <InputLeftAddon
-      width="203px"
       height="40px"
       background="#F4F4F4"
       borderRadius="0px 4px 4px 0px"
@@ -33,7 +35,7 @@ const LeftAddonInput: FC<Props> = ({ id, value, onChange }) => (
       fontFamily="TTHoves-Regular, TTHoves"
       fontWeight="400"
     >
-      https://nftmart.io/collection/
+      {url}
     </InputLeftAddon>
     <Input
       fontSize="12px"

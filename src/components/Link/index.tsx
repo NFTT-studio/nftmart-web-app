@@ -42,7 +42,7 @@ const NLink: FC<NLinkProps> = (props) => {
           as={RouterLink}
           key={title}
           to={path}
-          color={active ? '#000000' : '#999999'}
+          color="#000000"
           _after={active && bordered ? borderBottom : {}}
           _hover={{
             textDecoration: 'none',

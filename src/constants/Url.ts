@@ -13,7 +13,7 @@ export const IPFS_GET_SERVER = 'https://ipfs-web.bcdata.top/ipfs/';// query with
 export const PINATA_SERVER = 'https://ipfs-web.bcdata.top/ipfs/'; // query with cid server
 export const UPLOAD_PINATA_SERVER = 'https://gateway.pinata.cloud/ipfs/';
 export const UPLOAD_OWN_SERVER = 'https://ipfs-api.bcdata.top/api/v0/add?stream-channels=true&pin=true&progress=true&wrap-with-directory=false';
-export const EXPLORER_URL = 'http://81.70.132.13/#/explorer';
+export const EXPLORER_URL = 'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fstaging-ws.nftmart.io#/accounts';
 
 export const NAV_MAP = [
   {

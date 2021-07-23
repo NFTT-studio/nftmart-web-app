@@ -43,16 +43,16 @@ const Header: FC<HeaderProps> = () => {
       as="header"
       justify="space-between"
       backgroundColor="white"
-      boxShadow="md"
       position="fixed"
       top={0}
       left={0}
       right={0}
       zIndex={Z_INDEXES.header}
+      borderBottom="1px solid #4D4D4D"
     >
       <Container
         py={2}
-        maxW={1360}
+        maxW={1364}
         height="80px"
         display="flex"
         justifyContent="space-between"
@@ -73,7 +73,7 @@ const Header: FC<HeaderProps> = () => {
           />
         </Flex>
         <Network />
-        <Flex flex="1 1 auto">
+        <Flex ml="32px" flex="1 1 auto">
           <NavLink />
         </Flex>
         <ChangeLanguage />

@@ -57,8 +57,8 @@ const Home = () => {
         justifyContent="center"
         mb="40px"
       >
-        <Flex maxWidth="1360px" position="relative">
-          <Image maxWidth="1360px" width="100%" position="relative" src={BannerBg.default} alt="banner" />
+        <Flex maxWidth="1364px" position="relative">
+          <Image maxWidth="1364px" width="100%" position="relative" src={BannerBg.default} alt="banner" />
           <Flex
             color="white"
             flexDirection="column"
@@ -123,7 +123,7 @@ const Home = () => {
         : null}
 
       <Flex width="100%" justifyContent="center">
-        <Flex width="1360px" flexDirection="column">
+        <Flex width="1364px" flexDirection="column">
 
           {hotNftsIsLoading || expensiveNftsIsLoading || cheapNftsIsLoading || bannerIsLoading || categoriesIsLoading
             ? (
@@ -134,7 +134,7 @@ const Home = () => {
           {hotNftsData?.orders.length
             ? (
               <Flex width="100%" flexDirection="column" mt="40px">
-                <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="21px">
+                <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="40px">
                   <Box as="img" src={IconHome.default} alt="" w="18px" h="18px" mr="8px" />
                   <Text>{t('home.Hottest')}</Text>
                 </Flex>
@@ -168,7 +168,7 @@ const Home = () => {
             : null}
           {expensiveNftsData?.orders.length ? (
             <Flex width="100%" flexDirection="column" mt="40px">
-              <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="21px">
+              <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="40px">
                 <Box as="img" src={iconExpensive.default} alt="" w="18px" h="18px" mr="8px" />
                 <Text>{t('home.Expensive')}</Text>
               </Flex>
@@ -200,7 +200,7 @@ const Home = () => {
           {expensiveNftsData?.orders.length
             ? (
               <Flex width="100%" flexDirection="column" mt="40px">
-                <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="21px">
+                <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="40px">
                   <Box as="img" src={IconCheapest.default} alt="" w="18px" h="18px" mr="8px" />
                   <Text>{t('home.Cheapest')}</Text>
                 </Flex>
