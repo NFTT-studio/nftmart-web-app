@@ -24,7 +24,7 @@ const CategorySelector: FC<CategorySelectorProps> = (({ list, selectId, handleSe
           fontFamily="TTHoves-Medium, TTHoves"
           fontWeight="500"
           color={selectId === '' ? '#FFFFFF' : '#999999'}
-          m="0 40px 0 0"
+          m="0 24px 0 0"
           onClick={handleSelect}
           _hover={{ background: '#000000', color: '#FFFFFF' }}
           _focus={{

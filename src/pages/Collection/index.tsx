@@ -26,8 +26,11 @@ import {
   WEBSITE,
   Facebook,
   TWITTER,
-  IconDetailsCollection,
+  IconDetailsocllections,
 } from '../../assets/images';
+import {
+  PINATA_SERVER,
+} from '../../constants';
 import SortBy from '../../components/SortBy';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
 import useAccount from '../../hooks/reactQuery/useAccount';
@@ -97,7 +100,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
         >
           <Flex
             width="100%"
-            maxWidth="1360px"
+            maxWidth="1364px"
             justifyContent="flex-end"
           >
             {/* <Button
@@ -142,9 +145,14 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
         </Flex>
       ) : ''}
 
-      <Image mt="20px" maxWidth="1360px" width="100%" src={CollectionBackground.default} alt="banner" />
+      <Image mt="20px" maxWidth="1364px" width="100%" src={CollectionBackground.default} alt="banner" />
       <Flex mt="40px" w="100%" direction="row" paddingTop="40px" paddingBottom="40px">
-        <Avatar m="0 20px" src="https://bit.ly/broken-link" w="100px" h="100px" />
+        <Avatar
+          m="0 20px"
+          src={`${PINATA_SERVER}${collectionsData?.collection?.metadata.logoUrl}`}
+          w="100px"
+          h="100px"
+        />
         <Flex w="100%" direction="column">
           <Flex h="33px" alignItems="center">
             <Text
@@ -154,13 +162,13 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               color="#191A24"
               lineHeight="33px"
             >
-              {dataPerson.data?.name}
+              {collectionsData?.collection?.metadata.name}
             </Text>
             <Image
               ml="4px"
               w="18px"
               h="18px"
-              src={IconDetailsCollection.default}
+              src={IconDetailsocllections.default}
             />
           </Flex>
           <Text
@@ -179,7 +187,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 mR="4px"
                 w="16px"
                 h="16px"
-                src={IconDetailsCollection.default}
+                src={IconDetailsocllections.default}
               />
               <Text
                 fontSize="14px"
@@ -196,7 +204,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 mR="4px"
                 w="16px"
                 h="16px"
-                src={IconDetailsCollection.default}
+                src={IconDetailsocllections.default}
               />
               <Text
                 fontSize="14px"
@@ -213,7 +221,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 mR="4px"
                 w="16px"
                 h="16px"
-                src={IconDetailsCollection.default}
+                src={IconDetailsocllections.default}
               />
               <Text
                 fontSize="14px"
@@ -230,7 +238,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 mR="4px"
                 w="16px"
                 h="16px"
-                src={IconDetailsCollection.default}
+                src={IconDetailsocllections.default}
               />
               <Text
                 fontSize="14px"
@@ -245,7 +253,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
           </Flex>
         </Flex>
         <Flex>
-          {ICON_LIST.map((item, index) => (
+          {/* {ICON_LIST.map((item, index) => (
             <Box
               key="index"
               width="40px"
@@ -265,7 +273,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 src={item.src}
               />
             </Box>
-          ))}
+          ))} */}
         </Flex>
 
       </Flex>

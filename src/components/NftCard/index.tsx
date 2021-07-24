@@ -27,7 +27,6 @@ const NftCard: FC<NftCardProps> = ({
   const { t } = useTranslation();
   const history = useHistory();
   const price = priceStringDivUnit(nft?.price);
-  console.log(nft);
   return (
     <MotionBox
       width="260px"
@@ -77,7 +76,7 @@ const NftCard: FC<NftCardProps> = ({
           color="#FFFFFF"
         >
           <Box userSelect="none">{t('componentCollectionTitle')}</Box>
-          {nft.price ? (
+          {Number(nft.price) ? (
             <Box userSelect="none" flex="1" textAlign="right">
               {t('componentCollectionPrice')}
             </Box>
@@ -108,14 +107,14 @@ const NftCard: FC<NftCardProps> = ({
               </Text>
             )}
           </Box>
-          {nft?.price && (
+          {Number(nft.price) ? (
             <Box textAlign="right" display="flex" justifyContent="center">
               <Flex align="flex-start" alignItems="center">
                 <Box w="14px" h="14px" src={PriceIcon.default} as="img" alt="" mr="4px" />
                 <Box color="#FFFFFF">{price}</Box>
               </Flex>
             </Box>
-          )}
+          ) : null}
         </Box>
       </Box>
     </MotionBox>

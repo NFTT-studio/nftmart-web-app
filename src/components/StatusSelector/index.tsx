@@ -30,6 +30,7 @@ const StatusSelector: FC<StatusSelectorProps> = (({ selectedArr, statusArr, hand
             fontFamily="PingFangTC-Regular, PingFangTC"
             fontWeight="400"
             color={isSelected ? '#FFFFFF' : '#000000'}
+            border="1px solid #000000"
             _focus={{
               border: 'none',
               textDecoration: 'none',

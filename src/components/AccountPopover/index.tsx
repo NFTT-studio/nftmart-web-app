@@ -83,11 +83,16 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
             src={HeadPortrait.default}
           />
           <Text
+            maxWidth="200px"
+            width="100%"
             fontSize="16px"
             fontFamily="PingFangSC-Medium, PingFang SC"
             fontWeight="500"
             color="#191A24"
             pr="3px"
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
           >
             {avatar}
           </Text>
@@ -385,13 +390,14 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               w="100%"
               textAlign="center"
               mt="10px"
-              fontSize="12px"
+              fontSize="13px"
               fontFamily="PingFangSC-Regular, PingFang SC"
               fontWeight="400"
               color="#5C74FF"
               cursor="pointer"
               as={RouterLink}
               to="/connect"
+              onClick={() => setOpening(false)}
             >
               {t('switchAccounts')}
             </Link>

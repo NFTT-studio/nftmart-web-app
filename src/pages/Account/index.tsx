@@ -183,9 +183,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             fontWeight="bold"
             color="#191A24"
             lineHeight="33px"
-          >
-            {dataPerson.data?.name}
-          </Text>
+          />
           <Text
             mt="12px"
             fontSize="14px"
@@ -197,7 +195,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             {dataPerson.data?.address}
           </Text>
         </Flex>
-        <Flex position="absolute" right="20px" top="240px">
+        {/* <Flex position="absolute" right="20px" top="240px">
           <Box
             key="index"
             width="40px"
@@ -236,7 +234,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               src={IconDetailshaSre.default}
             />
           </Box>
-        </Flex>
+        </Flex> */}
       </Flex>
       <Tabs w="100%">
         <TabList
@@ -666,12 +664,11 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                     <Flex
                       key={item}
                       width="260px"
-                      height="249px"
                       borderRadius="4px"
                       border="1px solid #000000"
                       flexDirection="column"
                     >
-                      <Image w="100%" h="195px" src={`${PINATA_SERVER}${item.metadata.logoUrl}`} alt="" />
+                      <Image w="100%" h="260px" src={`${PINATA_SERVER}${item.metadata.logoUrl}`} alt="" />
                       <Text
                         w="100%"
                         background="#000000"

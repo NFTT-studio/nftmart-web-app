@@ -26,9 +26,9 @@ import CancelDialog from './CancelDialog';
 
 import {
   IconDetailsocllections,
-  IconDetailsRefresh,
-  IconDetailshaSre,
-  IconDetailsCollection,
+  // IconDetailsRefresh,
+  // IconDetailshaSre,
+  // IconDetailsCollection,
   IconDetailsDetail,
   ImgWorksBg,
   HuoDong,
@@ -36,8 +36,7 @@ import {
   WEBSITE,
   Facebook,
   TWITTER,
-  PriceIcon,
-  Emptyimg,
+  // PriceIcon,
   Historyempty,
   Offersempty,
   HeadPortrait,
@@ -46,7 +45,7 @@ import {
   IconProperties,
   Iconprice,
   IconOffersDetail,
-  IconLeft,
+  // IconLeft,
 } from '../../assets/images';
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
@@ -130,7 +129,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 <Flex
                   width="100%"
                   h="100%"
-                  maxWidth="1360px"
+                  maxWidth="1364px"
                   justifyContent="flex-end"
                 >
                   <Flex h="100%" alignItems="center">
@@ -154,7 +153,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     >
                       {t('Detail.Cancel')}
                     </Button>
-                    <Button
+                    {/* <Button
                       ml="10px"
                       width="110px"
                       height="40px"
@@ -173,7 +172,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       onClick={() => history.push(`/sellSetting/${nftId}`)}
                     >
                       {t('Detail.Setting')}
-                    </Button>
+                    </Button> */}
                   </Flex>
                 </Flex>
 
@@ -191,7 +190,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 <Flex
                   width="100%"
                   h="100%"
-                  maxWidth="1360px"
+                  maxWidth="1364px"
                   justifyContent="flex-end"
                 >
                   <Flex h="100%" alignItems="center">
@@ -263,7 +262,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               />
             </Box>
           </Flex>
-          <Flex width="788px" flexDirection="column" justifyContent="flex-start" borderBottom="1px solid #000000">
+          <Flex width="788px" minHeight="420px" flexDirection="column" justifyContent="flex-start" borderBottom="1px solid #000000">
             <Flex p="0 20px 0 20px" width="100%" h="40px" justifyContent="space-between" alignItems="flex-start">
               <Flex h="18px" alignItems="flex-start">
                 <Text
@@ -281,7 +280,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   src={IconDetailsocllections.default}
                 />
               </Flex>
-              <Flex>
+              {/* <Flex>
                 <Box
                   width="40px"
                   height="40px"
@@ -337,7 +336,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   />
                 </Box>
 
-              </Flex>
+              </Flex> */}
             </Flex>
             <Flex p="0 20px 0 20px">
               <Text
@@ -760,7 +759,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           h="100px"
                           border="1px solid #999999"
                           borderStyle="dashed"
-                          src={Emptyimg.default}
+                          src={Historyempty.default}
                         />
                         <Text
                           mt="10px"
@@ -868,7 +867,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           h="100px"
                           border="1px solid #999999"
                           borderStyle="dashed"
-                          src={Emptyimg.default}
+                          src={Historyempty.default}
                         />
                         <Text
                           mt="10px"
@@ -1408,8 +1407,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       <Image
                         w="150px"
                         h="100px"
-                        border="1px solid #999999"
-                        borderStyle="dashed"
                         src={Historyempty.default}
                       />
                       <Text

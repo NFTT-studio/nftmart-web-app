@@ -34,7 +34,7 @@ const NavLink = () => {
               active={active}
               bgSize="cover"
               fontWeight="bold"
-              marginRight="12px"
+              marginRight="8px"
               marginLeft="28px"
               bordered
             />

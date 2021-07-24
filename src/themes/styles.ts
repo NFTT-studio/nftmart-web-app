@@ -34,7 +34,7 @@ const obj = {
       boxShadow: 'none',
     },
     '.css-xzjcmu': {
-      maxWidth: '1360px',
+      maxWidth: '1364px',
     },
     '.swiper-container-horizontal>.swiper-scrollbar': {
       height: '16px',
