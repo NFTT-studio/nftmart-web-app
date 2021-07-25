@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import PolkaSDK from '..';
 import { filterUnparsableClass } from '../utils/filterUnparsableClass';
 import { mapClassToCollection } from '../utils/mapClassToCollection';

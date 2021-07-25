@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { omit } from 'ramda';
 import { ClassMetadata } from '../types/ClassMetadata';
 

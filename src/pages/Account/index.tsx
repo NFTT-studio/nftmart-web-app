@@ -18,7 +18,6 @@ import {
 import { union, without } from 'lodash';
 import { parse } from 'search-params';
 import MainContainer from '../../layout/MainContainer';
-import useNfts from '../../hooks/reactQuery/useNfts';
 import useCategories from '../../hooks/reactQuery/useCategories';
 import CategorySelector from '../../components/CategorySelector';
 import NftCard from '../../components/NftCard';
@@ -29,8 +28,6 @@ import {
   IconAllStateone,
   IconSearch,
   AccountBanner,
-  IconPen,
-  IconDetailshaSre,
   // IconOffers,
   IconWallet,
   IconDetailsocllections,
@@ -50,14 +47,11 @@ import { statusArr } from '../../constants/Status';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
 import CreateCard from './CreateCard';
 import useAccount from '../../hooks/reactQuery/useAccount';
-import useIsLoginAddress from '../../hooks/utils/useIsLoginAddress';
 import Sort from '../../constants/Sort';
 
 const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
   const { address } = match.params;
-
-  const isLoginAddress = useIsLoginAddress(address);
 
   const TABS = [
     {
@@ -91,13 +85,13 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     setSelectTabId(Number(event.currentTarget.id));
   };
 
-  const [offersMadeButtonId, setoffersMadeButtonId] = useState(0);
+  const [offersMadeButtonId, setOffersMadeButtonId] = useState(0);
   const handleButtonSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
-    setoffersMadeButtonId(Number(event.currentTarget.id));
+    setOffersMadeButtonId(Number(event.currentTarget.id));
   };
 
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
-  const { data: collectionsData, isLoading: collectionsIsLoading } = useCollections({ address });
+  const { data: collectionsData } = useCollections({ address });
 
   const { data: nftsData, isLoading: nftsIsLoading } = useNftsPersonal(
     {
@@ -407,7 +401,8 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                   </Flex>
 
                   <Flex width="100%" flexFlow="wrap" justifyContent="space-between">
-                    <StatusSelector statusArr={statusArr} selectedArr={selectedStatusArr} handleSelect={handleSelectStatus} />
+                    <StatusSelector
+                    statusArr={statusArr} selectedArr={selectedStatusArr} handleSelect={handleSelectStatus} />
                   </Flex>
                   <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 12px 0">
                     <Box as="img" src={IconAllStateone.default} alt="" w="22px" h="22px" mr="8px" />

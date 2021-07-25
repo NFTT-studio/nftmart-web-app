@@ -18,6 +18,7 @@ const MotionBox = motion(
       Object.entries(props).filter(([key]) => !isValidMotionProp(key)),
     );
     // FIXME: ref type imcompatible
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return <chakra.div ref={ref as any} {...chakraProps} />;
   }),
 ) as ComponentWithAs<'div', MotionBoxProps>;

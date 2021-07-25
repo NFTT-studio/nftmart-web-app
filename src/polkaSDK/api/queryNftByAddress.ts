@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { identity } from 'ramda';
 import PolkaSDK from '..';
 import { mapNFTToAsset } from '../utils/mapNFTToAsset';

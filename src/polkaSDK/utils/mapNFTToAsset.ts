@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const mapNFTToAsset = (NFT: any, cid: number, tid?: number) => {
   let metadata = {};
   if (!NFT.metadata) return null;

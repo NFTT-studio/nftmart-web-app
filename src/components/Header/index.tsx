@@ -109,7 +109,7 @@ const Header: FC<HeaderProps> = () => {
                   history.push('/connect');
                 }}
               >
-                {t('Login')}
+                {t('common.login')}
               </Button>
             </Flex>
           )}

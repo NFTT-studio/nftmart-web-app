@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const filterUnparsableClass = (clazz: any) => {
   try {
     // FIXME: there some error in the backend, which miss { at the start of the string

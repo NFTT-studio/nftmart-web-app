@@ -77,10 +77,10 @@ const NftCard: FC<NftCardProps> = ({
           fontSize="12px"
           color="#FFFFFF"
         >
-          <Box userSelect="none">{t('componentCollectionTitle')}</Box>
+          <Box userSelect="none">{t('NftCard.componentCollectionTitle')}</Box>
           {nft?.price && (
             <Box userSelect="none" flex="1" textAlign="right">
-              {t('componentCollectionPrice')}
+              {t('NftCard.componentCollectionPrice')}
             </Box>
           )}
         </Box>

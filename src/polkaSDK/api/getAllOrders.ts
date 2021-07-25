@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import PolkaSDK from '..';
 
 export const getAllOrders = async () => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { bnToBn } from '@polkadot/util';
 import PolkaSDK from '..';
 

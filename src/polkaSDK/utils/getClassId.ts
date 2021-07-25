@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const getClassId = (c: any) => {
   let key = c[0];
   const len = key.length;

@@ -61,7 +61,6 @@ const ProfileEdit = () => {
               <Form>
                 <Field name="name">
                   {({
-                    field,
                     form,
                   }: {
                     field: Record<string, unknown>;
@@ -84,7 +83,6 @@ const ProfileEdit = () => {
                 </Field>
                 <Field name="name">
                   {({
-                    field,
                     form,
                   }: {
                     field: Record<string, unknown>;
@@ -119,7 +117,6 @@ const ProfileEdit = () => {
                 </Field>
                 <Field name="name">
                   {({
-                    field,
                     form,
                   }: {
                     field: Record<string, unknown>;
@@ -142,7 +139,6 @@ const ProfileEdit = () => {
                 </Field>
                 <Field name="name">
                   {({
-                    field,
                     form,
                   }: {
                     field: Record<string, unknown>;

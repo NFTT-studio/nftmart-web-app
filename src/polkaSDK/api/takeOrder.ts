@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { web3FromAddress } from '@polkadot/extension-dapp';
 import PolkaSDK from '..';
 import { txLog } from '../../utils/txLog';

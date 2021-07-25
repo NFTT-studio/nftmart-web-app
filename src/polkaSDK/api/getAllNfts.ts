@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Work } from '../types/Work';
 import PolkaSDK from '..';
 import { getClassId } from '../utils/getClassId';

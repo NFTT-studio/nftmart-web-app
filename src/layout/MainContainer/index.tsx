@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Center } from '@chakra-ui/react';
 import Helmet from 'react-helmet';
-import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { scrollTo } from '../../utils/ui';
 
@@ -11,7 +10,6 @@ interface Props {
 }
 
 const MainContainer = ({ children, title }: Props) => {
-  const { t } = useTranslation();
   const location = useLocation();
 
   useEffect(() => {

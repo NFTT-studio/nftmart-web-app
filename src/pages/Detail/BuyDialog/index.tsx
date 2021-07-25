@@ -62,7 +62,7 @@ const BuyDialog: FC<Props> = (({
           setIsSubmitting(false);
         },
         error: (error: string) => {
-          toast(<ToastBody title="Error" message={t('Detail.buyError')} type="error" />);
+          toast(<ToastBody title="Error" message={error} type="error" />);
           setIsSubmitting(false);
           setIsSubmitting(false);
         },

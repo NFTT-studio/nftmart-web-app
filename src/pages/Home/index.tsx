@@ -136,7 +136,7 @@ const Home = () => {
               <Flex width="100%" flexDirection="column" mt="40px">
                 <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="40px">
                   <Box as="img" src={IconHome.default} alt="" w="18px" h="18px" mr="8px" />
-                  <Text>{t('home.Hottest')}</Text>
+                  <Text>{t('Home.hottest')}</Text>
                 </Flex>
                 <Stack direction="row" height="364px">
                   <Swiper
@@ -170,7 +170,7 @@ const Home = () => {
             <Flex width="100%" flexDirection="column" mt="40px">
               <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="40px">
                 <Box as="img" src={iconExpensive.default} alt="" w="18px" h="18px" mr="8px" />
-                <Text>{t('home.Expensive')}</Text>
+                <Text>{t('Home.expensive')}</Text>
               </Flex>
               <Stack direction="row" height="364px">
                 <Swiper
@@ -202,7 +202,7 @@ const Home = () => {
               <Flex width="100%" flexDirection="column" mt="40px">
                 <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="40px">
                   <Box as="img" src={IconCheapest.default} alt="" w="18px" h="18px" mr="8px" />
-                  <Text>{t('home.Cheapest')}</Text>
+                  <Text>{t('Home.cheapest')}</Text>
                 </Flex>
                 <Stack direction="row" height="364px">
                   <Swiper

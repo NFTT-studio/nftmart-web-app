@@ -14,6 +14,7 @@ type NftData = {
     name: string
     nftMartUrl: string
     url: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     offers: any[]
     order_status: string
     owner_id: string

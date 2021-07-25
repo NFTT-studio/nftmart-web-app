@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { mapNFTToAsset } from './mapNFTToAsset';
 
 export const mapNFTsToAsset = (NFTS: any[], cid: number) => {

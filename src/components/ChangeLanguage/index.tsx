@@ -18,8 +18,8 @@ import {
 } from '../../assets/images';
 
 const TRANSLATIONS: Record<string, string> = {
-  en: 'langEn',
-  zh: 'langZn',
+  en: 'common.langEn',
+  zh: 'common.langZn',
 };
 
 const ChangeLanguage = (): JSX.Element => {

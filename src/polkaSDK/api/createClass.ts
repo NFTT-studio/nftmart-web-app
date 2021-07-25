@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { web3FromAddress } from '@polkadot/extension-dapp';
 
 import PolkaSDK from '..';
@@ -19,7 +20,7 @@ export const createClass = async ({
 }: { address: string, metadata: ClassMetadata, cb: Callback }) => {
   try {
     const injector = await web3FromAddress(address);
-    const { name, description } = metadata;
+    const { name } = metadata;
     const metadataStr = JSON.stringify(metadata);
     const res = await PolkaSDK.api.tx.nftmart
       .createClass(metadataStr, name, '', TOKEN_TRANSFERABLE_BURNABLE)

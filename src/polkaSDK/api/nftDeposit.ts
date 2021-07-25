@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { bnToBn } from '@polkadot/util';
 
 import PolkaSDK from '..';
@@ -8,7 +9,6 @@ export async function nftDeposit(metadata: string) {
     const depositAll = await PolkaSDK.ws.call('nftmart_mintTokenDeposit', [metadata.length], 10000);
     return bnToBn(depositAll as any);
   } catch (e) {
-    console.log(e);
     return null;
   }
 }

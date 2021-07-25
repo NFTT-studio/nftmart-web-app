@@ -1,4 +1,4 @@
-export const redirectConnect = (callbackUrl = '', history?: any) => {
+export const redirectConnect = (callbackUrl = '', history?: History<unknown>) => {
   // toast({
   //   desc: t('account.not.detected'),
   //   status: 'waring',

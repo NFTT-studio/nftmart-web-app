@@ -14,7 +14,6 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
-import useParams from '../../hooks/url/useParams';
 import Upload from '../../components/Upload';
 import EditFormTitle from '../../components/EditFormTitle';
 import EditFromSubTitle from '../../components/EditFromSubTitle';
@@ -59,7 +58,7 @@ const CreateCollection: FC = () => {
         description: formValue.description,
       },
       cb: {
-        success: (result: any) => {
+        success: (result) => {
           if (result.dispatchError) {
             toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
           } else {
@@ -72,14 +71,14 @@ const CreateCollection: FC = () => {
           setIsSubmitting(false);
           formActions.resetForm();
         },
-        error: (error: any) => {
-          toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
+        error: (error) => {
+          toast(<ToastBody title="Error" message={error} type="error" />);
           setIsSubmitting(false);
           formActions.resetForm();
         },
       },
     });
-  }, [account, t]);
+  }, [account, history, t]);
 
   const schema = Yup.object().shape({
     logoUrl: Yup.string().required(t('Collection.Required')),
@@ -104,8 +103,6 @@ const CreateCollection: FC = () => {
     },
     validationSchema: schema,
   });
-  const params = useParams();
-  const collectionId = params.get('collectionId') || '';
 
   return (
     <Flex
@@ -125,7 +122,7 @@ const CreateCollection: FC = () => {
           mediatype="cutting"
           rectangle=""
           value={formik.values.logoUrl}
-          onChange={(v: any) => {
+          onChange={(v) => {
             formik.setFieldValue('logoUrl', v);
           }}
         />

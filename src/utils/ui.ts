@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import raf from 'rc-util/lib/raf';
 
 export const isWindow = (obj: any) => obj !== null && obj !== undefined && obj === obj.window;

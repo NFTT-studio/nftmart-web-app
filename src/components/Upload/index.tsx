@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   FC, useState, useCallback, useEffect, useRef,
 } from 'react';
@@ -214,7 +215,7 @@ const Upload: FC<UploadProps> = ({
         setImgName(currentFile.name);
       }
     }
-  }, []);
+  }, [mediatype, saveToIpfs]);
 
   const cropImage = (e: any) => {
     if (e) {
@@ -227,11 +228,11 @@ const Upload: FC<UploadProps> = ({
     if (valueFromProp.url !== !!valueFromProp.url) {
       setValue(valueFromProp.url as string);
     }
-  }, []);
+  }, [valueFromProp.url]);
 
   useEffect(() => {
     if (onChange) onChange(value);
-  }, [value]);
+  }, [onChange, value]);
 
   useEffect(() => {
     if (!file) {

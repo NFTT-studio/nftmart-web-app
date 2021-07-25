@@ -11,7 +11,6 @@ import {
   Text,
   Image,
 } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
 import {
   IoMdArrowDropdown,
   IoMdArrowDropup,
@@ -24,8 +23,6 @@ type SortByProps = {
 }
 
 const SortBy: FC<SortByProps> = ({ selectedSort, setSelectedSort }) => {
-  const { t } = useTranslation();
-
   const [opening, setOpening] = useState(false);
 
   const handleSelect = (key: string) => {

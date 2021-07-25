@@ -4,7 +4,6 @@ import {
   Flex,
   Image,
   Avatar,
-  Box,
   Text,
   Center,
   Spinner,
@@ -62,7 +61,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const ownerId = address;
   const classId = search.collectionId;
 
-  const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(classId);
+  const { data: collectionsData } = useCollectionsSinger(classId);
 
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const { data: nftData, isLoading } = useNftsPersonal(
@@ -80,7 +79,8 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
     if (address === account?.address) {
       setIsPerson(true);
     }
-  }, [dataPerson]);
+  }, [account?.address, address, dataPerson]);
+
   if (isLoading) {
     return (
       <Center height="100vh">

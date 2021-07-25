@@ -29,7 +29,6 @@ const CancelDialog: FC<Props> = (({
   isShowCancel,
   setIsShowCancel,
   orderId,
-  nftId,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const cancelRef = useRef<HTMLDivElement>(null);
@@ -40,7 +39,7 @@ const CancelDialog: FC<Props> = (({
   const onCancel = () => {
     setIsSubmitting(true);
     deleteOrder({
-      address: account?.address,
+      address: account!.address,
       orderId,
       cb: {
         success: () => {
@@ -48,8 +47,8 @@ const CancelDialog: FC<Props> = (({
           setIsSubmitting(false);
           history.push('/');
         },
-        error: (error: string) => {
-          toast(<ToastBody title="Error" message={t('Detail.cancelError')} type="success" />);
+        error: (error) => {
+          toast(<ToastBody title="Error" message={error} type="success" />);
           setIsSubmitting(false);
         },
       },

@@ -47,8 +47,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
 
   const { t } = useTranslation();
   const [opening, setOpening] = useState(false);
-  const [copyshow, oncopyshow] = useState(true);
-  const { hasCopied, onCopy } = useClipboard(address);
+  const { onCopy } = useClipboard(address);
   // const [hideMenu, setHideMenu] = useState(false);
   const toast = useToast();
   const handleCopy = () => {
@@ -354,38 +353,36 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 </Link>
               </Flex>
             </Flex>
-            {copyshow ? (
-              <Flex
-                p="10px"
-                width="332px"
-                flexFlow="wrap"
-                justifyContent="flex-start"
-                alignItems="center"
-                background="#F8F8F9"
-                borderRadius="2px"
+            <Flex
+              p="10px"
+              width="332px"
+              flexFlow="wrap"
+              justifyContent="flex-start"
+              alignItems="center"
+              background="#F8F8F9"
+              borderRadius="2px"
+            >
+              <Text
+                width="312px"
+                fontSize="12px"
+                fontFamily="PingFangSC-Regular, PingFang SC"
+                fontWeight="400"
+                color="#858999"
               >
-                <Text
-                  width="312px"
-                  fontSize="12px"
-                  fontFamily="PingFangSC-Regular, PingFang SC"
-                  fontWeight="400"
-                  color="#858999"
-                >
-                  {address}
-                </Text>
-                <Text
-                  mt="4px"
-                  fontSize="12px"
-                  fontFamily="PingFangSC-Regular, PingFang SC"
-                  fontWeight="400"
-                  color="#5C74FF"
-                  cursor="pointer"
-                  onClick={() => handleCopy()}
-                >
-                  {t('ClickToCopy')}
-                </Text>
-              </Flex>
-            ) : ''}
+                {address}
+              </Text>
+              <Text
+                mt="4px"
+                fontSize="12px"
+                fontFamily="PingFangSC-Regular, PingFang SC"
+                fontWeight="400"
+                color="#5C74FF"
+                cursor="pointer"
+                onClick={() => handleCopy()}
+              >
+                {t('ClickToCopy')}
+              </Text>
+            </Flex>
             <Link
               w="100%"
               textAlign="center"

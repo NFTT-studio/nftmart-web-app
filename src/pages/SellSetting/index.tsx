@@ -1,6 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/no-children-prop */
-/* eslint-disable max-len */
 import React, { useState, MouseEventHandler } from 'react';
 import {
   useFormik,
@@ -57,13 +55,22 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { t } = useTranslation();
   const ButtonArr = [
     {
-      id: 0, title: t('SellSetting.SetPrice'), subtitle: t('SellSetting.Sellatafixedprice'), isDisabled: false,
+      id: 0,
+      title: t('SellSetting.SetPrice'),
+      subtitle: t('SellSetting.Sellatafixedprice'),
+      isDisabled: false,
     },
     {
-      id: 1, title: t('SellSetting.DutchAuction'), subtitle: t('SellSetting.Sellatadecliningprice'), isDisabled: true,
+      id: 1,
+      title: t('SellSetting.DutchAuction'),
+      subtitle: t('SellSetting.Sellatadecliningprice'),
+      isDisabled: true,
     },
     {
-      id: 2, title: t('SellSetting.EnglishAuction'), subtitle: t('SellSetting.Auctiontothehighestbidder'), isDisabled: true,
+      id: 2,
+      title: t('SellSetting.EnglishAuction'),
+      subtitle: t('SellSetting.Auctiontothehighestbidder'),
+      isDisabled: true,
     },
   ];
   const chainState = useAppSelector((state) => state.chain);
@@ -74,8 +81,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { nftId } = match.params;
   const collectionsId = nftId.split('-')[0];
 
-  const { data: nftData, isLoading } = useNft(nftId);
-  const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
+  const { data: nftData } = useNft(nftId);
+  const { data: categoriesData } = useCategories();
   const { data: collectionsData } = useCollectionsSinger(collectionsId);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -111,12 +118,13 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               history.push('/');
             }, 1000);
           },
-          error: (error: string) => {
-            toast(<ToastBody title="Error" message="" type="error" />);
+          error: (error) => {
+            toast(<ToastBody title="Error" message={error} type="error" />);
             setIsSubmitting(false);
           },
         },
       };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       createOrder(orderParams as any);
     },
     validationSchema: schema,

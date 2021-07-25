@@ -1,5 +1,4 @@
-/* eslint-disable max-len */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Flex,
   Container,
@@ -38,7 +37,6 @@ import {
   TWITTER,
   // PriceIcon,
   Historyempty,
-  Offersempty,
   HeadPortrait,
   IconAbout,
   IconPriceHistory,
@@ -102,17 +100,48 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const collectionName = collectionsData?.collection?.metadata?.name;
   const nftName = nftData?.nftInfo?.metadata.name;
 
-  const offerLength = nftData?.nftInfo?.offers.length;
-  const lastOffer = nftData?.nftInfo?.offers[0];
+  const firstOffer = nftData?.nftInfo?.offers[0];
   const ownerId = nftData?.nftInfo?.owner_id;
-  const orderId = lastOffer?.order_id;
-
+  const orderId = firstOffer?.order_id;
+  const hideFlag = false;
   const handleBuy = () => {
     if (!account) {
       history.push(`/connect?callbackUrl=item/${nftId}`);
     }
     setIsShowBuy(true);
   };
+
+  const NoData = (width: string) => (
+    <AccordionPanel p="0px">
+      <Flex
+        width={width}
+        height="260px"
+        background="#FFFFFF"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Image
+          w="150px"
+          h="100px"
+          border="1px solid #999999"
+          borderStyle="dashed"
+          src={Historyempty.default}
+        />
+        <Text
+          mt="10px"
+          fontSize="14px"
+          fontFamily="TTHoves-Regular, TTHoves"
+          fontWeight="400"
+          color="#999999"
+          lineHeight="20px"
+        >
+          No data yet
+        </Text>
+      </Flex>
+    </AccordionPanel>
+  );
+
   return (
     <MainContainer title={t('Detail.title')}>
       {isLoginAddress ? (
@@ -262,7 +291,13 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               />
             </Box>
           </Flex>
-          <Flex width="788px" minHeight="420px" flexDirection="column" justifyContent="flex-start" borderBottom="1px solid #000000">
+          <Flex
+            width="788px"
+            minHeight="420px"
+            flexDirection="column"
+            justifyContent="flex-start"
+            borderBottom="1px solid #000000"
+          >
             <Flex p="0 20px 0 20px" width="100%" h="40px" justifyContent="space-between" alignItems="flex-start">
               <Flex h="18px" alignItems="flex-start">
                 <Text
@@ -695,9 +730,14 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   </Flex>
                   <AccordionIcon />
                 </AccordionButton>
-                {0
+                {hideFlag
                   ? (
-                    <AccordionPanel p="16px 20px 4px 20px" display="flex" flexFlow="row wrap" justifyContent="space-between">
+                    <AccordionPanel
+                      p="16px 20px 4px 20px"
+                      display="flex"
+                      flexFlow="row wrap"
+                      justifyContent="space-between"
+                    >
                       {propertiesArr.map((item) => (
                         <Flex
                           key={item}
@@ -812,7 +852,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   </Flex>
                   <AccordionIcon />
                 </AccordionButton>
-                {0
+                {hideFlag
                   ? (
                     <AccordionPanel p="16px 20px 16px 20px">
                       <Text
@@ -823,11 +863,12 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color="#000000"
                         lineHeight="22px"
                       >
-                        Here is an introduction to the portfolio. If it is a cross-chain NFT asset, a contract is a portfolio.
+                        Here is an introduction to the portfolio.
+                        If it is a cross-chain NFT asset, a contract is a portfolio.
                       </Text>
 
                       <Flex>
-                        {ICON_LIST.map((item, index) => (
+                        {ICON_LIST.map((item) => (
                           <Box
                             key="index"
                             width="40px"
@@ -853,34 +894,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     </AccordionPanel>
                   )
                   : (
-                    <AccordionPanel p="0px">
-                      <Flex
-                        width="100%"
-                        height="260px"
-                        background="#FFFFFF"
-                        flexDirection="column"
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <Image
-                          w="150px"
-                          h="100px"
-                          border="1px solid #999999"
-                          borderStyle="dashed"
-                          src={Historyempty.default}
-                        />
-                        <Text
-                          mt="10px"
-                          fontSize="14px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="20px"
-                        >
-                          No trading data yet
-                        </Text>
-                      </Flex>
-                    </AccordionPanel>
+                    <NoData width="100%" />
                   )}
               </AccordionItem>
             </Accordion>
@@ -922,7 +936,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   </Flex>
                   <AccordionIcon />
                 </AccordionButton>
-                {0
+                {hideFlag
                   ? (
                     <AccordionPanel p="20px">
 
@@ -981,34 +995,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     </AccordionPanel>
                   )
                   : (
-                    <AccordionPanel p="0px">
-                      <Flex
-                        width="788px"
-                        height="260px"
-                        background="#FFFFFF"
-                        flexDirection="column"
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <Image
-                          w="150px"
-                          h="100px"
-                          border="1px solid #999999"
-                          borderStyle="dashed"
-                          src={Historyempty.default}
-                        />
-                        <Text
-                          mt="10px"
-                          fontSize="14px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="20px"
-                        >
-                          No trading data yet
-                        </Text>
-                      </Flex>
-                    </AccordionPanel>
+                    <NoData width="100%" />
                   )}
               </AccordionItem>
               <AccordionItem width="100%" border="none">
@@ -1045,7 +1032,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   </Flex>
                   <AccordionIcon />
                 </AccordionButton>
-                {0
+                {hideFlag
                   ? (
                     <AccordionPanel p="0 20px">
                       <Flex w="100%" flexDirection="column" justifyContent="flex-start">
@@ -1094,8 +1081,15 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           />
 
                         </Flex>
-                        {OfferssArr.map((item, index) => (
-                          <Flex key="index" h="54px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
+                        {OfferssArr.map(() => (
+                          <Flex
+                            key="index"
+                            h="54px"
+                            w="100%"
+                            flexDirection="row"
+                            justifyContent="space-between"
+                            align="center"
+                          >
                             <Text
                               w="136px"
                               textAlign="left"
@@ -1170,35 +1164,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     </AccordionPanel>
                   )
                   : (
-                    <AccordionPanel p="0px">
-                      <Flex
-                        width="788px"
-                        height="260px"
-                        background="#FFFFFF"
-                        flexDirection="column"
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <Image
-                          w="150px"
-                          h="100px"
-                          border="1px solid #999999"
-                          borderStyle="dashed"
-                          src={Offersempty.default}
-                        />
-
-                        <Text
-                          mt="10px"
-                          fontSize="14px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="20px"
-                        >
-                          No trading data yet
-                        </Text>
-                      </Flex>
-                    </AccordionPanel>
+                    <NoData width="788px" />
                   )}
 
               </AccordionItem>
@@ -1241,7 +1207,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 </Flex>
                 <AccordionIcon />
               </AccordionButton>
-              {0
+              {hideFlag
                 ? (
                   <AccordionPanel p="0 20px">
                     <Flex w="100%" flexDirection="column" justifyContent="flex-start">
@@ -1314,8 +1280,15 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         </Text>
 
                       </Flex>
-                      {OfferssUnitArr.map((item, index) => (
-                        <Flex key="index" h="54px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
+                      {OfferssUnitArr.map(() => (
+                        <Flex
+                          key="index"
+                          h="54px"
+                          w="100%"
+                          flexDirection="row"
+                          justifyContent="space-between"
+                          align="center"
+                        >
                           <Text
                             w="136px"
                             textAlign="left"
@@ -1426,8 +1399,26 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             </AccordionItem>
           </Accordion>
         </Flex>
-        {isShowBuy && <BuyDialog isShowBuy={isShowBuy} setIsShowBuy={setIsShowBuy} price={price} logoUrl={logoUrl} nftName={nftName} collectionName={collectionName} orderId={orderId} ownerId={ownerId} />}
-        {isShowCancel && <CancelDialog isShowCancel={isShowCancel} setIsShowCancel={setIsShowCancel} orderId={orderId} nftId={nftId} />}
+        {isShowBuy && (
+          <BuyDialog
+            isShowBuy={isShowBuy}
+            setIsShowBuy={setIsShowBuy}
+            price={price}
+            logoUrl={logoUrl}
+            nftName={nftName}
+            collectionName={collectionName}
+            orderId={orderId}
+            ownerId={ownerId}
+          />
+        )}
+        {isShowCancel && (
+          <CancelDialog
+            isShowCancel={isShowCancel}
+            setIsShowCancel={setIsShowCancel}
+            orderId={orderId}
+            nftId={nftId}
+          />
+        )}
       </Container>
       <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
         <ModalOverlay />
