@@ -27,7 +27,6 @@ import { createClass } from '../../polkaSDK/api/createClass';
 import { useAppSelector } from '../../hooks/redux';
 import MyModal from '../../components/MyModal';
 import MyToast, { ToastBody } from '../../components/MyToast';
-import fetchAccount from '../../api/fetchAccount';
 
 const CreateCollection: FC = () => {
   const { t } = useTranslation();

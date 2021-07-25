@@ -8,15 +8,18 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   AlertDialogCloseButton,
-  useDisclosure,
   Modal,
   ModalOverlay,
 } from '@chakra-ui/react';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+
+import { useHistory } from 'react-router-dom';
 import { takeOrder } from '../../../polkaSDK/api/takeOrder';
 import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
 import { renderBalanceText } from '../../../components/Balance';
+import MyToast, { ToastBody } from '../../../components/MyToast';
 
 interface Props {
   price: string,
@@ -32,6 +35,8 @@ const BuyDialog: FC<Props> = (({
   price, nftName, collectionName, logoUrl, orderId, ownerId, isShowBuy, setIsShowBuy,
 }) => {
   const chainState = useAppSelector((state) => state.chain);
+  const history = useHistory();
+
   const { account } = chainState;
   const { data } = useAccount(account!.address);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,16 +46,24 @@ const BuyDialog: FC<Props> = (({
   const onSubmit = () => {
     setIsSubmitting(true);
     takeOrder({
-      address: account?.address,
+      address: account!.address,
       orderId,
       orderOwner: ownerId,
       cb: {
-        success: () => {
-          alert('success');
+        success: (result) => {
+          if (result.dispatchError) {
+            toast(<ToastBody title="Error" message={t('Detail.buyError')} type="error" />);
+          } else {
+            toast(<ToastBody title="Success" message={t('Detail.buySuccess')} type="success" />);
+            setTimeout(() => {
+              history.push(`/account/${account?.address}/wallet}`);
+            }, 3000);
+          }
           setIsSubmitting(false);
         },
         error: (error: string) => {
-          alert('error');
+          toast(<ToastBody title="Error" message={t('Detail.buyError')} type="error" />);
+          setIsSubmitting(false);
           setIsSubmitting(false);
         },
       },
@@ -264,6 +277,7 @@ const BuyDialog: FC<Props> = (({
           <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
             <ModalOverlay />
           </Modal>
+          <MyToast isCloseable />
         </AlertDialogContent>
       </AlertDialog>
     </>

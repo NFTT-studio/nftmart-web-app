@@ -3,10 +3,15 @@ import PolkaSDK from '..';
 import { txLog } from '../../utils/txLog';
 
 export const takeOrder = async ({
-  address = '', // address of current user
-  orderOwner = '', // owner address
-  orderId = '',
-  cb = { success: () => null, error: (err: any) => err },
+  address, // address of current user
+  orderOwner, // owner address
+  orderId,
+  cb,
+}: {
+  address: string,
+  orderOwner: string,
+  orderId: string,
+  cb: Callback
 }) => {
   try {
     const injector = await web3FromAddress(address);

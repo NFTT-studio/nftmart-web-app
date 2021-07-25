@@ -10,10 +10,13 @@ import {
   Modal,
   ModalOverlay,
 } from '@chakra-ui/react';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+
 import { deleteOrder } from '../../../polkaSDK/api/deleteOrder';
 import { useAppSelector } from '../../../hooks/redux';
+import MyToast, { ToastBody } from '../../../components/MyToast';
 
 interface Props {
   isShowCancel: boolean,
@@ -46,7 +49,7 @@ const CancelDialog: FC<Props> = (({
           history.push('/');
         },
         error: (error: string) => {
-          alert('error');
+          toast(<ToastBody title="Error" message={t('Detail.cancelError')} type="success" />);
           setIsSubmitting(false);
         },
       },
@@ -115,6 +118,7 @@ const CancelDialog: FC<Props> = (({
       <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
         <ModalOverlay />
       </Modal>
+      <MyToast isCloseable />
     </AlertDialog>
   );
 });
