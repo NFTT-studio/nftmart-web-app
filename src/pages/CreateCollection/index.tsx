@@ -27,24 +27,29 @@ import { createClass } from '../../polkaSDK/api/createClass';
 import { useAppSelector } from '../../hooks/redux';
 import MyModal from '../../components/MyModal';
 import MyToast, { ToastBody } from '../../components/MyToast';
+import fetchAccount from '../../api/fetchAccount';
 
 const CreateCollection: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
+
   const { account, whiteList } = chainState;
   const [isShowModal, setIsShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const onCloseModal = () => {
     setIsShowModal(false);
     history.push('/');
   };
+
   useEffect(() => {
     if (!account || whiteList.indexOf(account?.address) < 0) {
       setIsShowModal(true);
     }
   }, [account, whiteList]);
-  const create = useCallback((formValue, cb) => {
+
+  const create = useCallback((formValue, formActions) => {
     createClass({
       address: account!.address,
       metadata: {
@@ -54,9 +59,28 @@ const CreateCollection: FC = () => {
         stub: formValue.stub,
         description: formValue.description,
       },
-      cb,
+      cb: {
+        success: (result: any) => {
+          if (result.dispatchError) {
+            toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
+          } else {
+            toast(<ToastBody title="Success" message={t('Collection.Success')} type="success" />);
+            setTimeout(() => {
+              history.push(`/collection/${account!.address}?collectionId=${result.events[5].event.data[1].toString()}`);
+            }, 3000);
+          }
+
+          setIsSubmitting(false);
+          formActions.resetForm();
+        },
+        error: (error: any) => {
+          toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
+          setIsSubmitting(false);
+          formActions.resetForm();
+        },
+      },
     });
-  }, []);
+  }, [account, t]);
 
   const schema = Yup.object().shape({
     logoUrl: Yup.string().required(t('Collection.Required')),
@@ -77,23 +101,7 @@ const CreateCollection: FC = () => {
     },
     onSubmit: (values, formActions) => {
       setIsSubmitting(true);
-      create(values, {
-        success: (err: any) => {
-          console.log(err);
-          if (err.dispatchError) {
-            toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
-          } else {
-            toast(<ToastBody title="Success" message={t('Collection.Success')} type="success" />);
-          }
-          setIsSubmitting(false);
-          formActions.resetForm();
-        },
-        error: (err: any) => {
-          toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
-          setIsSubmitting(false);
-          formActions.resetForm();
-        },
-      });
+      create(values, formActions);
     },
     validationSchema: schema,
   });

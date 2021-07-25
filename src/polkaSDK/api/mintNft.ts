@@ -1,18 +1,23 @@
 import { web3FromAddress } from '@polkadot/extension-dapp';
 import { bnToBn } from '@polkadot/util';
-// import { noop } from 'react-query/types/core/utils';
 import PolkaSDK from '..';
 import { txLog } from '../../utils/txLog';
 import { nftDeposit } from './nftDeposit';
 
-const noop = () => null;
+type mintNftProps = {
+  address: string,
+  classId: number,
+  metadata: Metadata,
+  quantity: number,
+  cb: Callback
+}
 export const mintNft = async ({
   address = '',
   classId = 0,
-  metadata = {},
+  metadata,
   quantity = 1,
-  cb = { success: noop, error: (err: any) => err },
-}) => {
+  cb,
+}: mintNftProps) => {
   try {
     const injector = await web3FromAddress(address);
     const metadataStr = JSON.stringify(metadata);

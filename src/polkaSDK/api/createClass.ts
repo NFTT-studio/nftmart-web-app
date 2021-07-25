@@ -1,12 +1,10 @@
 import { web3FromAddress } from '@polkadot/extension-dapp';
-// import { noop } from 'react-query/types/core/utils';
 
 import PolkaSDK from '..';
 import { TOKEN_TRANSFERABLE_BURNABLE } from '../../constants';
 import { txLog } from '../../utils/txLog';
 import { ClassMetadata } from '../types/ClassMetadata';
 
-const noop = () => null;
 const defaultClassMetadata: ClassMetadata = {
   logoUrl: '', // class img url of class
   featuredUrl: '', //  url of class
@@ -17,8 +15,8 @@ const defaultClassMetadata: ClassMetadata = {
 export const createClass = async ({
   address = '',
   metadata = defaultClassMetadata,
-  cb = { success: noop, error: (err: any) => err },
-}) => {
+  cb,
+}: { address: string, metadata: ClassMetadata, cb: Callback }) => {
   try {
     const injector = await web3FromAddress(address);
     const { name, description } = metadata;
