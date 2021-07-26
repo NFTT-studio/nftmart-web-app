@@ -675,7 +675,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         display="flex"
                         flexDirection="row"
                       >
-                        {t('Detail.cretedBy')}
+                        {t('Detail.createdBy')}
                         <Link
                           href={`/account/${nftData?.nftInfo?.creator_id}/wallet`}
                           m="0 3px"

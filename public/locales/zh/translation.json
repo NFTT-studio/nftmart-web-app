@@ -84,7 +84,8 @@
     "collection": "创建新作品集",
     "nft": "创建一个新的NFT",
     "required": "必填",
-    "confirmClipping": "确认裁剪"
+    "confirmClipping": "确认裁剪",
+    "changeImage": "改变图片"
   },
   "Browsing": {
     "title": "浏览",
@@ -146,7 +147,7 @@
     "fixedPriceExplain": "*您可以使用固定价格立即购买此商品",
     "cancelDesc": "你想要取消这个订单吗?",
     "buyError": "购买错误",
-    "cretedBy": "创作于",
+    "createdBy": "创作于",
     "buySuccess": "购买成功"
   },
   "SellSetting": {

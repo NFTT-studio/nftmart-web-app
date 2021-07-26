@@ -84,7 +84,8 @@
     "collection": "Create new collection",
     "nft": "Create a new nft",
     "required": "Required",
-    "confirmClipping": "Confirm clipping"
+    "confirmClipping": "Confirm clipping",
+    "changeImage": "Change Image"
   },
   "Browsing": {
     "title": "Browsing",
@@ -146,7 +147,7 @@
     "fixedPriceExplain": "*You can buy this item immediately using Fixed Price",
     "cancelDesc": "Do you want to cancel this order?",
     "buyError": "Buy Error",
-    "cretedBy": "Created by",
+    "createdBy": "Created by",
     "buySuccess": "Buy Success"
   },
   "SellSetting": {

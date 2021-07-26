@@ -87,7 +87,7 @@ const CropperCop: React.FC<INavProps> = (props) => {
         color={Colors.Success}
         onClick={getCropData}
       >
-        {t('Create.Confirmclipping')}
+        {t('Collection.confirmClipping')}
       </Text>
     </Box>
   );
@@ -120,7 +120,7 @@ const Upload: FC<UploadProps> = ({
   const [value, setValue] = useState(valueFromProp?.url || '');
   const [isLoading, setLoadingStatus] = useState(false);
   const [imgName, setImgName] = useState('');
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [showCrop, setShowCrop] = useState(false);
   const [fileUrl, setFileUrl] = useState('');
   const [progresses, setProgresses] = useState(0);
@@ -299,7 +299,28 @@ const Upload: FC<UploadProps> = ({
       ) : (
         <Box>
           {value ? (
-            <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />
+            <>
+              <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />
+
+              <FormLabel htmlFor="changeId">
+                <Text
+                  fontSize="14px"
+                  lineHeight="47px"
+                  cursor="pointer"
+                  color={Colors.Success}
+                  onclick={() => setFile(null)}
+                >
+                  {t('Collection.changeImage')}
+                </Text>
+              </FormLabel>
+              <Input
+                id="changeId"
+                display="none"
+                type="file"
+                onChange={captureFile}
+                {...rest}
+              />
+            </>
           ) : (
             <Box>
               {file ? (
@@ -343,11 +364,7 @@ const Upload: FC<UploadProps> = ({
           id={id}
           display="none"
           type="file"
-          // onClick={(e) => {
-          //   if (e) {
-          //     e.stopPropagation();
-          //   }
-          // }}
+          disabled={value}
           onChange={captureFile}
           {...rest}
         />
