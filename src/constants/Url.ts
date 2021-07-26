@@ -1,5 +1,3 @@
-import { statusArr } from './Status';
-
 export const NODE_URL = 'wss://staging-ws.nftmart.io';
 export const PINATA_POST_SERVER = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
 export const POLKADOT_EXTENSION = 'https://polkadot.js.org/extension/';
@@ -15,45 +13,6 @@ export const UPLOAD_PINATA_SERVER = 'https://gateway.pinata.cloud/ipfs/';
 // eslint-disable-next-line max-len
 export const UPLOAD_OWN_SERVER = 'https://ipfs-api.bcdata.top/api/v0/add?stream-channels=true&pin=true&progress=true&wrap-with-directory=false';
 export const EXPLORER_URL = 'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fstaging-ws.nftmart.io#/accounts';
-
-export const NAV_MAP = [
-  {
-    title: 'common.nav.navHome',
-    path: '/',
-    requiredLogin: false,
-    requiredWhitelist: false,
-  },
-  {
-    title: 'common.nav.navBrowsing',
-    path: '/browsing',
-    requiredLogin: false,
-    requiredWhitelist: false,
-  },
-  {
-    title: 'common.nav.navListSale',
-    path: `/browsing?status=${statusArr[2]}`,
-    requiredLogin: false,
-    requiredWhitelist: false,
-  },
-  {
-    title: 'common.nav.navAuction',
-    path: `/browsing?status=${statusArr[1]}`,
-    requiredLogin: false,
-    requiredWhitelist: false,
-  },
-  // {
-  //   title: 'common.nav.navActive',
-  //   path: '/active',
-  //   requiredLogin: false,
-  //   requiredWhitelist: false,
-  // },
-  {
-    title: 'common.nav.navCreate',
-    path: '/profile/collection/create',
-    requiredLogin: true,
-    requiredWhitelist: true,
-  },
-];
 
 // online
 

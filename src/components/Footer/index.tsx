@@ -63,10 +63,10 @@ export default function Footer() {
         alignItems="center"
       >
         <Box maxW="80%" minW="40%" display="flex" flexFlow="row" mr="20px">
-          <Text lineHeight="20px" fontWeight="500" fontSize="14px" color="#61688A" mr="15px">
+          <Text lineHeight="20px" fontWeight="500" fontSize="14px" color="#999" mr="15px">
             © 2021 NFTMart
           </Text>
-          <Text color="#C7CCE6" fontSize="14px">
+          <Text color="#FFF" fontSize="14px">
             {t('Footer.PrivacyPolicy')}
           </Text>
         </Box>

@@ -56,7 +56,7 @@ const ChangeLanguage = (): JSX.Element => {
     >
       <PopoverTrigger>
         <Stack direction="row" cursor="pointer" alignItems="center" spacing={0}>
-          <Text pr="3px">{t(TRANSLATIONS[lang])}</Text>
+          <Text pr="3px" color="#999">{t(TRANSLATIONS[lang])}</Text>
           {opening ? (
             <Image
               width="12px"

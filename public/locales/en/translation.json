@@ -116,6 +116,7 @@
     "confirmClipping": "Confirm clipping"
   },
   "Detail": {
+    "Sell": "Sell",
     "title": "Detail",
     "Detail": "Detail",
     "properties": "Properties",
@@ -145,6 +146,7 @@
     "fixedPriceExplain": "*You can buy this item immediately using Fixed Price",
     "cancelDesc": "Do you want to cancel this order?",
     "buyError": "Buy Error",
+    "cretedBy": "Created by",
     "buySuccess": "Buy Success"
   },
   "SellSetting": {

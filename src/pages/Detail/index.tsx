@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { RouteComponentProps, useHistory, Link as RouterLink } from 'react-router-dom';
 import MainContainer from '../../layout/MainContainer';
 import PriceHistoryChart from './PriceHistoryChart';
 import CancelDialog from './CancelDialog';
@@ -124,7 +124,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         <Image
           w="150px"
           h="100px"
-          border="1px solid #999999"
           borderStyle="dashed"
           src={Historyempty.default}
         />
@@ -180,7 +179,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                       onClick={() => setIsShowCancel(true)}
                     >
-                      {t('Detail.Cancel')}
+                      {t('Detail.cancel')}
                     </Button>
                     {/* <Button
                       ml="10px"
@@ -241,7 +240,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                       onClick={() => history.push(`/sellSetting/${nftId}`)}
                     >
-                      {t('Detail.Setting')}
+                      {t('Detail.Sell')}
                     </Button>
                   </Flex>
                 </Flex>
@@ -298,23 +297,29 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             justifyContent="flex-start"
             borderBottom="1px solid #000000"
           >
+
             <Flex p="0 20px 0 20px" width="100%" h="40px" justifyContent="space-between" alignItems="flex-start">
-              <Flex h="18px" alignItems="flex-start">
-                <Text
-                  fontSize="14px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  color="#000000"
-                >
-                  {collectionName}
-                </Text>
-                <Image
-                  ml="4px"
-                  w="18px"
-                  h="18px"
-                  src={IconDetailsocllections.default}
-                />
-              </Flex>
+              <Link
+                as={RouterLink}
+                to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
+              >
+                <Flex h="18px" alignItems="flex-start">
+                  <Text
+                    fontSize="14px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#000000"
+                  >
+                    {collectionName}
+                  </Text>
+                  <Image
+                    ml="4px"
+                    w="18px"
+                    h="18px"
+                    src={IconDetailsocllections.default}
+                  />
+                </Flex>
+              </Link>
               {/* <Flex>
                 <Box
                   width="40px"
@@ -400,7 +405,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   color="#000000"
                   lineHeight="16px"
                 >
-                  {t('Detail.Ownedby')}
+                  {t('Detail.ownedBy')}
                   <Link
                     href={`/account/${nftData?.nftInfo?.owner_id}/wallet`}
                     color="#3D00FF"
@@ -670,7 +675,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         display="flex"
                         flexDirection="row"
                       >
-                        Creted
+                        {t('Detail.cretedBy')}
                         <Link
                           href={`/account/${nftData?.nftInfo?.creator_id}/wallet`}
                           m="0 3px"
@@ -696,7 +701,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   </Text>
                 </AccordionPanel>
               </AccordionItem>
-              <AccordionItem width="100%" border="none">
+              {/* <AccordionItem width="100%" border="none">
                 <AccordionButton
                   height="62px"
                   width="100%"
@@ -725,7 +730,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       color="#000000"
                       lineHeight="18px"
                     >
-                      {t('Detail.Properties')}
+                      {t('Detail.properties')}
                     </Text>
                   </Flex>
                   <AccordionIcon />
@@ -815,7 +820,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     </AccordionPanel>
                   )}
 
-              </AccordionItem>
+              </AccordionItem> */}
               <AccordionItem width="100%" border="none">
                 <AccordionButton
                   height="62px"
@@ -845,9 +850,9 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       color="#000000"
                       lineHeight="18px"
                     >
-                      {t('Detail.About')}
+                      {t('Detail.about')}
                       {' '}
-                      BeSide
+                      {collectionName}
                     </Text>
                   </Flex>
                   <AccordionIcon />
@@ -1390,7 +1395,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color="#999999"
                         lineHeight="20px"
                       >
-                        No trading data yet
+                        No offers data yet
                       </Text>
                     </Flex>
                   </AccordionPanel>

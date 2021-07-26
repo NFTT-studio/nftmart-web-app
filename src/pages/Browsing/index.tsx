@@ -117,7 +117,7 @@ const Browsing = () => {
         >
           <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="2px">
             <Box as="img" src={IconAllState.default} alt="" w="22px" h="22px" mr="8px" />
-            <Text>{t('Browsing.Status')}</Text>
+            <Text>{t('Browsing.status')}</Text>
           </Flex>
 
           <Flex width="100%" flexFlow="wrap" justifyContent="space-between">
@@ -125,7 +125,7 @@ const Browsing = () => {
           </Flex>
           <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 12px 0">
             <Box as="img" src={IconAllStateone.default} alt="" w="22px" h="22px" mr="8px" />
-            <Text>{t('Browsing.Collections')}</Text>
+            <Text>{t('Browsing.collections')}</Text>
           </Flex>
           <InputGroup
             variant="unstyled"

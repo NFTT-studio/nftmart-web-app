@@ -228,11 +228,11 @@ const Upload: FC<UploadProps> = ({
     if (valueFromProp.url !== !!valueFromProp.url) {
       setValue(valueFromProp.url as string);
     }
-  }, [valueFromProp.url]);
+  }, []);
 
   useEffect(() => {
     if (onChange) onChange(value);
-  }, [onChange, value]);
+  }, [value]);
 
   useEffect(() => {
     if (!file) {
