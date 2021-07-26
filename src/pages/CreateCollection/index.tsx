@@ -184,7 +184,7 @@ const CreateCollection: FC = () => {
           w="600px"
           justifyContent="center"
         >
-          <SubmitButton text={t('Collection.submit')} isSubmitting={isSubmitting} />
+          <SubmitButton text={t('common.save')} isSubmitting={isSubmitting} />
         </Flex>
       </form>
       <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>

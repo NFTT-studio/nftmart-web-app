@@ -5,13 +5,55 @@ import {
   Box,
 } from '@chakra-ui/react';
 import NLink from '../Link';
-import { NAV_MAP } from '../../constants';
+import { statusArr } from '../../constants/Status';
 import { useAppSelector } from '../../hooks/redux';
+import useAccount from '../../hooks/reactQuery/useAccount';
 
 const NavLink = () => {
   const location = useLocation();
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
+
+  const { data } = useAccount(account?.address);
+
+  const NAV_MAP = [
+    {
+      title: 'common.nav.navHome',
+      path: '/',
+      requiredLogin: false,
+      requiredWhitelist: false,
+    },
+    {
+      title: 'common.nav.navBrowsing',
+      path: '/browsing',
+      requiredLogin: false,
+      requiredWhitelist: false,
+    },
+    {
+      title: 'common.nav.navListSale',
+      path: `/browsing?status=${statusArr[2]}`,
+      requiredLogin: false,
+      requiredWhitelist: false,
+    },
+    {
+      title: 'common.nav.navAuction',
+      path: `/browsing?status=${statusArr[1]}`,
+      requiredLogin: false,
+      requiredWhitelist: false,
+    },
+    // {
+    //   title: 'common.nav.navActive',
+    //   path: '/active',
+    //   requiredLogin: false,
+    //   requiredWhitelist: false,
+    // },
+    {
+      title: 'common.nav.navCreate',
+      path: data?.createdClassCount ? `/account/${account?.address}/wallet?id=1` : '/profile/collection/create',
+      requiredLogin: true,
+      requiredWhitelist: true,
+    },
+  ];
   let filteredNav = NAV_MAP;
 
   if (!account) {
@@ -23,7 +65,6 @@ const NavLink = () => {
       {filteredNav.map((nav, index) => {
         const routePath = location.pathname + location.search;
         const active = routePath === nav.path;
-
         return (
           <Fragment key={nav.title}>
             <NLink

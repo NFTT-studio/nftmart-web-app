@@ -113,12 +113,12 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
       <Portal>
         {/* TODO: Move focus property else where to have common use */}
         <PopoverContent
-          mt="12px"
           width="372px"
+          mt="12px"
           _focus={{ boxShadow: 'none' }}
           outline="none"
-          position="relative"
-          right="110px"
+          position="absolute"
+          right="-79px"
           boxShadow="0px 0px 6px 0px rgba(0, 0, 0, 0.16)"
         >
           <PopoverArrow left="121px !important" />
@@ -139,7 +139,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="blod"
                     color="#191A24"
                   >
-                    {t('Balance')}
+                    {t('common.balance')}
                   </Text>
                 </Flex>
                 <Text
@@ -179,7 +179,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="blod"
                     color="#191A24"
                   >
-                    {t('quickAreaOwned')}
+                    {t('header.quickArea.owned')}
                   </Text>
                 </Flex>
                 <Text
@@ -209,7 +209,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   textDecoration: 'none',
                 }}
               >
-                {t('Buy')}
+                {t('common.buy')}
               </Link>
             </Flex>
 
@@ -228,7 +228,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="blod"
                     color="#191A24"
                   >
-                    {t('quickAreaCreated')}
+                    {t('header.quickArea.created')}
                   </Text>
                 </Flex>
                 <Text
@@ -258,7 +258,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   textDecoration: 'none',
                 }}
               >
-                {t('Add')}
+                {t('common.add')}
               </Link>
             </Flex>
 
@@ -277,7 +277,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="blod"
                     color="#191A24"
                   >
-                    {t('quickAreaCollections')}
+                    {t('header.quickArea.collections')}
                   </Text>
                 </Flex>
                 <Text
@@ -307,7 +307,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   textDecoration: 'none',
                 }}
               >
-                {t('Add')}
+                {t('common.add')}
               </Link>
             </Flex>
 
@@ -325,9 +325,8 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontFamily="PingFangSC-Regular, PingFang SC"
                     fontWeight="blod"
                     color="#191A24"
-
                   >
-                    {t('Address')}
+                    {t('common.address')}
                   </Text>
 
                 </Flex>
@@ -349,7 +348,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   }}
                   open
                 >
-                  {t('ViewInScan')}
+                  {t('header.viewInScan')}
                 </Link>
               </Flex>
             </Flex>
@@ -380,7 +379,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 cursor="pointer"
                 onClick={() => handleCopy()}
               >
-                {t('ClickToCopy')}
+                {t('header.clickToCopy')}
               </Text>
             </Flex>
             <Link
@@ -396,7 +395,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               to="/connect"
               onClick={() => setOpening(false)}
             >
-              {t('switchAccounts')}
+              {t('header.switchAccounts')}
             </Link>
 
           </PopoverBody>

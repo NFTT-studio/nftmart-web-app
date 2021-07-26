@@ -56,20 +56,20 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const ButtonArr = [
     {
       id: 0,
-      title: t('SellSetting.SetPrice'),
-      subtitle: t('SellSetting.Sellatafixedprice'),
+      title: t('SellSetting.setPrice'),
+      subtitle: t('SellSetting.sellAtaFixedPrice'),
       isDisabled: false,
     },
     {
       id: 1,
-      title: t('SellSetting.DutchAuction'),
-      subtitle: t('SellSetting.Sellatadecliningprice'),
+      title: t('SellSetting.dutchAuction'),
+      subtitle: t('SellSetting.sellAtaDecliningPrice'),
       isDisabled: true,
     },
     {
       id: 2,
-      title: t('SellSetting.EnglishAuction'),
-      subtitle: t('SellSetting.Auctiontothehighestbidder'),
+      title: t('SellSetting.englishAuction'),
+      subtitle: t('SellSetting.auctionToTheHighestBidder'),
       isDisabled: true,
     },
   ];
@@ -115,7 +115,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setIsSubmitting(false);
             formAction.resetForm();
             setTimeout(() => {
-              history.push('/');
+              history.push(`/item/${nftData?.nftInfo?.id}`);
             }, 1000);
           },
           error: (error) => {
@@ -290,7 +290,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     color="#000000"
                     lineHeight="18px"
                   >
-                    {t('SellSetting.SetPrice')}
+                    {t('SellSetting.setPrice')}
                   </Text>
                   <Text
                     mt="8px"
@@ -300,7 +300,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     color="#858999"
                     lineHeight="14px"
                   >
-                    {t('SellSetting.PriceExplain')}
+                    {t('SellSetting.priceExplain')}
                   </Text>
                 </Flex>
                 <InputGroup
@@ -309,21 +309,36 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   background="#FFFFFF"
                   borderRadius="4px"
                   border="1px solid #E5E5E5"
+                  _focus={{
+                    boxShadow: 'none',
+
+                  }}
                 >
                   <Input
                     id="price"
                     name="price"
                     value={formik.values.price}
                     onChange={formik.handleChange}
-                    fontSize="12px"
+                    fontSize="16px"
                     fontFamily="TTHoves-Regular, TTHoves"
                     fontWeight="400"
-                    color="#999999"
                     lineHeight="14px"
+                    color="#000000"
                     _focus={{
                       boxShadow: 'none',
+                      color: '#000000',
+                      border: '1px solid #000000',
                     }}
-                    placeholder={t('SellSetting.Price')}
+                    _after={{
+                      boxShadow: 'none',
+                      color: '#000000',
+                      border: '1px solid #000000',
+                    }}
+                    placeholder={t('SellSetting.price')}
+                    _placeholder={{
+                      color: '#999999',
+                      fontSize: '12px',
+                    }}
                   />
                   <InputRightAddon
                     width="72px"

@@ -116,6 +116,7 @@
     "ConfirmClipping": "确认裁剪"
   },
   "Detail": {
+    "Sell": "上架出售",
     "title": "作品信息",
     "detail": "作品信息",
     "properties": "特性",
@@ -145,6 +146,7 @@
     "fixedPriceExplain": "*您可以使用固定价格立即购买此商品",
     "cancelDesc": "你想要取消这个订单吗?",
     "buyError": "购买错误",
+    "cretedBy": "创作于",
     "buySuccess": "购买成功"
   },
   "SellSetting": {

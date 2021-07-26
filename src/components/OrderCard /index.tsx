@@ -35,6 +35,7 @@ const NftCard: FC<NftCardProps> = ({
       backgroundColor="#fff"
       borderRadius="4px"
       cursor="pointer"
+      marginTop="5px"
       _hover={{ boxShadow: 'lg' }}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
@@ -49,16 +50,15 @@ const NftCard: FC<NftCardProps> = ({
             style: {
               width: '260px',
               height: '195px',
-              borderBottom: '1px solid #000000',
               display: 'flex',
               justifyContent: 'center',
             },
           }}
           style={{
-            objectFit: 'contain',
-            maxWidth: '100%',
+            objectFit: 'cover',
+            width: '100%',
             maxHeight: '100%',
-            borderRadius: '5px',
+            borderRadius: '4px 4px 0 0 ',
           }}
           src={IPFS_URL + nft?.metadata.logoUrl}
           effect="none"
@@ -66,7 +66,7 @@ const NftCard: FC<NftCardProps> = ({
           fadeIn
         />
       )}
-      <Box h="115px" display="flex" flexDirection="column" backgroundColor="#000000">
+      <Box borderRadius="0 0 4px 4px" h="115px" display="flex" flexDirection="column" backgroundColor="#000000">
         <Box
           mt="16px"
           display="flex"

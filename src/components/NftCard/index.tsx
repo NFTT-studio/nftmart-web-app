@@ -64,7 +64,7 @@ const NftCard: FC<NftCardProps> = ({
           fadeIn
         />
       )}
-      <Box h="115px" display="flex" flexDirection="column" backgroundColor="#000000">
+      <Box borderRadius="0 0 4px 4px" h="115px" display="flex" flexDirection="column" backgroundColor="#000000">
         <Box
           mt="16px"
           display="flex"
