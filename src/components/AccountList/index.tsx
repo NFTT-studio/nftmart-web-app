@@ -6,7 +6,7 @@ import { encodeAddress } from '@polkadot/util-crypto';
 import { SelectIcon } from '../../assets/icons';
 import { Colors } from '../../constants';
 import useAccount from '../../hooks/reactQuery/useAccount';
-import { renderBalanceText } from '../Balance';
+import { renderBalanceFreeText, renderBalanceText } from '../Balance';
 
 interface AccountProps {
   handleClick: (index: number) => Promise<void>;
@@ -38,8 +38,10 @@ const Account = ({
             <Text fontWeight="medium">{InjectedAccountList[index].meta.name}</Text>
             {data.address ? <Text color={Colors.TextGray}>{encodeAddress(data.address, 50)}</Text> : null}
           </Box>
-          {data && renderBalanceText(data.balance.free)}
-          <Box display="inline-block" as="img" src={SelectIcon.default} w="32px" h="32px" />
+          <Box display="inline-flex" alignItems="center">
+            {data && renderBalanceFreeText(data.balance.free)}
+            <Box display="inline-block" as="img" src={SelectIcon.default} w="32px" h="32px" />
+          </Box>
         </Box>
       )}
       {index !== length - 1 && <Divider />}

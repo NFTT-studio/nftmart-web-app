@@ -2,7 +2,7 @@ import { bnToBn } from '@polkadot/util';
 import { unit as UnitBn } from '../polkaSDK/utils/unit';
 import { toBigNumber } from './bigNumber';
 
-const baseOptions = [
+export const baseOptions = [
   { power: 0, text: 'TEST', value: '-' },
   { power: 3, text: 'Kilo', value: 'k' },
   { power: 6, text: 'Mill', value: 'M' },

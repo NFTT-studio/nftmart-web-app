@@ -15,7 +15,7 @@ import { map } from 'ramda';
 import { useTranslation } from 'react-i18next';
 
 import { Colors } from '../../constants';
-import { parseMoneyText } from '../../utils/format';
+import { baseOptions, parseMoneyText } from '../../utils/format';
 
 export interface BalanceType {
   feeFrozen: string;
@@ -38,6 +38,27 @@ export const renderBalanceText = (balanceText: string) => {
       </Text>
       <Text fontSize="sm" color={Colors.TextGray} marginRight={1}>
         {decimal}
+      </Text>
+      <Text fontSize="sm" color={Colors.Primary}>
+        {unit}
+      </Text>
+    </Flex>
+  );
+};
+
+export const renderBalanceFreeText = (balanceText: string) => {
+  if (!balanceText || typeof balanceText !== 'string') return null;
+  const capBalanceText = balanceText.toUpperCase();
+  const [amount, unit] = capBalanceText.split(' ');
+  const [integer, decimal] = amount.toString().split('.');
+  return (
+    <Flex display="inline-flex">
+      <Text fontSize="sm" fontWeight="bold" color={Colors.Primary}>
+        {integer}
+        {decimal ? '.' : ''}
+      </Text>
+      <Text fontSize="sm" color={Colors.TextGray} marginRight={1}>
+        {decimal && decimal.substring(0, 1)}
       </Text>
       <Text fontSize="sm" color={Colors.Primary}>
         {unit}
