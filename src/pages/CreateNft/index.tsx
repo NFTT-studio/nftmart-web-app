@@ -106,7 +106,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   });
 
   return (
-    <MainContainer title={t('Collection.title')}>
+    <MainContainer title={t('Create.title')}>
       <Flex
         w="100%"
         h="80px"

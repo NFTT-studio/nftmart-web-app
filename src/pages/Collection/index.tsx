@@ -89,7 +89,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
     );
   }
   return (
-    <MainContainer title={t('Collection.title')}>
+    <MainContainer title={`${collectionsData?.collection?.metadata.name}${t('Collection.title')}`}>
       {isPerson ? (
         <Flex
           w="100vw"

@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import {
   Popover,
   PopoverTrigger,
@@ -44,7 +44,7 @@ const ICONS = {
 };
 const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
   const { data } = useAccount(address);
-
+  const history = useHistory();
   const { t } = useTranslation();
   const [opening, setOpening] = useState(false);
   const { onCopy } = useClipboard(address);
@@ -122,10 +122,16 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
           boxShadow="0px 0px 6px 0px rgba(0, 0, 0, 0.16)"
         >
           <PopoverArrow left="121px !important" />
-          <PopoverBody display="flex" flexFlow="wrap" p="20px">
+          <PopoverBody display="flex" flexFlow="wrap" justifyContent="center" p="20px 0">
 
-            <Flex width="100%" height="48px" justifyContent="space-between" alignItems="center">
-              <Flex width="100%" justifyContent="space-between" mr="31px">
+            <Flex
+              width="100%"
+              height="48px"
+              justifyContent="space-between"
+              alignItems="center"
+              p="0 20px"
+            >
+              <Flex width="100%" justifyContent="space-between">
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
@@ -146,7 +152,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   fontSize="14px"
                   fontFamily="PingFangSC-Regular, PingFang SC"
                   fontWeight="400"
-                  color="#858999"
+                  color="#191A24"
                 >
                   {data && renderBalanceText(data!.balance.free)}
                 </Text>
@@ -154,18 +160,150 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               <Text
                 width="47px"
                 textAlign="right"
-                ml="32px"
+                ml="12px"
                 fontSize="16px"
                 fontFamily="PingFangSC-Medium, PingFang SC"
                 fontWeight="500"
                 color="#858999"
               >
-                {/* NMT */}
+                NMT
+              </Text>
+            </Flex>
+            <Flex
+              width="100%"
+              height="16px"
+              justifyContent="space-between"
+              alignItems="center"
+              p="0 20px"
+            >
+              <Flex width="100%" justifyContent="space-between">
+                <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                  <Text
+                    ml="22px"
+                    fontSize="14px"
+                    fontFamily="PingFangSC-Regular, PingFang SC"
+                    fontWeight="blod"
+                    color="#999999"
+                  >
+                    {t('Account.transferrable')}
+                  </Text>
+                </Flex>
+                <Text
+                  fontSize="14px"
+                  fontFamily="PingFangSC-Regular, PingFang SC"
+                  fontWeight="400"
+                  color="#999999"
+                >
+                  {data && renderBalanceText(data!.balance.feeFrozen)}
+                </Text>
+              </Flex>
+              <Text
+                width="47px"
+                textAlign="right"
+                ml="12px"
+                fontSize="16px"
+                fontFamily="PingFangSC-Medium, PingFang SC"
+                fontWeight="500"
+                color="#999999"
+              >
+                NMT
+              </Text>
+            </Flex>
+            <Flex
+              m="10px 0"
+              width="100%"
+              height="16px"
+              justifyContent="space-between"
+              alignItems="center"
+              p="0 20px"
+            >
+              <Flex width="100%" justifyContent="space-between">
+                <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                  <Text
+                    ml="22px"
+                    fontSize="14px"
+                    fontFamily="PingFangSC-Regular, PingFang SC"
+                    fontWeight="blod"
+                    color="#999999"
+                  >
+                    {t('Account.loched')}
+                  </Text>
+                </Flex>
+                <Text
+                  fontSize="14px"
+                  fontFamily="PingFangSC-Regular, PingFang SC"
+                  fontWeight="400"
+                  color="#999999"
+                >
+                  {data && renderBalanceText(data!.balance.reserved)}
+                </Text>
+              </Flex>
+              <Text
+                width="47px"
+                textAlign="right"
+                ml="12px"
+                fontSize="16px"
+                fontFamily="PingFangSC-Medium, PingFang SC"
+                fontWeight="500"
+                color="#999999"
+              >
+                NMT
+              </Text>
+            </Flex>
+            <Flex
+              width="100%"
+              height="16px"
+              justifyContent="space-between"
+              alignItems="center"
+              p="0 20px"
+            >
+              <Flex width="100%" justifyContent="space-between">
+                <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                  <Text
+                    ml="22px"
+                    fontSize="14px"
+                    fontFamily="PingFangSC-Regular, PingFang SC"
+                    fontWeight="blod"
+                    color="#999999"
+                  >
+                    {t('Account.bonded')}
+                  </Text>
+                </Flex>
+                <Text
+                  fontSize="14px"
+                  fontFamily="PingFangSC-Regular, PingFang SC"
+                  fontWeight="400"
+                  color="#999999"
+                >
+                  {data && renderBalanceText(data!.balance.feeFrozen)}
+                </Text>
+              </Flex>
+              <Text
+                width="47px"
+                textAlign="right"
+                ml="12px"
+                fontSize="16px"
+                fontFamily="PingFangSC-Medium, PingFang SC"
+                fontWeight="500"
+                color="#999999"
+              >
+                NMT
               </Text>
             </Flex>
 
-            <Flex width="100%" height="48px" justifyContent="space-between" alignItems="center">
-              <Flex width="100%" justifyContent="space-between" mr="31px">
+            <Flex
+              cursor="pointer"
+              width="100%"
+              height="48px"
+              justifyContent="space-between"
+              alignItems="center"
+              p="0 20px"
+              _hover={{
+                background: '#F9F9F9',
+              }}
+              onClick={() => history.push(`/account/${address}/wallet?id=0`)}
+            >
+              <Flex width="100%" justifyContent="space-between" mr="12px">
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
@@ -196,7 +334,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 to={`/browsing?status=${statusArr[0]}`}
                 width="47px"
                 textAlign="right"
-                ml="34px"
+                ml="12px"
                 fontSize="16px"
                 fontFamily="PingFangSC-Medium, PingFang SC"
                 fontWeight="500"
@@ -213,8 +351,19 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Link>
             </Flex>
 
-            <Flex width="100%" height="48px" justifyContent="space-between" alignItems="center">
-              <Flex width="100%" justifyContent="space-between" mr="31px">
+            <Flex
+              cursor="pointer"
+              width="100%"
+              height="48px"
+              justifyContent="space-between"
+              alignItems="center"
+              p="0 20px"
+              _hover={{
+                background: '#F9F9F9',
+              }}
+              onClick={() => history.push(`/account/${address}/wallet?id=1`)}
+            >
+              <Flex width="100%" justifyContent="space-between" mr="12px">
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
@@ -242,10 +391,10 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Flex>
               <Link
                 as={RouterLink}
-                to={`/account/${address}/wallet`}
+                to={`/account/${address}/wallet?id=1`}
                 width="47px"
                 textAlign="right"
-                ml="34px"
+                ml="12px"
                 fontSize="16px"
                 fontFamily="PingFangSC-Medium, PingFang SC"
                 fontWeight="500"
@@ -262,8 +411,19 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Link>
             </Flex>
 
-            <Flex width="100%" height="48px" justifyContent="space-between" alignItems="center">
-              <Flex width="100%" justifyContent="space-between" mr="31px">
+            <Flex
+              cursor="pointer"
+              width="100%"
+              height="48px"
+              justifyContent="space-between"
+              alignItems="center"
+              p="0 20px"
+              _hover={{
+                background: '#F9F9F9',
+              }}
+              onClick={() => history.push(`/account/${address}/wallet?id=2`)}
+            >
+              <Flex width="100%" justifyContent="space-between" mr="12px">
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
@@ -291,10 +451,10 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Flex>
               <Link
                 as={RouterLink}
-                to={`/account/${data!.address}/wallet?id=1`}
+                to={`/account/${data!.address}/wallet?id=2`}
                 width="47px"
                 textAlign="right"
-                ml="34px"
+                ml="12px"
                 fontSize="16px"
                 fontFamily="PingFangSC-Medium, PingFang SC"
                 fontWeight="500"
@@ -311,7 +471,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Link>
             </Flex>
 
-            <Flex width="100%" height="48px" justifyContent="space-between" alignItems="center">
+            <Flex width="100%" height="48px" justifyContent="space-between" alignItems="center" p="0 20px">
               <Flex width="100%" justifyContent="space-between">
                 <Flex justifyContent="flex-start" alignItems="center">
                   <Image
@@ -353,13 +513,13 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Flex>
             </Flex>
             <Flex
-              p="10px"
               width="332px"
               flexFlow="wrap"
               justifyContent="flex-start"
               alignItems="center"
               background="#F8F8F9"
               borderRadius="2px"
+              p="10px"
             >
               <Text
                 width="312px"

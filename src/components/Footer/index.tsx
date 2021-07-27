@@ -45,7 +45,7 @@ export default function Footer() {
   return (
     <Box
       as="footer"
-      flex={1}
+      width="100vw"
       display="flex"
       justifyContent="center"
       minHeight="92px"
@@ -55,12 +55,13 @@ export default function Footer() {
     >
       <Flex
         p="0"
-        width="100%"
         maxWidth="1364px"
+        minWidth="1364px"
         display="flex"
         flexWrap="wrap"
         justifyContent="space-between"
         alignItems="center"
+        backgroundColor="#191A24"
       >
         <Box maxW="80%" minW="40%" display="flex" flexFlow="row" mr="20px">
           <Text lineHeight="20px" fontWeight="500" fontSize="14px" color="#999" mr="15px">

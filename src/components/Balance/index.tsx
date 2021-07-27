@@ -32,15 +32,12 @@ export const renderBalanceText = (balanceText: string) => {
 
   return (
     <Flex display="inline-flex">
-      <Text fontSize="sm" fontWeight="bold" color={Colors.Primary}>
+      <Text fontSize="sm" fontWeight="bold">
         {integer}
         {decimal ? '.' : ''}
       </Text>
-      <Text fontSize="sm" color={Colors.TextGray} marginRight={1}>
+      <Text fontSize="sm" fontWeight="bold">
         {decimal}
-      </Text>
-      <Text fontSize="sm" color={Colors.Primary}>
-        {unit}
       </Text>
     </Flex>
   );

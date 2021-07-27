@@ -35,6 +35,8 @@ import {
   IconWalletS,
   IconDetailsocllectionsS,
   HeadPortrait,
+  IconCreate,
+  IconCreateS,
 } from '../../assets/images';
 import {
   PINATA_SERVER,
@@ -62,6 +64,12 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     // },
     {
       id: '1',
+      icon: IconCreate.default,
+      iconS: IconCreateS.default,
+      title: t('Account.Created'),
+    },
+    {
+      id: '2',
       icon: IconDetailsocllections.default,
       iconS: IconDetailsocllectionsS.default,
       title: t('Account.collections'),
@@ -379,7 +387,117 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               </Container>
             </TabPanel>
           ) : ''}
+          {selectTabId === 1 ? (
+            <TabPanel>
+              <Container mt="40px" display="flex">
+                <Flex
+                  w="260px"
+                  h="492px"
+                  flexDirection="column"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  background="#F9F9F9"
+                  borderRadius="4px"
+                  p="20px"
+                  border="1px solid #F9F9F9"
+                  mr="16px"
+                >
+                  <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="2px">
+                    <Box as="img" src={IconAllState.default} alt="" w="22px" h="22px" mr="8px" />
+                    <Text>{t('Browsing.status')}</Text>
+                  </Flex>
 
+                  <Flex width="100%" flexFlow="wrap" justifyContent="space-between">
+                    <StatusSelector
+                      statusArr={statusArr}
+                      selectedArr={selectedStatusArr}
+                      handleSelect={handleSelectStatus}
+                    />
+                  </Flex>
+                  <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 12px 0">
+                    <Box as="img" src={IconAllStateone.default} alt="" w="22px" h="22px" mr="8px" />
+                    <Text>{t('Browsing.collections')}</Text>
+                  </Flex>
+                  <InputGroup
+                    variant="unstyled"
+                    width="220px"
+                    height="40px"
+                    background="#FFFFFF"
+                    borderRadius="4px"
+                    border="1px solid #E5E5E5"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    p="0px 0 0px 12px"
+                    m="12px 0 20px 0px"
+                  >
+                    <Image w="16px" h="16px" mr="6px" src={IconSearch.default} alt="" />
+                    <Input
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#999999"
+                      placeholder={t('Browsing.collectionPlaceholder')}
+                      onChange={handleSearch}
+                    />
+                  </InputGroup>
+
+                  <CollectionSelector
+                    collectionArr={collections}
+                    selectedArr={selectedCollection}
+                    handleSelect={handleSelectCollection}
+                  />
+                </Flex>
+
+                <Flex width="1088px" flexDirection="column" justifyContent="flex-start">
+                  {categoriesIsLoading || nftsIsLoading
+                    ? (
+                      <Center height="15vh">
+                        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                      </Center>
+                    ) : null}
+                  <Flex h="36px">
+                    {categoriesData ? (
+                      <CategorySelector
+                        list={categoriesData!.categories}
+                        selectId={selectedCategoryId}
+                        handleSelect={handleSelectCategory}
+                      />
+                    ) : ''}
+                  </Flex>
+                  <Flex
+                    m="29px 0 20px 0"
+                    width="1088px"
+                    h="36px"
+                    flexFlow="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Text
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#999999"
+                    >
+                      {nftsData?.pageInfo.totalNum}
+                      {' '}
+                      results
+                    </Text>
+                    <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
+                  </Flex>
+                  <Flex width="1088px" flexFlow="row wrap" justifyContent="space-between">
+                    <SimpleGrid
+                      w="100%"
+                      columns={4}
+                      spacing={4}
+                    >
+                      {nftsData?.nfts.map((nft) => <Flex mb="16px"><NftCard nft={nft} /></Flex>)}
+                    </SimpleGrid>
+                  </Flex>
+                </Flex>
+              </Container>
+            </TabPanel>
+          ) : ''}
           {/* {selectTabId === 1 ? (
             <TabPanel>
               <Container mt="40px" display="flex">
@@ -644,7 +762,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               </Container>
             </TabPanel>
           ) : ''} */}
-          {selectTabId === 1 ? (
+          {selectTabId === 2 ? (
             <Container mt="40px">
               <SimpleGrid
                 columns={5}

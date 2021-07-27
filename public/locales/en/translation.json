@@ -59,14 +59,14 @@
     "componentCollectionPledge.tooltip": "The pledge of this asset"
   },
   "Home": {
-    "title": "NFTMart",
+    "title": "NFTMart-A Professional NFT Market",
     "more": "more",
     "hottest": "Hottest",
     "expensive": "Expensive",
     "cheapest": "Cheapest"
   },
   "Collection": {
-    "title": "Collection",
+    "title": "-NFTMart|A Professional NFT Market",
     "editProfile": "Edit profile",
     "addItem": "Add Item",
     "createCollection": "Create NFT",
@@ -98,6 +98,7 @@
     "hasOffers": "Has Offers"
   },
   "Create": {
+    "headerTitle":"Create collection -NFTMart|A Professional NFT Market",
     "title": "General Settings",
     "createCollection": "Create NFT",
     "logo": "*Image",
@@ -118,7 +119,7 @@
   },
   "Detail": {
     "Sell": "Sell",
-    "title": "Detail",
+    "title": "-NFTMart|A Professional NFT Market",
     "Detail": "Detail",
     "properties": "Properties",
     "about": "About",
@@ -148,10 +149,16 @@
     "cancelDesc": "Do you want to cancel this order?",
     "buyError": "Buy Error",
     "createdBy": "Created by",
+    "currentPrice":"Current Price",
+    "placeBid":"Place Bid",
+    "noDataYet":"No data yet",
+    "noTradingDataYet":"No trading data yet",
+    "noOffersDataYet":"No trading data yet",
+    "activities":"Activities",
     "buySuccess": "Buy Success"
   },
   "SellSetting": {
-    "title": "SellSetting",
+    "title": "Set Price-NFTMart|A Professional NFT Market",
     "formTitle": "Select your sell method",
     "sellAtaFixedPrice": "Sell at a fixed price",
     "dutchAuction": "Dutch auction",
@@ -192,6 +199,10 @@
     "unitPrice": "UnitPrice",
     "quantity": "Quantity:",
     "from": "From:",
+    "transferrable": "transferrable",
+    "loched": "loched",
+    "bonded": "bonded",
+    "Created": "Created",
     "expiration": "Expiration"
   },
   "ProfileEdit": {
