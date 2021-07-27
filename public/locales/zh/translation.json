@@ -59,14 +59,14 @@
     "componentCollectionPledge.tooltip": "NFT 的质押金额"
   },
   "Home": {
-    "title": "NFTMart",
+    "title": "NFTMart-专业的NFT 交易市场",
     "more": "查看更多",
     "hottest": "热门",
     "expensive": "最昂贵",
     "cheapest": "最便宜"
   },
   "Collection": {
-    "title": "Collection",
+    "title": "-NFTMart|专业NFT交易市场",
     "editProfile": "修改资料",
     "addItem": "添加作品",
     "createCollection": "创建NFT",
@@ -98,6 +98,7 @@
     "hasOffers": "有出价"
   },
   "Create": {
+    "headerTitle":"创建作品集-NFTMart|专业的NFT交易市场",
     "title": "常规设置",
     "createCollection": "创建NFT",
     "logo": "*图片",
@@ -118,7 +119,7 @@
   },
   "Detail": {
     "Sell": "上架出售",
-    "title": "作品信息",
+    "title": "-NFTMart|专业NFT交易市场",
     "detail": "作品信息",
     "properties": "特性",
     "about": "关于",
@@ -148,10 +149,16 @@
     "cancelDesc": "你想要取消这个订单吗?",
     "buyError": "购买错误",
     "createdBy": "创作于",
+    "currentPrice":"当前价格",
+    "placeBid":"出价竞拍",
+    "noDataYet":"没有数据",
+    "noTradingDataYet":"没有成交记录",
+    "noOffersDataYet":"没有提供数据",
+    "activities":"相关活动",
     "buySuccess": "购买成功"
   },
   "SellSetting": {
-    "title": "SellSetting",
+    "title": "设置价格-NFTMart|专业的NFT交易市场",
     "formTitle": "选择售卖方式",
     "sellAtaFixedPrice": "固定价格售卖",
     "dutchAuction": "荷兰式拍卖",
@@ -192,6 +199,10 @@
     "unitPrice": "单价",
     "quantity": "数量",
     "from": "出价人",
+    "transferrable": "可转账",
+    "loched": "锁定的",
+    "bonded": "抵押的",
+    "Created": "我的创作",
     "expiration": "有效期"
   },
   "ProfileEdit": {

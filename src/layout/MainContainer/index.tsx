@@ -26,8 +26,7 @@ const MainContainer = ({ children, title }: Props) => {
       </Helmet>
       <Center
         as="main"
-        maxWidth="1364px"
-        width="100%"
+        width="1364px"
         minHeight="100%"
         pt="80px"
         boxSizing="border-box"
