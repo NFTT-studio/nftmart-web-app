@@ -845,7 +845,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     isDisabled={isLoginAddress}
                     onClick={handleBuy}
                   >
-                    {t('Detail.placeBid')}
+                    {t('Detail.buyNow')}
                   </Button>
 
                   {/* <Text
