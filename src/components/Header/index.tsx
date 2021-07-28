@@ -6,6 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
+import { useWindowScroll } from 'react-use';
 import NavLink from '../Navlink';
 import AccountPopover from '../AccountPopover';
 import ChangeLanguage from '../ChangeLanguage';
@@ -25,6 +26,7 @@ export interface HeaderProps {
 const Header: FC<HeaderProps> = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const { y } = useWindowScroll();
 
   const chainState = useAppSelector((state) => state.chain);
   const { t } = useTranslation();
@@ -42,13 +44,14 @@ const Header: FC<HeaderProps> = () => {
     <Flex
       as="header"
       justify="space-between"
-      backgroundColor="white"
+      backgroundColor={y > 0 ? 'black' : 'white'}
       position="fixed"
       top={0}
       left={0}
       right={0}
       zIndex={Z_INDEXES.header}
       borderBottom="1px solid #4D4D4D"
+      transition="background-color 1s"
     >
       <Container
         py={2}
