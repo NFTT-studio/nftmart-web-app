@@ -13,6 +13,7 @@ import ChangeLanguage from '../ChangeLanguage';
 import Network from '../Network';
 import {
   LogoSrc,
+  LogoWhite,
 } from '../../assets/images';
 import { Z_INDEXES } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -44,13 +45,13 @@ const Header: FC<HeaderProps> = () => {
     <Flex
       as="header"
       justify="space-between"
-      backgroundColor={y > 0 ? 'black' : 'white'}
+      backgroundColor={y > 0 ? 'white' : 'black'}
       position="fixed"
       top={0}
       left={0}
       right={0}
       zIndex={Z_INDEXES.header}
-      borderBottom="1px solid #4D4D4D"
+      borderBottom="1px solid #999999"
       transition="background-color 1s"
     >
       <Container
@@ -72,7 +73,7 @@ const Header: FC<HeaderProps> = () => {
             display="block"
             width="158px"
             height="auto"
-            src={LogoSrc.default}
+            src={y > 0 ? LogoSrc.default : LogoWhite.default}
           />
         </Flex>
         <Network />

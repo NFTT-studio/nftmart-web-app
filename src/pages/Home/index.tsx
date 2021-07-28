@@ -57,7 +57,7 @@ const Home = () => {
         justifyContent="center"
         mb="40px"
       >
-        <Flex maxWidth="1364px" position="relative">
+        <Flex maxWidth="1364px" minWidth="1364px" position="relative">
           <Image maxWidth="1364px" width="100%" position="relative" src={BannerBg.default} alt="banner" />
           <Flex
             color="white"
@@ -93,11 +93,10 @@ const Home = () => {
             <Text
               mt="3px"
               w="579px"
-              fontFamily="TTHoves-Bold, TTHoves"
+              fontFamily="TTHoves-Thin, TTHoves"
               fontWeight="100"
               color="#999999"
               lineHeight="29px"
-              letterSpacing="2px"
               fontSize="24px"
             >
               {t('banner.content')}
@@ -122,7 +121,7 @@ const Home = () => {
         ? <CategorySelector list={categoriesData.categories} selectId={selectId} handleSelect={handleSelect} />
         : null}
 
-      <Flex width="100%" justifyContent="center">
+      <Flex width="100%" minWidth="1364px" justifyContent="center">
         <Flex width="1364px" flexDirection="column">
 
           {hotNftsIsLoading || expensiveNftsIsLoading || cheapNftsIsLoading || bannerIsLoading || categoriesIsLoading
@@ -134,11 +133,11 @@ const Home = () => {
           {hotNftsData?.orders.length
             ? (
               <Flex width="100%" flexDirection="column" mt="40px">
-                <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="40px">
+                <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="19px">
                   <Box as="img" src={IconHome.default} alt="" w="18px" h="18px" mr="8px" />
                   <Text>{t('Home.hottest')}</Text>
                 </Flex>
-                <Stack direction="row" height="364px">
+                <Stack direction="row" height="353px">
                   <Swiper
                     scrollbar={{ draggable: true }}
                     slidesPerView={5}
@@ -169,11 +168,11 @@ const Home = () => {
             : null}
           {expensiveNftsData?.orders.length ? (
             <Flex width="100%" flexDirection="column" mt="40px">
-              <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="40px">
+              <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="19px">
                 <Box as="img" src={iconExpensive.default} alt="" w="18px" h="18px" mr="8px" />
                 <Text>{t('Home.expensive')}</Text>
               </Flex>
-              <Stack direction="row" height="364px">
+              <Stack direction="row" height="353px">
                 <Swiper
                   scrollbar={{ draggable: true }}
                   spaceBetween={20}
@@ -202,11 +201,11 @@ const Home = () => {
           {expensiveNftsData?.orders.length
             ? (
               <Flex width="100%" flexDirection="column" mt="40px">
-                <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="40px">
+                <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="19px">
                   <Box as="img" src={IconCheapest.default} alt="" w="18px" h="18px" mr="8px" />
                   <Text>{t('Home.cheapest')}</Text>
                 </Flex>
-                <Stack direction="row" height="364px">
+                <Stack direction="row" height="353px">
                   <Swiper
                     scrollbar={{ draggable: true }}
                     spaceBetween={20}

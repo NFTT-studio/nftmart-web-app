@@ -54,7 +54,7 @@ const Network = (): JSX.Element => {
     >
       <PopoverTrigger>
         <Stack direction="row" cursor="pointer" alignItems="center" spacing={0}>
-          <Text fontSize="12px" pr="3px">{t(Networks[selected])}</Text>
+          <Text fontSize="12px" pr="3px" color="#999999">{t(Networks[selected])}</Text>
           {opening ? (
             <Image
               width="12px"

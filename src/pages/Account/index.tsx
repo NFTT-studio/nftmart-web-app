@@ -256,6 +256,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
           flexDirection="row"
           justifyContent="flex-start"
           alignItems="center"
+          borderBottom="1px solid #000000"
         >
           {TABS.map((item, index) => (
             <Button
@@ -289,7 +290,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
         <TabPanels>
           {selectTabId === 0 ? (
             <TabPanel>
-              <Container mt="40px" display="flex">
+              <Container mt="20px" display="flex">
                 <Flex
                   w="260px"
                   h="492px"
@@ -314,7 +315,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       handleSelect={handleSelectStatus}
                     />
                   </Flex>
-                  <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 12px 0">
+                  <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 20px 0">
                     <Box as="img" src={IconAllStateone.default} alt="" w="22px" h="22px" mr="8px" />
                     <Text>{t('Browsing.collections')}</Text>
                   </Flex>
@@ -329,7 +330,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                     justifyContent="center"
                     alignItems="center"
                     p="0px 0 0px 12px"
-                    m="12px 0 20px 0px"
+                    m="0px 0 12px 0px"
                   >
                     <Image w="16px" h="16px" mr="6px" src={IconSearch.default} alt="" />
                     <Input

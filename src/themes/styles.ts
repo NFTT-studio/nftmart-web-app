@@ -37,6 +37,7 @@ const obj = {
       maxWidth: '1364px',
     },
     '.swiper-container-horizontal>.swiper-scrollbar': {
+      width: '1364px',
       height: '16px',
       background: '#F8F8F9',
       display: 'flex',

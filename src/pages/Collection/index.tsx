@@ -146,7 +146,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
       ) : ''}
 
       <Image mt="20px" maxWidth="1364px" width="100%" src={CollectionBackground.default} alt="banner" />
-      <Flex mt="40px" w="100%" direction="row" paddingTop="40px" paddingBottom="40px">
+      <Flex w="100%" direction="row" paddingTop="20px" paddingBottom="20px">
         <Avatar
           m="0 20px"
           src={`${PINATA_SERVER}${collectionsData?.collection?.metadata.logoUrl}`}
@@ -278,7 +278,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
 
       </Flex>
       <Flex
-        m="29px 0 20px 0"
+        m="0px 0 0px 0"
         width="100%"
         h="36px"
         flexDirection="column"
@@ -296,7 +296,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             fontWeight="400"
             color="#999999"
           >
-            {nftData.pageInfo.totalNum || 0}
+            {nftData?.pageInfo.totalNum || 0}
             {' '}
             results
           </Text>
@@ -307,7 +307,6 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
         w="100%"
         m="20px 0 20px 0"
         columns={5}
-        spacing={4}
       >
         {nftData.nfts.map((nft) => <Flex mb="16px"><NftCard nft={nft} /></Flex>)}
       </SimpleGrid>
