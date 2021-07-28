@@ -87,7 +87,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
             fontSize="16px"
             fontFamily="PingFangSC-Medium, PingFang SC"
             fontWeight="500"
-            color="#191A24"
+            color="#999999"
             pr="3px"
             whiteSpace="nowrap"
             overflow="hidden"
@@ -154,7 +154,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   fontWeight="400"
                   color="#191A24"
                 >
-                  {data && renderBalanceText(data!.balance.free)}
+                  {data && renderBalanceText(data?.balance.free)}
                 </Text>
               </Flex>
               <Text
@@ -169,7 +169,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 NMT
               </Text>
             </Flex>
-            {Number(data!.balance?.transferrable?.replace(/[^0-9]/ig, ''))
+            {Number(data?.balance?.transferrable?.replace(/[^0-9]/ig, ''))
               ? (
                 <Flex
                   width="100%"
@@ -196,7 +196,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                       fontWeight="400"
                       color="#999999"
                     >
-                      {data && renderBalanceText(data!.balance.transferrable)}
+                      {data && renderBalanceText(data?.balance.transferrable)}
                     </Text>
                   </Flex>
                   <Text
@@ -212,7 +212,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   </Text>
                 </Flex>
               ) : null}
-            {Number(data!.balance?.locked?.replace(/[^0-9]/ig, ''))
+            {Number(data?.balance?.locked?.replace(/[^0-9]/ig, ''))
               ? (
                 <Flex
                   m="10px 0"
@@ -256,7 +256,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   </Text>
                 </Flex>
               ) : null}
-            {Number(data!.balance?.bonded?.replace(/[^0-9]/ig, ''))
+            {Number(data?.balance?.bonded?.replace(/[^0-9]/ig, ''))
               ? (
                 <Flex
                   width="100%"
@@ -283,7 +283,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                       fontWeight="400"
                       color="#999999"
                     >
-                      {data && renderBalanceText(data!.balance.bonded)}
+                      {data && renderBalanceText(data?.balance.bonded)}
                     </Text>
                   </Flex>
                   <Text

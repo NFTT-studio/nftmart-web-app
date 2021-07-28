@@ -4,6 +4,7 @@ import {
 } from '@chakra-ui/react';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useWindowScroll } from 'react-use';
 
 export interface NLinkProps extends HTMLChakraProps<'p'> {
   path: string;
@@ -15,6 +16,7 @@ export interface NLinkProps extends HTMLChakraProps<'p'> {
 
 const NLink: FC<NLinkProps> = (props) => {
   const { t } = useTranslation();
+  const { y } = useWindowScroll();
   const {
     path, title, active = false, bordered = false, linkProps, ...restStyles
   } = props;
@@ -42,11 +44,11 @@ const NLink: FC<NLinkProps> = (props) => {
           as={RouterLink}
           key={title}
           to={path}
-          color={active ? '#000000' : '#999'}
+          color={active ? `${y > 0 ? '#000000' : 'white'}` : '#999'}
           _after={active && bordered ? borderBottom : {}}
           _hover={{
             textDecoration: 'none',
-            color: '#000000',
+            color: y > 0 ? '#000000' : 'white',
           }}
           _focus={{
             border: 'none',

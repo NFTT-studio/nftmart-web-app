@@ -117,13 +117,21 @@ const Browsing = () => {
         >
           <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="2px">
             <Box as="img" src={IconAllState.default} alt="" w="22px" h="22px" mr="8px" />
-            <Text>{t('Browsing.status')}</Text>
+            <Text
+              fontSize="16px"
+              fontFamily="TTHoves-Medium, TTHoves"
+              fontWeight="500"
+              color="#000000"
+              lineHeight="18px"
+            >
+              {t('Browsing.status')}
+            </Text>
           </Flex>
 
           <Flex width="100%" flexFlow="wrap" justifyContent="space-between">
             <StatusSelector statusArr={statusArr} selectedArr={selectedStatusArr} handleSelect={handleSelectStatus} />
           </Flex>
-          <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 12px 0">
+          <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 20px 0">
             <Box as="img" src={IconAllStateone.default} alt="" w="22px" h="22px" mr="8px" />
             <Text>{t('Browsing.collections')}</Text>
           </Flex>
@@ -138,7 +146,7 @@ const Browsing = () => {
             justifyContent="center"
             alignItems="center"
             p="0px 0 0px 12px"
-            m="12px 0 20px 0px"
+            m="0px 0 12px 0px"
           >
             <Image w="16px" h="16px" mr="6px" src={IconSearch.default} alt="" />
             <Input
@@ -205,9 +213,8 @@ const Browsing = () => {
                 <SimpleGrid
                   w="100%"
                   columns={4}
-                  spacing={4}
                 >
-                  {nftsData?.orders.map((nft) => <Flex mb="16px"><OrderCard nft={nft} /></Flex>)}
+                  {nftsData?.orders.map((nft) => <Flex mb="11px"><OrderCard nft={nft} /></Flex>)}
                 </SimpleGrid>
               ) : (
                 <Flex
