@@ -70,6 +70,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   });
 
   const mint = useCallback(async (formValue, cb) => {
+    formValue.stub = `https://${formValue.stub}`;
     const { ...others } = formValue;
     const normalizedFormData = {
       address: account?.address,
@@ -92,7 +93,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       setIsSubmitting(true);
       mint(formValue, {
         success: () => {
-          toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
+          toast(<ToastBody title="Success" message={t('Create.success')} type="success" />);
           setIsSubmitting(false);
           formAction.resetForm();
         },
@@ -233,7 +234,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             w="600px"
             justifyContent="center"
           >
-            <SubmitButton text={t('Create.submit')} isSubmitting={isSubmitting} />
+            <SubmitButton text={t('common.save')} isSubmitting={isSubmitting} />
           </Flex>
         </form>
         <MyModal

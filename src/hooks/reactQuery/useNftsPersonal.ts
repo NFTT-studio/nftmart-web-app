@@ -3,10 +3,10 @@ import fetchPersonalNfts, { fetchPersonalNftsParams } from '../../api/fetchPerso
 import { QUERY_KEYS } from '../../constants';
 
 export default ({
-  ownerId, sortBy, categoryId, collectionId, status, classId,
+  ownerId, sortBy, categoryId, collectionId, status, classId, creatorId,
 }: fetchPersonalNftsParams) => useQuery(
-  [QUERY_KEYS.NFTS, ownerId, sortBy, categoryId, collectionId, status, classId],
+  [QUERY_KEYS.NFTS, ownerId, creatorId, sortBy, categoryId, collectionId, status, classId],
   () => fetchPersonalNfts({
-    ownerId, sortBy, categoryId, collectionId, status, classId,
+    ownerId, sortBy, categoryId, collectionId, status, classId, creatorId,
   }),
 );

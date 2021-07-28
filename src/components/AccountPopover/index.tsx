@@ -169,128 +169,137 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 NMT
               </Text>
             </Flex>
-            <Flex
-              width="100%"
-              height="16px"
-              justifyContent="space-between"
-              alignItems="center"
-              p="0 20px"
-            >
-              <Flex width="100%" justifyContent="space-between">
-                <Flex width="100%" justifyContent="flex-start" alignItems="center">
+            {Number(data!.balance?.transferrable?.replace(/[^0-9]/ig, ''))
+              ? (
+                <Flex
+                  width="100%"
+                  height="16px"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  p="0 20px"
+                >
+                  <Flex width="100%" justifyContent="space-between">
+                    <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                      <Text
+                        ml="22px"
+                        fontSize="14px"
+                        fontFamily="PingFangSC-Regular, PingFang SC"
+                        fontWeight="blod"
+                        color="#999999"
+                      >
+                        {t('Account.transferrable')}
+                      </Text>
+                    </Flex>
+                    <Text
+                      fontSize="14px"
+                      fontFamily="PingFangSC-Regular, PingFang SC"
+                      fontWeight="400"
+                      color="#999999"
+                    >
+                      {data && renderBalanceText(data!.balance.transferrable)}
+                    </Text>
+                  </Flex>
                   <Text
-                    ml="22px"
-                    fontSize="14px"
-                    fontFamily="PingFangSC-Regular, PingFang SC"
-                    fontWeight="blod"
+                    width="47px"
+                    textAlign="right"
+                    ml="12px"
+                    fontSize="16px"
+                    fontFamily="PingFangSC-Medium, PingFang SC"
+                    fontWeight="500"
                     color="#999999"
                   >
-                    {t('Account.transferrable')}
+                    NMT
                   </Text>
                 </Flex>
-                <Text
-                  fontSize="14px"
-                  fontFamily="PingFangSC-Regular, PingFang SC"
-                  fontWeight="400"
-                  color="#999999"
+              ) : null}
+            {Number(data!.balance?.locked?.replace(/[^0-9]/ig, ''))
+              ? (
+                <Flex
+                  m="10px 0"
+                  width="100%"
+                  height="16px"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  p="0 20px"
                 >
-                  {data && renderBalanceText(data!.balance.feeFrozen)}
-                </Text>
-              </Flex>
-              <Text
-                width="47px"
-                textAlign="right"
-                ml="12px"
-                fontSize="16px"
-                fontFamily="PingFangSC-Medium, PingFang SC"
-                fontWeight="500"
-                color="#999999"
-              >
-                NMT
-              </Text>
-            </Flex>
-            <Flex
-              m="10px 0"
-              width="100%"
-              height="16px"
-              justifyContent="space-between"
-              alignItems="center"
-              p="0 20px"
-            >
-              <Flex width="100%" justifyContent="space-between">
-                <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                  <Flex width="100%" justifyContent="space-between">
+                    <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                      <Text
+                        ml="22px"
+                        fontSize="14px"
+                        fontFamily="PingFangSC-Regular, PingFang SC"
+                        fontWeight="blod"
+                        color="#999999"
+                      >
+                        {t('Account.loched')}
+                      </Text>
+                    </Flex>
+                    <Text
+                      fontSize="14px"
+                      fontFamily="PingFangSC-Regular, PingFang SC"
+                      fontWeight="400"
+                      color="#999999"
+                    >
+                      {data && renderBalanceText(data!.balance.locked)}
+                    </Text>
+                  </Flex>
                   <Text
-                    ml="22px"
-                    fontSize="14px"
-                    fontFamily="PingFangSC-Regular, PingFang SC"
-                    fontWeight="blod"
+                    width="47px"
+                    textAlign="right"
+                    ml="12px"
+                    fontSize="16px"
+                    fontFamily="PingFangSC-Medium, PingFang SC"
+                    fontWeight="500"
                     color="#999999"
                   >
-                    {t('Account.loched')}
+                    NMT
                   </Text>
                 </Flex>
-                <Text
-                  fontSize="14px"
-                  fontFamily="PingFangSC-Regular, PingFang SC"
-                  fontWeight="400"
-                  color="#999999"
+              ) : null}
+            {Number(data!.balance?.bonded?.replace(/[^0-9]/ig, ''))
+              ? (
+                <Flex
+                  width="100%"
+                  height="16px"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  p="0 20px"
                 >
-                  {data && renderBalanceText(data!.balance.reserved)}
-                </Text>
-              </Flex>
-              <Text
-                width="47px"
-                textAlign="right"
-                ml="12px"
-                fontSize="16px"
-                fontFamily="PingFangSC-Medium, PingFang SC"
-                fontWeight="500"
-                color="#999999"
-              >
-                NMT
-              </Text>
-            </Flex>
-            <Flex
-              width="100%"
-              height="16px"
-              justifyContent="space-between"
-              alignItems="center"
-              p="0 20px"
-            >
-              <Flex width="100%" justifyContent="space-between">
-                <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                  <Flex width="100%" justifyContent="space-between">
+                    <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                      <Text
+                        ml="22px"
+                        fontSize="14px"
+                        fontFamily="PingFangSC-Regular, PingFang SC"
+                        fontWeight="blod"
+                        color="#999999"
+                      >
+                        {t('Account.bonded')}
+                      </Text>
+                    </Flex>
+                    <Text
+                      fontSize="14px"
+                      fontFamily="PingFangSC-Regular, PingFang SC"
+                      fontWeight="400"
+                      color="#999999"
+                    >
+                      {data && renderBalanceText(data!.balance.bonded)}
+                    </Text>
+                  </Flex>
                   <Text
-                    ml="22px"
-                    fontSize="14px"
-                    fontFamily="PingFangSC-Regular, PingFang SC"
-                    fontWeight="blod"
+                    width="47px"
+                    textAlign="right"
+                    ml="12px"
+                    fontSize="16px"
+                    fontFamily="PingFangSC-Medium, PingFang SC"
+                    fontWeight="500"
                     color="#999999"
                   >
-                    {t('Account.bonded')}
+                    NMT
                   </Text>
                 </Flex>
-                <Text
-                  fontSize="14px"
-                  fontFamily="PingFangSC-Regular, PingFang SC"
-                  fontWeight="400"
-                  color="#999999"
-                >
-                  {data && renderBalanceText(data!.balance.feeFrozen)}
-                </Text>
-              </Flex>
-              <Text
-                width="47px"
-                textAlign="right"
-                ml="12px"
-                fontSize="16px"
-                fontFamily="PingFangSC-Medium, PingFang SC"
-                fontWeight="500"
-                color="#999999"
-              >
-                NMT
-              </Text>
-            </Flex>
-
+              )
+              : null}
             <Flex
               cursor="pointer"
               width="100%"
@@ -303,7 +312,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               }}
               onClick={() => history.push(`/account/${address}/wallet?id=0`)}
             >
-              <Flex width="100%" justifyContent="space-between" mr="12px">
+              <Flex width="100%" justifyContent="space-between">
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
@@ -363,7 +372,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               }}
               onClick={() => history.push(`/account/${address}/wallet?id=1`)}
             >
-              <Flex width="100%" justifyContent="space-between" mr="12px">
+              <Flex width="100%" justifyContent="space-between">
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
@@ -423,7 +432,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               }}
               onClick={() => history.push(`/account/${address}/wallet?id=2`)}
             >
-              <Flex width="100%" justifyContent="space-between" mr="12px">
+              <Flex width="100%" justifyContent="space-between">
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"

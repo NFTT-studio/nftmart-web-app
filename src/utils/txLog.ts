@@ -30,6 +30,7 @@ export const txLog = (result: any, onSuccess = (res: any) => res) => {
   //   status: 'info',
   //   duration: 8000,
   // });
+  console.log(result.status, '=====');
   if (result.status.isInBlock) {
     toast({
       title: '',
@@ -37,6 +38,7 @@ export const txLog = (result: any, onSuccess = (res: any) => res) => {
       status: 'info',
       duration: 8000,
     });
+    console.log(`Transaction included at blockHash ${result.status.asInBlock}`);
   } else if (result.status.isFinalized) {
     toast({
       title: '',
@@ -45,6 +47,7 @@ export const txLog = (result: any, onSuccess = (res: any) => res) => {
       duration: 6000,
     });
     onSuccess(result);
+    console.log(`Transaction finalized at blockHash ${result.status.asFinalized}`);
   } else if (result.status.isBroadcast) {
     toast({
       title: '',

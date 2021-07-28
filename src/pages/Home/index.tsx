@@ -142,12 +142,13 @@ const Home = () => {
                   <Swiper
                     scrollbar={{ draggable: true }}
                     slidesPerView={5}
+                    spaceBetween={20}
                     breakpoints={{
                       640: {
-                        slidesPerView: 2,
+                        slidesPerView: 5,
                       },
                       768: {
-                        slidesPerView: 4,
+                        slidesPerView: 5,
                       },
                       1024: {
                         slidesPerView: 5,
@@ -175,6 +176,7 @@ const Home = () => {
               <Stack direction="row" height="364px">
                 <Swiper
                   scrollbar={{ draggable: true }}
+                  spaceBetween={20}
                   breakpoints={{
                     640: {
                       slidesPerView: 2,
@@ -207,6 +209,7 @@ const Home = () => {
                 <Stack direction="row" height="364px">
                   <Swiper
                     scrollbar={{ draggable: true }}
+                    spaceBetween={20}
                     breakpoints={{
                       640: {
                         slidesPerView: 2,

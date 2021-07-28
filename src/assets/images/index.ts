@@ -82,6 +82,7 @@ export * as Iconprice from './icon_price.png';
 export * as IconOffersDetail from './icon_offers_detail.png';
 export * as IconSummary from './icon_Summary.png';
 export * as IconIntructions from './Icon_Intructions.png';
+export * as IconAuthentication from './icon_authentication.png';
 
 // empty
 export * as Emptyimg from './empty.png';

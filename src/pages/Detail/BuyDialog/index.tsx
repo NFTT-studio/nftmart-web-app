@@ -92,7 +92,7 @@ const BuyDialog: FC<Props> = (({
 
           <Flex p="30px" flexDirection="column">
             <Flex mb="35px" h="21px" alignItems="center" justifyContent="space-between">
-              <Text>{t('Detail.Checkout')}</Text>
+              <Text>{t('Detail.checkout')}</Text>
               <AlertDialogCloseButton position="inherit" />
             </Flex>
             <Flex h="25px" justifyContent="space-between" alignItems="flex-start" borderBottom="1px solid #E5E5E5">
@@ -110,7 +110,7 @@ const BuyDialog: FC<Props> = (({
                 fontWeight="400"
                 color="#999999"
               >
-                {t('Detail.Subtotal')}
+                {t('Detail.subtotal')}
               </Text>
             </Flex>
             <Flex justifyContent="space-between" borderBottom="1px solid #E5E5E5" p="16px 0">
@@ -127,11 +127,10 @@ const BuyDialog: FC<Props> = (({
               >
                 <Image
                   mr="10px"
-                  width="54px"
+                  width="auto"
                   height="40px"
                   borderRadius="4px"
                   src={logoUrl}
-                  alt=""
                 />
                 <Flex
                   flexDirection="column"
@@ -209,7 +208,7 @@ const BuyDialog: FC<Props> = (({
                   color="#999999"
                   lineHeight="20px"
                 >
-                  {t('Detail.Total')}
+                  {t('Detail.total')}
                 </Text>
                 <Text />
               </Flex>
@@ -253,7 +252,7 @@ const BuyDialog: FC<Props> = (({
               color="#999999"
               lineHeight="20px"
             >
-              {t('Detail.Balance')}
+              {t('Detail.balance')}
               :
               {' '}
               {data && renderBalanceText(data!.balance.free)}
@@ -270,7 +269,7 @@ const BuyDialog: FC<Props> = (({
                 borderRadius="4px"
                 onClick={onSubmit}
               >
-                {t('Detail.CheckoutSub')}
+                {t('Detail.checkoutSub')}
               </Button>
             </Flex>
           </Flex>

@@ -139,7 +139,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               }}
               onClick={handleCreate}
             >
-              {t('Collection.AddItem')}
+              {t('Collection.addItem')}
             </Button>
           </Flex>
         </Flex>
