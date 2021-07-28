@@ -44,6 +44,7 @@ import {
   IconOffersDetail,
   ImgFillTop,
   ImgFillBottom,
+  IconAuthentication,
   // IconLeft,
 } from '../../assets/images';
 import useNft from '../../hooks/reactQuery/useNft';
@@ -80,6 +81,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const { account } = chainState;
   const { nftId } = match.params;
+  const { data: nftData, isLoading: nftDataIsLoading } = useNft(nftId);
   const collectionsId = nftId.split('-')[0];
 
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
@@ -87,7 +89,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [isShowCancel, setIsShowCancel] = useState(false);
   const [isShowBuy, setIsShowBuy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { data: nftData, isLoading: nftDataIsLoading } = useNft(nftId);
+
   const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
 
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
@@ -99,6 +101,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const logoUrl = `${PINATA_SERVER}${nftData.nftInfo.metadata.logoUrl}`;
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
   const collectionName = collectionsData?.collection?.metadata?.name;
+  const collectionDescription = collectionsData?.collection?.metadata?.description;
   const nftName = nftData?.nftInfo?.metadata.name;
 
   const firstOffer = nftData?.nftInfo?.offers[0];
@@ -146,7 +149,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     <MainContainer title={`${nftName}-${collectionName}${t('Detail.title')}`}>
       {isLoginAddress ? (
         <>
-          {nftData?.nftInfo.status === SELLING
+          {nftData?.nftInfo.status === 'Selling'
             ? (
               <Flex
                 minWidth="1364px"
@@ -331,7 +334,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color="#000000"
                         lineHeight="18px"
                       >
-                        {t('Detail.detail')}
+                        {t('Detail.Detail')}
                       </Text>
                     </Flex>
                     <AccordionIcon />
@@ -354,7 +357,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         <Text
                           fontSize="14px"
                           fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="bold"
+                          fontWeight="400"
                           color="#000000"
                           display="flex"
                           flexDirection="row"
@@ -542,7 +545,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     </Flex>
                     <AccordionIcon />
                   </AccordionButton>
-                  {hideFlag
+                  {collectionDescription
                     ? (
                       <AccordionPanel p="16px 20px 16px 20px">
                         <Text
@@ -553,11 +556,10 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="22px"
                         >
-                          Here is an introduction to the portfolio.
-                          If it is a cross-chain NFT asset, a contract is a portfolio.
+                          {collectionDescription}
                         </Text>
 
-                        <Flex>
+                        {/* <Flex>
                           {ICON_LIST.map((item) => (
                             <Box
                               key="index"
@@ -579,7 +581,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               />
                             </Box>
                           ))}
-                        </Flex>
+                        </Flex> */}
 
                       </AccordionPanel>
                     )
@@ -608,7 +610,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       fontSize="14px"
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
-                      color="#000000"
+                      color="#3D00FF"
                     >
                       {collectionName}
                     </Text>
@@ -616,7 +618,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       ml="4px"
                       w="18px"
                       h="18px"
-                      src={IconDetailsocllections.default}
+                      src={IconAuthentication.default}
                     />
                   </Flex>
                 </Link>
@@ -707,6 +709,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   >
                     {t('Detail.ownedBy')}
                     <Link
+                      ml="3px"
                       as={RouterLink}
                       to={`/account/${nftData?.nftInfo?.owner_id}/wallet`}
                       color="#3D00FF"
@@ -809,7 +812,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color="#333333"
                         lineHeight="43px"
                       >
-                        {price}
+                        {Number(price) ? price : '-'}
                       </Text>
                       <Text
                         m="0 0 8px 4px"
@@ -818,7 +821,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         fontWeight="400"
                         color="#999999"
                       >
-                        NMT ($1,146.90)
+                        {Number(price) ? 'NMT ($1,146.90)' : null}
                       </Text>
                       {/* <Image
                       m="0 0 8px 10px"
@@ -842,7 +845,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     isDisabled={isLoginAddress}
                     onClick={handleBuy}
                   >
-                    {t('Detail.placeBid')}
+                    {t('Detail.buyNow')}
                   </Button>
 
                   {/* <Text
@@ -1045,7 +1048,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color="#000000"
                         lineHeight="18px"
                       >
-                        {t('Detail.activities')}
+                        {t('Detail.offers')}
                       </Text>
                     </Flex>
                     <AccordionIcon />
@@ -1222,7 +1225,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     color="#000000"
                     lineHeight="18px"
                   >
-                    {t('Detail.offers')}
+                    {t('Detail.activities')}
                   </Text>
                 </Flex>
                 <AccordionIcon />

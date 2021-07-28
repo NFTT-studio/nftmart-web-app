@@ -49,7 +49,7 @@ const NavLink = () => {
     // },
     {
       title: 'common.nav.navCreate',
-      path: data?.createdClassCount ? `/account/${account?.address}/wallet?id=1` : '/profile/collection/create',
+      path: data?.createdClassCount ? `/account/${account?.address}/wallet?id=2` : '/profile/collection/create',
       requiredLogin: true,
       requiredWhitelist: true,
     },

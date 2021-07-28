@@ -91,8 +91,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   };
 
   const schema = Yup.object().shape({
-    price: Yup.number().moreThan(0).required(t('Create.Required')),
-    categoryId: Yup.string().required(t('Create.Required')),
+    categoryId: Yup.string().required(t('Create.required')),
+    price: Yup.number().moreThan(0).required(t('Create.required')),
   });
 
   const formik = useFormik({
@@ -453,7 +453,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 </Stack>
               </RadioGroup>
               {formik.errors.categoryId && formik.touched.categoryId ? (
-                <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                <div style={{ color: 'red' }}>{formik.errors.categoryId}</div>
               ) : null}
               <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                 <AccordionItem width="100%" border="none">
@@ -485,7 +485,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color="#000000"
                         lineHeight="18px"
                       >
-                        {t('SellSetting.Intructions')}
+                        {t('SellSetting.Instructions')}
                       </Text>
                     </Flex>
                     <AccordionIcon />
@@ -500,7 +500,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       color="#000000"
                       lineHeight="22px"
                     >
-                      {t('SellSetting.IntructionsExplain')}
+                      {t('SellSetting.InstructionsExplain')}
                     </Text>
                   </AccordionPanel>
                 </AccordionItem>
@@ -538,7 +538,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color="#000000"
                         lineHeight="18px"
                       >
-                        {t('SellSetting.Summary')}
+                        {t('SellSetting.summary')}
                       </Text>
                     </Flex>
                     <AccordionIcon />
@@ -563,7 +563,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#232A4A"
                           lineHeight="18px"
                         >
-                          {t('SellSetting.Listing')}
+                          {t('SellSetting.listing')}
                         </Text>
                         <Text
                           mt="12px"
@@ -573,8 +573,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {t('SellSetting.ListingExplainone')}
-                          {t('SellSetting.ListingExplaintwo')}
+                          {t('SellSetting.listingExplainOne')}
+                          {t('SellSetting.listingExplainTwo')}
                         </Text>
                       </Flex>
                       <Button
@@ -591,7 +591,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         lineHeight="16px"
                         type="submit"
                       >
-                        {t('SellSetting.PostYourListing')}
+                        {t('SellSetting.postYourListing')}
                       </Button>
                     </Flex>
                     {/* <Flex

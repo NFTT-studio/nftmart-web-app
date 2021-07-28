@@ -48,7 +48,7 @@ const CancelDialog: FC<Props> = (({
           history.push('/');
         },
         error: (error) => {
-          toast(<ToastBody title="Error" message={error} type="success" />);
+          toast(<ToastBody title="Error" message={error} type="error" />);
           setIsSubmitting(false);
         },
       },
@@ -72,7 +72,7 @@ const CancelDialog: FC<Props> = (({
       >
         <Flex p="30px" flexDirection="column">
           <Flex mb="35px" h="21px" alignItems="center" justifyContent="space-between">
-            <Text>{t('Detail.Cancel')}</Text>
+            <Text>{t('Detail.cancel')}</Text>
             <AlertDialogCloseButton position="inherit" />
           </Flex>
           <Text

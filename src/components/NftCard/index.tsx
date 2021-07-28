@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { IPFS_URL } from '../../constants';
 import { priceStringDivUnit } from '../../utils/format';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import {
   PriceIcon,
@@ -53,13 +54,13 @@ const NftCard: FC<NftCardProps> = ({
             },
           }}
           style={{
-            objectFit: 'contain',
-            maxWidth: '100%',
+            objectFit: 'cover',
+            width: '100%',
             maxHeight: '100%',
-            borderRadius: '5px',
+            borderRadius: '4px 4px 0 0 ',
           }}
           src={IPFS_URL + nft?.metadata.logoUrl}
-          effect="none"
+          effect="blur"
           fallback={<Shimmer height={195} width={260} />}
           fadeIn
         />

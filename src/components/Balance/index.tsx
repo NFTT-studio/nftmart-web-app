@@ -50,14 +50,14 @@ export const renderBalanceFreeText = (balanceText: string) => {
   const [integer, decimal] = amount.toString().split('.');
   return (
     <Flex display="inline-flex">
-      <Text fontSize="sm" fontWeight="bold" color={Colors.Primary}>
+      <Text fontSize="sm" fontWeight="bold">
         {integer}
         {decimal ? '.' : ''}
       </Text>
-      <Text fontSize="sm" color={Colors.TextGray} marginRight={1}>
+      <Text fontSize="sm" fontWeight="bold" marginRight={1}>
         {decimal && decimal.substring(0, 1)}
       </Text>
-      <Text fontSize="sm" color={Colors.Primary}>
+      <Text fontSize="sm" fontWeight="bold">
         {unit}
       </Text>
     </Flex>

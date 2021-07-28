@@ -110,6 +110,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       sortBy: selectedSort,
     },
   );
+  const { data: nftsDataCreate } = useNftsPersonal(
+    {
+      creatorId: address,
+      categoryId: selectedCategoryId,
+      collectionId: selectedCollection,
+      status: selectedStatusArr,
+      sortBy: selectedSort,
+    },
+  );
 
   const handleSelectCategory: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectedCategoryId(event.currentTarget.id);
@@ -171,13 +180,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
           top="-60px"
         >
           <Image
+            background="#FFFFFF"
             width="120px"
-            height="120px"
-            border="3px solid #FFFFFF"
             borderRadius="50%"
+            border="3px solid #FFFFFF"
+            height="auto"
+            objectFit="cover"
             src={HeadPortrait.default}
-            alt=""
           />
+
           <Text
             mt="20px"
             fontSize="28px"
@@ -491,7 +502,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       columns={4}
                       spacing={4}
                     >
-                      {nftsData?.nfts.map((nft) => <Flex mb="16px"><NftCard nft={nft} /></Flex>)}
+                      {nftsDataCreate?.nfts.map((nft) => <Flex mb="16px"><NftCard nft={nft} /></Flex>)}
                     </SimpleGrid>
                   </Flex>
                 </Flex>
