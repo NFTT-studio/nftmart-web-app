@@ -45,6 +45,7 @@
     "button": "CREATE"
   },
   "extension": {
+    "install": "Install",
     "download": "You will need to install the Polkadot {.js} extension to use NFTMart",
     "login": "Connect wallet",
     "account": "Please use Polkadot extension create or import your account",
@@ -129,6 +130,8 @@
     "unitPrice": "UnitPrice",
     "quantity": "Quantity",
     "from": "From",
+    "price": "price",
+    "expiration": "expiration",
     "to": "To",
     "date": "Date",
     "buyNow": "Buy Now",
@@ -202,6 +205,7 @@
     "transferrable": "transferrable",
     "loched": "loched",
     "bonded": "bonded",
+    "reserved": "reserved",
     "Created": "Created",
     "expiration": "Expiration"
   },

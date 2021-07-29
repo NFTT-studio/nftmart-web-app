@@ -85,7 +85,7 @@ const Connect: FC = () => {
                   lineHeight="36px"
                   textAlign="center"
                 >
-                  {t('extension.dowload')}
+                  {t('extension.download')}
                 </Heading>
                 <Box alt="waleet_logo" as="img" src={Polkadot.default} width="160px" margin="30px auto" />
                 <Button
@@ -102,7 +102,7 @@ const Connect: FC = () => {
                   color="#FFFFFF"
                   lineHeight="18px"
                 >
-                  {t('download')}
+                  {t('extension.install')}
                 </Button>
               </Box>
             </Center>

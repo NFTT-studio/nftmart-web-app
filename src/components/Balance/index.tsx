@@ -26,20 +26,30 @@ export interface BalanceType {
 
 export const renderBalanceText = (balanceText: string) => {
   if (!balanceText || typeof balanceText !== 'string') return null;
-
-  const { value, unit } = parseMoneyText(balanceText);
-  const [integer, decimal] = value.toString().split('.');
-
+  const capBalanceText = balanceText.toUpperCase();
+  const [amount, unit] = capBalanceText.split(' ');
+  const [integer, decimal] = amount.toString().split('.');
+  const { value } = parseMoneyText(balanceText);
+  const [num, str] = value.toString().split('.');
+  const shu = num.concat('.', str);
   return (
-    <Flex display="inline-flex">
-      <Text fontSize="sm" fontWeight="bold">
-        {integer}
-        {decimal ? '.' : ''}
-      </Text>
-      <Text fontSize="sm" fontWeight="bold">
-        {decimal}
-      </Text>
-    </Flex>
+    <>
+      {Number(shu) > 1000000
+        ? (
+          <Flex display="inline-flex">
+            <Text fontSize="sm" fontWeight="bold">
+              {integer}
+              {decimal ? '.' : ''}
+            </Text>
+            <Text fontSize="sm" fontWeight="bold" marginRight={1}>
+              {decimal && decimal.substring(0, 3)}
+            </Text>
+            <Text fontSize="sm" fontWeight="bold">
+              {unit}
+            </Text>
+          </Flex>
+        ) : `${Math.floor(Number(shu) * 10) / 10}`}
+    </>
   );
 };
 
@@ -48,19 +58,27 @@ export const renderBalanceFreeText = (balanceText: string) => {
   const capBalanceText = balanceText.toUpperCase();
   const [amount, unit] = capBalanceText.split(' ');
   const [integer, decimal] = amount.toString().split('.');
+  const { value } = parseMoneyText(balanceText);
+  const [num, str] = value.toString().split('.');
+  const shu = num.concat('.', str);
   return (
-    <Flex display="inline-flex">
-      <Text fontSize="sm" fontWeight="bold">
-        {integer}
-        {decimal ? '.' : ''}
-      </Text>
-      <Text fontSize="sm" fontWeight="bold" marginRight={1}>
-        {decimal && decimal.substring(0, 1)}
-      </Text>
-      <Text fontSize="sm" fontWeight="bold">
-        {unit}
-      </Text>
-    </Flex>
+    <>
+      {Number(shu) > 1000000
+        ? (
+          <Flex display="inline-flex">
+            <Text fontSize="sm" fontWeight="bold">
+              {integer}
+              {decimal ? '.' : ''}
+            </Text>
+            <Text fontSize="sm" fontWeight="bold" marginRight={1}>
+              {decimal && decimal.substring(0, 3)}
+            </Text>
+            <Text fontSize="sm" fontWeight="bold">
+              {unit}
+            </Text>
+          </Flex>
+        ) : `${Math.floor(Number(shu) * 10) / 10}NMT`}
+    </>
   );
 };
 
