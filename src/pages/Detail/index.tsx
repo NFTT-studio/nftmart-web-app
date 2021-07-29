@@ -49,6 +49,7 @@ import {
 } from '../../assets/images';
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
+import useToken from '../../hooks/reactQuery/useToken';
 import {
   PINATA_SERVER,
 } from '../../constants';
@@ -90,6 +91,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [isShowBuy, setIsShowBuy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { data: token } = useToken();
   const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
 
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
@@ -823,7 +825,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         fontWeight="400"
                         color="#999999"
                       >
-                        {Number(price) ? 'NMT ($1,146.90)' : null}
+                        {Number(price) ? `NMT ($${token?.price * Number(price)})` : null}
                       </Text>
                       {/* <Image
                       m="0 0 8px 10px"

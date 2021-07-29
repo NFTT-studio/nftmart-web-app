@@ -15,11 +15,13 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 import { useHistory } from 'react-router-dom';
+import { number } from 'yup';
 import { takeOrder } from '../../../polkaSDK/api/takeOrder';
 import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
 import { renderBalanceText } from '../../../components/Balance';
 import MyToast, { ToastBody } from '../../../components/MyToast';
+import useToken from '../../../hooks/reactQuery/useToken';
 
 interface Props {
   price: string,
@@ -36,6 +38,7 @@ const BuyDialog: FC<Props> = (({
 }) => {
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
+  const { data: token } = useToken();
 
   const { account } = chainState;
   const { data } = useAccount(account!.address);
@@ -143,7 +146,6 @@ const BuyDialog: FC<Props> = (({
                 >
                   <Text
                     mb="5px"
-                    width="60px"
                     fontSize="14px"
                     fontFamily="TTHoves-Regular, TTHoves"
                     fontWeight="400"
@@ -178,12 +180,15 @@ const BuyDialog: FC<Props> = (({
                   lineHeight="20px"
                 >
                   {price}
+                  {' '}
                   <Text color="#999999">
                     NMT
                   </Text>
                 </Text>
                 <Text>
-                  (≈$1,146.90)
+                  (≈$
+                  {Number(price) * Number(token?.price)}
+                  )
                 </Text>
               </Flex>
             </Flex>
@@ -233,12 +238,15 @@ const BuyDialog: FC<Props> = (({
                   lineHeight="20px"
                 >
                   {price}
+                  {' '}
                   <Text color="#999999">
                     NMT
                   </Text>
                 </Text>
                 <Text>
-                  (≈$1,146.90)
+                  (≈$
+                  {Number(price) * Number(token?.price)}
+                  )
                 </Text>
               </Flex>
             </Flex>
@@ -256,6 +264,8 @@ const BuyDialog: FC<Props> = (({
               :
               {' '}
               {data && renderBalanceText(data!.balance.free)}
+              {' '}
+              NMT
             </Text>
             <Flex w="100%" justifyContent="center" pt="10px">
               <Button
