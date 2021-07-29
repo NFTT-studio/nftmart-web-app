@@ -7,6 +7,8 @@ const obj = {
       height: '100%',
     },
     body: {
+      position: 'relative',
+      minHeight: '100%',
     },
     a: {
       _hover: {
@@ -27,6 +29,7 @@ const obj = {
       right: 0,
       bottom: '-151px',
       border: 'none',
+      overflow: 'hidden',
     },
 
     ':focus': {

@@ -49,6 +49,7 @@ import {
 } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
 import { createOrder } from '../../polkaSDK/api/createOrder';
+import { settingOrder } from '../../polkaSDK/api/settingOrder';
 import MyToast, { ToastBody } from '../../components/MyToast';
 
 const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
@@ -85,6 +86,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { data: categoriesData } = useCategories();
   const { data: collectionsData } = useCollectionsSinger(collectionsId);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const firstOffer = nftData?.nftInfo?.offers[0];
+  const orderId = firstOffer?.order_id;
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectId(Number(event.currentTarget.id));
@@ -124,8 +128,35 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           },
         },
       };
+      const settingorderParams = {
+        address: account!.address,
+        orderId,
+        categoryId: formValue.categoryId,
+        price: formValue.price,
+        classId: nftData?.nftInfo.class_id,
+        quantity: nftData?.nftInfo.quantity,
+        tokenId: nftData?.nftInfo.token_id,
+        cb: {
+          success: () => {
+            toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
+            setIsSubmitting(false);
+            formAction.resetForm();
+            setTimeout(() => {
+              history.push(`/item/${nftData?.nftInfo?.id}`);
+            }, 1000);
+          },
+          error: (error) => {
+            toast(<ToastBody title="Error" message={error} type="error" />);
+            setIsSubmitting(false);
+          },
+        },
+      };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      createOrder(orderParams as any);
+      if (Number(nftData?.nftInfo?.price)) {
+        settingOrder(settingorderParams as any);
+      } else {
+        createOrder(orderParams as any);
+      }
     },
     validationSchema: schema,
   });
@@ -574,7 +605,13 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           lineHeight="16px"
                         >
                           {t('SellSetting.listingExplainOne')}
+                          {'  '}
+                          {formik.values.price || 0}
+                          NMT
                           {t('SellSetting.listingExplainTwo')}
+                          {'  '}
+                          {formik.values.price || 0}
+                          NMT
                         </Text>
                       </Flex>
                       <Button

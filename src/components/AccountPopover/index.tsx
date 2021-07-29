@@ -169,7 +169,9 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 NMT
               </Text>
             </Flex>
-            {Number(data?.balance?.transferrable?.replace(/[^0-9]/ig, ''))
+            {Number(data?.balance?.locked?.replace(/[^0-9]/ig, ''))
+            || Number(data?.balance?.bonded?.replace(/[^0-9]/ig, ''))
+            || Number(data?.balance?.locked?.replace(/[^0-9]/ig, ''))
               ? (
                 <Flex
                   width="100%"
@@ -212,6 +214,50 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   </Text>
                 </Flex>
               ) : null}
+            {Number(data?.balance?.reserved?.replace(/[^0-9]/ig, ''))
+              ? (
+                <Flex
+                  width="100%"
+                  height="16px"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  p="0 20px"
+                >
+                  <Flex width="100%" justifyContent="space-between">
+                    <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                      <Text
+                        ml="22px"
+                        fontSize="14px"
+                        fontFamily="PingFangSC-Regular, PingFang SC"
+                        fontWeight="blod"
+                        color="#999999"
+                      >
+                        {t('Account.reserved')}
+                      </Text>
+                    </Flex>
+                    <Text
+                      fontSize="14px"
+                      fontFamily="PingFangSC-Regular, PingFang SC"
+                      fontWeight="400"
+                      color="#999999"
+                    >
+                      {data && renderBalanceText(data?.balance.reserved)}
+                    </Text>
+                  </Flex>
+                  <Text
+                    width="47px"
+                    textAlign="right"
+                    ml="12px"
+                    fontSize="16px"
+                    fontFamily="PingFangSC-Medium, PingFang SC"
+                    fontWeight="500"
+                    color="#999999"
+                  >
+                    NMT
+                  </Text>
+                </Flex>
+              )
+              : null}
             {Number(data?.balance?.locked?.replace(/[^0-9]/ig, ''))
               ? (
                 <Flex
@@ -300,6 +346,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 </Flex>
               )
               : null}
+
             <Flex
               cursor="pointer"
               width="100%"
@@ -310,9 +357,12 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               _hover={{
                 background: '#F9F9F9',
               }}
-              onClick={() => history.push(`/account/${address}/wallet?id=0`)}
             >
-              <Flex width="100%" justifyContent="space-between">
+              <Flex
+                width="100%"
+                justifyContent="space-between"
+                onClick={() => { history.push(`/account/${address}/wallet?id=0`); setOpening(false); }}
+              >
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
@@ -335,7 +385,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   fontWeight="400"
                   color="#858999"
                 >
-                  {data!.ownerNftscount}
+                  {data?.ownerNftscount}
                 </Text>
               </Flex>
               <Link
@@ -355,6 +405,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   border: 'none',
                   textDecoration: 'none',
                 }}
+                onClick={() => { setOpening(false); }}
               >
                 {t('common.buy')}
               </Link>
@@ -370,9 +421,12 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               _hover={{
                 background: '#F9F9F9',
               }}
-              onClick={() => history.push(`/account/${address}/wallet?id=1`)}
             >
-              <Flex width="100%" justifyContent="space-between">
+              <Flex
+                width="100%"
+                justifyContent="space-between"
+                onClick={() => { history.push(`/account/${address}/wallet?id=1`); setOpening(false); }}
+              >
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
@@ -395,7 +449,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   fontWeight="400"
                   color="#858999"
                 >
-                  {data!.createdNftCount}
+                  {data?.createdNftCount}
                 </Text>
               </Flex>
               <Link
@@ -415,6 +469,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   border: 'none',
                   textDecoration: 'none',
                 }}
+                onClick={() => { setOpening(false); }}
               >
                 {t('common.add')}
               </Link>
@@ -430,9 +485,12 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               _hover={{
                 background: '#F9F9F9',
               }}
-              onClick={() => history.push(`/account/${address}/wallet?id=2`)}
             >
-              <Flex width="100%" justifyContent="space-between">
+              <Flex
+                width="100%"
+                justifyContent="space-between"
+                onClick={() => { history.push(`/account/${address}/wallet?id=2`); setOpening(false); }}
+              >
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
@@ -455,12 +513,12 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   fontWeight="400"
                   color="#858999"
                 >
-                  {data!.createdClassCount}
+                  {data?.createdClassCount}
                 </Text>
               </Flex>
               <Link
                 as={RouterLink}
-                to={`/account/${data!.address}/wallet?id=2`}
+                to={`/account/${data?.address}/wallet?id=2`}
                 width="47px"
                 textAlign="right"
                 ml="12px"
@@ -475,6 +533,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   border: 'none',
                   textDecoration: 'none',
                 }}
+                onClick={() => { setOpening(false); }}
               >
                 {t('common.add')}
               </Link>

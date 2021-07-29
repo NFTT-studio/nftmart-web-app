@@ -71,7 +71,7 @@ const ICON_LIST = ICONS.map((item, index) => ({
   id: index,
   link: '',
 }));
-const OfferssArr = [1, 2, 3];
+
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
 
 const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
@@ -103,6 +103,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const collectionName = collectionsData?.collection?.metadata?.name;
   const collectionDescription = collectionsData?.collection?.metadata?.description;
   const nftName = nftData?.nftInfo?.metadata.name;
+  const OffersArr = nftData?.nftInfo?.offers;
+  console.log(OffersArr);
 
   const firstOffer = nftData?.nftInfo?.offers[0];
   const ownerId = nftData?.nftInfo?.owner_id;
@@ -185,7 +187,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     >
                       {t('Detail.cancel')}
                     </Button>
-                    {/* <Button
+                    <Button
                       ml="10px"
                       width="110px"
                       height="40px"
@@ -203,8 +205,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                       onClick={() => history.push(`/sellSetting/${nftId}`)}
                     >
-                      {t('Detail.Setting')}
-                    </Button> */}
+                      {t('Detail.setting')}
+                    </Button>
                   </Flex>
                 </Flex>
 
@@ -845,7 +847,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     isDisabled={isLoginAddress}
                     onClick={handleBuy}
                   >
-                    {t('Detail.buyNow')}
+                    {!isLoginAddress ? t('Detail.buyNow') : '-'}
                   </Button>
 
                   {/* <Text
@@ -922,7 +924,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             </Flex>
 
             <Flex className="DetailRight" width="788px">
-              <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
+              <Accordion width="100%" defaultIndex={[1]} allowMultiple>
                 <AccordionItem width="100%" border="none">
                   <AccordionButton
                     height="62px"
@@ -1053,7 +1055,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     </Flex>
                     <AccordionIcon />
                   </AccordionButton>
-                  {hideFlag
+                  {OffersArr.length
                     ? (
                       <AccordionPanel p="0 20px">
                         <Flex w="100%" flexDirection="column" justifyContent="flex-start">
@@ -1067,7 +1069,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               color="#999999"
                               lineHeight="20px"
                             >
-                              {t('Detail.From')}
+                              {t('Detail.from')}
                             </Text>
                             <Text
                               w="136px"
@@ -1078,7 +1080,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               color="#999999"
                               lineHeight="20px"
                             >
-                              {t('Detail.Price')}
+                              {t('Detail.price')}
                             </Text>
                             <Text
                               w="136px"
@@ -1089,7 +1091,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               color="#999999"
                               lineHeight="20px"
                             >
-                              {t('Detail.Expiration')}
+                              {t('Detail.expiration')}
                             </Text>
                             <Text
                               w="136px"
@@ -1102,71 +1104,76 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             />
 
                           </Flex>
-                          {OfferssArr.map(() => (
-                            <Flex
-                              key="index"
-                              h="54px"
-                              w="100%"
-                              flexDirection="row"
-                              justifyContent="space-between"
-                              align="center"
-                            >
-                              <Text
-                                w="136px"
-                                textAlign="left"
-                                fontSize="14px"
-                                fontFamily="TTHoves-Regular, TTHoves"
-                                fontWeight="400"
-                                color="#000000"
-                                lineHeight="20px"
+                          <Box height="162px" overflowY="scroll" boxSizing="border-box">
+                            {OffersArr.map((item) => (
+                              <Box
+                                key={item}
+                                h="54px"
                               >
-                                3gte...7gsh
-                              </Text>
-                              <Text
-                                w="136px"
-                                display="flex"
-                                flexDirection="row"
-                                justifyContent="center"
-                                fontSize="14px"
-                                fontFamily="TTHoves-Regular, TTHoves"
-                                fontWeight="400"
-                                color="#000000"
-                                lineHeight="20px"
-                              >
-                                29084
-                                <Text
-                                  ml="3px"
-                                  color="#999999"
+                                <Flex
+                                  w="100%"
+                                  flexDirection="row"
+                                  justifyContent="space-between"
+                                  align="center"
                                 >
-                                  NMT
-                                </Text>
-                              </Text>
-                              <Text
-                                w="136px"
-                                textAlign="center"
-                                fontSize="14px"
-                                fontFamily="TTHoves-Regular, TTHoves"
-                                fontWeight="400"
-                                color="#000000"
-                                lineHeight="20px"
-                              >
-                                in 2 hours
-                              </Text>
-                              <Text
-                                w="136px"
-                                textAlign="right"
-                                fontSize="14px"
-                                fontFamily="TTHoves-Regular, TTHoves"
-                                fontWeight="400"
-                                color="#3D00FF"
-                                lineHeight="20px"
-                              >
-                                Deal
-                              </Text>
-                            </Flex>
-                          ))}
+                                  <Text
+                                    w="136px"
+                                    textAlign="left"
+                                    fontSize="14px"
+                                    fontFamily="TTHoves-Regular, TTHoves"
+                                    fontWeight="400"
+                                    color="#000000"
+                                    lineHeight="20px"
+                                  >
+                                    {formatAddress(item?.order?.seller_id)}
+                                  </Text>
+                                  <Text
+                                    w="136px"
+                                    display="flex"
+                                    flexDirection="row"
+                                    justifyContent="center"
+                                    fontSize="14px"
+                                    fontFamily="TTHoves-Regular, TTHoves"
+                                    fontWeight="400"
+                                    color="#000000"
+                                    lineHeight="20px"
+                                  >
+                                    {priceStringDivUnit(item?.order?.price)}
+                                    <Text
+                                      ml="3px"
+                                      color="#999999"
+                                    >
+                                      NMT
+                                    </Text>
+                                  </Text>
+                                  <Text
+                                    w="136px"
+                                    textAlign="center"
+                                    fontSize="14px"
+                                    fontFamily="TTHoves-Regular, TTHoves"
+                                    fontWeight="400"
+                                    color="#000000"
+                                    lineHeight="20px"
+                                  >
+                                    -
+                                  </Text>
+                                  <Text
+                                    w="136px"
+                                    textAlign="right"
+                                    fontSize="14px"
+                                    fontFamily="TTHoves-Regular, TTHoves"
+                                    fontWeight="400"
+                                    color="#3D00FF"
+                                    lineHeight="20px"
+                                  >
+                                    {0 ? 'Deal' : '-'}
+                                  </Text>
+                                </Flex>
+                              </Box>
+                            ))}
+                          </Box>
                           <Flex justifyContent="flex-end">
-                            <Button
+                            {/* <Button
                               mt="16px"
                               width="132px"
                               height="40px"
@@ -1179,7 +1186,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               color="#000000"
                             >
                               Make Offer
-                            </Button>
+                            </Button> */}
                           </Flex>
                         </Flex>
                       </AccordionPanel>
@@ -1277,7 +1284,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#999999"
                           lineHeight="20px"
                         >
-                          {t('Detail.From')}
+                          {t('Detail.from')}
                         </Text>
                         <Text
                           w="136px"
