@@ -95,3 +95,5 @@ export const SS58_FORMAT = 50;
 export const TOKEN_TRANSFERABLE_BURNABLE = 0b00000011;
 
 export const NATIVE_CURRENCY_ID = 0;
+
+export const LOGIN_LOCAL_STORAGE_KEY = 'LOGIN_ADDRESS';

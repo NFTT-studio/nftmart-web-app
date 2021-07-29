@@ -6,13 +6,14 @@ import { useHistory } from 'react-router-dom';
 import { web3Accounts, web3Enable, web3FromSource } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { useTranslation } from 'react-i18next';
+import { useLocalStorage } from 'react-use';
 
 import { encodeAddress } from '@polkadot/util-crypto';
 import Card from '../../components/Card';
 import MainContainer from '../../layout/MainContainer';
 import { Polkadot } from '../../assets/images';
 import useParams from '../../hooks/url/useParams';
-import { POLKADOT_EXTENSION } from '../../constants';
+import { LOGIN_LOCAL_STORAGE_KEY, POLKADOT_EXTENSION } from '../../constants';
 import { useAppDispatch } from '../../hooks/redux';
 import { setAccount, setAccounts, setInjector } from '../../redux/chainSlice';
 import { PolkadotIcon } from '../../assets/icons';
@@ -24,7 +25,7 @@ const Connect: FC = () => {
   const { t } = useTranslation();
   const params = useParams();
   const callbackUrl = params.get('callbackUrl');
-
+  const [_, setValue] = useLocalStorage(LOGIN_LOCAL_STORAGE_KEY);
   const [injected, setInjected] = useState(false);
   const [injectedAccounts, setInjectedAccounts] = useState<InjectedAccountWithMeta[]>([]);
 
@@ -58,6 +59,7 @@ const Connect: FC = () => {
     dispatch(setAccount(injectedAccounts[index]));
     dispatch(setInjector(injector));
     dispatch(setAccounts(injectedAccounts));
+    setValue(injectedAccounts[index].address);
     if (callbackUrl && callbackUrl.length > 0) {
       history.push(callbackUrl);
     } else {
