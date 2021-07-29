@@ -169,7 +169,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 NMT
               </Text>
             </Flex>
-            {Number(data?.balance?.locked?.replace(/[^0-9]/ig, ''))
+            {Number(data?.balance?.reserved?.replace(/[^0-9]/ig, ''))
             || Number(data?.balance?.bonded?.replace(/[^0-9]/ig, ''))
             || Number(data?.balance?.locked?.replace(/[^0-9]/ig, ''))
               ? (

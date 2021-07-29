@@ -30,11 +30,13 @@ export const renderBalanceText = (balanceText: string) => {
   const [amount, unit] = capBalanceText.split(' ');
   const [integer, decimal] = amount.toString().split('.');
   const { value } = parseMoneyText(balanceText);
+  console.log(value);
   const [num, str] = value.toString().split('.');
-  const shu = num.concat('.', str);
+  const shu = num.concat('.', str || '0');
+  console.log(shu);
   return (
     <>
-      {Number(shu) > 1000000
+      {Number(shu) > 10000000
         ? (
           <Flex display="inline-flex">
             <Text fontSize="sm" fontWeight="bold">
@@ -60,10 +62,10 @@ export const renderBalanceFreeText = (balanceText: string) => {
   const [integer, decimal] = amount.toString().split('.');
   const { value } = parseMoneyText(balanceText);
   const [num, str] = value.toString().split('.');
-  const shu = num.concat('.', str);
+  const shu = num.concat('.', str || '0');
   return (
     <>
-      {Number(shu) > 1000000
+      {Number(shu) > 10000000
         ? (
           <Flex display="inline-flex">
             <Text fontSize="sm" fontWeight="bold">

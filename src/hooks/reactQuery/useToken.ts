@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import fetchBanner from '../../api/fetchBanner';
+import fetchToken from '../../api/fetchToken';
 import { QUERY_KEYS } from '../../constants';
 
-export default () => useQuery(QUERY_KEYS.BANNER, () => fetchBanner());
+export default () => useQuery(QUERY_KEYS.BANNER, () => fetchToken());
