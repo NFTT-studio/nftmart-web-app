@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Center } from '@chakra-ui/react';
+import { Center, Flex, Box } from '@chakra-ui/react';
 import Helmet from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import { scrollTo } from '../../utils/ui';
@@ -24,16 +24,17 @@ const MainContainer = ({ children, title }: Props) => {
         {title && <title>{title}</title>}
         <link rel="canonical" href="../" />
       </Helmet>
-      <Center
+      <Flex
         as="main"
-        width="1364px"
         height="100%"
+        minHeight="100vh"
         pt="80px"
         boxSizing="border-box"
         flexDirection="column"
+        alignItems="center"
       >
         {children}
-      </Center>
+      </Flex>
     </>
   );
 };

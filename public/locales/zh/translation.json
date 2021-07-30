@@ -140,6 +140,7 @@
     "subtotal": "明细",
     "total": "总额",
     "balance": "余额",
+    "Transferrable": "可用余额",
     "checkoutSub": "结账",
     "cancel": "取消",
     "setting": "售卖设置",
@@ -158,6 +159,11 @@
     "noTradingDataYet":"没有成交记录",
     "noOffersDataYet":"没有提供数据",
     "activities":"相关活动",
+    "makeAnOffer":"提交报价",
+    "offer":"Make an offer",
+    "inAday":"提交报价",
+    "makeOffer":"提交报价",
+    "offerExplain":"*I如果拥有者接受报价，交易将会自动完成。",
     "buySuccess": "购买成功"
   },
   "SellSetting": {
