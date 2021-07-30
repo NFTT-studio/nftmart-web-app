@@ -218,7 +218,7 @@
     "twitter": "Twitter:"
   },
   "Trx": {
-    "inBlock": "Transaction in block",
+    "inblock": "Transaction in block",
     "broadcasting": "Transaction is broadcasting",
     "finalize": "Transaction finalized",
     "failed": "Transaction failed"

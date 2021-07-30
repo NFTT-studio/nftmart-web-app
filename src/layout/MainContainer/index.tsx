@@ -27,7 +27,7 @@ const MainContainer = ({ children, title }: Props) => {
       <Center
         as="main"
         width="1364px"
-        minHeight="100%"
+        height="100%"
         pt="80px"
         boxSizing="border-box"
         flexDirection="column"

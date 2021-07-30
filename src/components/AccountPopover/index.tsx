@@ -154,7 +154,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   fontWeight="400"
                   color="#191A24"
                 >
-                  {data && renderBalanceText(data?.balance.free)}
+                  {data && renderBalanceText(`${data?.balance?.balance} NMT`)}
                 </Text>
               </Flex>
               <Text
@@ -169,9 +169,9 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 NMT
               </Text>
             </Flex>
-            {Number(data?.balance?.reserved?.replace(/[^0-9]/ig, ''))
-            || Number(data?.balance?.bonded?.replace(/[^0-9]/ig, ''))
-            || Number(data?.balance?.locked?.replace(/[^0-9]/ig, ''))
+            {Number(data?.balance?.reserved)
+            || Number(data?.balance?.bonded)
+            || Number(data?.balance?.locked)
               ? (
                 <Flex
                   width="100%"
@@ -198,7 +198,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                       fontWeight="400"
                       color="#999999"
                     >
-                      {data && renderBalanceText(data?.balance.transferrable)}
+                      {data && renderBalanceText(`${data?.balance?.transferrable} NMT`) }
                     </Text>
                   </Flex>
                   <Text
@@ -214,7 +214,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   </Text>
                 </Flex>
               ) : null}
-            {Number(data?.balance?.reserved?.replace(/[^0-9]/ig, ''))
+            {Number(data?.balance?.reserved)
               ? (
                 <Flex
                   width="100%"
@@ -241,7 +241,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                       fontWeight="400"
                       color="#999999"
                     >
-                      {data && renderBalanceText(data?.balance.reserved)}
+                      {data && renderBalanceText(`${data?.balance.reserved} NMT`)}
                     </Text>
                   </Flex>
                   <Text
@@ -258,7 +258,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 </Flex>
               )
               : null}
-            {Number(data?.balance?.locked?.replace(/[^0-9]/ig, ''))
+            {Number(data?.balance?.locked)
               ? (
                 <Flex
                   m="10px 0"
@@ -286,7 +286,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                       fontWeight="400"
                       color="#999999"
                     >
-                      {data && renderBalanceText(data!.balance.locked)}
+                      {data && renderBalanceText(`${data?.balance.locked} NMT`)}
                     </Text>
                   </Flex>
                   <Text
@@ -302,7 +302,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   </Text>
                 </Flex>
               ) : null}
-            {Number(data?.balance?.bonded?.replace(/[^0-9]/ig, ''))
+            {Number(data?.balance?.bonded)
               ? (
                 <Flex
                   width="100%"
@@ -329,7 +329,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                       fontWeight="400"
                       color="#999999"
                     >
-                      {data && renderBalanceText(data?.balance.bonded)}
+                      {data && renderBalanceText(`${data?.balance.bonded} NMT`)}
                     </Text>
                   </Flex>
                   <Text

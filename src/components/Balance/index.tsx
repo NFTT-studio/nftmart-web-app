@@ -29,14 +29,11 @@ export const renderBalanceText = (balanceText: string) => {
   const capBalanceText = balanceText.toUpperCase();
   const [amount, unit] = capBalanceText.split(' ');
   const [integer, decimal] = amount.toString().split('.');
-  const { value } = parseMoneyText(balanceText);
-  console.log(value);
-  const [num, str] = value.toString().split('.');
-  const shu = num.concat('.', str || '0');
-  console.log(shu);
+  const shu = integer.concat('.', decimal || '0');
+
   return (
     <>
-      {Number(shu) > 10000000
+      {Number(shu) > 1000000
         ? (
           <Flex display="inline-flex">
             <Text fontSize="sm" fontWeight="bold">
@@ -60,9 +57,7 @@ export const renderBalanceFreeText = (balanceText: string) => {
   const capBalanceText = balanceText.toUpperCase();
   const [amount, unit] = capBalanceText.split(' ');
   const [integer, decimal] = amount.toString().split('.');
-  const { value } = parseMoneyText(balanceText);
-  const [num, str] = value.toString().split('.');
-  const shu = num.concat('.', str || '0');
+  const shu = integer.concat('.', decimal || '0');
   return (
     <>
       {Number(shu) > 10000000
@@ -79,7 +74,7 @@ export const renderBalanceFreeText = (balanceText: string) => {
               {unit}
             </Text>
           </Flex>
-        ) : `${Math.floor(Number(shu) * 10) / 10}NMT`}
+        ) : `${Math.floor(Number(shu) * 10) / 10}`}
     </>
   );
 };

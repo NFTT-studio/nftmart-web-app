@@ -218,7 +218,7 @@
     "twitter": "Twitter："
   },
   "Trx": {
-    "inBlock": "交易区块正在确认中",
+    "inblock": "交易区块正在确认中",
     "broadcasting": "交易正在广播中",
     "finalize": "交易确认",
     "failed": "交易失败"

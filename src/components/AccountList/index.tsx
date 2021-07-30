@@ -38,9 +38,18 @@ const Account = ({
             <Text fontWeight="medium">{InjectedAccountList[index].meta.name}</Text>
             {data.address ? <Text color={Colors.TextGray}>{encodeAddress(data.address, 50)}</Text> : null}
           </Box>
-          <Box display="inline-flex" alignItems="center">
-            {data && renderBalanceFreeText(data.balance.free)}
-            <Box display="inline-block" as="img" src={SelectIcon.default} w="32px" h="32px" />
+          <Box
+            display="inline-flex"
+            alignItems="center"
+            height="20px"
+            fontSize="14px"
+            fontFamily="TTHoves-Medium, TTHoves"
+            fontWeight="500"
+            color="#000000"
+          >
+            {data && renderBalanceFreeText(`${data?.balance?.balance} NMT`)}
+            <Text ml="3px" color="#999999">NMT</Text>
+            <Box ml="20px" display="inline-block" as="img" src={SelectIcon.default} w="32px" h="32px" />
           </Box>
         </Box>
       )}
