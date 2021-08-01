@@ -3,7 +3,6 @@ import {
   Stack,
   Popover,
   PopoverTrigger,
-  Portal,
   PopoverContent,
   PopoverArrow,
   PopoverBody,
@@ -85,18 +84,16 @@ const SortBy: FC<SortByProps> = ({ selectedSort, setSelectedSort }) => {
           )}
         </Stack>
       </PopoverTrigger>
-      <Portal>
-        <PopoverContent width="180px" _focus={{ boxShadow: 'none' }}>
-          <PopoverArrow />
-          <PopoverBody display="flex" justifyContent="center">
-            <Stack
-              paddingY={2}
-            >
-              {Sort.map(renderButton)}
-            </Stack>
-          </PopoverBody>
-        </PopoverContent>
-      </Portal>
+      <PopoverContent width="180px" _focus={{ boxShadow: 'none' }}>
+        <PopoverArrow />
+        <PopoverBody display="flex" justifyContent="center">
+          <Stack
+            paddingY={2}
+          >
+            {Sort.map(renderButton)}
+          </Stack>
+        </PopoverBody>
+      </PopoverContent>
     </Popover>
   );
 };

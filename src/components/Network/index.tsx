@@ -3,7 +3,6 @@ import {
   Stack,
   Popover,
   PopoverTrigger,
-  Portal,
   PopoverContent,
   PopoverArrow,
   PopoverBody,
@@ -70,15 +69,13 @@ const Network = (): JSX.Element => {
           )}
         </Stack>
       </PopoverTrigger>
-      <Portal>
-        {/* TODO: Move focus property else where to have common use */}
-        <PopoverContent maxWidth="100px" _focus={{ boxShadow: 'none' }}>
-          <PopoverArrow />
-          <PopoverBody display="flex" justifyContent="center">
-            <Stack paddingY={2}>{Object.keys(Networks).map(renderButton)}</Stack>
-          </PopoverBody>
-        </PopoverContent>
-      </Portal>
+      {/* TODO: Move focus property else where to have common use */}
+      <PopoverContent maxWidth="100px" _focus={{ boxShadow: 'none' }}>
+        <PopoverArrow />
+        <PopoverBody display="flex" justifyContent="center">
+          <Stack paddingY={2}>{Object.keys(Networks).map(renderButton)}</Stack>
+        </PopoverBody>
+      </PopoverContent>
     </Popover>
   );
 };
