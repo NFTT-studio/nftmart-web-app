@@ -118,7 +118,7 @@ const Home = () => {
         </Flex>
       </Flex>
       {categoriesData
-        ? <CategorySelector list={categoriesData.categories} selectId={selectId} handleSelect={handleSelect} />
+        ? <Flex width="1364px"><CategorySelector list={categoriesData.categories} selectId={selectId} handleSelect={handleSelect} /></Flex>
         : null}
 
       <Flex width="100%" minWidth="1364px" justifyContent="center">

@@ -58,6 +58,7 @@ import useIsLoginAddress from '../../hooks/utils/useIsLoginAddress';
 import { SELLING } from '../../constants/Status';
 import { useAppSelector } from '../../hooks/redux';
 import BuyDialog from './BuyDialog';
+import OfferDialog from './OfferDialog';
 
 const propertiesArr = [1, 2, 3, 4, 5, 6];
 const ICONS = [
@@ -84,11 +85,13 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { nftId } = match.params;
   const { data: nftData, isLoading: nftDataIsLoading } = useNft(nftId);
   const collectionsId = nftId.split('-')[0];
+  const tokenId = nftId.split('-')[1];
 
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
 
   const [isShowCancel, setIsShowCancel] = useState(false);
   const [isShowBuy, setIsShowBuy] = useState(false);
+  const [isShowOffer, setIsShowOffer] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data: token } = useToken();
@@ -106,7 +109,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const collectionDescription = collectionsData?.collection?.metadata?.description;
   const nftName = nftData?.nftInfo?.metadata.name;
   const OffersArr = nftData?.nftInfo?.offers;
-  console.log(OffersArr);
 
   const firstOffer = nftData?.nftInfo?.offers[0];
   const ownerId = nftData?.nftInfo?.owner_id;
@@ -117,6 +119,12 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       history.push(`/connect?callbackUrl=item/${nftId}`);
     }
     setIsShowBuy(true);
+  };
+  const handleOffer = () => {
+    if (!account) {
+      history.push(`/connect?callbackUrl=item/${nftId}`);
+    }
+    setIsShowOffer(true);
   };
 
   const NoData = (width: string) => (
@@ -1127,7 +1135,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                                     color="#000000"
                                     lineHeight="20px"
                                   >
-                                    {formatAddress(item?.order?.seller_id)}
+                                    {item?.order?.seller_id ? formatAddress(item?.order?.seller_id) : formatAddress(item?.order?.buyer_id)}
                                   </Text>
                                   <Text
                                     w="136px"
@@ -1175,7 +1183,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             ))}
                           </Box>
                           <Flex justifyContent="flex-end">
-                            {/* <Button
+                            <Button
                               mt="16px"
                               width="132px"
                               height="40px"
@@ -1186,9 +1194,10 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               fontFamily="TTHoves-Regular, TTHoves"
                               fontWeight="500"
                               color="#000000"
+                              onClick={handleOffer}
                             >
                               Make Offer
-                            </Button> */}
+                            </Button>
                           </Flex>
                         </Flex>
                       </AccordionPanel>
@@ -1441,6 +1450,15 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             collectionName={collectionName}
             orderId={orderId}
             ownerId={ownerId}
+          />
+        )}
+        {isShowOffer && (
+          <OfferDialog
+            isShowOffer={isShowOffer}
+            setIsShowOffer={setIsShowOffer}
+            classId={collectionsId}
+            categoryId="0"
+            tokenId={tokenId}
           />
         )}
         {isShowCancel && (

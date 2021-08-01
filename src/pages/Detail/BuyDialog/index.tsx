@@ -22,6 +22,7 @@ import useAccount from '../../../hooks/reactQuery/useAccount';
 import { renderBalanceText } from '../../../components/Balance';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 import useToken from '../../../hooks/reactQuery/useToken';
+import { priceStringDivUnit } from '../../../utils/format';
 
 interface Props {
   price: string,
@@ -260,10 +261,10 @@ const BuyDialog: FC<Props> = (({
               color="#999999"
               lineHeight="20px"
             >
-              {t('Detail.balance')}
+              {t('Detail.Transferrable')}
               :
               {' '}
-              {data && renderBalanceText(data!.balance.free)}
+              {priceStringDivUnit(data?.balance?.balance)}
               {' '}
               NMT
             </Text>
@@ -278,6 +279,7 @@ const BuyDialog: FC<Props> = (({
                 lineHeight="20px"
                 borderRadius="4px"
                 onClick={onSubmit}
+                isDisabled={Number(priceStringDivUnit(data?.balance?.balance)) < Number(price)}
               >
                 {t('Detail.checkoutSub')}
               </Button>
