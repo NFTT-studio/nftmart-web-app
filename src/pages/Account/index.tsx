@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { union, without } from 'lodash';
 import { parse } from 'search-params';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import MainContainer from '../../layout/MainContainer';
 import useCategories from '../../hooks/reactQuery/useCategories';
 import CategorySelector from '../../components/CategorySelector';
@@ -37,8 +38,10 @@ import {
   HeadPortrait,
   IconCreate,
   IconCreateS,
+  Emptyimg,
 } from '../../assets/images';
 import {
+  DEFAULT_PAGE_LIMIT,
   PINATA_SERVER,
 } from '../../constants';
 import CollectionSelector from '../../components/CollectionSelector';
@@ -101,7 +104,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
   const { data: collectionsData } = useCollections({ address });
 
-  const { data: nftsData, isLoading: nftsIsLoading } = useNftsPersonal(
+  const { data: nftsData, isLoading: nftsIsLoading, fetchNextPage: fetchNextPageNftsData } = useNftsPersonal(
     {
       ownerId: address,
       categoryId: selectedCategoryId,
@@ -110,7 +113,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       sortBy: selectedSort,
     },
   );
-  const { data: nftsDataCreate } = useNftsPersonal(
+  const { data: nftsDataCreate, fetchNextPage: fetchNextPageNftsDataCreate } = useNftsPersonal(
     {
       creatorId: address,
       categoryId: selectedCategoryId,
@@ -148,11 +151,13 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   useEffect(() => {
     setCollections(collectionsData?.collections);
   }, [collectionsData?.collections]);
+
   useEffect(() => {
     if (address === account?.address) {
       setIsPerson(true);
     }
-  }, [dataPerson]);
+  }, [account?.address, address, dataPerson]);
+
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     function checkAdult(o: any) {
       return o.metadata.name.indexOf(value) > -1;
@@ -380,20 +385,59 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       fontWeight="400"
                       color="#999999"
                     >
-                      {nftsData?.pageInfo.totalNum}
+                      {nftsData?.pages[0].pageInfo.totalNum}
                       {' '}
                       results
                     </Text>
                     <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
                   </Flex>
                   <Flex width="1088px" flexFlow="row wrap" justifyContent="space-between">
-                    <SimpleGrid
-                      w="100%"
-                      columns={4}
-                      spacing={4}
-                    >
-                      {nftsData?.nfts.map((nft) => <Flex mb="16px"><NftCard nft={nft} /></Flex>)}
-                    </SimpleGrid>
+                    {nftsData?.pages.length ? (
+                      <InfiniteScroll
+                        dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
+                        next={fetchNextPageNftsData}
+                        hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
+                        loader={<h4>Loading...</h4>}
+                        initialScrollY={1}
+                      >
+                        <SimpleGrid
+                          w="100%"
+                          columns={4}
+                          spacing={4}
+                        >
+                          {nftsData?.pages.map((page) => page.nfts.map(
+                            (nft) => <Flex m="11px"><NftCard nft={nft} /></Flex>,
+                          ))}
+                        </SimpleGrid>
+                      </InfiniteScroll>
+                    ) : (
+                      <Flex
+                        width="100%"
+                        height="260px"
+                        background="#FFFFFF"
+                        flexDirection="column"
+                        justifyContent="center"
+                        alignItems="center"
+                      >
+                        <Image
+                          w="150px"
+                          h="100px"
+                          border="1px solid #999999"
+                          borderStyle="dashed"
+                          src={Emptyimg.default}
+                        />
+                        <Text
+                          mt="10px"
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="20px"
+                        >
+                          No data yet
+                        </Text>
+                      </Flex>
+                    )}
                   </Flex>
                 </Flex>
               </Container>
@@ -491,20 +535,61 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       fontWeight="400"
                       color="#999999"
                     >
-                      {nftsData?.pageInfo.totalNum}
+                      {nftsDataCreate?.pages[0].pageInfo.totalNum}
                       {' '}
                       results
                     </Text>
                     <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
                   </Flex>
                   <Flex width="1088px" flexFlow="row wrap" justifyContent="space-between">
-                    <SimpleGrid
-                      w="100%"
-                      columns={4}
-                      spacing={4}
-                    >
-                      {nftsDataCreate?.nfts.map((nft) => <Flex mb="16px"><NftCard nft={nft} /></Flex>)}
-                    </SimpleGrid>
+                    {nftsDataCreate?.pages.length ? (
+                      <InfiniteScroll
+                        dataLength={nftsDataCreate?.pages.length * DEFAULT_PAGE_LIMIT}
+                        next={fetchNextPageNftsData}
+                        hasMore={
+                          nftsDataCreate?.pages.length * DEFAULT_PAGE_LIMIT < nftsDataCreate?.pages[0].pageInfo.totalNum
+                        }
+                        loader={<h4>Loading...</h4>}
+                        initialScrollY={1}
+                      >
+                        <SimpleGrid
+                          w="100%"
+                          columns={4}
+                          spacing={4}
+                        >
+                          {nftsDataCreate?.pages.map((page) => page.nfts.map(
+                            (nft) => <Flex m="11px"><NftCard nft={nft} /></Flex>,
+                          ))}
+                        </SimpleGrid>
+                      </InfiniteScroll>
+                    ) : (
+                      <Flex
+                        width="100%"
+                        height="260px"
+                        background="#FFFFFF"
+                        flexDirection="column"
+                        justifyContent="center"
+                        alignItems="center"
+                      >
+                        <Image
+                          w="150px"
+                          h="100px"
+                          border="1px solid #999999"
+                          borderStyle="dashed"
+                          src={Emptyimg.default}
+                        />
+                        <Text
+                          mt="10px"
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="20px"
+                        >
+                          No data yet
+                        </Text>
+                      </Flex>
+                    )}
                   </Flex>
                 </Flex>
               </Container>
@@ -787,7 +872,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                     to={`/collection/${address}?collectionId=${item.id}`}
                   >
                     <Flex
-                      key={item}
+                      key={item.id}
                       width="260px"
                       borderRadius="4px"
                       border="1px solid #000000"

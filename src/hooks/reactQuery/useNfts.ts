@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery, useInfiniteQuery } from 'react-query';
 import fetchNfts, { FetchNftParams } from '../../api/fetchNfts';
 import { QUERY_KEYS } from '../../constants';
 
@@ -7,12 +7,15 @@ const expensive = 'expensive';
 const cheap = 'cheapest';
 
 export default ({
-  sortBy, categoryId, collectionId, status, address, limit,
-}: FetchNftParams) => useQuery(
+  sortBy, categoryId, collectionId, status, address, number,
+}: FetchNftParams) => useInfiniteQuery(
   [QUERY_KEYS.NFTS, sortBy, categoryId, collectionId, status],
-  () => fetchNfts({
-    sortBy, categoryId, collectionId, status, address, limit,
+  ({ pageParam = 0 }) => fetchNfts({
+    sortBy, categoryId, collectionId, status, address, number, pageParam,
   }),
+  {
+    getNextPageParam: (lastPage, pages) => (pages.length + 1),
+  },
 );
 
 export const useHotNfts = (categoryId?: string) => useQuery(

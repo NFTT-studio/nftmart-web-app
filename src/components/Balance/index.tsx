@@ -15,7 +15,7 @@ import { map } from 'ramda';
 import { useTranslation } from 'react-i18next';
 
 import { Colors } from '../../constants';
-import { baseOptions, parseMoneyText } from '../../utils/format';
+import { parseMoneyText } from '../../utils/format';
 
 export interface BalanceType {
   feeFrozen: string;

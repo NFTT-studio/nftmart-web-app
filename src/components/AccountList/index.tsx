@@ -6,7 +6,7 @@ import { encodeAddress } from '@polkadot/util-crypto';
 import { SelectIcon } from '../../assets/icons';
 import { Colors } from '../../constants';
 import useAccount from '../../hooks/reactQuery/useAccount';
-import { renderBalanceFreeText, renderBalanceText } from '../Balance';
+import { renderBalanceFreeText } from '../Balance';
 
 interface AccountProps {
   handleClick: (index: number) => Promise<void>;

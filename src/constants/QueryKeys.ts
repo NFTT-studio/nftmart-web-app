@@ -11,3 +11,5 @@ export const QUERY_KEYS = {
   ADDRESS: 'ADDRESS',
   WHITELIST: 'WHITELIST',
 };
+
+export const DEFAULT_PAGE_LIMIT = 20;

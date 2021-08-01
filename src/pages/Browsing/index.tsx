@@ -14,6 +14,7 @@ import {
   SimpleGrid,
 } from '@chakra-ui/react';
 import { union, without } from 'lodash';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useTranslation } from 'react-i18next';
 import MainContainer from '../../layout/MainContainer';
@@ -35,6 +36,7 @@ import {
 import useParams from '../../hooks/url/useParams';
 import { statusArr } from '../../constants/Status';
 import Sort from '../../constants/Sort';
+import { DEFAULT_PAGE_LIMIT } from '../../constants';
 
 const Browsing = () => {
   const { t } = useTranslation();
@@ -49,7 +51,9 @@ const Browsing = () => {
 
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
   const { data: collectionsData, isLoading: collectionsIsLoading } = useCollections({});
-  const { data: nftsData, isLoading: nftsIsLoading } = useNfts(
+  const {
+    data: nftsData, isLoading: nftsIsLoading, fetchNextPage,
+  } = useNfts(
     {
       categoryId: selectedCategoryId,
       collectionId: selectedCollection,
@@ -201,21 +205,31 @@ const Browsing = () => {
               fontWeight="400"
               color="#999999"
             >
-              {nftsData?.pageInfo.totalNum}
+              {nftsData?.pages[0].pageInfo.totalNum}
               {' '}
               results
             </Text>
             <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
           </Flex>
           <Flex width="1088px">
-            {nftsData?.orders.length
+            {nftsData?.pages.length
               ? (
-                <SimpleGrid
-                  w="100%"
-                  columns={4}
+                <InfiniteScroll
+                  dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
+                  next={fetchNextPage}
+                  hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
+                  loader={<h4>Loading...</h4>}
+                  initialScrollY={1}
                 >
-                  {nftsData?.orders.map((nft) => <Flex mb="11px"><OrderCard nft={nft} /></Flex>)}
-                </SimpleGrid>
+                  <SimpleGrid
+                    w="100%"
+                    columns={4}
+                  >
+                    {nftsData?.pages.map((page) => page.orders.map(
+                      (nft) => <Flex m="11px"><OrderCard nft={nft} /></Flex>,
+                    ))}
+                  </SimpleGrid>
+                </InfiniteScroll>
               ) : (
                 <Flex
                   width="100%"

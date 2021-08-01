@@ -2,7 +2,7 @@ import { identity, pickBy } from 'lodash';
 import axiosClient from '../apiClient/axiosClient';
 
 type Nfts = {
-  nfts: Nft,
+  nfts: Nft[],
   pageInfo: {
     pageNum: number
     pageSize: number
