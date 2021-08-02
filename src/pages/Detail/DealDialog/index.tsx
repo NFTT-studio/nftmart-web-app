@@ -47,6 +47,8 @@ const DealDialog: FC<Props> = (({
         success: (result) => {
           if (result.dispatchError) {
             toast(<ToastBody title="Error" message={t('common.error')} type="error" />);
+            setIsShowDeal(false);
+            setIsSubmitting(false);
           } else {
             toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
             setTimeout(() => {
@@ -58,6 +60,7 @@ const DealDialog: FC<Props> = (({
         },
         error: (error) => {
           toast(<ToastBody title="Error" message={error} type="error" />);
+          setIsShowDeal(false);
           setIsSubmitting(false);
         },
       },
