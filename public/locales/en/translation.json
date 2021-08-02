@@ -12,6 +12,7 @@
     "buy": "Buy",
     "add": "Add",
     "success": "Success",
+    "error": "error",
     "submit": "Submit",
     "nav": {
       "navHome": "Home",
@@ -151,6 +152,7 @@
     "fixedPrice": "Fixed price",
     "fixedPriceExplain": "*You can buy this item immediately using Fixed Price",
     "cancelDesc": "Do you want to cancel this order?",
+    "dealDesc": "Do you want to accept this offer?",
     "buyError": "Buy Error",
     "createdBy": "Created by",
     "currentPrice":"Current Price",
@@ -164,6 +166,7 @@
     "inAday":"In a day",
     "makeOffer":"Make Offer",
     "offerExplain":"*If the owner accepts, the transaction will be automatically executed", 
+    "deal":"Deal",
     "buySuccess": "Buy Success"
   },
   "SellSetting": {

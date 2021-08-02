@@ -22,6 +22,7 @@ import { RouteComponentProps, useHistory, Link as RouterLink } from 'react-route
 import MainContainer from '../../layout/MainContainer';
 import PriceHistoryChart from './PriceHistoryChart';
 import CancelDialog from './CancelDialog';
+import DealDialog from './DealDialog';
 
 import {
   IconDetailsocllections,
@@ -90,9 +91,13 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
 
   const [isShowCancel, setIsShowCancel] = useState(false);
+  const [isShowDeal, setIsShowDeal] = useState(false);
   const [isShowBuy, setIsShowBuy] = useState(false);
   const [isShowOffer, setIsShowOffer] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [offerId, setOfferId] = useState('');
+  const [offerOwner, setOfferOwner] = useState('');
 
   const { data: token } = useToken();
   const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
@@ -110,10 +115,19 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const nftName = nftData?.nftInfo?.metadata.name;
   const OffersArr = nftData?.nftInfo?.offers;
 
-  const firstOffer = nftData?.nftInfo?.offers[0];
   const ownerId = nftData?.nftInfo?.owner_id;
-  const orderId = firstOffer?.order_id;
+  const orderId = nftData?.nftInfo?.order_id;
   const hideFlag = false;
+
+  const handleDeal = (offerIdItem:string, offerOwnerItem:string) => {
+    if (!account) {
+      history.push(`/connect?callbackUrl=item/${nftId}`);
+    }
+    setOfferId(offerIdItem);
+    setOfferOwner(offerOwnerItem);
+    setIsShowDeal(true);
+  };
+
   const handleBuy = () => {
     if (!account) {
       history.push(`/connect?callbackUrl=item/${nftId}`);
@@ -156,6 +170,17 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       </Flex>
     </AccordionPanel>
   );
+  const add0 = (m) => (m < 10 ? `0${m}` : m);
+  const format = (shijianchuo) => {
+    const time = new Date(shijianchuo);
+    const y = time.getFullYear();
+    const m = time.getMonth() + 1;
+    const d = time.getDate();
+    const h = time.getHours();
+    const mm = time.getMinutes();
+    const s = time.getSeconds();
+    return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
+  };
 
   return (
     <MainContainer title={`${nftName}-${collectionName}${t('Detail.title')}`}>
@@ -1065,147 +1090,185 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     </Flex>
                     <AccordionIcon />
                   </AccordionButton>
-                  {OffersArr.length
-                    ? (
-                      <AccordionPanel p="0 20px">
-                        <Flex w="100%" flexDirection="column" justifyContent="flex-start">
-                          <Flex h="40px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
-                            <Text
-                              w="136px"
-                              textAlign="left"
-                              fontSize="12px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#999999"
-                              lineHeight="20px"
-                            >
-                              {t('Detail.from')}
-                            </Text>
-                            <Text
-                              w="136px"
-                              textAlign="center"
-                              fontSize="12px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#999999"
-                              lineHeight="20px"
-                            >
-                              {t('Detail.price')}
-                            </Text>
-                            <Text
-                              w="136px"
-                              textAlign="center"
-                              fontSize="12px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#999999"
-                              lineHeight="20px"
-                            >
-                              {t('Detail.expiration')}
-                            </Text>
-                            <Text
-                              w="136px"
-                              textAlign="right"
-                              fontSize="12px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#999999"
-                              lineHeight="20px"
-                            />
-
-                          </Flex>
-                          <Box height="162px" overflowY="scroll" boxSizing="border-box">
-                            {OffersArr.map((item) => (
-                              <Box
-                                key={item}
-                                h="54px"
+                  <AccordionPanel p="0 20px">
+                    <Flex w="100%" flexDirection="column" justifyContent="flex-start">
+                      {OffersArr.length
+                        ? (
+                          <>
+                            <Flex h="40px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
+                              <Text
+                                w="136px"
+                                textAlign="left"
+                                fontSize="12px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#999999"
+                                lineHeight="20px"
                               >
-                                <Flex
-                                  w="100%"
-                                  flexDirection="row"
-                                  justifyContent="space-between"
-                                  align="center"
-                                >
-                                  <Text
-                                    w="136px"
-                                    textAlign="left"
-                                    fontSize="14px"
-                                    fontFamily="TTHoves-Regular, TTHoves"
-                                    fontWeight="400"
-                                    color="#000000"
-                                    lineHeight="20px"
-                                  >
-                                    {item?.order?.seller_id ? formatAddress(item?.order?.seller_id) : formatAddress(item?.order?.buyer_id)}
-                                  </Text>
-                                  <Text
-                                    w="136px"
-                                    display="flex"
-                                    flexDirection="row"
-                                    justifyContent="center"
-                                    fontSize="14px"
-                                    fontFamily="TTHoves-Regular, TTHoves"
-                                    fontWeight="400"
-                                    color="#000000"
-                                    lineHeight="20px"
-                                  >
-                                    {priceStringDivUnit(item?.order?.price)}
-                                    <Text
-                                      ml="3px"
-                                      color="#999999"
-                                    >
-                                      NMT
-                                    </Text>
-                                  </Text>
-                                  <Text
-                                    w="136px"
-                                    textAlign="center"
-                                    fontSize="14px"
-                                    fontFamily="TTHoves-Regular, TTHoves"
-                                    fontWeight="400"
-                                    color="#000000"
-                                    lineHeight="20px"
-                                  >
-                                    -
-                                  </Text>
-                                  <Text
-                                    w="136px"
-                                    textAlign="right"
-                                    fontSize="14px"
-                                    fontFamily="TTHoves-Regular, TTHoves"
-                                    fontWeight="400"
-                                    color="#3D00FF"
-                                    lineHeight="20px"
-                                  >
-                                    {0 ? 'Deal' : '-'}
-                                  </Text>
-                                </Flex>
-                              </Box>
-                            ))}
-                          </Box>
-                          <Flex justifyContent="flex-end">
-                            <Button
-                              mt="16px"
-                              width="132px"
-                              height="40px"
-                              background="#FFFFFF"
-                              borderRadius="4px"
-                              border="1px solid #000000"
-                              fontSize="16px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="500"
-                              color="#000000"
-                              onClick={handleOffer}
-                            >
-                              Make Offer
-                            </Button>
-                          </Flex>
-                        </Flex>
-                      </AccordionPanel>
-                    )
-                    : (
-                      <NoData width="788px" />
-                    )}
+                                {t('Detail.from')}
+                              </Text>
+                              <Text
+                                w="136px"
+                                textAlign="center"
+                                fontSize="12px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#999999"
+                                lineHeight="20px"
+                              >
+                                {t('Detail.price')}
+                              </Text>
+                              <Text
+                                w="136px"
+                                textAlign="center"
+                                fontSize="12px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#999999"
+                                lineHeight="20px"
+                              >
+                                {t('Detail.expiration')}
+                              </Text>
+                              <Text
+                                w="136px"
+                                textAlign="right"
+                                fontSize="12px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#999999"
+                                lineHeight="20px"
+                              />
 
+                            </Flex>
+                            <Box height="162px" overflowY="scroll" boxSizing="border-box">
+                              {OffersArr.map((item) => (
+                                <Box
+                                  key={item}
+                                  h="54px"
+                                >
+                                  <Flex
+                                    w="100%"
+                                    flexDirection="row"
+                                    justifyContent="space-between"
+                                    align="center"
+                                  >
+                                    <Text
+                                      w="136px"
+                                      textAlign="left"
+                                      fontSize="14px"
+                                      fontFamily="TTHoves-Regular, TTHoves"
+                                      fontWeight="400"
+                                      color="#000000"
+                                      lineHeight="20px"
+                                    >
+                                      {item?.order?.seller_id ? formatAddress(item?.order?.seller_id) : formatAddress(item?.order?.buyer_id)}
+                                    </Text>
+                                    <Text
+                                      w="136px"
+                                      display="flex"
+                                      flexDirection="row"
+                                      justifyContent="center"
+                                      fontSize="14px"
+                                      fontFamily="TTHoves-Regular, TTHoves"
+                                      fontWeight="400"
+                                      color="#000000"
+                                      lineHeight="20px"
+                                    >
+                                      {priceStringDivUnit(item?.order?.price)}
+                                      <Text
+                                        ml="3px"
+                                        color="#999999"
+                                      >
+                                        NMT
+                                      </Text>
+                                    </Text>
+                                    {item?.order?.deadline ? (
+                                      <Text
+                                        minW="136px"
+                                        textAlign="center"
+                                        fontSize="14px"
+                                        fontFamily="TTHoves-Regular, TTHoves"
+                                        fontWeight="400"
+                                        color="#000000"
+                                        lineHeight="20px"
+                                      >
+                                        {format(item?.order?.deadline)}
+                                        )
+                                      </Text>
+                                    ) : (
+                                      <Text
+                                        w="136px"
+                                        textAlign="center"
+                                        fontSize="14px"
+                                        fontFamily="TTHoves-Regular, TTHoves"
+                                        fontWeight="400"
+                                        color="#000000"
+                                        lineHeight="20px"
+                                      >
+                                        -
+                                      </Text>
+                                    )}
+                                    {item?.order?.deadline && isLoginAddress ? (
+                                      <Text
+                                        w="136px"
+                                        textAlign="right"
+                                        fontSize="14px"
+                                        fontFamily="TTHoves-Regular, TTHoves"
+                                        fontWeight="400"
+                                        color="#3D00FF"
+                                        lineHeight="20px"
+                                        onClick={() => {
+                                          handleDeal(item.order_id, item.buyer_id);
+                                        }}
+                                      >
+                                        {' '}
+                                        {t('Detail.deal')}
+                                      </Text>
+                                    ) : (
+                                      <Text
+                                        w="136px"
+                                        textAlign="right"
+                                        fontSize="14px"
+                                        fontFamily="TTHoves-Regular, TTHoves"
+                                        fontWeight="400"
+                                        lineHeight="20px"
+                                      >
+                                        {' '}
+                                        -
+                                      </Text>
+                                    )}
+                                  </Flex>
+                                </Box>
+                              ))}
+                            </Box>
+                          </>
+                        )
+                        : (
+                          <NoData width="732px" />
+                        )}
+                      <Flex justifyContent="flex-end">
+                        {isLoginAddress ? (
+                          ''
+                        ) : (
+                          <Button
+                            mt="16px"
+                            width="132px"
+                            height="40px"
+                            background="#FFFFFF"
+                            borderRadius="4px"
+                            border="1px solid #000000"
+                            fontSize="16px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="500"
+                            color="#000000"
+                            onClick={handleOffer}
+                          >
+                            {t('Detail.makeOffer')}
+                          </Button>
+                        )}
+                      </Flex>
+                    </Flex>
+                  </AccordionPanel>
                 </AccordionItem>
               </Accordion>
             </Flex>
@@ -1457,7 +1520,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             isShowOffer={isShowOffer}
             setIsShowOffer={setIsShowOffer}
             classId={collectionsId}
-            categoryId="0"
+            categoryId={nftData?.nftInfo?.category?.id}
             tokenId={tokenId}
           />
         )}
@@ -1467,6 +1530,14 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setIsShowCancel={setIsShowCancel}
             orderId={orderId}
             nftId={nftId}
+          />
+        )}
+        {isShowDeal && (
+          <DealDialog
+            isShowDeal={isShowDeal}
+            setIsShowDeal={setIsShowDeal}
+            offerId={offerId}
+            offerOwner={offerOwner}
           />
         )}
       </Container>

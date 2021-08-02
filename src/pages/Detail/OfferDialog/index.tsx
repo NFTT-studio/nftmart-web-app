@@ -84,19 +84,20 @@ const OfferDialog: FC<Props> = (({
         cb: {
           success: (result) => {
             if (result.dispatchError) {
-              toast(<ToastBody title="Error" message={t('Detail.buyError')} type="error" />);
+              toast(<ToastBody title="Error" message={t('common.error')} type="error" />);
             } else {
-              toast(<ToastBody title="Success" message={t('Detail.buySuccess')} type="success" />);
+              toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
               setTimeout(() => {
-                history.push(`/account/${account?.address}/wallet}`);
-              }, 3000);
+                history.push(`/item/${classId}-${tokenId}`);
+                setIsSubmitting(false);
+                setIsShowOffer(false);
+              }, 1500);
             }
-            setIsSubmitting(false);
           },
           error: (error: string) => {
             toast(<ToastBody title="Error" message={error} type="error" />);
             setIsSubmitting(false);
-            setIsSubmitting(false);
+            setIsShowOffer(false);
           },
         },
       });
@@ -210,7 +211,8 @@ const OfferDialog: FC<Props> = (({
                 fontWeight="400"
                 color="#999999"
               >
-                ≈$676
+                ≈$
+                {formik.values.price * token.price}
               </Text>
               <Text
                 mb="13px"

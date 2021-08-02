@@ -12,6 +12,7 @@
     "buy": "购买",
     "add": "添加",
     "success": "成功",
+    "error": "错误",
     "submit": "提交",
     "nav": {
       "navHome": "首页",
@@ -151,6 +152,7 @@
     "fixedPrice": "一口价",
     "fixedPriceExplain": "*您可以使用固定价格立即购买此商品",
     "cancelDesc": "你想要取消这个订单吗?",
+    "dealDesc": "你想接受这个提议吗？",
     "buyError": "购买错误",
     "createdBy": "创作于",
     "currentPrice":"当前价格",
@@ -164,6 +166,7 @@
     "inAday":"提交报价",
     "makeOffer":"提交报价",
     "offerExplain":"*I如果拥有者接受报价，交易将会自动完成。",
+    "deal":"成交",
     "buySuccess": "购买成功"
   },
   "SellSetting": {
