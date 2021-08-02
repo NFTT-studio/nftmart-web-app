@@ -60,7 +60,7 @@ const BuyDialog: FC<Props> = (({
           } else {
             toast(<ToastBody title="Success" message={t('Detail.buySuccess')} type="success" />);
             setTimeout(() => {
-              history.push(`/account/${account?.address}/wallet}`);
+              history.push(`/account/${account?.address}/wallet`);
             }, 3000);
           }
           setIsSubmitting(false);
@@ -264,7 +264,7 @@ const BuyDialog: FC<Props> = (({
               {t('Detail.Transferrable')}
               :
               {' '}
-              {priceStringDivUnit(data?.balance?.balance)}
+              {priceStringDivUnit(data?.balance?.transferrable)}
               {' '}
               NMT
             </Text>
@@ -279,7 +279,7 @@ const BuyDialog: FC<Props> = (({
                 lineHeight="20px"
                 borderRadius="4px"
                 onClick={onSubmit}
-                isDisabled={Number(priceStringDivUnit(data?.balance?.balance)) < Number(price)}
+                isDisabled={Number(priceStringDivUnit(data?.balance?.transferrable)) < Number(price)}
               >
                 {t('Detail.checkoutSub')}
               </Button>
