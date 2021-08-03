@@ -19,7 +19,6 @@ import { number } from 'yup';
 import { takeOrder } from '../../../polkaSDK/api/takeOrder';
 import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
-import { renderBalanceText } from '../../../components/Balance';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 import useToken from '../../../hooks/reactQuery/useToken';
 import { priceStringDivUnit } from '../../../utils/format';

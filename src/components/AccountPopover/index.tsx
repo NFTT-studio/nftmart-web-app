@@ -30,8 +30,7 @@ import {
 import { statusArr } from '../../constants/Status';
 import { EXPLORER_URL } from '../../constants';
 import useAccount from '../../hooks/reactQuery/useAccount';
-import { renderBalanceText } from '../Balance';
-import { priceStringDivUnit } from '../../utils/format';
+import { renderNmtNumberText } from '../Balance';
 
 export interface LoginProps {
   avatar?: string;
@@ -153,7 +152,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 fontWeight="400"
                 color="#191A24"
               >
-                {data && renderBalanceText(`${priceStringDivUnit(data?.balance?.balance)} NMT`)}
+                {data && renderNmtNumberText(data?.balance?.balance)}
               </Text>
             </Flex>
             <Text
@@ -197,7 +196,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="400"
                     color="#999999"
                   >
-                    {data && renderBalanceText(`${priceStringDivUnit(data?.balance?.transferrable)} NMT`)}
+                    {data && renderNmtNumberText(data?.balance?.transferrable)}
                   </Text>
                 </Flex>
                 <Text
@@ -240,7 +239,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="400"
                     color="#999999"
                   >
-                    {data && renderBalanceText(`${priceStringDivUnit(data?.balance.reserved)} NMT`)}
+                    {data && renderNmtNumberText(data?.balance?.reserved)}
                   </Text>
                 </Flex>
                 <Text
@@ -285,7 +284,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="400"
                     color="#999999"
                   >
-                    {data && renderBalanceText(`${priceStringDivUnit(data?.balance.locked)} NMT`)}
+                    {data && renderNmtNumberText(data?.balance?.locked)}
                   </Text>
                 </Flex>
                 <Text
@@ -328,7 +327,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="400"
                     color="#999999"
                   >
-                    {data && renderBalanceText(`${priceStringDivUnit(data?.balance.bonded)} NMT`)}
+                    {data && renderNmtNumberText(data?.balance?.bonded)}
                   </Text>
                 </Flex>
                 <Text

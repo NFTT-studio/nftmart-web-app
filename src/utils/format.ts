@@ -35,4 +35,12 @@ export const extractBalanceText = (balanceText: string) => {
 
 export const priceStringDivUnit = (priceString: string) => bnToBn(priceString).div(UnitBn).toString();
 
+export const nmtNumberToString = (nmtNumber: string) => {
+  const nmtBn = toBigNumber(nmtNumber).div(UnitBn.toNumber());
+  const millBn = toBigNumber(10 ** baseOptions[2].power);
+  if (nmtBn.gte(millBn)) {
+    return `${nmtBn.div(millBn).toFixed(3).toString()} M`;
+  }
+  return nmtBn.toFixed(1).toString();
+};
 export const toFixedDecimals = (n: NumberValue, place = 8) => toBigNumber(n).toFormat(place);

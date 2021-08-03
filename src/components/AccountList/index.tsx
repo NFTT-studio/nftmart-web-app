@@ -6,8 +6,7 @@ import { encodeAddress } from '@polkadot/util-crypto';
 import { SelectIcon } from '../../assets/icons';
 import { Colors } from '../../constants';
 import useAccount from '../../hooks/reactQuery/useAccount';
-import { renderBalanceFreeText } from '../Balance';
-import { priceStringDivUnit } from '../../utils/format';
+import { renderNmtNumberText } from '../Balance';
 
 interface AccountProps {
   handleClick: (index: number) => Promise<void>;
@@ -48,7 +47,7 @@ const Account = ({
             fontWeight="500"
             color="#000000"
           >
-            {data && renderBalanceFreeText(`${priceStringDivUnit(data?.balance?.balance)} NMT`)}
+            {data && renderNmtNumberText(`${data?.balance?.balance}`)}
             <Text ml="3px" color="#999999">NMT</Text>
             <Box ml="20px" display="inline-block" as="img" src={SelectIcon.default} w="32px" h="32px" />
           </Box>

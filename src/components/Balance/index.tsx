@@ -15,7 +15,7 @@ import { map } from 'ramda';
 import { useTranslation } from 'react-i18next';
 
 import { Colors } from '../../constants';
-import { parseMoneyText } from '../../utils/format';
+import { nmtNumberToString, parseMoneyText } from '../../utils/format';
 
 export interface BalanceType {
   feeFrozen: string;
@@ -52,29 +52,26 @@ export const renderBalanceText = (balanceText: string) => {
   );
 };
 
-export const renderBalanceFreeText = (balanceText: string) => {
+export const renderNmtNumberText = (balanceText: string) => {
   if (!balanceText || typeof balanceText !== 'string') return null;
-  const capBalanceText = balanceText.toUpperCase();
-  const [amount, unit] = capBalanceText.split(' ');
+  const formattedString = nmtNumberToString(balanceText);
+  const [amount, unit] = formattedString.split(' ');
   const [integer, decimal] = amount.toString().split('.');
-  const shu = integer.concat('.', decimal || '0');
   return (
     <>
-      {Number(shu) > 10000000
-        ? (
-          <Flex display="inline-flex">
-            <Text fontSize="sm" fontWeight="bold">
-              {integer}
-              {decimal ? '.' : ''}
-            </Text>
-            <Text fontSize="sm" fontWeight="bold" marginRight={1}>
-              {decimal && decimal.substring(0, 3)}
-            </Text>
-            <Text fontSize="sm" fontWeight="bold">
-              {unit}
-            </Text>
-          </Flex>
-        ) : `${Math.floor(Number(shu) * 10) / 10}`}
+      <Flex display="inline-flex">
+        <Text fontSize="sm" fontWeight="bold">
+          {integer}
+          {decimal ? '.' : ''}
+        </Text>
+        <Text fontSize="sm" fontWeight="bold" marginRight={1}>
+          {decimal && decimal.substring(0, 3)}
+        </Text>
+        <Text fontSize="sm" fontWeight="bold">
+          {unit}
+          NMT
+        </Text>
+      </Flex>
     </>
   );
 };
