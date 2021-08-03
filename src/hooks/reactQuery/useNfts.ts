@@ -7,11 +7,11 @@ const expensive = 'expensive';
 const cheap = 'cheapest';
 
 export default ({
-  sortBy, categoryId, collectionId, status, address, number,
+  sortBy, categoryId, collectionId, status, address, number, buyerId, sellerId,
 }: FetchNftParams) => useInfiniteQuery(
-  [QUERY_KEYS.NFTS, sortBy, categoryId, collectionId, status],
+  [QUERY_KEYS.NFTS, sortBy, categoryId, collectionId, status, buyerId, sellerId],
   ({ pageParam = 0 }) => fetchNfts({
-    sortBy, categoryId, collectionId, status, address, number, pageParam,
+    sortBy, categoryId, collectionId, status, address, buyerId, sellerId, number, pageParam,
   }),
   {
     getNextPageParam: (lastPage, pages) => (pages.length + 1),

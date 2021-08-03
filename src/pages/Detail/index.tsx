@@ -1143,7 +1143,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             <Box height="162px" overflowY="scroll" boxSizing="border-box">
                               {OffersArr.map((item) => (
                                 <Box
-                                  key={item}
+                                  key={item?.order?.seller_id}
                                   h="54px"
                                 >
                                   <Flex
@@ -1192,8 +1192,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                                         color="#000000"
                                         lineHeight="20px"
                                       >
-                                        {format(item?.order?.deadline)}
-                                        )
+                                        {item?.order?.deadline}
                                       </Text>
                                     ) : (
                                       <Text
@@ -1384,9 +1383,9 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         </Text>
 
                       </Flex>
-                      {OfferssUnitArr.map(() => (
+                      {OfferssUnitArr.map((item) => (
                         <Flex
-                          key="index"
+                          key={item}
                           h="54px"
                           w="100%"
                           flexDirection="row"

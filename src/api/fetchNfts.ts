@@ -12,13 +12,15 @@ export type FetchNftParams = {
   categoryId?: string | null,
   collectionId?: string[],
   status?: string[],
-  address?: string[]
+  address?: string[],
+  buyerId?: string,
+  sellerId?: string,
   number?: number,
   pageParam?: number
 }
 
 export default async ({
-  sortBy, categoryId, collectionId, status, number = DEFAULT_PAGE_LIMIT, pageParam = 0,
+  sortBy, categoryId, collectionId, status, buyerId, sellerId, number = DEFAULT_PAGE_LIMIT, pageParam = 0,
 }: FetchNftParams) => {
   const res = await axiosClient.get<NftsList>('/orders', {
     params: pickBy({
@@ -27,6 +29,8 @@ export default async ({
       collectionId: collectionId || undefined,
       status,
       number,
+      buyerId,
+      sellerId,
       page: pageParam,
     }, identity),
   });

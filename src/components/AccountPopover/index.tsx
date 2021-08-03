@@ -359,7 +359,11 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
             <Flex
               width="100%"
               justifyContent="space-between"
-              onClick={() => { history.push(`/account/${address}/wallet?id=0`); setOpening(false); }}
+              onClick={() => {
+                history.push(`/account/${address}/wallet?id=0`);
+                setOpening(false);
+                localStorage.setItem('ButtonSelect', '0');
+              }}
             >
               <Flex width="100%" justifyContent="flex-start" alignItems="center">
                 <Image
@@ -423,7 +427,11 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
             <Flex
               width="100%"
               justifyContent="space-between"
-              onClick={() => { history.push(`/account/${address}/wallet?id=1`); setOpening(false); }}
+              onClick={() => {
+                history.push(`/account/${address}/wallet?id=1`);
+                setOpening(false);
+                localStorage.setItem('ButtonSelect', '1');
+              }}
             >
               <Flex width="100%" justifyContent="flex-start" alignItems="center">
                 <Image
@@ -467,7 +475,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 border: 'none',
                 textDecoration: 'none',
               }}
-              onClick={() => { setOpening(false); }}
+              onClick={() => { setOpening(false); localStorage.setItem('ButtonSelect', '1'); }}
             >
               {t('common.add')}
             </Link>
@@ -487,7 +495,10 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
             <Flex
               width="100%"
               justifyContent="space-between"
-              onClick={() => { history.push(`/account/${address}/wallet?id=2`); setOpening(false); }}
+              onClick={() => {
+                history.push(`/account/${address}/wallet?id=3`); setOpening(false);
+                localStorage.setItem('ButtonSelect', '3');
+              }}
             >
               <Flex width="100%" justifyContent="flex-start" alignItems="center">
                 <Image
@@ -516,7 +527,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
             </Flex>
             <Link
               as={RouterLink}
-              to={`/account/${data?.address}/wallet?id=2`}
+              to={`/account/${data?.address}/wallet?id=3`}
               width="47px"
               textAlign="right"
               ml="12px"
@@ -531,7 +542,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 border: 'none',
                 textDecoration: 'none',
               }}
-              onClick={() => { setOpening(false); }}
+              onClick={() => { setOpening(false); localStorage.setItem('ButtonSelect', '3'); }}
             >
               {t('common.add')}
             </Link>
