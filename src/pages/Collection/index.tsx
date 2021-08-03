@@ -13,6 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, useLocation, useHistory } from 'react-router-dom';
 import { parse } from 'search-params';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import MainContainer from '../../layout/MainContainer';
 import NftCard from '../../components/NftCard';
 import { useAppSelector } from '../../hooks/redux';
@@ -29,6 +30,7 @@ import {
 } from '../../assets/images';
 import {
   PINATA_SERVER,
+  DEFAULT_PAGE_LIMIT,
 } from '../../constants';
 import SortBy from '../../components/SortBy';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
@@ -64,7 +66,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { data: collectionsData } = useCollectionsSinger(classId);
 
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
-  const { data: nftData, isLoading } = useNftsPersonal(
+  const { data: nftsData, isLoading, fetchNextPage } = useNftsPersonal(
     {
       ownerId,
       classId,
@@ -296,20 +298,31 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             fontWeight="400"
             color="#999999"
           >
-            {nftData?.pageInfo.totalNum || 0}
+            {nftsData?.pages[0].pageInfo.totalNum}
             {' '}
             results
           </Text>
           <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
         </Flex>
       </Flex>
-      <SimpleGrid
-        w="100%"
-        m="20px 0 20px 0"
-        columns={5}
+      <InfiniteScroll
+        dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
+        next={fetchNextPage}
+        hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
+        loader={<h4>Loading...</h4>}
+        initialScrollY={1}
       >
-        {nftData.nfts.map((nft) => <Flex mb="16px"><NftCard nft={nft} /></Flex>)}
-      </SimpleGrid>
+        <SimpleGrid
+          w="100%"
+          m="20px 0 20px 0"
+          columns={5}
+        >
+          {nftsData?.pages.map((page) => page.nfts?.map(
+            (nft) => <Flex m="16px"><NftCard nft={nft} /></Flex>,
+          ))}
+        </SimpleGrid>
+      </InfiniteScroll>
+
     </MainContainer>
   );
 };

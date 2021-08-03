@@ -203,7 +203,7 @@
   "Account": {
     "title": "Account",
     "myWallet": "我的钱包",
-    "Offers": "报价",
+    "offers": "报价",
     "collections": "作品集",
     "offersMade": "发出的报价",
     "offersReceived": "收到的报价",

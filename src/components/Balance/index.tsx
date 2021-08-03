@@ -69,7 +69,6 @@ export const renderNmtNumberText = (balanceText: string) => {
         </Text>
         <Text fontSize="sm" fontWeight="bold">
           {unit}
-          NMT
         </Text>
       </Flex>
     </>

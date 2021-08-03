@@ -29,10 +29,10 @@ import {
   IconAllStateone,
   IconSearch,
   AccountBanner,
-  // IconOffers,
+  IconOffers,
   IconWallet,
   IconDetailsocllections,
-  // IconOffersS,
+  IconOffersS,
   IconWalletS,
   IconDetailsocllectionsS,
   HeadPortrait,
@@ -51,20 +51,21 @@ import { statusArr } from '../../constants/Status';
 // import useCollections from '../../hooks/reactQuery/useCollections';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
 import CreateCard from './CreateCard';
+import OfferItem from './OfferItem';
 import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
+import useNfts from '../../hooks/reactQuery/useNfts';
+import { renderNmtNumberText } from '../../components/Balance';
 
 const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
   const { address } = match.params;
+  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
 
   const TABS = [
     {
       id: '0', icon: IconWallet.default, iconS: IconWalletS.default, title: t('Account.myWallet'),
     },
-    // {
-    //   id: '1', icon: IconOffers.default, iconS: IconOffersS.default, title: t('Account.Offers'),
-    // },
     {
       id: '1',
       icon: IconCreate.default,
@@ -72,12 +73,26 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       title: t('Account.Created'),
     },
     {
-      id: '2',
+      id: '2', icon: IconOffers.default, iconS: IconOffersS.default, title: t('Account.offers'),
+    },
+    {
+      id: '3',
       icon: IconDetailsocllections.default,
       iconS: IconDetailsocllectionsS.default,
       title: t('Account.collections'),
     },
   ];
+  const offersMadeButton = [
+    {
+      id: '0',
+      title: t('Account.offersMade'),
+    },
+    {
+      id: '1',
+      title: t('Account.offersReceived'),
+    },
+  ];
+
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
   const dataPerson = useAccount(address);
@@ -91,9 +106,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const [selectedCollection, setSelectedCollectionArr] = useState();
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
 
-  const [selectTabId, setSelectTabId] = useState(Number(search.id) || 0);
+  const [selectTabId, setSelectTabId] = useState(Number(localStorage.getItem('ButtonSelect')) || 0);
   const handletabSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectTabId(Number(event.currentTarget.id));
+    localStorage.setItem('ButtonSelect', event.currentTarget.id);
   };
 
   const [offersMadeButtonId, setOffersMadeButtonId] = useState(0);
@@ -122,6 +138,20 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       sortBy: selectedSort,
     },
   );
+  const { data: offersBuyerIdArr, fetchNextPage: fetchNextPagesBuyer } = useNfts(
+    {
+      buyerId: address,
+      collectionId: selectedCollection,
+      status: selectedStatusArr,
+    },
+  );
+  const { data: offersSellerArr, fetchNextPage: fetchNextPagesSeller } = useNfts(
+    {
+      sellerId: address,
+      collectionId: selectedCollection,
+      status: selectedStatusArr,
+    },
+  );
 
   const handleSelectCategory: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectedCategoryId(event.currentTarget.id);
@@ -143,8 +173,8 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   };
 
   useEffect(() => {
-    setSelectTabId(Number(search.id) || 0);
-  }, [search.id]);
+    setSelectTabId(Number(localStorage.getItem('ButtonSelect')) || 0);
+  }, [Number(localStorage.getItem('ButtonSelect'))]);
 
   const [collections, setCollections] = useState([]);
 
@@ -595,7 +625,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               </Container>
             </TabPanel>
           ) : ''}
-          {/* {selectTabId === 1 ? (
+          {selectTabId === 2 ? (
             <TabPanel>
               <Container mt="40px" display="flex">
                 <Flex
@@ -612,16 +642,19 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                 >
                   <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="2px">
                     <Box as="img" src={IconAllState.default} alt="" w="22px" h="22px" mr="8px" />
-                    <Text>{t('Browsing.Status')}</Text>
+                    <Text>{t('Browsing.status')}</Text>
                   </Flex>
 
                   <Flex width="100%" flexFlow="wrap" justifyContent="space-between">
                     <StatusSelector
-                    statusArr={statusArr} selectedArr={selectedStatusArr} handleSelect={handleSelectStatus} />
+                      statusArr={statusArr}
+                      selectedArr={selectedStatusArr}
+                      handleSelect={handleSelectStatus}
+                    />
                   </Flex>
                   <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 12px 0">
                     <Box as="img" src={IconAllStateone.default} alt="" w="22px" h="22px" mr="8px" />
-                    <Text>{t('Browsing.Collections')}</Text>
+                    <Text>{t('Browsing.collections')}</Text>
                   </Flex>
                   <InputGroup
                     variant="unstyled"
@@ -647,7 +680,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                   </InputGroup>
 
                   <CollectionSelector
-                    collectionArr={collectionsData!.list}
+                    collectionArr={collections}
                     selectedArr={selectedCollection}
                     handleSelect={handleSelectCollection}
                   />
@@ -709,7 +742,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                         color="#000000"
                         lineHeight="20px"
                       >
-                        {t('Account.UnitPrice')}
+                        {t('Account.unitPrice')}
                       </Text>
                       <Text
                         width="60px"
@@ -719,7 +752,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                         color="#000000"
                         lineHeight="20px"
                       >
-                        {t('Account.Quantity')}
+                        {t('Account.quantity')}
                       </Text>
                       <Text
                         width="60px"
@@ -729,7 +762,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                         color="#000000"
                         lineHeight="20px"
                       >
-                        {t('Account.From')}
+                        {t('Account.from')}
                       </Text>
                       <Text
                         width="120px"
@@ -740,126 +773,110 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                         color="#000000"
                         lineHeight="20px"
                       >
-                        {t('Account.Expiration')}
+                        {t('Account.expiration')}
                       </Text>
                     </Flex>
-                    {offersMadeArr.map((item, index) => (
-                      <Flex
-                        key={item}
-                        p="0 20px"
-                        width="100%"
-                        height="81px"
-                        flexFlow="row"
-                        justifyContent="space-between"
-                        alignItems="center"
-                        borderBottom="1px solid #E5E5E5"
-                      >
-                        <Flex
-                          flexDirection="row"
-                          justifyContent="flex-start"
-                          width="224px"
-                          textAlign="left"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#000000"
-                          lineHeight="20px"
-                        >
-                          <Image
-                            mr="10px"
-                            width="54px"
-                            height="40px"
-                            borderRadius="4px"
-                            src={AccountBanner.default}
-                            alt=""
-                          />
-                          <Flex
-                            flexDirection="column"
-                            textAlign="left"
-                            fontSize="12px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#999999"
-                            lineHeight="14px"
-                          >
-                            <Text
-                              mb="5px"
-                              width="60px"
-                              fontSize="14px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#000000"
-                              lineHeight="20px"
+                    {offersMadeButtonId === 0
+                      ? (
+                        <>
+                          {offersBuyerIdArr?.pages.length ? (
+                            <InfiniteScroll
+                              dataLength={offersBuyerIdArr?.pages.length * DEFAULT_PAGE_LIMIT}
+                              next={fetchNextPagesBuyer}
+                              hasMore={offersBuyerIdArr?.pages.length * DEFAULT_PAGE_LIMIT < offersBuyerIdArr?.pages[0].pageInfo.totalNum}
+                              loader={<h4>Loading...</h4>}
+                              initialScrollY={1}
                             >
-                              BeSide
-                            </Text>
-                            <Text>
-                              Parity Asia hackathon
-                            </Text>
-                          </Flex>
-                        </Flex>
-                        <Text
-                          display="flex"
-                          flexDirection="row"
-                          justifyContent="center"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#000000"
-                          lineHeight="20px"
-                        >
-                          29084
-                          <Text
-                            ml="3px"
-                            fontSize="14px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#999999"
-                            lineHeight="20px"
-                          >
-                            NMT
-                          </Text>
-                        </Text>
-                        <Text
-                          width="60px"
-                          fontSize="14px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#000000"
-                          lineHeight="20px"
-                        >
-                          6
-                        </Text>
-                        <Text
-                          width="60px"
-                          fontSize="14px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#000000"
-                          lineHeight="20px"
-                        >
-                          4tf...fp
-                        </Text>
-                        <Text
-                          width="120px"
-                          textAlign="right"
-                          fontSize="14px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#000000"
-                          lineHeight="20px"
-                          textStroke="1px #979797"
-                        >
-                          in 2 hours
-                        </Text>
-                      </Flex>
-                    ))}
+                              {offersBuyerIdArr?.pages.map((page) => page?.orders?.map((item) => (
+                                <OfferItem offer={item} />
+                              )))}
+                            </InfiniteScroll>
+                          ) : (
+                            <Flex
+                              width="100%"
+                              height="260px"
+                              background="#FFFFFF"
+                              flexDirection="column"
+                              justifyContent="center"
+                              alignItems="center"
+                            >
+                              <Image
+                                w="150px"
+                                h="100px"
+                                border="1px solid #999999"
+                                borderStyle="dashed"
+                                src={Emptyimg.default}
+                              />
+                              <Text
+                                mt="10px"
+                                fontSize="14px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#999999"
+                                lineHeight="20px"
+                              >
+                                No data yet
+                              </Text>
+                            </Flex>
+                          )}
+                        </>
+                      )
+                      : null}
+                    {offersMadeButtonId === 1
+                      ? (
+                        <>
+                          {offersSellerArr?.pages.length ? (
+                            <InfiniteScroll
+                              dataLength={offersSellerArr?.pages.length * DEFAULT_PAGE_LIMIT}
+                              next={fetchNextPagesBuyer}
+                              hasMore={offersSellerArr?.pages.length * DEFAULT_PAGE_LIMIT < offersSellerArr?.pages[0].pageInfo.totalNum}
+                              loader={<h4>Loading...</h4>}
+                              initialScrollY={1}
+                            >
+                              {offersSellerArr?.pages.map((page) => page?.orders?.map((item) => (
+                                <OfferItem offer={item} />
+                              )))}
+                            </InfiniteScroll>
+                          ) : (
+                            <Flex
+                              width="100%"
+                              height="260px"
+                              background="#FFFFFF"
+                              flexDirection="column"
+                              justifyContent="center"
+                              alignItems="center"
+                            >
+                              <Image
+                                w="150px"
+                                h="100px"
+                                border="1px solid #999999"
+                                borderStyle="dashed"
+                                src={Emptyimg.default}
+                              />
+                              <Text
+                                mt="10px"
+                                fontSize="14px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#999999"
+                                lineHeight="20px"
+                              >
+                                No data yet
+                              </Text>
+                            </Flex>
+                          )}
+                        </>
+                      )
+                      : null}
+                    {/* {offersMadeArr ? offersMadeArr?.orders?.map((item, index) => (
+
+                    )) : ''} */}
                   </Flex>
                 </Flex>
               </Container>
             </TabPanel>
-          ) : ''} */}
-          {selectTabId === 2 ? (
+          ) : ''}
+          {selectTabId === 3 ? (
             <Container mt="40px">
               <SimpleGrid
                 columns={5}

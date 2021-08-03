@@ -13,6 +13,7 @@ import { useHistory, Link as RouterLink } from 'react-router-dom';
 import { IPFS_URL } from '../../constants';
 import { priceStringDivUnit } from '../../utils/format';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { renderNmtNumberText } from '../Balance';
 
 import {
   PriceIcon,
@@ -28,7 +29,7 @@ const NftCard: FC<NftCardProps> = ({
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const price = priceStringDivUnit(nft?.price);
+  const price = renderNmtNumberText(nft?.price);
   return (
     <Link
       as={RouterLink}

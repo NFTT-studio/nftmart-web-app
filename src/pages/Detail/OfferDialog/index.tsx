@@ -21,6 +21,7 @@ import {
 } from 'formik';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import DatePicker from 'react-date-picker';
 
 import { useHistory } from 'react-router-dom';
 import { number } from 'yup';
@@ -49,6 +50,7 @@ const OfferDialog: FC<Props> = (({
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
   const { data: token } = useToken();
+  const [value, onChange] = useState(new Date());
 
   const { account } = chainState;
   const { data } = useAccount(account!.address);
@@ -284,6 +286,10 @@ const OfferDialog: FC<Props> = (({
                       src={IconCalendar.default}
                     />
 )}
+                />
+                <DatePicker
+                  onChange={onChange}
+                  value={value}
                 />
               </InputGroup>
               <Flex w="100%" justifyContent="center" pt="10px">
