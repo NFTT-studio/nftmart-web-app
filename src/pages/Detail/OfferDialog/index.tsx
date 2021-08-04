@@ -79,12 +79,7 @@ const OfferDialog: FC<Props> = (({
 
     const hours = Math.floor(msecDiffer % (24 * 3600 * 1000));
 
-    const datas = {
-      days,
-      hours,
-    };
     onExpiration(hours);
-    console.log(expiration);
     return hours;
   };
 
