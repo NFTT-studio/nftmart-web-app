@@ -68,7 +68,6 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const { data: nftsData, isLoading, fetchNextPage } = useNftsPersonal(
     {
-      ownerId,
       classId,
       sortBy: selectedSort,
     },
@@ -148,7 +147,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
       ) : ''}
 
       <Image mt="20px" maxWidth="1364px" width="100%" src={CollectionBackground.default} alt="banner" />
-      <Flex w="100%" direction="row" paddingTop="20px" paddingBottom="20px">
+      <Flex w="100%" maxWidth="1364px" direction="row" paddingTop="20px" paddingBottom="20px">
         <Avatar
           m="0 20px"
           src={`${PINATA_SERVER}${collectionsData?.collection?.metadata.logoUrl}`}
@@ -282,6 +281,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
       <Flex
         m="0px 0 0px 0"
         width="100%"
+        maxWidth="1364px"
         h="36px"
         flexDirection="column"
         justifyContent="space-between"
@@ -314,6 +314,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
       >
         <SimpleGrid
           w="100%"
+          maxWidth="1364px"
           m="20px 0 20px 0"
           columns={5}
         >

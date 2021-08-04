@@ -20,6 +20,7 @@ const CreateCard: FC<Props> = (({ collectionId }) => {
     <Link
       as={RouterLink}
       to={collectionId ? `/profile/nft/create/${collectionId}` : '/profile/collection/create'}
+
     >
       <Flex
         width="260px"

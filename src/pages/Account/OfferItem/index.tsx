@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Link,
@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { renderNmtNumberText } from '../../../components/Balance';
+import { getBlock } from '../../../polkaSDK/api/getBlock';
 
 import {
   PINATA_SERVER,
@@ -20,10 +21,43 @@ const OfferItem: FC<Props> = (({ offer }) => {
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
   const { t } = useTranslation();
 
+  const [remainingTime, setRemainingTime] = useState(0);
+  getBlock().then((res) => {
+    setRemainingTime(res);
+  });
+
+  const timeBlock = (index:numer) => {
+    const times = (index - remainingTime) * 6;
+
+    let theTime = parseInt(times.toString(), 10);
+    let middle = 0;
+    let hour = 0;
+
+    if (theTime > 60) {
+      middle = parseInt((theTime / 60).toString(), 10);
+      theTime = parseInt((theTime % 60).toString(), 10);
+      if (middle > 60) {
+        hour = parseInt((middle / 60).toString(), 10);
+        middle = parseInt((middle % 60).toString(), 10);
+      }
+    }
+    let result = null;
+    // let result = `${parseInt(theTime.toString(), 10)}`;
+    // if (middle > 0) {
+    //   result = `${parseInt(middle.toString(), 10)}:${result}`;
+    // }
+    if (hour > 0) {
+      // result = `${parseInt(hour.toString(), 10)}:${result}`;
+      result = `${parseInt(hour.toString(), 10)}`;
+    }
+    return result;
+  };
+
   return (
     <Link
       as={RouterLink}
       to={`/item/${offer?.nft?.nft_id}`}
+
     >
       <Flex
         key={offer?.id}
@@ -34,6 +68,9 @@ const OfferItem: FC<Props> = (({ offer }) => {
         justifyContent="space-between"
         alignItems="center"
         borderBottom="1px solid #E5E5E5"
+        _hover={{
+          background: '#F9F9F9',
+        }}
       >
         <Flex
           flexDirection="row"
@@ -132,7 +169,11 @@ const OfferItem: FC<Props> = (({ offer }) => {
           lineHeight="20px"
           textStroke="1px #979797"
         >
-          {offer?.deadline}
+          in
+          {' '}
+          {timeBlock(offer?.deadline)}
+          {' '}
+          hours
         </Text>
       </Flex>
     </Link>

@@ -26,13 +26,12 @@ import DatePicker from 'react-date-picker';
 import { useHistory } from 'react-router-dom';
 import { number } from 'yup';
 import * as Yup from 'yup';
+import { time } from 'console';
 import { submitOffer } from '../../../polkaSDK/api/submitOffer';
 import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
-import { renderBalanceText } from '../../../components/Balance';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 import useToken from '../../../hooks/reactQuery/useToken';
-import { priceStringDivUnit } from '../../../utils/format';
 import {
   IconCalendar,
 } from '../../../assets/images';
@@ -51,6 +50,7 @@ const OfferDialog: FC<Props> = (({
   const history = useHistory();
   const { data: token } = useToken();
   const [value, onChange] = useState(new Date());
+  const [expiration, onExpiration] = useState(0);
 
   const { account } = chainState;
   const { data } = useAccount(account!.address);
@@ -58,6 +58,35 @@ const OfferDialog: FC<Props> = (({
   const { t } = useTranslation();
   const cancelRef = useRef<HTMLDivElement>(null);
   const oneMonth = (60 * 60 * 24 * 30) / 6;
+
+  const add0 = (m) => (m < 10 ? `0${m}` : m);
+  const format = (shijianchuo) => {
+    const times = new Date(shijianchuo);
+    const y = times.getFullYear();
+    const m = times.getMonth() + 1;
+    const d = times.getDate();
+    const h = times.getHours();
+    const mm = times.getMinutes();
+    const s = times.getSeconds();
+    return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
+  };
+  const timestamp1 = (index) => Date.parse(index);
+  const timeDiffer = (minDate, maxDate) => {
+    if (minDate || maxDate) { return 0; }
+    const msecDiffer = maxDate.getTime() - minDate.getTime();
+
+    const days = Math.floor(msecDiffer / (24 * 3600 * 1000));
+
+    const hours = Math.floor(msecDiffer % (24 * 3600 * 1000));
+
+    const datas = {
+      days,
+      hours,
+    };
+    onExpiration(hours);
+    console.log(expiration);
+    return hours;
+  };
 
   const schema = Yup.object().shape({
     during: Yup.string().required(t('Create.required')),
@@ -250,35 +279,13 @@ const OfferDialog: FC<Props> = (({
                 // eslint-disable-next-line react/no-children-prop
                   children={t('Detail.inAday')}
                 />
-                <Input
-                  id="during"
-                  name="during"
-                  value={formik.values.during}
-                  onChange={formik.handleChange}
-                  fontSize="16px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  lineHeight="14px"
-                  color="#000000"
-                  _focus={{
-                    boxShadow: 'none',
-                    color: '#000000',
-                    border: '1px solid #000000',
-                  }}
-                  _after={{
-                    boxShadow: 'none',
-                    color: '#000000',
-                    border: '1px solid #000000',
-                  }}
-                  placeholder=""
-                  _placeholder={{
-                    color: '#999999',
-                    fontSize: '12px',
-                  }}
-                />
-                <InputRightElement
-              // eslint-disable-next-line react/no-children-prop
-                  children={(
+                <DatePicker
+                  onChange={onChange}
+                  value={value}
+                  clearIcon={null}
+                  minDate={new Date()}
+                  required
+                  calendarIcon={(
                     <Image
                       w="22px"
                       h="22px"
@@ -287,10 +294,19 @@ const OfferDialog: FC<Props> = (({
                     />
 )}
                 />
-                <DatePicker
-                  onChange={onChange}
-                  value={value}
-                />
+
+                {/* <DatePicker
+                  onChange={formik.handleChange}
+                  value={formik.values.during}
+                  calendarIcon={(
+                    <Image
+                      w="22px"
+                      h="22px"
+                      borderStyle="dashed"
+                      src={IconCalendar.default}
+                    />
+)}
+                /> */}
               </InputGroup>
               <Flex w="100%" justifyContent="center" pt="10px">
                 <Button

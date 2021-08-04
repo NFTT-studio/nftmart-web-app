@@ -55,7 +55,6 @@ import OfferItem from './OfferItem';
 import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
 import useNfts from '../../hooks/reactQuery/useNfts';
-import { renderNmtNumberText } from '../../components/Balance';
 
 const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
@@ -124,7 +123,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     {
       ownerId: address,
       categoryId: selectedCategoryId,
-      collectionId: selectedCollection,
+      classId: selectedCollection,
       status: selectedStatusArr,
       sortBy: selectedSort,
     },
@@ -350,7 +349,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       handleSelect={handleSelectStatus}
                     />
                   </Flex>
-                  <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 20px 0">
+                  <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 12px 0">
                     <Box as="img" src={IconAllStateone.default} alt="" w="22px" h="22px" mr="8px" />
                     <Text>{t('Browsing.collections')}</Text>
                   </Flex>
@@ -475,7 +474,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
           ) : ''}
           {selectTabId === 1 ? (
             <TabPanel>
-              <Container mt="40px" display="flex">
+              <Container mt="20px" display="flex">
                 <Flex
                   w="260px"
                   h="492px"
@@ -515,7 +514,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                     justifyContent="center"
                     alignItems="center"
                     p="0px 0 0px 12px"
-                    m="12px 0 20px 0px"
+                    m="0px 0 12px 0px"
                   >
                     <Image w="16px" h="16px" mr="6px" src={IconSearch.default} alt="" />
                     <Input
@@ -627,7 +626,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
           ) : ''}
           {selectTabId === 2 ? (
             <TabPanel>
-              <Container mt="40px" display="flex">
+              <Container mt="20px" display="flex">
                 <Flex
                   w="260px"
                   h="492px"
@@ -667,7 +666,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                     justifyContent="center"
                     alignItems="center"
                     p="0px 0 0px 12px"
-                    m="12px 0 20px 0px"
+                    m="0px 0 12px 0px"
                   >
                     <Image w="16px" h="16px" mr="6px" src={IconSearch.default} alt="" />
                     <Input
@@ -783,7 +782,8 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                             <InfiniteScroll
                               dataLength={offersBuyerIdArr?.pages.length * DEFAULT_PAGE_LIMIT}
                               next={fetchNextPagesBuyer}
-                              hasMore={offersBuyerIdArr?.pages.length * DEFAULT_PAGE_LIMIT < offersBuyerIdArr?.pages[0].pageInfo.totalNum}
+                              hasMore={offersBuyerIdArr?.pages.length
+                                * DEFAULT_PAGE_LIMIT < offersBuyerIdArr?.pages[0].pageInfo.totalNum}
                               loader={<h4>Loading...</h4>}
                               initialScrollY={1}
                             >
@@ -828,8 +828,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                           {offersSellerArr?.pages.length ? (
                             <InfiniteScroll
                               dataLength={offersSellerArr?.pages.length * DEFAULT_PAGE_LIMIT}
-                              next={fetchNextPagesBuyer}
-                              hasMore={offersSellerArr?.pages.length * DEFAULT_PAGE_LIMIT < offersSellerArr?.pages[0].pageInfo.totalNum}
+                              next={fetchNextPagesSeller}
+                              hasMore={offersSellerArr?.pages.length
+                                * DEFAULT_PAGE_LIMIT < offersSellerArr?.pages[0].pageInfo.totalNum}
                               loader={<h4>Loading...</h4>}
                               initialScrollY={1}
                             >

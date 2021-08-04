@@ -100,7 +100,7 @@ const NftCard: FC<NftCardProps> = ({
             <Box pr={2}>
               {nft?.metadata && (
               <Text
-                width="130px"
+                maxWidth="130px"
                 color="#FFFFFF"
                 align="center"
                 fontSize="16px"

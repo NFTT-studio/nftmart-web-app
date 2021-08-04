@@ -1,3 +1,5 @@
+import { none } from 'ramda';
+
 const obj = {
   global: () => ({
     // font
@@ -54,6 +56,14 @@ const obj = {
     '.swiper-container': {
       width: '100%',
     },
+    '.react-date-picker': {
+      width: '100%',
+      height: '100%',
+    },
+    '.react-date-picker__wrapper': {
+      border: 'none',
+    },
+
   }),
 };
 

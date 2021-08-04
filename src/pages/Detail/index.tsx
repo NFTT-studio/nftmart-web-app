@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Flex,
   Container,
@@ -23,6 +23,7 @@ import MainContainer from '../../layout/MainContainer';
 import PriceHistoryChart from './PriceHistoryChart';
 import CancelDialog from './CancelDialog';
 import DealDialog from './DealDialog';
+import { getBlock } from '../../polkaSDK/api/getBlock';
 
 import {
   IconDetailsocllections,
@@ -81,6 +82,38 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const chainState = useAppSelector((state) => state.chain);
   const { t } = useTranslation();
   const history = useHistory();
+
+  const [remainingTime, setRemainingTime] = useState(0);
+  getBlock().then((res) => {
+    setRemainingTime(res);
+  });
+
+  const timeBlock = (index:numer) => {
+    const times = (index - remainingTime) * 6;
+
+    let theTime = parseInt(times.toString(), 10);
+    let middle = 0;
+    let hour = 0;
+
+    if (theTime > 60) {
+      middle = parseInt((theTime / 60).toString(), 10);
+      theTime = parseInt((theTime % 60).toString(), 10);
+      if (middle > 60) {
+        hour = parseInt((middle / 60).toString(), 10);
+        middle = parseInt((middle % 60).toString(), 10);
+      }
+    }
+    let result = null;
+    // let result = `${parseInt(theTime.toString(), 10)}`;
+    // if (middle > 0) {
+    //   result = `${parseInt(middle.toString(), 10)}:${result}`;
+    // }
+    if (hour > 0) {
+      // result = `${parseInt(hour.toString(), 10)}:${result}`;
+      result = `${parseInt(hour.toString(), 10)}`;
+    }
+    return result;
+  };
 
   const { account } = chainState;
   const { nftId } = match.params;
@@ -170,17 +203,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       </Flex>
     </AccordionPanel>
   );
-  const add0 = (m) => (m < 10 ? `0${m}` : m);
-  const format = (shijianchuo) => {
-    const time = new Date(shijianchuo);
-    const y = time.getFullYear();
-    const m = time.getMonth() + 1;
-    const d = time.getDate();
-    const h = time.getHours();
-    const mm = time.getMinutes();
-    const s = time.getSeconds();
-    return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
-  };
 
   return (
     <MainContainer title={`${nftName}-${collectionName}${t('Detail.title')}`}>
@@ -1192,7 +1214,11 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                                         color="#000000"
                                         lineHeight="20px"
                                       >
-                                        {item?.order?.deadline}
+                                        in
+                                        {' '}
+                                        {timeBlock(item?.order?.deadline)}
+                                        {' '}
+                                        hours
                                       </Text>
                                     ) : (
                                       <Text
