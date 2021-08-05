@@ -103,14 +103,14 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         middle = parseInt((middle % 60).toString(), 10);
       }
     }
-    let result = null;
-    // let result = `${parseInt(theTime.toString(), 10)}`;
-    // if (middle > 0) {
-    //   result = `${parseInt(middle.toString(), 10)}:${result}`;
-    // }
+    // let result = null;
+    let result = `${parseInt(theTime.toString(), 10)}`;
+    if (middle > 0) {
+      result = `${parseInt(middle.toString(), 10)}:${result}`;
+    }
     if (hour > 0) {
-      // result = `${parseInt(hour.toString(), 10)}:${result}`;
-      result = `${parseInt(hour.toString(), 10)}`;
+      result = `${parseInt(hour.toString(), 10)}:${result}`;
+      // result = `${parseInt(hour.toString(), 10)}`;
     }
     return result;
   };
@@ -317,6 +317,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         display="flex"
         flexDirection="column"
         width="100%"
+        height="100%"
         justifyContent="flex-start"
       >
 
@@ -1204,7 +1205,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                                         NMT
                                       </Text>
                                     </Text>
-                                    {item?.order?.deadline ? (
+                                    {item?.order?.deadline && item.order.status_id === 'Created' ? (
                                       <Text
                                         minW="136px"
                                         textAlign="center"
@@ -1233,7 +1234,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                                         -
                                       </Text>
                                     )}
-                                    {item?.order?.deadline && isLoginAddress ? (
+                                    {item?.order?.deadline && isLoginAddress && item.order.status_id === 'Created' ? (
                                       <Text
                                         w="136px"
                                         textAlign="right"
@@ -1243,7 +1244,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                                         color="#3D00FF"
                                         lineHeight="20px"
                                         onClick={() => {
-                                          handleDeal(item.order_id, item.buyer_id);
+                                          handleDeal(item.order_id, item.order.buyer_id);
                                         }}
                                       >
                                         {' '}
@@ -1563,6 +1564,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setIsShowDeal={setIsShowDeal}
             offerId={offerId}
             offerOwner={offerOwner}
+            orderId={nftData?.nftInfo.status === 'Selling' ? orderId : ''}
           />
         )}
       </Container>
