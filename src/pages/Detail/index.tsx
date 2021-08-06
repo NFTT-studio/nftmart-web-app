@@ -153,8 +153,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const ownerId = nftData?.nftInfo?.owner_id;
   const orderId = nftData?.nftInfo?.order_id;
   const hideFlag = false;
-  const piceHistory = nftData?.nftInfo?.history[selectedTime];
-  console.log(piceHistory, selectedTime);
+  const PriceHistory = nftData?.nftInfo?.history[selectedTime];
+  // console.log(PriceHistory.price_list.PriceDate);
 
   const handleDeal = (offerIdItem:string, offerOwnerItem:string) => {
     if (!account) {
@@ -1046,7 +1046,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             color="#000000"
                             lineHeight="18px"
                           >
-                            {piceHistory?.volume}
+                            {PriceHistory?.volume}
                           </Text>
                         </Flex>
                       </Flex>
@@ -1070,14 +1070,14 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             color="#000000"
                             lineHeight="18px"
                           >
-                            {piceHistory?.average}
+                            {PriceHistory?.average}
                           </Text>
                         </Flex>
                       </Flex>
                     </Flex>
-                    {piceHistory
+                    {PriceHistory?.price_list
                       ? (
-                        <PriceHistoryChart />)
+                        <PriceHistoryChart PriceDate={PriceHistory.price_list} />)
                       : (
                         <NoData width="100%" />
                       )}
