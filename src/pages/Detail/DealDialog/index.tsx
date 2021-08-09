@@ -15,6 +15,8 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import { takeOffer } from '../../../polkaSDK/api/takeOffer';
+import { takeOrderOffer } from '../../../polkaSDK/api/takeOrderOffer';
+
 import { useAppSelector } from '../../../hooks/redux';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 
@@ -23,6 +25,7 @@ interface Props {
   setIsShowDeal: React.Dispatch<React.SetStateAction<boolean>>,
   offerId: string,
   offerOwner: string,
+  orderId: string,
 }
 
 const DealDialog: FC<Props> = (({
@@ -30,6 +33,7 @@ const DealDialog: FC<Props> = (({
   setIsShowDeal,
   offerId,
   offerOwner,
+  orderId,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const cancelRef = useRef<HTMLDivElement>(null);
@@ -39,32 +43,62 @@ const DealDialog: FC<Props> = (({
   const history = useHistory();
   const onCancel = () => {
     setIsSubmitting(true);
-    takeOffer({
-      address: account!.address,
-      offerId: Number(offerId),
-      offerOwner,
-      cb: {
-        success: (result) => {
-          if (result.dispatchError) {
-            toast(<ToastBody title="Error" message={t('common.error')} type="error" />);
-            setIsShowDeal(false);
-            setIsSubmitting(false);
-          } else {
-            toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
-            setTimeout(() => {
+    if (orderId) {
+      takeOrderOffer({
+        address: account!.address,
+        offerId: Number(offerId),
+        offerOwner,
+        orderId,
+        cb: {
+          success: (result) => {
+            if (result.dispatchError) {
+              toast(<ToastBody title="Error" message={t('common.error')} type="error" />);
               setIsShowDeal(false);
               setIsSubmitting(false);
-              history.push('/');
-            }, 1500);
-          }
+            } else {
+              toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
+              setTimeout(() => {
+                setIsShowDeal(false);
+                setIsSubmitting(false);
+                history.push('/');
+              }, 1500);
+            }
+          },
+          error: (error) => {
+            toast(<ToastBody title="Error" message={error} type="error" />);
+            setIsShowDeal(false);
+            setIsSubmitting(false);
+          },
         },
-        error: (error) => {
-          toast(<ToastBody title="Error" message={error} type="error" />);
-          setIsShowDeal(false);
-          setIsSubmitting(false);
+      });
+    } else {
+      takeOffer({
+        address: account!.address,
+        offerId: Number(offerId),
+        offerOwner,
+        cb: {
+          success: (result) => {
+            if (result.dispatchError) {
+              toast(<ToastBody title="Error" message={t('common.error')} type="error" />);
+              setIsShowDeal(false);
+              setIsSubmitting(false);
+            } else {
+              toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
+              setTimeout(() => {
+                setIsShowDeal(false);
+                setIsSubmitting(false);
+                history.push('/');
+              }, 1500);
+            }
+          },
+          error: (error) => {
+            toast(<ToastBody title="Error" message={error} type="error" />);
+            setIsShowDeal(false);
+            setIsSubmitting(false);
+          },
         },
-      },
-    });
+      });
+    }
   };
   return (
     <AlertDialog

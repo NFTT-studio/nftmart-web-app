@@ -24,6 +24,7 @@ import PriceHistoryChart from './PriceHistoryChart';
 import CancelDialog from './CancelDialog';
 import DealDialog from './DealDialog';
 import { getBlock } from '../../polkaSDK/api/getBlock';
+import TimeBy from './TimeBy';
 
 import {
   IconDetailsocllections,
@@ -103,14 +104,14 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         middle = parseInt((middle % 60).toString(), 10);
       }
     }
-    let result = null;
-    // let result = `${parseInt(theTime.toString(), 10)}`;
-    // if (middle > 0) {
-    //   result = `${parseInt(middle.toString(), 10)}:${result}`;
-    // }
+    // let result = null;
+    let result = `${parseInt(theTime.toString(), 10)}`;
+    if (middle > 0) {
+      result = `${parseInt(middle.toString(), 10)}:${result}`;
+    }
     if (hour > 0) {
-      // result = `${parseInt(hour.toString(), 10)}:${result}`;
-      result = `${parseInt(hour.toString(), 10)}`;
+      result = `${parseInt(hour.toString(), 10)}:${result}`;
+      // result = `${parseInt(hour.toString(), 10)}`;
     }
     return result;
   };
@@ -128,6 +129,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [isShowBuy, setIsShowBuy] = useState(false);
   const [isShowOffer, setIsShowOffer] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedTime, setSelectedTime] = useState('seven');
 
   const [offerId, setOfferId] = useState('');
   const [offerOwner, setOfferOwner] = useState('');
@@ -151,6 +153,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const ownerId = nftData?.nftInfo?.owner_id;
   const orderId = nftData?.nftInfo?.order_id;
   const hideFlag = false;
+  const PriceHistory = nftData?.nftInfo?.history[selectedTime];
+  // console.log(PriceHistory.price_list.PriceDate);
 
   const handleDeal = (offerIdItem:string, offerOwnerItem:string) => {
     if (!account) {
@@ -317,6 +321,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         display="flex"
         flexDirection="column"
         width="100%"
+        height="100%"
         justifyContent="flex-start"
       >
 
@@ -981,7 +986,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             </Flex>
 
             <Flex className="DetailRight" width="788px">
-              <Accordion width="100%" defaultIndex={[1]} allowMultiple>
+              <Accordion width="100%" defaultIndex={[0, 1]} allowMultiple>
                 <AccordionItem width="100%" border="none">
                   <AccordionButton
                     height="62px"
@@ -1016,67 +1021,69 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     </Flex>
                     <AccordionIcon />
                   </AccordionButton>
-                  {hideFlag
-                    ? (
-                      <AccordionPanel p="20px">
 
-                        <Flex flexDirection="row" justifyContent="flex-start" mb="20px">
-                          <Flex m="0 20px" textAlign="center" flexDirection="column" justifyContent="center">
-                            <Text
-                              mb="2px"
-                              fontSize="12px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#999999"
-                              lineHeight="14px"
-                            >
-                              7天平均价格
-                            </Text>
-                            <Flex align="flex-start" alignItems="center">
-                              <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
-                              <Text
-                                fontSize="16px"
-                                fontFamily="TTHoves-Regular, TTHoves"
-                                fontWeight="400"
-                                color="#000000"
-                                lineHeight="18px"
-                              >
-                                198,234
-                              </Text>
-                            </Flex>
-                          </Flex>
-                          <Flex textAlign="center" flexDirection="column" justifyContent="center">
-                            <Text
-                              mb="2px"
-                              fontSize="12px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#999999"
-                              lineHeight="14px"
-                            >
-                              7天平均价格
-                            </Text>
-                            <Flex align="flex-start" alignItems="center">
-                              <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
-                              <Text
-                                fontSize="16px"
-                                fontFamily="TTHoves-Regular, TTHoves"
-                                fontWeight="400"
-                                color="#000000"
-                                lineHeight="18px"
-                              >
-                                198,234
-                              </Text>
-                            </Flex>
-                          </Flex>
+                  <AccordionPanel p="20px">
+
+                    <Flex flexDirection="row" justifyContent="flex-start" mb="20px">
+                      <TimeBy selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+                      <Flex m="0 20px" textAlign="center" flexDirection="column" justifyContent="center">
+                        <Text
+                          mb="2px"
+                          fontSize="12px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                        >
+                          7天平均价格
+                        </Text>
+                        <Flex align="flex-start" alignItems="center">
+                          <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
+                          <Text
+                            fontSize="16px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="18px"
+                          >
+                            {PriceHistory?.volume}
+                          </Text>
                         </Flex>
-                        <PriceHistoryChart />
+                      </Flex>
+                      <Flex textAlign="center" flexDirection="column" justifyContent="center">
+                        <Text
+                          mb="2px"
+                          fontSize="12px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                        >
+                          7天成交量
+                        </Text>
+                        <Flex align="flex-start" alignItems="center">
+                          <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
+                          <Text
+                            fontSize="16px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="18px"
+                          >
+                            {PriceHistory?.average}
+                          </Text>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                    {PriceHistory?.price_list
+                      ? (
+                        <PriceHistoryChart PriceDate={PriceHistory.price_list} />)
+                      : (
+                        <NoData width="100%" />
+                      )}
 
-                      </AccordionPanel>
-                    )
-                    : (
-                      <NoData width="100%" />
-                    )}
+                  </AccordionPanel>
+
                 </AccordionItem>
                 <AccordionItem width="100%" border="none">
                   <AccordionButton
@@ -1204,7 +1211,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                                         NMT
                                       </Text>
                                     </Text>
-                                    {item?.order?.deadline ? (
+                                    {item?.order?.deadline && item.order.status_id === 'Created' ? (
                                       <Text
                                         minW="136px"
                                         textAlign="center"
@@ -1233,7 +1240,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                                         -
                                       </Text>
                                     )}
-                                    {item?.order?.deadline && isLoginAddress ? (
+                                    {item?.order?.deadline && isLoginAddress && item.order.status_id === 'Created' ? (
                                       <Text
                                         w="136px"
                                         textAlign="right"
@@ -1243,7 +1250,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                                         color="#3D00FF"
                                         lineHeight="20px"
                                         onClick={() => {
-                                          handleDeal(item.order_id, item.buyer_id);
+                                          handleDeal(item.order_id, item.order.buyer_id);
                                         }}
                                       >
                                         {' '}
@@ -1563,6 +1570,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setIsShowDeal={setIsShowDeal}
             offerId={offerId}
             offerOwner={offerOwner}
+            orderId={nftData?.nftInfo.status === 'Selling' ? orderId : ''}
           />
         )}
       </Container>

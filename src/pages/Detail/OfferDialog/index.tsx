@@ -84,7 +84,7 @@ const OfferDialog: FC<Props> = (({
   };
 
   const schema = Yup.object().shape({
-    during: Yup.string().required(t('Create.required')),
+    // during: Yup.string().required(t('Create.required')),
     price: Yup.number().moreThan(0).required(t('Create.required')),
   });
 
@@ -105,7 +105,7 @@ const OfferDialog: FC<Props> = (({
         classId: Number(classId),
         tokenId: Number(tokenId),
         quantity: 1,
-        price: Number(formValue.price),
+        price: Number(formValue?.price),
         during: oneMonth,
         cb: {
           success: (result) => {
@@ -114,9 +114,9 @@ const OfferDialog: FC<Props> = (({
             } else {
               toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
               setTimeout(() => {
-                history.push(`/item/${classId}-${tokenId}`);
                 setIsSubmitting(false);
                 setIsShowOffer(false);
+                history.push(`/item/${classId}-${tokenId}`);
               }, 1500);
             }
           },
@@ -132,7 +132,6 @@ const OfferDialog: FC<Props> = (({
   });
 
   return (
-
     <>
       <AlertDialog
         motionPreset="slideInBottom"

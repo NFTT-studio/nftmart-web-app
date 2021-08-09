@@ -63,7 +63,15 @@ const obj = {
     '.react-date-picker__wrapper': {
       border: 'none',
     },
-
+    '.recharts-cartesian-axis-ticks': {
+      background: '#F8F9FA',
+      width: '705px',
+      height: '40px',
+      display: 'flex',
+      flexFlow: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   }),
 };
 
