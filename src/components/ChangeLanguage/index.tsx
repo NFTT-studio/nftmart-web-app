@@ -75,7 +75,7 @@ const ChangeLanguage = (): JSX.Element => {
       <PopoverContent maxWidth="100px" _focus={{ boxShadow: 'none' }}>
         <PopoverArrow />
         <PopoverBody display="flex" justifyContent="center">
-          <Stack paddingY={2}>{Object.keys(TRANSLATIONS).map(renderButton)}</Stack>
+          <Stack color="#999" paddingY={2}>{Object.keys(TRANSLATIONS).map(renderButton)}</Stack>
         </PopoverBody>
       </PopoverContent>
     </Popover>

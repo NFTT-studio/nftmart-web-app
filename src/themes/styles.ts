@@ -72,6 +72,35 @@ const obj = {
       justifyContent: 'center',
       alignItems: 'center',
     },
+    '.css-1b2twv6': {
+      width: '38px !important',
+      height: '16px !important',
+      borderRadius: '10px !important',
+      border: 'none !important',
+      boxShadow: 'none !important',
+    },
+    '.chakra-switch__thumb': {
+      width: '16px !important',
+      height: '16px !important',
+      background: '#FFFFFF !important',
+      border: 'none !important',
+      boxShadow: 'none !important',
+    },
+    '.css-1b2twv6[data-checked]': {
+      border: 'none !important',
+      boxShadow: 'none !important',
+    },
+    '.css-1b2twv6[aria-checked=true], .css-1b2twv6[data-checked]': {
+      background: '#000000 !important',
+      border: 'none',
+      boxShadow: 'none',
+    },
+    '.css-1b2twv6[aria-checked=true]:focus, .css-1b2twv6[data-checked]:focus': {
+      background: '#000000 !important',
+      border: 'none',
+      boxShadow: 'none',
+    },
+
   }),
 };
 
