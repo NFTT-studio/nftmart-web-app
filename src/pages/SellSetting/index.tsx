@@ -92,7 +92,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const orderId = firstOffer?.order_id;
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
-    console.log(Number(event.currentTarget.id));
     setSelectId(Number(event.currentTarget.id));
   };
 
