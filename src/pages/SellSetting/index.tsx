@@ -23,6 +23,7 @@ import {
   Stack,
   Modal,
   ModalOverlay,
+  Switch,
 } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -65,13 +66,13 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       id: 1,
       title: t('SellSetting.dutchAuction'),
       subtitle: t('SellSetting.sellAtaDecliningPrice'),
-      isDisabled: true,
+      isDisabled: false,
     },
     {
       id: 2,
       title: t('SellSetting.englishAuction'),
       subtitle: t('SellSetting.auctionToTheHighestBidder'),
-      isDisabled: true,
+      isDisabled: false,
     },
   ];
   const chainState = useAppSelector((state) => state.chain);
@@ -260,7 +261,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               >
                 {ButtonArr.map((item, index) => (
                   <Button
-                    key={item.title}
+                    key={item.id}
+                    id={item.id}
                     width="254px"
                     height="80px"
                     borderRadius="4px"
@@ -301,95 +303,97 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   </Button>
                 ))}
               </Flex>
-              <Flex
-                w="100%"
-                h="80px"
-                mt="20px"
-                flexDirection="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Flex
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignItems="flex-start"
-                >
-                  <Text
-                    fontSize="16px"
-                    fontFamily="TTHoves-Medium, TTHoves"
-                    fontWeight="500"
-                    color="#000000"
-                    lineHeight="18px"
+              {selectId === 0 ? (
+                <>
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
                   >
-                    {t('SellSetting.setPrice')}
-                  </Text>
-                  <Text
-                    mt="8px"
-                    fontSize="12px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#858999"
-                    lineHeight="14px"
-                  >
-                    {t('SellSetting.priceExplain')}
-                  </Text>
-                </Flex>
-                <InputGroup
-                  width="200px"
-                  height="40px"
-                  background="#FFFFFF"
-                  borderRadius="4px"
-                  border="1px solid #E5E5E5"
-                  _focus={{
-                    boxShadow: 'none',
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.setPrice')}
+                      </Text>
+                      <Text
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.priceExplain')}
+                      </Text>
+                    </Flex>
+                    <InputGroup
+                      width="200px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      border="1px solid #E5E5E5"
+                      _focus={{
+                        boxShadow: 'none',
 
-                  }}
-                >
-                  <Input
-                    id="price"
-                    name="price"
-                    value={formik.values.price}
-                    onChange={formik.handleChange}
-                    fontSize="16px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    lineHeight="14px"
-                    color="#000000"
-                    _focus={{
-                      boxShadow: 'none',
-                      color: '#000000',
-                      border: '1px solid #000000',
-                    }}
-                    _after={{
-                      boxShadow: 'none',
-                      color: '#000000',
-                      border: '1px solid #000000',
-                    }}
-                    placeholder={t('SellSetting.price')}
-                    _placeholder={{
-                      color: '#999999',
-                      fontSize: '12px',
-                    }}
-                  />
-                  <InputRightAddon
-                    width="72px"
-                    height="40px"
-                    background="#F4F4F4"
-                    borderRadius="0px 4px 4px 0px"
-                    border="1px solid #E5E5E5"
-                    fontSize="14px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#999999"
-                    lineHeight="14px"
-                    children="NMT"
-                  />
-                </InputGroup>
-              </Flex>
-              {formik.errors.price && formik.touched.price ? (
-                <div style={{ color: 'red' }}>{formik.errors.price}</div>
-              ) : null}
-              {/* <Flex
+                      }}
+                    >
+                      <Input
+                        id="price"
+                        name="price"
+                        value={formik.values.price}
+                        onChange={formik.handleChange}
+                        fontSize="16px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        lineHeight="14px"
+                        color="#000000"
+                        _focus={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        _after={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        placeholder={t('SellSetting.price')}
+                        _placeholder={{
+                          color: '#999999',
+                          fontSize: '12px',
+                        }}
+                      />
+                      <InputRightAddon
+                        width="72px"
+                        height="40px"
+                        background="#F4F4F4"
+                        borderRadius="0px 4px 4px 0px"
+                        border="1px solid #E5E5E5"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#999999"
+                        lineHeight="14px"
+                        children="NMT"
+                      />
+                    </InputGroup>
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  {/* <Flex
                 w="100%"
                 h="80px"
                 flexDirection="row"
@@ -454,25 +458,25 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   />
                 </InputGroup>
               </Flex> */}
-              <Text
-                mt="20px"
-                mb="8px"
-                fontSize="16px"
-                fontFamily="TTHoves-Medium, TTHoves"
-                fontWeight="500"
-                color="#000000"
-                lineHeight="18px"
-              >
-                {t('SellSetting.categories')}
-              </Text>
-              <RadioGroup
-                color={colors.text.gray}
-                onChange={(value: string) => {
-                  formik.values.categoryId = value;
-                }}
-              >
-                <Stack direction="row" spacing={6}>
-                  {categoriesData
+                  <Text
+                    mt="20px"
+                    mb="8px"
+                    fontSize="16px"
+                    fontFamily="TTHoves-Medium, TTHoves"
+                    fontWeight="500"
+                    color="#000000"
+                    lineHeight="18px"
+                  >
+                    {t('SellSetting.categories')}
+                  </Text>
+                  <RadioGroup
+                    color={colors.text.gray}
+                    onChange={(value: string) => {
+                      formik.values.categoryId = value;
+                    }}
+                  >
+                    <Stack direction="row" spacing={6}>
+                      {categoriesData
                     && categoriesData?.categories?.map((item) => (
                       <Radio
                         key={item.id}
@@ -481,34 +485,78 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         {item.name}
                       </Radio>
                     ))}
-                </Stack>
-              </RadioGroup>
-              {formik.errors.categoryId && formik.touched.categoryId ? (
-                <div style={{ color: 'red' }}>{formik.errors.categoryId}</div>
+                    </Stack>
+                  </RadioGroup>
+                  {formik.errors.categoryId && formik.touched.categoryId ? (
+                    <div style={{ color: 'red' }}>{formik.errors.categoryId}</div>
+                  ) : null}
+                  <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
+                    <AccordionItem width="100%" border="none">
+                      <AccordionButton
+                        height="62px"
+                        width="100%"
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        p="0"
+                        borderBottom="1px solid #E5E5E5"
+                        outline="none"
+                        _focus={{
+                          textDecoration: 'none',
+                          boxShadow: 'none',
+                        }}
+                      >
+                        <Flex height="100%" alignItems="center">
+                          <Image
+                            mr="8px"
+                            w="22px"
+                            h="22px"
+                            src={IconSummary.default}
+                          />
+                          <Text
+                            fontSize="16px"
+                            fontFamily="TTHoves-Medium, TTHoves"
+                            fontWeight="500"
+                            color="#000000"
+                            lineHeight="18px"
+                          >
+                            {t('SellSetting.Instructions')}
+                          </Text>
+                        </Flex>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      <AccordionPanel p="20px 0">
+                        <Text
+                          w="100%"
+                          textAlign="left"
+                          fontSize="13.9px"
+                          fontFamily="TTHoves-Light, TTHoves"
+                          fontWeight="300"
+                          color="#000000"
+                          lineHeight="22px"
+                        >
+                          {t('SellSetting.InstructionsExplain')}
+                        </Text>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                </>
               ) : null}
-              <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
-                <AccordionItem width="100%" border="none">
-                  <AccordionButton
-                    height="62px"
-                    width="100%"
-                    display="flex"
+              {selectId === 1 ? (
+                <>
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
                     justifyContent="space-between"
                     alignItems="center"
-                    p="0"
-                    borderBottom="1px solid #E5E5E5"
-                    outline="none"
-                    _focus={{
-                      textDecoration: 'none',
-                      boxShadow: 'none',
-                    }}
                   >
-                    <Flex height="100%" alignItems="center">
-                      <Image
-                        mr="8px"
-                        w="22px"
-                        h="22px"
-                        src={IconSummary.default}
-                      />
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
                       <Text
                         fontSize="16px"
                         fontFamily="TTHoves-Medium, TTHoves"
@@ -516,26 +564,1129 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color="#000000"
                         lineHeight="18px"
                       >
-                        {t('SellSetting.Instructions')}
+                        {t('SellSetting.startingPrice')}
+                      </Text>
+                      <Text
+                        width="400px"
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.startingPriceExplain')}
                       </Text>
                     </Flex>
-                    <AccordionIcon />
-                  </AccordionButton>
-                  <AccordionPanel p="20px 0">
-                    <Text
-                      w="100%"
-                      textAlign="left"
-                      fontSize="13.9px"
-                      fontFamily="TTHoves-Light, TTHoves"
-                      fontWeight="300"
-                      color="#000000"
-                      lineHeight="22px"
+                    <InputGroup
+                      width="200px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      border="1px solid #E5E5E5"
+                      _focus={{
+                        boxShadow: 'none',
+
+                      }}
                     >
-                      {t('SellSetting.InstructionsExplain')}
-                    </Text>
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
+                      <Input
+                        id="price"
+                        name="price"
+                        value={formik.values.price}
+                        onChange={formik.handleChange}
+                        fontSize="16px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        lineHeight="14px"
+                        color="#000000"
+                        _focus={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        _after={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        placeholder={t('SellSetting.price')}
+                        _placeholder={{
+                          color: '#999999',
+                          fontSize: '12px',
+                        }}
+                      />
+                      <InputRightAddon
+                        width="72px"
+                        height="40px"
+                        background="#F4F4F4"
+                        borderRadius="0px 4px 4px 0px"
+                        border="1px solid #E5E5E5"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#999999"
+                        lineHeight="14px"
+                        children="NMT"
+                      />
+                    </InputGroup>
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.endingPrice')}
+                      </Text>
+                      <Text
+                        width="400px"
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.endingPriceExplain')}
+                      </Text>
+                    </Flex>
+                    <InputGroup
+                      width="200px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      border="1px solid #E5E5E5"
+                      _focus={{
+                        boxShadow: 'none',
+
+                      }}
+                    >
+                      <Input
+                        id="price"
+                        name="price"
+                        value={formik.values.price}
+                        onChange={formik.handleChange}
+                        fontSize="16px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        lineHeight="14px"
+                        color="#000000"
+                        _focus={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        _after={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        placeholder={t('SellSetting.price')}
+                        _placeholder={{
+                          color: '#999999',
+                          fontSize: '12px',
+                        }}
+                      />
+                      <InputRightAddon
+                        width="72px"
+                        height="40px"
+                        background="#F4F4F4"
+                        borderRadius="0px 4px 4px 0px"
+                        border="1px solid #E5E5E5"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#999999"
+                        lineHeight="14px"
+                        children="Days"
+                      />
+                    </InputGroup>
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.expirationDate')}
+                      </Text>
+                      <Text
+                        width="400px"
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.expirationDateExplain')}
+                      </Text>
+                    </Flex>
+                    <Flex alignItems="center">
+                      <Text
+                        mt="8px"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#000000"
+                        lineHeight="14px"
+                        mr="9px"
+                      >
+                        at PM 5:32
+                      </Text>
+                      <InputGroup
+                        width="200px"
+                        height="40px"
+                        background="#FFFFFF"
+                        borderRadius="4px"
+                        border="1px solid #E5E5E5"
+                        _focus={{
+                          boxShadow: 'none',
+
+                        }}
+                      >
+                        <Input
+                          id="price"
+                          name="price"
+                          value={formik.values.price}
+                          onChange={formik.handleChange}
+                          fontSize="16px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          lineHeight="14px"
+                          color="#000000"
+                          _focus={{
+                            boxShadow: 'none',
+                            color: '#000000',
+                            border: '1px solid #000000',
+                          }}
+                          _after={{
+                            boxShadow: 'none',
+                            color: '#000000',
+                            border: '1px solid #000000',
+                          }}
+                          placeholder={t('SellSetting.price')}
+                          _placeholder={{
+                            color: '#999999',
+                            fontSize: '12px',
+                          }}
+                        />
+                        <InputRightAddon
+                          width="72px"
+                          height="40px"
+                          background="#F4F4F4"
+                          borderRadius="0px 4px 4px 0px"
+                          border="1px solid #E5E5E5"
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                          children="NMT"
+                        />
+                      </InputGroup>
+                    </Flex>
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.turnToEnglishAuction')}
+                      </Text>
+                      <Text
+                        width="400px"
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.turnToEnglishAuctionExplain')}
+                      </Text>
+                    </Flex>
+                    <Switch width="#40" height="40px" size="lg" />
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.minimumMarkup')}
+                      </Text>
+                      <Text
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.minimumMarkupExplain')}
+                      </Text>
+                    </Flex>
+                    <InputGroup
+                      width="200px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      border="1px solid #E5E5E5"
+                      _focus={{
+                        boxShadow: 'none',
+
+                      }}
+                    >
+                      <Input
+                        id="price"
+                        name="price"
+                        value={formik.values.price}
+                        onChange={formik.handleChange}
+                        fontSize="16px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        lineHeight="14px"
+                        color="#000000"
+                        _focus={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        _after={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        placeholder={t('SellSetting.price')}
+                        _placeholder={{
+                          color: '#999999',
+                          fontSize: '12px',
+                        }}
+                      />
+                      <InputRightAddon
+                        width="72px"
+                        height="40px"
+                        background="#F4F4F4"
+                        borderRadius="0px 4px 4px 0px"
+                        border="1px solid #E5E5E5"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#999999"
+                        lineHeight="14px"
+                        children="NMT"
+                      />
+                    </InputGroup>
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.pledge')}
+                      </Text>
+                      <Text
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.pledgeExplain')}
+                      </Text>
+                    </Flex>
+                    <Flex alignItems="center">
+                      <Text
+                        mt="8px"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#000000"
+                        lineHeight="14px"
+                        mr="9px"
+                      >
+                        * At least 20000 NMT
+                      </Text>
+                      <InputGroup
+                        width="200px"
+                        height="40px"
+                        background="#FFFFFF"
+                        borderRadius="4px"
+                        border="1px solid #E5E5E5"
+                      >
+                        <Input
+                          fontSize="12px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                          _focus={{
+                            boxShadow: 'none',
+                          }}
+                          placeholder={t('SellSetting.price')}
+                        />
+                        <InputRightAddon
+                          width="72px"
+                          height="40px"
+                          background="#F4F4F4"
+                          borderRadius="0px 4px 4px 0px"
+                          border="1px solid #E5E5E5"
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                          children="NMT"
+                        />
+                      </InputGroup>
+                    </Flex>
+                  </Flex>
+                  <Text
+                    mt="20px"
+                    mb="8px"
+                    fontSize="16px"
+                    fontFamily="TTHoves-Medium, TTHoves"
+                    fontWeight="500"
+                    color="#000000"
+                    lineHeight="18px"
+                  >
+                    {t('SellSetting.categories')}
+                  </Text>
+                  <RadioGroup
+                    color={colors.text.gray}
+                    onChange={(value: string) => {
+                      formik.values.categoryId = value;
+                    }}
+                  >
+                    <Stack direction="row" spacing={6}>
+                      {categoriesData
+                    && categoriesData?.categories?.map((item) => (
+                      <Radio
+                        key={item.id}
+                        value={item.id}
+                      >
+                        {item.name}
+                      </Radio>
+                    ))}
+                    </Stack>
+                  </RadioGroup>
+                  {formik.errors.categoryId && formik.touched.categoryId ? (
+                    <div style={{ color: 'red' }}>{formik.errors.categoryId}</div>
+                  ) : null}
+                  <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
+                    <AccordionItem width="100%" border="none">
+                      <AccordionButton
+                        height="62px"
+                        width="100%"
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        p="0"
+                        borderBottom="1px solid #E5E5E5"
+                        outline="none"
+                        _focus={{
+                          textDecoration: 'none',
+                          boxShadow: 'none',
+                        }}
+                      >
+                        <Flex height="100%" alignItems="center">
+                          <Image
+                            mr="8px"
+                            w="22px"
+                            h="22px"
+                            src={IconSummary.default}
+                          />
+                          <Text
+                            fontSize="16px"
+                            fontFamily="TTHoves-Medium, TTHoves"
+                            fontWeight="500"
+                            color="#000000"
+                            lineHeight="18px"
+                          >
+                            {t('SellSetting.Instructions')}
+                          </Text>
+                        </Flex>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      <AccordionPanel p="20px 0">
+                        <Text
+                          w="100%"
+                          textAlign="left"
+                          fontSize="13.9px"
+                          fontFamily="TTHoves-Light, TTHoves"
+                          fontWeight="300"
+                          color="#000000"
+                          lineHeight="22px"
+                        >
+                          {t('SellSetting.InstructionsExplain')}
+                        </Text>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                </>
+              ) : null}
+              {selectId === 2 ? (
+                <>
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.startingPrice')}
+                      </Text>
+                      <Text
+                        width="400px"
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.startingPriceExplain')}
+                      </Text>
+                    </Flex>
+                    <InputGroup
+                      width="200px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      border="1px solid #E5E5E5"
+                      _focus={{
+                        boxShadow: 'none',
+
+                      }}
+                    >
+                      <Input
+                        id="price"
+                        name="price"
+                        value={formik.values.price}
+                        onChange={formik.handleChange}
+                        fontSize="16px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        lineHeight="14px"
+                        color="#000000"
+                        _focus={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        _after={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        placeholder={t('SellSetting.price')}
+                        _placeholder={{
+                          color: '#999999',
+                          fontSize: '12px',
+                        }}
+                      />
+                      <InputRightAddon
+                        width="72px"
+                        height="40px"
+                        background="#F4F4F4"
+                        borderRadius="0px 4px 4px 0px"
+                        border="1px solid #E5E5E5"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#999999"
+                        lineHeight="14px"
+                        children="NMT"
+                      />
+                    </InputGroup>
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.expirationDate')}
+                      </Text>
+                      <Text
+                        width="400px"
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.expirationDateExplain')}
+                      </Text>
+                    </Flex>
+                    <Flex alignItems="center">
+                      <Text
+                        mt="8px"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#000000"
+                        lineHeight="14px"
+                        mr="9px"
+                      >
+                        at PM 5:32
+                      </Text>
+                      <InputGroup
+                        width="200px"
+                        height="40px"
+                        background="#FFFFFF"
+                        borderRadius="4px"
+                        border="1px solid #E5E5E5"
+                        _focus={{
+                          boxShadow: 'none',
+
+                        }}
+                      >
+                        <Input
+                          id="price"
+                          name="price"
+                          value={formik.values.price}
+                          onChange={formik.handleChange}
+                          fontSize="16px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          lineHeight="14px"
+                          color="#000000"
+                          _focus={{
+                            boxShadow: 'none',
+                            color: '#000000',
+                            border: '1px solid #000000',
+                          }}
+                          _after={{
+                            boxShadow: 'none',
+                            color: '#000000',
+                            border: '1px solid #000000',
+                          }}
+                          placeholder={t('SellSetting.price')}
+                          _placeholder={{
+                            color: '#999999',
+                            fontSize: '12px',
+                          }}
+                        />
+                        <InputRightAddon
+                          width="72px"
+                          height="40px"
+                          background="#F4F4F4"
+                          borderRadius="0px 4px 4px 0px"
+                          border="1px solid #E5E5E5"
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                          children="NMT"
+                        />
+                      </InputGroup>
+                    </Flex>
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.automaticDelay')}
+                      </Text>
+                      <Text
+                        width="400px"
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.automaticDelayExplain')}
+                      </Text>
+                    </Flex>
+                    <Switch width="#40" height="40px" size="lg" />
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.minimumMarkup')}
+                      </Text>
+                      <Text
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.minimumMarkupExplain')}
+                      </Text>
+                    </Flex>
+                    <InputGroup
+                      width="200px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      border="1px solid #E5E5E5"
+                      _focus={{
+                        boxShadow: 'none',
+
+                      }}
+                    >
+                      <Input
+                        id="price"
+                        name="price"
+                        value={formik.values.price}
+                        onChange={formik.handleChange}
+                        fontSize="16px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        lineHeight="14px"
+                        color="#000000"
+                        _focus={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        _after={{
+                          boxShadow: 'none',
+                          color: '#000000',
+                          border: '1px solid #000000',
+                        }}
+                        placeholder={t('SellSetting.price')}
+                        _placeholder={{
+                          color: '#999999',
+                          fontSize: '12px',
+                        }}
+                      />
+                      <InputRightAddon
+                        width="72px"
+                        height="40px"
+                        background="#F4F4F4"
+                        borderRadius="0px 4px 4px 0px"
+                        border="1px solid #E5E5E5"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#999999"
+                        lineHeight="14px"
+                        children="NMT"
+                      />
+                    </InputGroup>
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    mt="20px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.endingPrice')}
+                      </Text>
+                      <Text
+                        width="400px"
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.endingPriceExplain')}
+                      </Text>
+                    </Flex>
+                    <Flex flexDirection="column" justifyContent="space-between" alignItems="flex-end">
+                      <Switch width="#40" height="40px" size="lg" />
+                      <InputGroup
+                        width="200px"
+                        height="40px"
+                        background="#FFFFFF"
+                        borderRadius="4px"
+                        border="1px solid #E5E5E5"
+                        _focus={{
+                          boxShadow: 'none',
+
+                        }}
+                      >
+                        <Input
+                          id="price"
+                          name="price"
+                          value={formik.values.price}
+                          onChange={formik.handleChange}
+                          fontSize="16px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          lineHeight="14px"
+                          color="#000000"
+                          _focus={{
+                            boxShadow: 'none',
+                            color: '#000000',
+                            border: '1px solid #000000',
+                          }}
+                          _after={{
+                            boxShadow: 'none',
+                            color: '#000000',
+                            border: '1px solid #000000',
+                          }}
+                          placeholder={t('SellSetting.price')}
+                          _placeholder={{
+                            color: '#999999',
+                            fontSize: '12px',
+                          }}
+                        />
+                        <InputRightAddon
+                          width="72px"
+                          height="40px"
+                          background="#F4F4F4"
+                          borderRadius="0px 4px 4px 0px"
+                          border="1px solid #E5E5E5"
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                          children="Days"
+                        />
+                      </InputGroup>
+                    </Flex>
+                  </Flex>
+                  {formik.errors.price && formik.touched.price ? (
+                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  ) : null}
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.pledge')}
+                      </Text>
+                      <Text
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.pledgeExplain')}
+                      </Text>
+                    </Flex>
+                    <Flex alignItems="center">
+                      <Text
+                        mt="8px"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#000000"
+                        lineHeight="14px"
+                        mr="9px"
+                      >
+                        * At least 20000 NMT
+                      </Text>
+                      <InputGroup
+                        width="200px"
+                        height="40px"
+                        background="#FFFFFF"
+                        borderRadius="4px"
+                        border="1px solid #E5E5E5"
+                      >
+                        <Input
+                          fontSize="12px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                          _focus={{
+                            boxShadow: 'none',
+                          }}
+                          placeholder={t('SellSetting.price')}
+                        />
+                        <InputRightAddon
+                          width="72px"
+                          height="40px"
+                          background="#F4F4F4"
+                          borderRadius="0px 4px 4px 0px"
+                          border="1px solid #E5E5E5"
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                          children="NMT"
+                        />
+                      </InputGroup>
+                    </Flex>
+                  </Flex>
+                  <Text
+                    mt="20px"
+                    mb="8px"
+                    fontSize="16px"
+                    fontFamily="TTHoves-Medium, TTHoves"
+                    fontWeight="500"
+                    color="#000000"
+                    lineHeight="18px"
+                  >
+                    {t('SellSetting.categories')}
+                  </Text>
+                  <RadioGroup
+                    color={colors.text.gray}
+                    onChange={(value: string) => {
+                      formik.values.categoryId = value;
+                    }}
+                  >
+                    <Stack direction="row" spacing={6}>
+                      {categoriesData
+                    && categoriesData?.categories?.map((item) => (
+                      <Radio
+                        key={item.id}
+                        value={item.id}
+                      >
+                        {item.name}
+                      </Radio>
+                    ))}
+                    </Stack>
+                  </RadioGroup>
+                  {formik.errors.categoryId && formik.touched.categoryId ? (
+                    <div style={{ color: 'red' }}>{formik.errors.categoryId}</div>
+                  ) : null}
+                  <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
+                    <AccordionItem width="100%" border="none">
+                      <AccordionButton
+                        height="62px"
+                        width="100%"
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        p="0"
+                        borderBottom="1px solid #E5E5E5"
+                        outline="none"
+                        _focus={{
+                          textDecoration: 'none',
+                          boxShadow: 'none',
+                        }}
+                      >
+                        <Flex height="100%" alignItems="center">
+                          <Image
+                            mr="8px"
+                            w="22px"
+                            h="22px"
+                            src={IconSummary.default}
+                          />
+                          <Text
+                            fontSize="16px"
+                            fontFamily="TTHoves-Medium, TTHoves"
+                            fontWeight="500"
+                            color="#000000"
+                            lineHeight="18px"
+                          >
+                            {t('SellSetting.Instructions')}
+                          </Text>
+                        </Flex>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      <AccordionPanel p="20px 0">
+                        <Text
+                          w="100%"
+                          textAlign="left"
+                          fontSize="13.9px"
+                          fontFamily="TTHoves-Light, TTHoves"
+                          fontWeight="300"
+                          color="#000000"
+                          lineHeight="22px"
+                        >
+                          {t('SellSetting.InstructionsExplain')}
+                        </Text>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                </>
+              ) : null}
             </Flex>
             <Flex width="560px" ml="16px">
               <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
