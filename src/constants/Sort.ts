@@ -1,9 +1,9 @@
 export default [
-  { key: 'recently_listed', value: 'Recently Listed' },
-  { key: 'recently_created', value: 'Recently Created' },
-  { key: 'recently_sold', value: 'Recently Sold' },
-  { key: 'ending_soon', value: 'Ending Soon' },
-  { key: 'cheapest', value: 'Cheapest' },
-  { key: 'most_stared', value: 'Most Started' },
-  { key: 'oldest', value: 'Oldest' },
+  { key: 'recently_listed', value: 'recentlyListed' },
+  { key: 'recently_created', value: 'recentlyCreated' },
+  { key: 'recently_sold', value: 'recentlySold' },
+  { key: 'ending_soon', value: 'endingSoon' },
+  { key: 'cheapest', value: 'cheapest' },
+  { key: 'most_stared', value: 'mostStarted' },
+  { key: 'oldest', value: 'oldest' },
 ];

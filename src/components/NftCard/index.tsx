@@ -11,7 +11,6 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from 'react-i18next';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
 import { IPFS_URL } from '../../constants';
-import { priceStringDivUnit } from '../../utils/format';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { renderNmtNumberText } from '../Balance';
 

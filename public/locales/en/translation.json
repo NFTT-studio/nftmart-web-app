@@ -1,5 +1,14 @@
 {
   "TestNet":"TestNet",
+  "sortBy": {
+    "recentlyListed": "Recently Listed",
+    "recentlyCreated": "Recently Created",
+    "recentlySold": "Recently Sold",
+    "endingSoon": "Ending Soon",
+    "cheapest": "Cheapest",
+    "mostStarted": "Most Started ",
+    "oldest": "Oldest"
+  },
   "common": {
     "save": "Save",
     "yes": "YES",

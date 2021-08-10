@@ -85,6 +85,7 @@ export * as IconSummary from './icon_Summary.png';
 export * as IconIntructions from './Icon_Intructions.png';
 export * as IconAuthentication from './icon_authentication.png';
 export * as IconCalendar from './icon_calendar.png';
+export * as IconTime from './icon_time.png';
 
 // empty
 export * as Emptyimg from './empty.png';

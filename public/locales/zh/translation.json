@@ -1,5 +1,14 @@
 {
   "TestNet":"TestNet",
+  "sortBy": {
+    "recentlyListed": "最近上架",
+    "recentlyCreated": "最近创建",
+    "recentlySold": "最近售出",
+    "endingSoon": "即将结束",
+    "cheapest": "最便宜的",
+    "mostStarted": "最多星的",
+    "oldest": "最旧的"
+  },
   "common": {
     "save": "保存",
     "yes": "是",
