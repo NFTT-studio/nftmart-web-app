@@ -207,7 +207,7 @@ const Browsing = () => {
             >
               {nftsData?.pages[0].pageInfo.totalNum}
               {' '}
-              results
+              {t('results')}
             </Text>
             <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
           </Flex>

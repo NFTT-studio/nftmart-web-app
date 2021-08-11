@@ -1,5 +1,6 @@
 {
   "TestNet":"TestNet",
+  "results":"个结果",
   "sortBy": {
     "recentlyListed": "最近上架",
     "recentlyCreated": "最近创建",
@@ -24,6 +25,7 @@
     "success": "成功",
     "error": "错误",
     "submit": "提交",
+    "noDataYet": "还没有数据",
     "nav": {
       "navHome": "首页",
       "navBrowsing": "浏览",

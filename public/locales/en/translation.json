@@ -1,5 +1,6 @@
 {
   "TestNet":"TestNet",
+  "results":"results",
   "sortBy": {
     "recentlyListed": "Recently Listed",
     "recentlyCreated": "Recently Created",
@@ -24,6 +25,7 @@
     "success": "Success",
     "error": "error",
     "submit": "Submit",
+    "noDataYet": "No data yet",
     "nav": {
       "navHome": "Home",
       "navBrowsing": "Browsing",
