@@ -17,6 +17,7 @@ import { renderNmtNumberText } from '../Balance';
 
 import {
   PriceIcon,
+  IconTime,
 } from '../../assets/images';
 import MotionBox from '../MotionBox';
 
@@ -124,6 +125,117 @@ const NftCard: FC<NftCardProps> = ({
             </Box>
             )}
           </Box>
+          <Box
+            mt="0px"
+            display="flex"
+            justifyContent="space-between"
+            padding="0 16px 0px 16px"
+            paddingBottom=""
+            fontSize="12px"
+            fontFamily="TTHoves-Regular, TTHoves"
+            fontWeight="400"
+            color="#FFFFFF"
+            lineHeight="14px"
+          >
+            <Box pr={2} />
+            {0 / 1 ? (
+              <Box textAlign="right" display="flex" justifyContent="center">
+                <Flex align="flex-start" alignItems="center">
+                  <Box w="16px" h="16px" src={IconTime.default} as="img" alt="" mr="4px" />
+                  <Box color="#FFFFFF">3 days left</Box>
+                </Flex>
+              </Box>
+            ) : null}
+            {0 / 1 ? (
+              <Box textAlign="right" display="flex" justifyContent="center">
+                <Flex align="flex-start" alignItems="center">
+                  <Box color="#999999" mr="6px">Last</Box>
+                  <Box
+                    fontSize="14px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#FFFFFF"
+                    lineHeight="16px"
+                    mr="9px"
+                  >
+                    12,823
+                  </Box>
+                  <Box color="#999999">NMT</Box>
+                </Flex>
+              </Box>
+            ) : null}
+            {1 ? (
+              <Box
+                fontSize="12px"
+                fontFamily="TTHoves-Medium, TTHoves"
+                fontWeight="500"
+                color="#000000"
+                lineHeight="14px"
+                textAlign="right"
+                display="flex"
+                justifyContent="center"
+              >
+                <Flex align="flex-start" alignItems="center">
+                  <Box
+                    width="18px"
+                    height="22px"
+                    background="#FFFFFF"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="1px"
+                  >
+                    2
+                  </Box>
+                  <Box
+                    width="18px"
+                    height="22px"
+                    background="#FFFFFF"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="3px"
+                  >
+                    2
+                  </Box>
+
+                  <Box
+                    fontSize="12px"
+                    color="#FFFFFF"
+                  >
+                    :
+                  </Box>
+                  <Box
+                    mr="1px"
+                    ml="3px"
+                    width="18px"
+                    height="22px"
+                    background="#FFFFFF"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    2
+                  </Box>
+                  <Box
+                    width="18px"
+                    height="22px"
+                    background="#FFFFFF"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    2
+                  </Box>
+                </Flex>
+              </Box>
+            ) : null}
+          </Box>
+
         </Box>
       </MotionBox>
     </Link>

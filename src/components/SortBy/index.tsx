@@ -10,6 +10,7 @@ import {
   Text,
   Image,
 } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import {
   IoMdArrowDropdown,
   IoMdArrowDropup,
@@ -23,6 +24,7 @@ type SortByProps = {
 
 const SortBy: FC<SortByProps> = ({ selectedSort, setSelectedSort }) => {
   const [opening, setOpening] = useState(false);
+  const { t } = useTranslation();
 
   const handleSelect = (key: string) => {
     setSelectedSort(key);
@@ -41,7 +43,7 @@ const SortBy: FC<SortByProps> = ({ selectedSort, setSelectedSort }) => {
       color="#191A24"
       onClick={() => handleSelect(sort.key)}
     >
-      {sort.value}
+      {t(`sortBy.${sort.value}`)}
     </Button>
   );
 
@@ -68,7 +70,7 @@ const SortBy: FC<SortByProps> = ({ selectedSort, setSelectedSort }) => {
           p="0 20px"
           spacing={0}
         >
-          <Text fontSize="12px" pr="3px">{Sort.find((s) => s.key === selectedSort)?.value}</Text>
+          <Text fontSize="12px" pr="3px">{t(`sortBy.${Sort.find((s) => s.key === selectedSort)?.value}`)}</Text>
           {opening ? (
             <Image
               width="12px"

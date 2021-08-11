@@ -1,0 +1,11 @@
+export * as banner12 from './banner_1_2.png';
+export * as banner13 from './banner_1_3.png';
+export * as banner21 from './banner_2_1.png';
+export * as banner22 from './banner_2_2.png';
+export * as banner23 from './banner_2_3.png';
+export * as banner24 from './banner_2_4.png';
+export * as banner31 from './banner_3_1.png';
+export * as banner34 from './banner_3_4.png';
+export * as banner35 from './banner_3_5.png';
+export * as banner36 from './banner_3_6.png';
+export * as bannerLeft from './banner_left.png';
