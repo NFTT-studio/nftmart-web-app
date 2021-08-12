@@ -93,7 +93,7 @@ const Home = () => {
                 height="410px"
               >
                 <MotionBox
-                  backgroundColor="#fff"
+                  backgroundColor="#000"
                   cursor="pointer"
                   _hover={{ boxShadow: 'lg' }}
                   whileHover={{ scale: 1.03 }}
@@ -113,7 +113,7 @@ const Home = () => {
                   alignItems="flex-end"
                 >
                   <MotionBox
-                    backgroundColor="#fff"
+                    backgroundColor="#000"
                     cursor="pointer"
                     _hover={{ boxShadow: 'lg' }}
                     whileHover={{ scale: 1.03 }}
@@ -127,7 +127,7 @@ const Home = () => {
                     />
                   </MotionBox>
                   <MotionBox
-                    backgroundColor="#fff"
+                    backgroundColor="#000"
                     cursor="pointer"
                     _hover={{ boxShadow: 'lg' }}
                     whileHover={{ scale: 1.03 }}
@@ -149,7 +149,7 @@ const Home = () => {
               alignItems="flex-end"
             >
               <MotionBox
-                backgroundColor="#fff"
+                backgroundColor="#000"
                 cursor="pointer"
                 _hover={{ boxShadow: 'lg' }}
                 whileHover={{ scale: 1.03 }}
@@ -163,7 +163,7 @@ const Home = () => {
                 />
               </MotionBox>
               <MotionBox
-                backgroundColor="#fff"
+                backgroundColor="#000"
                 cursor="pointer"
                 _hover={{ boxShadow: 'lg' }}
                 whileHover={{ scale: 1.03 }}
@@ -177,7 +177,7 @@ const Home = () => {
                 />
               </MotionBox>
               <MotionBox
-                backgroundColor="#fff"
+                backgroundColor="#000"
                 cursor="pointer"
                 _hover={{ boxShadow: 'lg' }}
                 whileHover={{ scale: 1.03 }}
@@ -191,7 +191,7 @@ const Home = () => {
                 />
               </MotionBox>
               <MotionBox
-                backgroundColor="#fff"
+                backgroundColor="#000"
                 cursor="pointer"
                 _hover={{ boxShadow: 'lg' }}
                 whileHover={{ scale: 1.03 }}
@@ -211,7 +211,7 @@ const Home = () => {
               alignItems="flex-end"
             >
               <MotionBox
-                backgroundColor="#fff"
+                backgroundColor="#000"
                 cursor="pointer"
                 _hover={{ boxShadow: 'lg' }}
                 whileHover={{ scale: 1.03 }}
@@ -225,7 +225,7 @@ const Home = () => {
                 />
               </MotionBox>
               <MotionBox
-                backgroundColor="#fff"
+                backgroundColor="#000"
                 cursor="pointer"
                 _hover={{ boxShadow: 'lg' }}
                 whileHover={{ scale: 1.03 }}
@@ -239,7 +239,7 @@ const Home = () => {
                 />
               </MotionBox>
               <MotionBox
-                backgroundColor="#fff"
+                backgroundColor="#000"
                 cursor="pointer"
                 _hover={{ boxShadow: 'lg' }}
                 whileHover={{ scale: 1.03 }}
@@ -253,7 +253,7 @@ const Home = () => {
                 />
               </MotionBox>
               <MotionBox
-                backgroundColor="#fff"
+                backgroundColor="#000"
                 cursor="pointer"
                 _hover={{ boxShadow: 'lg' }}
                 whileHover={{ scale: 1.03 }}
@@ -267,7 +267,7 @@ const Home = () => {
                 />
               </MotionBox>
               <MotionBox
-                backgroundColor="#fff"
+                backgroundColor="#000"
                 cursor="pointer"
                 _hover={{ boxShadow: 'lg' }}
                 whileHover={{ scale: 1.03 }}
@@ -281,7 +281,7 @@ const Home = () => {
                 />
               </MotionBox>
               <MotionBox
-                backgroundColor="#fff"
+                backgroundColor="#000"
                 cursor="pointer"
                 _hover={{ boxShadow: 'lg' }}
                 whileHover={{ scale: 1.03 }}

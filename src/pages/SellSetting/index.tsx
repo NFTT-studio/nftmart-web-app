@@ -33,6 +33,7 @@ import {
 
 import { useTranslation } from 'react-i18next';
 
+import { boolean } from 'yup/lib/locale';
 import MainContainer from '../../layout/MainContainer';
 import colors from '../../themes/colors';
 import useNft from '../../hooks/reactQuery/useNft';
@@ -51,6 +52,8 @@ import {
 import { useAppSelector } from '../../hooks/redux';
 import { createOrder } from '../../polkaSDK/api/createOrder';
 import { settingOrder } from '../../polkaSDK/api/settingOrder';
+import { submitDutchAuction } from '../../polkaSDK/api/submitDutchAuction';
+import { submitBritishAuction } from '../../polkaSDK/api/submitBritishAuction';
 import MyToast, { ToastBody } from '../../components/MyToast';
 
 const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
@@ -87,6 +90,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { data: categoriesData } = useCategories();
   const { data: collectionsData } = useCollectionsSinger(collectionsId);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnToEnglishAuction, setTurnToEnglishAuction] = useState(false);
+  const [automaticDelay, setAutomaticDelay] = useState(false);
+  const [endingPriceSl, setEndingPriceSl] = useState(false);
 
   const firstOffer = nftData?.nftInfo?.offers[0];
   const orderId = firstOffer?.order_id;
@@ -99,14 +105,39 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     categoryId: Yup.string().required(t('Create.required')),
     price: Yup.number().moreThan(0).required(t('Create.required')),
   });
+  const schemaDutch = Yup.object().shape({
+    categoryId: Yup.string().required(t('Create.required')),
+    startingPrice: Yup.string().required(t('Create.required')),
+    endingPrice: Yup.string().required(t('Create.required')),
+    expirationDate: Yup.string().required(t('Create.required')),
+    minimumMarkup: Yup.string().required(t('Create.required')),
+    automaticDelay: Yup.boolean().required(t('Create.required')),
+  });
+  const schemaEnglish = Yup.object().shape({
+    categoryId: Yup.string().required(t('Create.required')),
+    startingPrice: Yup.string().required(t('Create.required')),
+    endingPrice: Yup.string().required(t('Create.required')),
+    expirationDate: Yup.string().required(t('Create.required')),
+    minimumMarkup: Yup.string().required(t('Create.required')),
+    automaticDelay: Yup.boolean().required(t('Create.required')),
+  });
 
   const formik = useFormik({
     initialValues: {
       price: '',
       categoryId: '',
+      startingPrice: '',
+      endingPrice: '',
+      expirationDate: '',
+      minimumMarkup: '',
+      automaticDelay: false,
+      turnToEnglishAuction: false,
+      endingPriceSl: false,
     },
     onSubmit: (formValue, formAction) => {
-      setIsSubmitting(true);
+      setIsSubmitting(false);
+      // console.log(formValue);
+      // return;
       const orderParams = {
         address: account!.address,
         categoryId: formValue.categoryId,
@@ -152,14 +183,69 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           },
         },
       };
+      const dutchParams = {
+        address: account!.address,
+        maxPrice: formValue.startingPrice,
+        minPrice: formValue.endingPrice,
+        deadline_minute: formValue.expirationDate,
+        allow_british_auction: formValue.turnToEnglishAuction,
+        range: formValue.minimumMarkup,
+        tokens: [[nftData?.nftInfo.class_id, nftData?.nftInfo.token_id, 1]],
+        categoryId: formValue.categoryId,
+        cb: {
+          success: () => {
+            toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
+            setIsSubmitting(false);
+            formAction.resetForm();
+            setTimeout(() => {
+              history.push(`/item/${nftData?.nftInfo?.id}`);
+            }, 1000);
+          },
+          error: (error) => {
+            toast(<ToastBody title="Error" message={error} type="error" />);
+            setIsSubmitting(false);
+          },
+        },
+      };
+      const britishParams = {
+        address: account!.address,
+        InitPrice: formValue.startingPrice,
+        deadline_minute: formValue.expirationDate,
+        allow_british_auction: formValue.automaticDelay,
+        range: formValue.minimumMarkup,
+        tokens: [[nftData?.nftInfo.class_id, nftData?.nftInfo.token_id, 1]],
+        categoryId: formValue.categoryId,
+        cb: {
+          success: () => {
+            toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
+            setIsSubmitting(false);
+            formAction.resetForm();
+            setTimeout(() => {
+              history.push(`/item/${nftData?.nftInfo?.id}`);
+            }, 1000);
+          },
+          error: (error) => {
+            toast(<ToastBody title="Error" message={error} type="error" />);
+            setIsSubmitting(false);
+          },
+        },
+      };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (Number(nftData?.nftInfo?.price)) {
+      if (selectId === 0 && Number(nftData?.nftInfo?.price)) {
         settingOrder(settingorderParams as any);
-      } else {
+      }
+      if (selectId === 0 && !Number(nftData?.nftInfo?.price)) {
         createOrder(orderParams as any);
       }
+      if (selectId === 1) {
+        submitDutchAuction(dutchParams as any);
+      }
+      if (selectId === 2) {
+        submitBritishAuction(britishParams as any);
+      }
     },
-    validationSchema: schema,
+    // eslint-disable-next-line no-nested-ternary
+    validationSchema: Number(selectId) === 0 ? schema : Number(selectId) === 1 ? schemaDutch : schemaEnglish,
   });
 
   return (
@@ -590,9 +676,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                     >
                       <Input
-                        id="price"
-                        name="price"
-                        value={formik.values.price}
+                        id="startingPrice"
+                        name="startingPrice"
+                        value={formik.values.startingPrice}
                         onChange={formik.handleChange}
                         fontSize="16px"
                         fontFamily="TTHoves-Regular, TTHoves"
@@ -630,8 +716,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       />
                     </InputGroup>
                   </Flex>
-                  {formik.errors.price && formik.touched.price ? (
-                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  {formik.errors.startingPrice && formik.touched.startingPrice ? (
+                    <div style={{ color: 'red' }}>{formik.errors.startingPrice}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -679,9 +765,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                     >
                       <Input
-                        id="price"
-                        name="price"
-                        value={formik.values.price}
+                        id="endingPrice"
+                        name="endingPrice"
+                        value={formik.values.endingPrice}
                         onChange={formik.handleChange}
                         fontSize="16px"
                         fontFamily="TTHoves-Regular, TTHoves"
@@ -719,8 +805,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       />
                     </InputGroup>
                   </Flex>
-                  {formik.errors.price && formik.touched.price ? (
-                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  {formik.errors.endingPrice && formik.touched.endingPrice ? (
+                    <div style={{ color: 'red' }}>{formik.errors.endingPrice}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -780,9 +866,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         }}
                       >
                         <Input
-                          id="price"
-                          name="price"
-                          value={formik.values.price}
+                          id="expirationDate"
+                          name="expirationDate"
+                          value={formik.values.expirationDate}
                           onChange={formik.handleChange}
                           fontSize="16px"
                           fontFamily="TTHoves-Regular, TTHoves"
@@ -816,13 +902,13 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           fontWeight="400"
                           color="#999999"
                           lineHeight="14px"
-                          children="NMT"
+                          children="Days"
                         />
                       </InputGroup>
                     </Flex>
                   </Flex>
-                  {formik.errors.price && formik.touched.price ? (
-                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  {formik.errors.expirationDate && formik.touched.expirationDate ? (
+                    <div style={{ color: 'red' }}>{formik.errors.expirationDate}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -858,10 +944,21 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         {t('SellSetting.turnToEnglishAuctionExplain')}
                       </Text>
                     </Flex>
-                    <Switch width="#40" height="40px" size="lg" />
+                    <Switch
+                      id="turnToEnglishAuction"
+                      name="turnToEnglishAuction"
+                      isChecked={turnToEnglishAuction}
+                      onChange={() => {
+                        setTurnToEnglishAuction(!turnToEnglishAuction);
+                        formik.values.turnToEnglishAuction = !turnToEnglishAuction;
+                      }}
+                      width="#40"
+                      height="40px"
+                      size="lg"
+                    />
                   </Flex>
-                  {formik.errors.price && formik.touched.price ? (
-                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  {formik.errors.turnToEnglishAuction && formik.touched.turnToEnglishAuction ? (
+                    <div style={{ color: 'red' }}>{formik.errors.turnToEnglishAuction}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -908,9 +1005,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                     >
                       <Input
-                        id="price"
-                        name="price"
-                        value={formik.values.price}
+                        id="minimumMarkup"
+                        name="minimumMarkup"
+                        value={formik.values.minimumMarkup}
                         onChange={formik.handleChange}
                         fontSize="16px"
                         fontFamily="TTHoves-Regular, TTHoves"
@@ -934,7 +1031,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         }}
                       />
                       <InputRightAddon
-                        width="72px"
                         height="40px"
                         background="#F4F4F4"
                         borderRadius="0px 4px 4px 0px"
@@ -944,14 +1040,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         fontWeight="400"
                         color="#999999"
                         lineHeight="14px"
-                        children="NMT"
+                        children="%"
                       />
                     </InputGroup>
                   </Flex>
-                  {formik.errors.price && formik.touched.price ? (
-                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  {formik.errors.minimumMarkup && formik.touched.minimumMarkup ? (
+                    <div style={{ color: 'red' }}>{formik.errors.minimumMarkup}</div>
                   ) : null}
-                  <Flex
+                  {/* <Flex
                     w="100%"
                     h="80px"
                     flexDirection="row"
@@ -1028,7 +1124,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         />
                       </InputGroup>
                     </Flex>
-                  </Flex>
+                  </Flex> */}
                   <Text
                     mt="20px"
                     mb="8px"
@@ -1041,6 +1137,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     {t('SellSetting.categories')}
                   </Text>
                   <RadioGroup
+                    id="categoryId"
+                    name="categoryId"
                     color={colors.text.gray}
                     onChange={(value: string) => {
                       formik.values.categoryId = value;
@@ -1161,9 +1259,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                     >
                       <Input
-                        id="price"
-                        name="price"
-                        value={formik.values.price}
+                        id="startingPrice"
+                        name="startingPrice"
+                        value={formik.values.startingPrice}
                         onChange={formik.handleChange}
                         fontSize="16px"
                         fontFamily="TTHoves-Regular, TTHoves"
@@ -1201,8 +1299,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       />
                     </InputGroup>
                   </Flex>
-                  {formik.errors.price && formik.touched.price ? (
-                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  {formik.errors.startingPrice && formik.touched.startingPrice ? (
+                    <div style={{ color: 'red' }}>{formik.errors.startingPrice}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -1262,9 +1360,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         }}
                       >
                         <Input
-                          id="price"
-                          name="price"
-                          value={formik.values.price}
+                          id="expirationDate"
+                          name="expirationDate"
+                          value={formik.values.expirationDate}
                           onChange={formik.handleChange}
                           fontSize="16px"
                           fontFamily="TTHoves-Regular, TTHoves"
@@ -1298,13 +1396,13 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           fontWeight="400"
                           color="#999999"
                           lineHeight="14px"
-                          children="NMT"
+                          children="Days"
                         />
                       </InputGroup>
                     </Flex>
                   </Flex>
-                  {formik.errors.price && formik.touched.price ? (
-                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  {formik.errors.expirationDate && formik.touched.expirationDate ? (
+                    <div style={{ color: 'red' }}>{formik.errors.expirationDate}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -1340,10 +1438,21 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         {t('SellSetting.automaticDelayExplain')}
                       </Text>
                     </Flex>
-                    <Switch width="#40" height="40px" size="lg" />
+                    <Switch
+                      id="automaticDelay"
+                      name="automaticDelay"
+                      isChecked={automaticDelay}
+                      onChange={() => {
+                        formik.values.automaticDelay = !automaticDelay;
+                        setAutomaticDelay(!automaticDelay);
+                      }}
+                      width="#40"
+                      height="40px"
+                      size="lg"
+                    />
                   </Flex>
-                  {formik.errors.price && formik.touched.price ? (
-                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  {formik.errors.automaticDelay && formik.touched.automaticDelay ? (
+                    <div style={{ color: 'red' }}>{formik.errors.automaticDelay}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -1390,9 +1499,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                     >
                       <Input
-                        id="price"
-                        name="price"
-                        value={formik.values.price}
+                        id="minimumMarkup"
+                        name="minimumMarkup"
+                        value={formik.values.minimumMarkup}
                         onChange={formik.handleChange}
                         fontSize="16px"
                         fontFamily="TTHoves-Regular, TTHoves"
@@ -1426,12 +1535,12 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         fontWeight="400"
                         color="#999999"
                         lineHeight="14px"
-                        children="NMT"
+                        children="%"
                       />
                     </InputGroup>
                   </Flex>
-                  {formik.errors.price && formik.touched.price ? (
-                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  {formik.errors.minimumMarkup && formik.touched.minimumMarkup ? (
+                    <div style={{ color: 'red' }}>{formik.errors.minimumMarkup}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -1468,7 +1577,21 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       </Text>
                     </Flex>
                     <Flex flexDirection="column" justifyContent="space-between" alignItems="flex-end">
-                      <Switch width="#40" height="40px" size="lg" />
+                      <Switch
+                        id="endingPrice"
+                        name="endingPrice"
+                        isChecked={endingPriceSl}
+                        onChange={() => {
+                          formik.values.endingPriceSl = !endingPriceSl;
+                          setEndingPriceSl(!turnToEnglishAuction);
+                        }}
+                        width="#40"
+                        height="40px"
+                        size="lg"
+                      />
+                      {formik.errors.endingPriceSl && formik.touched.endingPriceSl ? (
+                        <div style={{ color: 'red' }}>{formik.errors.endingPriceSl}</div>
+                      ) : null}
                       <InputGroup
                         width="200px"
                         height="40px"
@@ -1481,9 +1604,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         }}
                       >
                         <Input
-                          id="price"
-                          name="price"
-                          value={formik.values.price}
+                          id="endingPrice"
+                          name="endingPrice"
+                          value={formik.values.endingPrice}
                           onChange={formik.handleChange}
                           fontSize="16px"
                           fontFamily="TTHoves-Regular, TTHoves"
@@ -1522,10 +1645,10 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       </InputGroup>
                     </Flex>
                   </Flex>
-                  {formik.errors.price && formik.touched.price ? (
-                    <div style={{ color: 'red' }}>{formik.errors.price}</div>
+                  {formik.errors.endingPrice && formik.touched.endingPrice ? (
+                    <div style={{ color: 'red' }}>{formik.errors.endingPrice}</div>
                   ) : null}
-                  <Flex
+                  {/* <Flex
                     w="100%"
                     h="80px"
                     flexDirection="row"
@@ -1602,7 +1725,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         />
                       </InputGroup>
                     </Flex>
-                  </Flex>
+                  </Flex> */}
                   <Text
                     mt="20px"
                     mb="8px"
