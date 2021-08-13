@@ -9,11 +9,15 @@ import {
 } from 'formik';
 import { toast } from 'react-toastify';
 import {
+  Button,
   Flex,
   Modal,
   ModalOverlay,
+  Image,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
+import { F } from 'ramda';
+import console from 'console';
 import Upload from '../../components/Upload';
 import EditFormTitle from '../../components/EditFormTitle';
 import EditFromSubTitle from '../../components/EditFromSubTitle';
@@ -26,6 +30,12 @@ import { createClass } from '../../polkaSDK/api/createClass';
 import { useAppSelector } from '../../hooks/redux';
 import MyModal from '../../components/MyModal';
 import MyToast, { ToastBody } from '../../components/MyToast';
+import SetCategory from './SetCategory';
+
+import {
+  IconAdd,
+  IconDel,
+} from '../../assets/images';
 
 const CreateCollection: FC = () => {
   const { t } = useTranslation();
@@ -35,6 +45,7 @@ const CreateCollection: FC = () => {
   const { account, whiteList } = chainState;
   const [isShowModal, setIsShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const onCloseModal = () => {
     setIsShowModal(false);
@@ -46,6 +57,15 @@ const CreateCollection: FC = () => {
       setIsShowModal(true);
     }
   }, [account, whiteList]);
+  const remove = (l) => {
+    const index = categories.indexOf(l);
+    if (index > -1) {
+      const newcategories:never[] = [];
+      const arr = newcategories.concat(categories);
+      arr.splice(index, 1);
+      setCategories(arr);
+    }
+  };
 
   const create = useCallback((formValue, formActions) => {
     createClass({
@@ -180,6 +200,34 @@ const CreateCollection: FC = () => {
         {formik.errors.description && formik.touched.description ? (
           <div style={{ color: 'red' }}>{formik.errors.description}</div>
         ) : null}
+        <Flex w="600px" mt="30px">
+          {categories.map((item) => (
+            <Flex
+              p="0 20px"
+              height="40px"
+              borderRadius="4px"
+              border="1px solid #000000"
+              fontSize="14px"
+              fontFamily="TTHoves-Regular, TTHoves"
+              fontWeight="400"
+              color="#000000"
+              lineHeight="14px"
+              justifyContent="center"
+              alignItems="center"
+              mr="10px"
+            >
+              {item.name}
+              <Image
+                ml="10px"
+                w="14px"
+                h="14px"
+                src={IconDel.default}
+                onClick={() => remove(item)}
+              />
+            </Flex>
+          ))}
+          <SetCategory categories={categories} setCategories={setCategories} />
+        </Flex>
         <Flex
           w="600px"
           justifyContent="center"

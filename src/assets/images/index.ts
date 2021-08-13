@@ -32,7 +32,6 @@ export * as IoMdArrowDropup from './icon_triangle_down(2).png';
 export * as IconRight from './icon_right.png';
 export * as PriceIcon from './img_logo_umt.png';
 export * as IconHome from './icon_home.png';
-export * as BannerBg from './banner_bg.png';
 
 export * as IconUpload from './icon_upload.png';
 export * as IconSearch from './icon_search@2x.png';
@@ -86,6 +85,8 @@ export * as IconIntructions from './Icon_Intructions.png';
 export * as IconAuthentication from './icon_authentication.png';
 export * as IconCalendar from './icon_calendar.png';
 export * as IconTime from './icon_time.png';
+export * as IconAdd from './icon_add.png';
+export * as IconDel from './icon_del.png';
 
 // empty
 export * as Emptyimg from './empty.png';

@@ -164,7 +164,7 @@ const NftCard: FC<NftCardProps> = ({
                 </Flex>
               </Box>
             ) : null}
-            {1 ? (
+            {0 / 1 ? (
               <Box
                 fontSize="12px"
                 fontFamily="TTHoves-Medium, TTHoves"
