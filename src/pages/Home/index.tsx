@@ -26,7 +26,6 @@ import {
   IconHome,
   IconCheapest,
   iconExpensive,
-  BannerBg,
 } from '../../assets/images';
 import {
   banner12,
