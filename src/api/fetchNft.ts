@@ -23,6 +23,7 @@ type NftData = {
     royalty: boolean
     status: Status
     token_id: string
+    category: []
   }
 }
 

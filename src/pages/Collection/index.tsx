@@ -77,10 +77,10 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
     history.push(`/profile/nft/create/${classId}`);
   }
   useEffect(() => {
-    if (address === account?.address) {
+    if (collectionsData?.collection?.creator_id === account?.address) {
       setIsPerson(true);
     }
-  }, [account?.address, address, dataPerson]);
+  }, [collectionsData?.collection?.creator_id, address, dataPerson]);
 
   if (isLoading) {
     return (

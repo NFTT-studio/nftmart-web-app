@@ -27,6 +27,10 @@ import { getBlock } from '../../polkaSDK/api/getBlock';
 import TimeBy from './TimeBy';
 
 import {
+  PINATA_SERVER,
+} from '../../constants';
+
+import {
   IconDetailsocllections,
   // IconDetailsRefresh,
   // IconDetailshaSre,
@@ -53,12 +57,9 @@ import {
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import useToken from '../../hooks/reactQuery/useToken';
-import {
-  PINATA_SERVER,
-} from '../../constants';
+
 import { priceStringDivUnit } from '../../utils/format';
 import useIsLoginAddress from '../../hooks/utils/useIsLoginAddress';
-import { SELLING } from '../../constants/Status';
 import { useAppSelector } from '../../hooks/redux';
 import BuyDialog from './BuyDialog';
 import OfferDialog from './OfferDialog';
@@ -1046,7 +1047,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             color="#000000"
                             lineHeight="18px"
                           >
-                            {PriceHistory?.volume}
+                            {PriceHistory?.volume || '-'}
                           </Text>
                         </Flex>
                       </Flex>
@@ -1070,7 +1071,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             color="#000000"
                             lineHeight="18px"
                           >
-                            {PriceHistory?.average}
+                            {PriceHistory?.average || '-'}
                           </Text>
                         </Flex>
                       </Flex>
@@ -1172,7 +1173,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             <Box height="162px" overflowY="scroll" boxSizing="border-box">
                               {OffersArr.map((item) => (
                                 <Box
-                                  key={item?.order?.seller_id}
+                                  key={item.id}
                                   h="54px"
                                 >
                                   <Flex
@@ -1190,7 +1191,9 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                                       color="#000000"
                                       lineHeight="20px"
                                     >
-                                      {item?.order?.seller_id ? formatAddress(item?.order?.seller_id) : formatAddress(item?.order?.buyer_id)}
+                                      {item?.order?.seller_id
+                                        ? formatAddress(item?.order?.seller_id)
+                                        : formatAddress(item?.order?.buyer_id)}
                                     </Text>
                                     <Text
                                       w="136px"
@@ -1552,7 +1555,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             isShowOffer={isShowOffer}
             setIsShowOffer={setIsShowOffer}
             classId={collectionsId}
-            categoryId={nftData?.nftInfo?.category?.id}
+            categoryId={nftData.nftInfo.category?.id}
             tokenId={tokenId}
           />
         )}

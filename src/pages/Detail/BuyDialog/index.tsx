@@ -26,7 +26,7 @@ import { priceStringDivUnit } from '../../../utils/format';
 interface Props {
   price: string,
   nftName: string,
-  collectionName: string,
+  collectionName: string | undefined,
   logoUrl: string,
   ownerId: string,
   orderId: string,
