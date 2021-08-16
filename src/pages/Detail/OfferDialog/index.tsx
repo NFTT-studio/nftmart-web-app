@@ -27,6 +27,7 @@ import { useHistory } from 'react-router-dom';
 import { number } from 'yup';
 import * as Yup from 'yup';
 import { time } from 'console';
+import { useQueryClient } from 'react-query';
 import { submitOffer } from '../../../polkaSDK/api/submitOffer';
 import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
@@ -35,6 +36,9 @@ import useToken from '../../../hooks/reactQuery/useToken';
 import {
   IconCalendar,
 } from '../../../assets/images';
+import {
+  QUERY_KEYS,
+} from '../../../constants';
 
 interface Props {
   categoryId: string,
@@ -46,6 +50,7 @@ interface Props {
 const OfferDialog: FC<Props> = (({
   categoryId, classId, tokenId, isShowOffer, setIsShowOffer,
 }) => {
+  const queryCliet = useQueryClient();
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
   const { data: token } = useToken();
@@ -116,8 +121,8 @@ const OfferDialog: FC<Props> = (({
               setTimeout(() => {
                 setIsSubmitting(false);
                 setIsShowOffer(false);
-                history.push(`/item/${classId}-${tokenId}`);
-              }, 1500);
+                queryCliet.refetchQueries(QUERY_KEYS.NFT);
+              }, 2500);
             }
           },
           error: (error: string) => {

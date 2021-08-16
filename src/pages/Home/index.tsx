@@ -434,7 +434,7 @@ const Home = () => {
               </Stack>
             </Flex>
           ) : null}
-          {expensiveNftsData?.orders.length
+          {cheapNftsData?.orders.length
             ? (
               <Flex width="100%" flexDirection="column" mt="40px">
                 <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="19px">
