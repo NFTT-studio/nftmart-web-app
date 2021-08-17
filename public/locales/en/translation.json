@@ -1,5 +1,5 @@
 {
-  "testnet":"TestNet",
+  "TestNet":"TestNet",
   "results":"results",
   "sortBy": {
     "recentlyListed": "Recently Listed",
