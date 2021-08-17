@@ -12,7 +12,7 @@ type submitBritishAuctionProps = {
   // eslint-disable-next-line camelcase
   allow_delay: boolean,
   // eslint-disable-next-line camelcase
-  deadline_minute: number,
+  expirationDate: number,
   range: number,
   categoryId: number,
   tokens: [],
@@ -26,7 +26,7 @@ export const submitBritishAuction = async ({
   address,
   InitPrice,
   // eslint-disable-next-line camelcase
-  deadline_minute,
+  expirationDate,
   // eslint-disable-next-line camelcase
   allow_delay,
   range,
@@ -40,7 +40,7 @@ export const submitBritishAuction = async ({
 
     const blockTimeSec = PolkaSDK.api.consts.babe.expectedBlockTime.toNumber() / 1000;
     // eslint-disable-next-line camelcase
-    let deadlineBlock = (deadline_minute * 60) / blockTimeSec;
+    let deadlineBlock = (expirationDate * 24 * 60 * 60) / blockTimeSec;
     const block = await PolkaSDK.api.rpc.chain.getBlock();
     deadlineBlock += Number(block.block.header.number);
 

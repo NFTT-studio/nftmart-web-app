@@ -30,7 +30,7 @@ import * as Yup from 'yup';
 import {
   useHistory, RouteComponentProps, Link as RouterLink,
 } from 'react-router-dom';
-
+import date from 'date-and-time';
 import { useTranslation } from 'react-i18next';
 
 import { boolean } from 'yup/lib/locale';
@@ -160,7 +160,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           },
         },
       };
-      const settingorderParams = {
+      const settingOrderParams = {
         address: account!.address,
         orderId,
         categoryId: formValue.categoryId,
@@ -187,7 +187,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         address: account!.address,
         maxPrice: formValue.startingPrice,
         minPrice: formValue.endingPrice,
-        deadline_minute: formValue.expirationDate,
+        expirationDate: formValue.expirationDate,
         allow_british_auction: formValue.turnToEnglishAuction,
         range: formValue.minimumMarkup,
         tokens: [[nftData?.nftInfo.class_id, nftData?.nftInfo.token_id, 1]],
@@ -210,7 +210,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       const britishParams = {
         address: account!.address,
         InitPrice: formValue.startingPrice,
-        deadline_minute: formValue.expirationDate,
+        expirationDate: formValue.expirationDate,
         allow_british_auction: formValue.automaticDelay,
         range: formValue.minimumMarkup,
         tokens: [[nftData?.nftInfo.class_id, nftData?.nftInfo.token_id, 1]],
@@ -232,7 +232,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (selectId === 0 && Number(nftData?.nftInfo?.price)) {
-        settingOrder(settingorderParams as any);
+        settingOrder(settingOrderParams as any);
       }
       if (selectId === 0 && !Number(nftData?.nftInfo?.price)) {
         createOrder(orderParams as any);
@@ -563,14 +563,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   >
                     <Stack direction="row" spacing={6}>
                       {categoriesData
-                    && categoriesData?.categories?.map((item) => (
-                      <Radio
-                        key={item.id}
-                        value={item.id}
-                      >
-                        {item.name}
-                      </Radio>
-                    ))}
+                        && categoriesData?.categories?.map((item) => (
+                          <Radio
+                            key={item.id}
+                            value={item.id}
+                          >
+                            {item.name}
+                          </Radio>
+                        ))}
                     </Stack>
                   </RadioGroup>
                   {formik.errors.categoryId && formik.touched.categoryId ? (
@@ -852,7 +852,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         lineHeight="14px"
                         mr="9px"
                       >
-                        at PM 5:32
+                        at
+                        {' '}
+                        {date.format(new Date(), 'A hh:mm')}
                       </Text>
                       <InputGroup
                         width="200px"
@@ -862,7 +864,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         border="1px solid #E5E5E5"
                         _focus={{
                           boxShadow: 'none',
-
                         }}
                       >
                         <Input
@@ -885,7 +886,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             color: '#000000',
                             border: '1px solid #000000',
                           }}
-                          placeholder={t('SellSetting.price')}
+                          placeholder={t('SellSetting.day')}
                           _placeholder={{
                             color: '#999999',
                             fontSize: '12px',
@@ -1146,14 +1147,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   >
                     <Stack direction="row" spacing={6}>
                       {categoriesData
-                    && categoriesData?.categories?.map((item) => (
-                      <Radio
-                        key={item.id}
-                        value={item.id}
-                      >
-                        {item.name}
-                      </Radio>
-                    ))}
+                        && categoriesData?.categories?.map((item) => (
+                          <Radio
+                            key={item.id}
+                            value={item.id}
+                          >
+                            {item.name}
+                          </Radio>
+                        ))}
                     </Stack>
                   </RadioGroup>
                   {formik.errors.categoryId && formik.touched.categoryId ? (
@@ -1346,7 +1347,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         lineHeight="14px"
                         mr="9px"
                       >
-                        at PM 5:32
+                        at
+                        {' '}
+                        {date.format(new Date(), 'A hh:mm')}
                       </Text>
                       <InputGroup
                         width="200px"
@@ -1379,7 +1382,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             color: '#000000',
                             border: '1px solid #000000',
                           }}
-                          placeholder={t('SellSetting.price')}
+                          placeholder={t('SellSetting.day')}
                           _placeholder={{
                             color: '#999999',
                             fontSize: '12px',
@@ -1745,14 +1748,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   >
                     <Stack direction="row" spacing={6}>
                       {categoriesData
-                    && categoriesData?.categories?.map((item) => (
-                      <Radio
-                        key={item.id}
-                        value={item.id}
-                      >
-                        {item.name}
-                      </Radio>
-                    ))}
+                        && categoriesData?.categories?.map((item) => (
+                          <Radio
+                            key={item.id}
+                            value={item.id}
+                          >
+                            {item.name}
+                          </Radio>
+                        ))}
                     </Stack>
                   </RadioGroup>
                   {formik.errors.categoryId && formik.touched.categoryId ? (

@@ -177,7 +177,7 @@
     "offer":"Make an offer",
     "inAday":"In a day",
     "makeOffer":"Make Offer",
-    "offerExplain":"*If the owner accepts, the transaction will be automatically executed", 
+    "offerExplain":"*If the owner accepts, the transaction will be automatically executed",
     "deal":"Deal",
     "buySuccess": "Buy Success"
   },
@@ -190,6 +190,7 @@
     "englishAuction": "English Auction",
     "auctionToTheHighestBidder": "Auction to the highest bidder",
     "price": "Price",
+    "day": "Day",
     "setPrice": "Set Price",
     "priceExplain": "Will be on sale until you transfer this item or cancel it.",
     "startingPrice": "Starting Price",
