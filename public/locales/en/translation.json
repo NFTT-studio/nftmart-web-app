@@ -1,5 +1,5 @@
 {
-  "TestNet":"TestNet",
+  "testnet":"TestNet",
   "results":"results",
   "sortBy": {
     "recentlyListed": "Recently Listed",
@@ -99,6 +99,8 @@
     "nft": "Create a new nft",
     "required": "Required",
     "confirmClipping": "Confirm clipping",
+    "category": "Category",
+    "categoryRule": "Adding a category will help make your item discoverable on mart.You can set up to 2 categories.",
     "changeImage": "Change Image"
   },
   "Browsing": {
@@ -134,7 +136,7 @@
   "Detail": {
     "Sell": "Sell",
     "title": "-NFTMart|A Professional NFT Market",
-    "Detail": "Detail",
+    "detail": "Detail",
     "properties": "Properties",
     "about": "About",
     "offers": "Offers",
@@ -179,6 +181,14 @@
     "makeOffer":"Make Offer",
     "offerExplain":"*If the owner accepts, the transaction will be automatically executed",
     "deal":"Deal",
+    "average":"day average price",
+    "volume":"day trading volume",
+    "seven":"7",
+    "fourteen":"14",
+    "thirty":"30",
+    "sixty":"60",
+    "ninety":"90",
+    "year":"last year",
     "buySuccess": "Buy Success"
   },
   "SellSetting": {

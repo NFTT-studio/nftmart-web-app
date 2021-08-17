@@ -13,7 +13,7 @@ import {
 
 type CollectionSelectorProps = {
   collectionArr: Collection[],
-  selectedArr: string,
+  selectedArr: string|undefined,
   handleSelect: MouseEventHandler<HTMLButtonElement>
 } & HTMLChakraProps<'div'>
 

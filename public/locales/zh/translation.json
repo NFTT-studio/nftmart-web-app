@@ -1,5 +1,5 @@
 {
-  "TestNet": "TestNet",
+  "testnet": "TestNet",
   "results": "个结果",
   "sortBy": {
     "recentlyListed": "最近上架",
@@ -99,6 +99,8 @@
     "nft": "创建一个新的NFT",
     "required": "必填",
     "confirmClipping": "确认裁剪",
+    "category": "公共分类",
+    "categoryRule": "添加类别将有助于在市场上找到您的项目。您最多可以设置2个类别。",
     "changeImage": "改变图片"
   },
   "Browsing": {
@@ -179,6 +181,14 @@
     "makeOffer": "提交报价",
     "offerExplain": "*I如果拥有者接受报价，交易将会自动完成。",
     "deal": "成交",
+    "average":"天平均价格",
+    "volume":"天成交量",
+    "seven":"7",
+    "fourteen":"14",
+    "thirty":"30",
+    "sixty":"60",
+    "ninety":"90",
+    "year":"去年",
     "buySuccess": "购买成功"
   },
   "SellSetting": {

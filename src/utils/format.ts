@@ -43,4 +43,8 @@ export const nmtNumberToString = (nmtNumber: string) => {
   }
   return nmtBn.toFixed(1).toString();
 };
+export const NumberToString = (nmtNumber: string) => {
+  const nmtBn = toBigNumber(nmtNumber).div(UnitBn.toNumber());
+  return nmtBn.toString();
+};
 export const toFixedDecimals = (n: NumberValue, place = 8) => toBigNumber(n).toFormat(place);

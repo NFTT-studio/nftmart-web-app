@@ -17,7 +17,6 @@ import {
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 import { F } from 'ramda';
-import console from 'console';
 import Upload from '../../components/Upload';
 import EditFormTitle from '../../components/EditFormTitle';
 import EditFromSubTitle from '../../components/EditFromSubTitle';
@@ -101,10 +100,10 @@ const CreateCollection: FC = () => {
   }, [account, history, t]);
 
   const schema = Yup.object().shape({
-    logoUrl: Yup.string().required(t('Collection.Required')),
+    logoUrl: Yup.string().required(t('Collection.required')),
     name: Yup.string()
       .max(50, t('Collection.nameRule'))
-      .required(t('Collection.Required')),
+      .required(t('Collection.required')),
     stub: Yup.string().max(50, t('Collection.urlRule')),
     description: Yup.string().max(1000, t('Collection.descriptionRule')),
   });
@@ -200,9 +199,17 @@ const CreateCollection: FC = () => {
         {formik.errors.description && formik.touched.description ? (
           <div style={{ color: 'red' }}>{formik.errors.description}</div>
         ) : null}
+        <label htmlFor="categories">
+          {' '}
+          <EditFormTitle text={t('Collection.category')} />
+          <EditFromSubTitle
+            text={t('Collection.categoryRule')}
+          />
+        </label>
         <Flex w="600px" mt="30px">
           {categories.map((item) => (
             <Flex
+              key={item.name}
               p="0 20px"
               height="40px"
               borderRadius="4px"
