@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Stack,
   Popover,
@@ -19,11 +19,15 @@ import useCategories from '../../../hooks/reactQuery/useCategories';
 
 interface Props {
   categories:never[],
+  onChange?: (cid: string) => any;
   setCategories: React.Dispatch<React.SetStateAction<never[]>>,
 }
 const ChangeLanguage: FC<Props> = (({
-  categories, setCategories,
+  categories, setCategories, onChange,
 }) => {
+  useEffect(() => {
+    if (categories) onChange(categories);
+  }, [categories]);
   const { i18n, t } = useTranslation();
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
 

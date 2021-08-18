@@ -308,7 +308,7 @@ const Upload: FC<UploadProps> = ({
                   lineHeight="47px"
                   cursor="pointer"
                   color={Colors.Success}
-                  onclick={() => setFile(null)}
+                  onClick={() => setFile(null)}
                 >
                   {t('Collection.changeImage')}
                 </Text>

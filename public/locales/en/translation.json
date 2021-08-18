@@ -101,6 +101,10 @@
     "confirmClipping": "Confirm clipping",
     "category": "Category",
     "categoryRule": "Adding a category will help make your item discoverable on mart.You can set up to 2 categories.",
+    "royalties": "Royalties",
+    "royaltiesRule": "When users sell your work on the market, you receive ",
+    "royaltiesRuleTwo": "royalties. Royalties are capped at ", 
+    "royaltiesSchema": "The maximum royalty is 20% and cannot be less than 0",
     "changeImage": "Change Image"
   },
   "Browsing": {

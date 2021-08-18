@@ -9,11 +9,16 @@ import {
 } from 'formik';
 import { toast } from 'react-toastify';
 import {
-  Button,
   Flex,
   Modal,
   ModalOverlay,
   Image,
+  Switch,
+  InputRightAddon,
+  InputGroup,
+  Input,
+  Text,
+  Box,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 import { F } from 'ramda';
@@ -32,7 +37,6 @@ import MyToast, { ToastBody } from '../../components/MyToast';
 import SetCategory from './SetCategory';
 
 import {
-  IconAdd,
   IconDel,
 } from '../../assets/images';
 
@@ -45,6 +49,7 @@ const CreateCollection: FC = () => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [royaltiesSl, setroyaltiesSl] = useState(false);
 
   const onCloseModal = () => {
     setIsShowModal(false);
@@ -76,6 +81,8 @@ const CreateCollection: FC = () => {
         stub: formValue.stub,
         description: formValue.description,
       },
+      royaltyRate: royaltiesSl ? formValue.royalties : 0,
+      cate: formValue.cate,
       cb: {
         success: (result) => {
           if (result.dispatchError) {
@@ -106,6 +113,8 @@ const CreateCollection: FC = () => {
       .required(t('Collection.required')),
     stub: Yup.string().max(50, t('Collection.urlRule')),
     description: Yup.string().max(1000, t('Collection.descriptionRule')),
+    royalties: Yup.number().max(20, t('Collection.royaltiesSchema')).min(0, t('Collection.royaltiesSchema')),
+    cate: Yup.string().required(t('Collection.required')),
   });
 
   const formik = useFormik({
@@ -115,6 +124,8 @@ const CreateCollection: FC = () => {
       name: '',
       stub: '',
       description: '',
+      royalties: 0,
+      cate: '',
     },
     onSubmit: (values, formActions) => {
       setIsSubmitting(true);
@@ -142,7 +153,8 @@ const CreateCollection: FC = () => {
           rectangle=""
           value={formik.values.logoUrl}
           onChange={(v) => {
-            formik.setFieldValue('logoUrl', v);
+            console.log(v);
+            formik.values.logoUrl = v;
           }}
         />
         {formik.errors.logoUrl && formik.touched.logoUrl ? (
@@ -199,6 +211,125 @@ const CreateCollection: FC = () => {
         {formik.errors.description && formik.touched.description ? (
           <div style={{ color: 'red' }}>{formik.errors.description}</div>
         ) : null}
+        <Flex
+          w="100%"
+          h="80px"
+          mt="20px"
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Flex
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="flex-start"
+          >
+            <Text
+              fontSize="16px"
+              fontFamily="TTHoves-Medium, TTHoves"
+              fontWeight="500"
+              color="#000000"
+              lineHeight="18px"
+            >
+              {t('Collection.royalties')}
+            </Text>
+            <Box
+              width="349px"
+              mt="8px"
+              fontSize="14px"
+              fontFamily="TTHoves-Regular, TTHoves"
+              fontWeight="400"
+              color="#999999"
+              lineHeight="16px"
+              display="flex"
+              flexDirection="column"
+            >
+              <Text
+                display="inline-block"
+              >
+                {t('Collection.royaltiesRule')}
+              </Text>
+              <Flex>
+                <Text
+                  display="inline-block"
+                >
+                  {t('Collection.royaltiesRuleTwo')}
+                </Text>
+                <Text
+                  ml="3px"
+                  height="16px"
+                  display="inline-block"
+                  color="#000000"
+                >
+                  20%
+                </Text>
+              </Flex>
+            </Box>
+          </Flex>
+          <Flex flexDirection="column" justifyContent="space-between" alignItems="flex-end">
+            <Switch
+              isChecked={royaltiesSl}
+              onChange={() => {
+                setroyaltiesSl(!royaltiesSl);
+              }}
+              width="#40"
+              height="40px"
+              size="lg"
+            />
+            <InputGroup
+              width="200px"
+              height="40px"
+              background="#FFFFFF"
+              borderRadius="4px"
+              border="1px solid #E5E5E5"
+              _focus={{
+                boxShadow: 'none',
+              }}
+            >
+              <Input
+                id="royalties"
+                name="royalties"
+                value={formik.values.royalties}
+                onChange={formik.handleChange}
+                fontSize="16px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                lineHeight="14px"
+                color="#000000"
+                _focus={{
+                  boxShadow: 'none',
+                  color: '#000000',
+                  border: '1px solid #000000',
+                }}
+                _after={{
+                  boxShadow: 'none',
+                  color: '#000000',
+                  border: '1px solid #000000',
+                }}
+                placeholder="0"
+                _placeholder={{
+                  color: '#999999',
+                  fontSize: '12px',
+                }}
+              />
+              <InputRightAddon
+                height="40px"
+                background="#F4F4F4"
+                borderRadius="0px 4px 4px 0px"
+                border="1px solid #E5E5E5"
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#999999"
+                lineHeight="14px"
+                children="%"
+              />
+            </InputGroup>
+          </Flex>
+        </Flex>
+        {formik.errors.royalties && formik.touched.royalties ? (
+          <div style={{ color: 'red' }}>{formik.errors.royalties}</div>
+        ) : null}
         <label htmlFor="categories">
           {' '}
           <EditFormTitle text={t('Collection.category')} />
@@ -233,8 +364,22 @@ const CreateCollection: FC = () => {
               />
             </Flex>
           ))}
-          <SetCategory categories={categories} setCategories={setCategories} />
+          <SetCategory
+            categories={categories}
+            setCategories={setCategories}
+            onChange={() => {
+              const resultArr: any[] = [];
+              // eslint-disable-next-line array-callback-return
+              categories.map((item, index) => {
+                resultArr.splice(index, 0, item.id);
+              });
+              formik.values.cate = resultArr.toString();
+            }}
+          />
         </Flex>
+        {formik.errors.cate && formik.touched.cate ? (
+          <div style={{ color: 'red' }}>{formik.errors.cate}</div>
+        ) : null}
         <Flex
           w="600px"
           justifyContent="center"

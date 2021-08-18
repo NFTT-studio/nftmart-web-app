@@ -101,6 +101,10 @@
     "confirmClipping": "确认裁剪",
     "category": "公共分类",
     "categoryRule": "添加类别将有助于在市场上找到您的项目。您最多可以设置2个类别。",
+    "royalties": "版税",
+    "royaltiesRule": "当用户在市场上出售您的作品时，您将获得版税收入。",
+    "royaltiesRuleTwo": "版税上限为 ",
+    "royaltiesSchema": "版税上限为 20% 且不能小于0",
     "changeImage": "改变图片"
   },
   "Browsing": {
