@@ -100,7 +100,9 @@ const obj = {
       border: 'none',
       boxShadow: 'none',
     },
-
+    '.css-rwn23e': {
+      background: '#000000 !important',
+    },
   }),
 };
 

@@ -271,7 +271,6 @@ const CreateCollection: FC = () => {
               onChange={() => {
                 setroyaltiesSl(!royaltiesSl);
               }}
-              width="#40"
               height="40px"
               size="lg"
             />
