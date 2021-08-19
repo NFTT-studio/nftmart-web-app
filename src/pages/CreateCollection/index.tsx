@@ -81,7 +81,7 @@ const CreateCollection: FC = () => {
         stub: formValue.stub,
         description: formValue.description,
       },
-      royaltyRate: royaltiesSl ? formValue.royalties : 0,
+      royaltyRate: Number(formValue.royalties) / 100,
       cate: formValue.cate,
       cb: {
         success: (result) => {
@@ -153,7 +153,6 @@ const CreateCollection: FC = () => {
           rectangle=""
           value={formik.values.logoUrl}
           onChange={(v) => {
-            console.log(v);
             formik.values.logoUrl = v;
           }}
         />
@@ -289,7 +288,7 @@ const CreateCollection: FC = () => {
               <Input
                 id="royalties"
                 name="royalties"
-                value={formik.values.royalties}
+                value={royaltiesSl ? formik.values.royalties : 0}
                 onChange={formik.handleChange}
                 fontSize="16px"
                 fontFamily="TTHoves-Regular, TTHoves"

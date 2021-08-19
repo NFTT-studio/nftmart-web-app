@@ -5,17 +5,19 @@ import { txLog } from '../../utils/txLog';
 import { nftDeposit } from './nftDeposit';
 
 type mintNftProps = {
-  address: string,
+  address: string | undefined,
   classId: number,
   metadata: Metadata,
   quantity: number,
+  royaltyRate: number | undefined,
   cb: Callback
 }
 export const mintNft = async ({
   address = '',
-  classId = 0,
+  classId,
   metadata,
   quantity = 1,
+  royaltyRate,
   cb,
 }: mintNftProps) => {
   try {
@@ -26,18 +28,17 @@ export const mintNft = async ({
     if (balancesNeeded === null) return null;
     const classInfo: any = await PolkaSDK.api.query.ormlNft.classes(classId);
     if (!classInfo.isSome) {
-      // console.log('classInfo not exist');
       return null;
     }
-
     const ownerOfClass = classInfo.unwrap().owner.toString();
-    const needToChargeRoyalty = null;
+    // eslint-disable-next-line camelcase
+    const royalty_rate = royaltyRate;
     const txs = [
-      PolkaSDK.api.tx.balances.transfer(ownerOfClass, balancesNeeded),
+      PolkaSDK.api.tx.balances.transfer(ownerOfClass, balancesNeeded.toString()),
       PolkaSDK.api.tx.proxy.proxy(
         ownerOfClass,
         null,
-        PolkaSDK.api.tx.nftmart.mint(address, classId, metadataStr, quantity, needToChargeRoyalty),
+        PolkaSDK.api.tx.nftmart.mint(address, classId, metadataStr, quantity, royalty_rate),
       ),
     ];
 

@@ -19,14 +19,14 @@ import useCategories from '../../../hooks/reactQuery/useCategories';
 
 interface Props {
   categories:never[],
-  onChange?: (cid: string) => any;
+  onChange?: () => any;
   setCategories: React.Dispatch<React.SetStateAction<never[]>>,
 }
 const ChangeLanguage: FC<Props> = (({
   categories, setCategories, onChange,
 }) => {
   useEffect(() => {
-    if (categories) onChange(categories);
+    if (categories) onChange();
   }, [categories]);
   const { i18n, t } = useTranslation();
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
@@ -78,7 +78,7 @@ const ChangeLanguage: FC<Props> = (({
       <PopoverContent maxWidth="140px" _focus={{ boxShadow: 'none' }}>
         <PopoverArrow />
         <PopoverBody display="flex" flexDirection="column" alignItems="center">
-          {categoriesData?.categories.map((item) => (
+          {categoriesData?.categories.length ? categoriesData.categories.map((item) => (
             <Button
               isDisabled={categories.length === 2}
               backgroundColor="#FFFFFF"
@@ -97,7 +97,7 @@ const ChangeLanguage: FC<Props> = (({
             >
               {item.name}
             </Button>
-          ))}
+          )) : null}
         </PopoverBody>
       </PopoverContent>
     </Popover>

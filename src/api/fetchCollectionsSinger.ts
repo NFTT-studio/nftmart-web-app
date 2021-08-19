@@ -8,6 +8,8 @@ type collections = {
       description: string,
       logoUrl: string,
     },
+    // eslint-disable-next-line camelcase
+    royalty_rate: number,
     id: string
   }
 }

@@ -76,6 +76,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       address: account?.address,
       metadata: { ...others },
       classId: Number(collectionId),
+      quantity: 1,
+      royaltyRate: collectionsData?.collection.royalty_rate,
       cb,
     };
     mintNft(normalizedFormData);
@@ -96,6 +98,9 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           toast(<ToastBody title="Success" message={t('Create.success')} type="success" />);
           setIsSubmitting(false);
           formAction.resetForm();
+          setTimeout(() => {
+            history.push(`/collection/${account!.address}?collectionId=${collectionId}`);
+          }, 3000);
         },
         error: (error: string) => {
           toast(<ToastBody title="Error" message={error} type="error" />);

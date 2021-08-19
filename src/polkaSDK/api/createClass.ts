@@ -12,18 +12,18 @@ function float2PerU16(x) {
 
 const defaultClassMetadata: ClassMetadata = {
   logoUrl: '', // class img url of class
-  featuredUrl: '', //  url of class
+  featuredUrl: '',
   name: '', // name of nft asset
   stub: '', // website url
   description: '', // nft desc
 };
 export const createClass = async ({
   address = '',
-  royaltyRate = '',
+  royaltyRate = 0,
   cate = [],
   metadata = defaultClassMetadata,
   cb,
-}: { address: string, metadata: ClassMetadata, royaltyRate: string, cate : [], cb: Callback }) => {
+}: { address: string, metadata: ClassMetadata, royaltyRate: number, cate : [], cb: Callback }) => {
   try {
     const injector = await web3FromAddress(address);
     const { name } = metadata;

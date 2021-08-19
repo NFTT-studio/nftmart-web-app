@@ -24,6 +24,7 @@ import {
   Modal,
   ModalOverlay,
   Switch,
+  Progress,
 } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -761,7 +762,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       border="1px solid #E5E5E5"
                       _focus={{
                         boxShadow: 'none',
-
                       }}
                     >
                       <Input
@@ -1908,7 +1908,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         {t('SellSetting.postYourListing')}
                       </Button>
                     </Flex>
-                    {/* <Flex
+                    <Flex
                       p="20px 0 20px 0"
                       flexDirection="row"
                       justifyContent="space-between"
@@ -1927,7 +1927,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="18px"
                         >
-                          {t('SellSetting.Bounties')}
+                          {t('SellSetting.bounties')}
                         </Text>
                         <Text
                           width="200px"
@@ -1938,7 +1938,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#999999"
                           lineHeight="14px"
                         >
-                          {t('SellSetting.BountiesExplain')}
+                          {t('SellSetting.bountiesExplain')}
                         </Text>
                       </Flex>
                       <Flex
@@ -1946,7 +1946,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         justifyContent="center"
                         alignItems="flex-end"
                       >
-                        <Switch colorScheme="teal" size="lg" />
+                        <Switch size="lg" />
                         <InputGroup
                           mt="10px"
                           width="200px"
@@ -2003,7 +2003,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="18px"
                         >
-                          {t('SellSetting.Royalties')}
+                          {t('SellSetting.royalties')}
                         </Text>
                         <Text
                           mt="8px"
@@ -2013,7 +2013,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#999999"
                           lineHeight="14px"
                         >
-                          {t('SellSetting.RoyaltiesExplain')}
+                          {t('SellSetting.royaltiesExplain')}
                         </Text>
                       </Flex>
                       <Flex
@@ -2031,7 +2031,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {t('SellSetting.Tothebeneficiary')}
+                          {t('SellSetting.toTheBeneficiary')}
                         </Text>
                         <Progress width="378px" height="3px" borderRadius="2px" value={20} colorScheme={colors.black} />
                         <Text
@@ -2045,8 +2045,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         </Text>
                       </Flex>
 
-                    </Flex> */}
-                    {/* <Flex
+                    </Flex>
+                    <Flex
                       p="20px 0 20px 0"
                       flexDirection="column"
                       justifyContent="flex-start"
@@ -2065,7 +2065,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="18px"
                         >
-                          {t('SellSetting.Tax')}
+                          {t('SellSetting.tax')}
                         </Text>
                         <Text
                           mt="8px"
@@ -2075,7 +2075,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#999999"
                           lineHeight="14px"
                         >
-                          {t('SellSetting.TaxExplain')}
+                          {t('SellSetting.taxExplain')}
                         </Text>
                       </Flex>
                       <Flex
@@ -2093,7 +2093,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {t('SellSetting.ToNFTMartTreasury')}
+                          {t('SellSetting.toNFTMartTreasury')}
                         </Text>
                         <Progress width="378px" height="3px" borderRadius="2px" value={20} colorScheme={colors.black} />
                         <Text
@@ -2106,7 +2106,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           0%
                         </Text>
                       </Flex>
-                    </Flex> */}
+                    </Flex>
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
