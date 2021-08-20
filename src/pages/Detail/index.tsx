@@ -37,11 +37,12 @@ import {
   // IconDetailshaSre,
   IconDetailsCollection,
   IconDetailsDetail,
-  HuoDong,
-  DISCORD,
   WEBSITE,
-  Facebook,
+  DISCORD,
   TWITTER,
+  IconIns,
+  medium,
+  telegram,
   // PriceIcon,
   Historyempty,
   HeadPortrait,
@@ -66,18 +67,14 @@ import BuyDialog from './BuyDialog';
 import OfferDialog from './OfferDialog';
 
 // const propertiesArr = [1, 2, 3, 4, 5, 6];
-// const ICONS = [
-//   { icon: HuoDong.default },
-//   { icon: DISCORD.default },
-//   { icon: TWITTER.default },
-//   { icon: Facebook.default },
-//   { icon: WEBSITE.default },
-// ];
-// const ICON_LIST = ICONS.map((item, index) => ({
-//   src: item.icon,
-//   id: index,
-//   link: '',
-// }));
+const ICONS = [
+  { icon: WEBSITE.default, name: 'website' },
+  { icon: DISCORD.default, name: 'discord' },
+  { icon: TWITTER.default, name: 'twitter' },
+  { icon: IconIns.default, name: 'ins' },
+  { icon: medium.default, name: 'medium' },
+  { icon: telegram.default, name: 'telegram' },
+];
 
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
 
@@ -144,6 +141,12 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   if (nftDataIsLoading || collectionsDateIsLoading || !nftData) {
     return <Spinner />;
   }
+  const links = collectionsData?.collection?.metadata?.links;
+  const ICON_LIST = ICONS.map((item, index) => ({
+    src: item.icon,
+    id: index,
+    link: links ? links[item.name] : '',
+  }));
 
   const logoUrl = `${PINATA_SERVER}${nftData.nftInfo.metadata.logoUrl}`;
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
@@ -626,29 +629,37 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           {collectionDescription}
                         </Text>
 
-                        {/* <Flex>
+                        <Flex>
                           {ICON_LIST.map((item) => (
-                            <Box
-                              key="index"
-                              width="40px"
-                              height="40px"
-                              borderRadius="4px 0px 0px 4px"
-                              border="1px solid #E5E5E5"
-                              display="flex"
-                              justifyContent="center"
-                              alignItems="center"
-                              _hover={{
-                                boxShadow: '0px 2px 8px 0px #E1E1E1',
-                              }}
-                            >
-                              <Image
-                                w="22px"
-                                h="22px"
-                                src={item.src}
-                              />
-                            </Box>
+                            item.link === '' ? null
+                              : (
+                                <Link
+                                  href={item.link}
+                                >
+                                  <Box
+                                    key="index"
+                                    width="40px"
+                                    height="40px"
+                                    borderRadius="4px 0px 0px 4px"
+                                    border="1px solid #E5E5E5"
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    _hover={{
+                                      boxShadow: '0px 2px 8px 0px #E1E1E1',
+                                    }}
+                                  >
+                                    <Image
+                                      w="22px"
+                                      h="22px"
+                                      src={item.src}
+                                    />
+                                  </Box>
+
+                                </Link>
+                              )
                           ))}
-                        </Flex> */}
+                        </Flex>
 
                       </AccordionPanel>
                     )

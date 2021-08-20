@@ -34,7 +34,7 @@ export const mintNft = async ({
     // eslint-disable-next-line camelcase
     const royalty_rate = royaltyRate;
     const txs = [
-      PolkaSDK.api.tx.balances.transfer(ownerOfClass, balancesNeeded.toString()),
+      PolkaSDK.api.tx.balances.transfer(ownerOfClass, balancesNeeded),
       PolkaSDK.api.tx.proxy.proxy(
         ownerOfClass,
         null,

@@ -50,6 +50,8 @@ export * as Facebook from './facebook.png';
 export * as TWITTER from './TWITTER.png';
 export * as ImgFillBottom from './img_Fill_bottom.png';
 export * as ImgFillTop from './img_Fill_top.png';
+export * as medium from './medium.png';
+export * as telegram from './telegram.png';
 
 // Sellsetting
 export * as IconLeft from './icon_left.png';
@@ -87,7 +89,7 @@ export * as IconCalendar from './icon_calendar.png';
 export * as IconTime from './icon_time.png';
 export * as IconAdd from './icon_add.png';
 export * as IconDel from './icon_del.png';
-
+export * as IconIns from './icon_ins.png';
 // empty
 export * as Emptyimg from './empty.png';
 export * as Historyempty from './historyempty.png';

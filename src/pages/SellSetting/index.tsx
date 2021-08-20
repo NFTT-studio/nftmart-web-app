@@ -2028,7 +2028,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           width="378px"
                           height="3px"
                           borderRadius="2px"
-                          value={tax}
+                          value={number2PerU16(tax)}
                         />
                         <Text
                           fontSize="14px"
@@ -2037,7 +2037,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {tax}
+                          {number2PerU16(tax)}
                           %
                         </Text>
                       </Flex>

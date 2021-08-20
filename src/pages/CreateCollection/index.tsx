@@ -27,6 +27,7 @@ import EditFormTitle from '../../components/EditFormTitle';
 import EditFromSubTitle from '../../components/EditFromSubTitle';
 import FormInput from '../../components/FormInput';
 import LeftAddonInput from '../../components/LeftAddonInput';
+import LeftImgonInput from '../../components/LeftImgonInput';
 import FromTextarea from '../../components/FromTextarea';
 import SubmitButton from '../../components/SubmitButton';
 import LoginDetector from '../../components/LoginDetector';
@@ -38,6 +39,12 @@ import SetCategory from './SetCategory';
 
 import {
   IconDel,
+  WEBSITE,
+  DISCORD,
+  TWITTER,
+  IconIns,
+  medium,
+  telegram,
 } from '../../assets/images';
 
 const CreateCollection: FC = () => {
@@ -80,6 +87,14 @@ const CreateCollection: FC = () => {
         name: formValue.name,
         stub: formValue.stub,
         description: formValue.description,
+        links: {
+          website: formValue.website,
+          discord: formValue.discord,
+          twitter: formValue.twitter,
+          ins: formValue.ins,
+          medium: formValue.medium,
+          telegram: formValue.telegram,
+        },
       },
       royaltyRate: Number(formValue.royalties) / 100,
       cate: formValue.cate,
@@ -126,6 +141,12 @@ const CreateCollection: FC = () => {
       description: '',
       royalties: 0,
       cate: '',
+      website: '',
+      discord: '',
+      twitter: '',
+      ins: '',
+      medium: '',
+      telegram: '',
     },
     onSubmit: (values, formActions) => {
       setIsSubmitting(true);
@@ -209,6 +230,98 @@ const CreateCollection: FC = () => {
         <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} />
         {formik.errors.description && formik.touched.description ? (
           <div style={{ color: 'red' }}>{formik.errors.description}</div>
+        ) : null}
+        <label htmlFor="Links">
+          {' '}
+          <EditFormTitle text={t('Collection.links')} />
+        </label>
+        <Flex mt="24px" />
+        <LeftImgonInput
+          id="website"
+          value={formik.values.website}
+          onChange={formik.handleChange}
+          position="top"
+          placeholder="http://"
+          url={(
+            <Image
+              w="22px"
+              h="22px"
+              src={WEBSITE.default}
+            />
+)}
+        />
+        <LeftImgonInput
+          id="discord"
+          value={formik.values.discord}
+          onChange={formik.handleChange}
+          position=""
+          placeholder="https://discard.gg/"
+          url={(
+            <Image
+              w="22px"
+              h="22px"
+              src={DISCORD.default}
+            />
+)}
+        />
+        <LeftImgonInput
+          id="twitter"
+          position=""
+          value={formik.values.twitter}
+          onChange={formik.handleChange}
+          placeholder="@"
+          url={(
+            <Image
+              w="22px"
+              h="22px"
+              src={TWITTER.default}
+            />
+)}
+        />
+        <LeftImgonInput
+          id="ins"
+          position=""
+          value={formik.values.ins}
+          onChange={formik.handleChange}
+          placeholder="@"
+          url={(
+            <Image
+              w="22px"
+              h="22px"
+              src={IconIns.default}
+            />
+)}
+        />
+        <LeftImgonInput
+          id="medium"
+          position=""
+          value={formik.values.medium}
+          onChange={formik.handleChange}
+          placeholder="@"
+          url={(
+            <Image
+              w="22px"
+              h="22px"
+              src={medium.default}
+            />
+)}
+        />
+        <LeftImgonInput
+          id="telegram"
+          position="bottom"
+          value={formik.values.telegram}
+          onChange={formik.handleChange}
+          placeholder="https://t.me/"
+          url={(
+            <Image
+              w="22px"
+              h="22px"
+              src={telegram.default}
+            />
+)}
+        />
+        {formik.errors.stub && formik.touched.stub ? (
+          <div style={{ color: 'red' }}>{formik.errors.stub}</div>
         ) : null}
         <Flex
           w="100%"

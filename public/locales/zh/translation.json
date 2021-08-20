@@ -237,6 +237,7 @@
     "tax": "交易税",
     "taxExplain": "上架免费，成交后按比例收取交易税。",
     "categories": "类别",
+    "links": "链接",
     "toNFTMartTreasury": "到NFTMart国库"
   },
   "Account": {

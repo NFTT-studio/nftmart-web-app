@@ -9,6 +9,8 @@ import {
   Spinner,
   Button,
   SimpleGrid,
+  Box,
+  Link,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, useLocation, useHistory } from 'react-router-dom';
@@ -21,11 +23,12 @@ import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 
 import {
   CollectionBackground,
-  HuoDong,
-  DISCORD,
   WEBSITE,
-  Facebook,
+  DISCORD,
   TWITTER,
+  IconIns,
+  medium,
+  telegram,
   IconDetailsocllections,
 } from '../../assets/images';
 import {
@@ -38,17 +41,13 @@ import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
 
 const ICONS = [
-  { icon: HuoDong.default },
-  { icon: DISCORD.default },
-  { icon: TWITTER.default },
-  { icon: Facebook.default },
-  { icon: WEBSITE.default },
+  { icon: WEBSITE.default, name: 'website' },
+  { icon: DISCORD.default, name: 'discord' },
+  { icon: TWITTER.default, name: 'twitter' },
+  { icon: IconIns.default, name: 'ins' },
+  { icon: medium.default, name: 'medium' },
+  { icon: telegram.default, name: 'telegram' },
 ];
-const ICON_LIST = ICONS.map((item, index) => ({
-  src: item.icon,
-  id: index,
-  link: '',
-}));
 
 const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
@@ -64,6 +63,12 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const classId = search.collectionId;
 
   const { data: collectionsData } = useCollectionsSinger(classId);
+  const links = collectionsData?.collection?.metadata?.links;
+  const ICON_LIST = ICONS.map((item, index) => ({
+    src: item.icon,
+    id: index,
+    link: links ? links[item.name] : '',
+  }));
 
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const { data: nftsData, isLoading, fetchNextPage } = useNftsPersonal(
@@ -254,27 +259,35 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
           </Flex>
         </Flex>
         <Flex>
-          {/* {ICON_LIST.map((item, index) => (
-            <Box
-              key="index"
-              width="40px"
-              height="40px"
-              borderRadius="4px 0px 0px 4px"
-              border="1px solid #E5E5E5"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              _hover={{
-                boxShadow: '0px 2px 8px 0px #E1E1E1',
-              }}
-            >
-              <Image
-                w="22px"
-                h="22px"
-                src={item.src}
-              />
-            </Box>
-          ))} */}
+          {ICON_LIST.map((item) => (
+            item.link === '' ? null
+              : (
+                <Link
+                  href={item.link}
+                >
+                  <Box
+                    key="index"
+                    width="40px"
+                    height="40px"
+                    borderRadius="4px 0px 0px 4px"
+                    border="1px solid #E5E5E5"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    _hover={{
+                      boxShadow: '0px 2px 8px 0px #E1E1E1',
+                    }}
+                  >
+                    <Image
+                      w="22px"
+                      h="22px"
+                      src={item.src}
+                    />
+                  </Box>
+
+                </Link>
+              )
+          ))}
         </Flex>
 
       </Flex>
