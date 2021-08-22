@@ -24,6 +24,7 @@ import {
   Modal,
   ModalOverlay,
   Switch,
+  Progress,
 } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -38,8 +39,8 @@ import MainContainer from '../../layout/MainContainer';
 import colors from '../../themes/colors';
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
-import useCategories from '../../hooks/reactQuery/useCategories';
 import LoginDetector from '../../components/LoginDetector';
+import { getTax } from '../../polkaSDK/api/getTax';
 
 import {
   IconSummary,
@@ -78,6 +79,10 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       isDisabled: false,
     },
   ];
+  const [tax, setTax] = useState(0);
+  getTax().then((res) => {
+    setTax(Number(res.toString()));
+  });
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
   const history = useHistory();
@@ -87,12 +92,12 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const collectionsId = nftId.split('-')[0];
 
   const { data: nftData } = useNft(nftId);
-  const { data: categoriesData } = useCategories();
   const { data: collectionsData } = useCollectionsSinger(collectionsId);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnToEnglishAuction, setTurnToEnglishAuction] = useState(false);
   const [automaticDelay, setAutomaticDelay] = useState(false);
   const [endingPriceSl, setEndingPriceSl] = useState(false);
+  const [commissionRateSl, setcommissionRateSl] = useState(false);
 
   const firstOffer = nftData?.nftInfo?.offers[0];
   const orderId = firstOffer?.order_id;
@@ -121,7 +126,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     minimumMarkup: Yup.string().required(t('Create.required')),
     automaticDelay: Yup.boolean().required(t('Create.required')),
   });
-
+  function number2PerU16(x) {
+    return (x / 65535.0) * 100;
+  }
   const formik = useFormik({
     initialValues: {
       price: '',
@@ -133,6 +140,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       automaticDelay: false,
       turnToEnglishAuction: false,
       endingPriceSl: false,
+      commissionRate: 0,
     },
     onSubmit: (formValue, formAction) => {
       setIsSubmitting(false);
@@ -140,11 +148,11 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       // return;
       const orderParams = {
         address: account!.address,
-        categoryId: formValue.categoryId,
         price: formValue.price,
         classId: nftData?.nftInfo.class_id,
         quantity: nftData?.nftInfo.quantity,
         tokenId: nftData?.nftInfo.token_id,
+        commissionRate: formValue.commissionRate,
         cb: {
           success: () => {
             toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
@@ -544,38 +552,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   />
                 </InputGroup>
               </Flex> */}
-                  <Text
-                    mt="20px"
-                    mb="8px"
-                    fontSize="16px"
-                    fontFamily="TTHoves-Medium, TTHoves"
-                    fontWeight="500"
-                    color="#000000"
-                    lineHeight="18px"
-                  >
-                    {t('SellSetting.categories')}
-                  </Text>
-                  <RadioGroup
-                    color={colors.text.gray}
-                    onChange={(value: string) => {
-                      formik.values.categoryId = value;
-                    }}
-                  >
-                    <Stack direction="row" spacing={6}>
-                      {categoriesData
-                        && categoriesData?.categories?.map((item) => (
-                          <Radio
-                            key={item.id}
-                            value={item.id}
-                          >
-                            {item.name}
-                          </Radio>
-                        ))}
-                    </Stack>
-                  </RadioGroup>
-                  {formik.errors.categoryId && formik.touched.categoryId ? (
-                    <div style={{ color: 'red' }}>{formik.errors.categoryId}</div>
-                  ) : null}
                   <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                     <AccordionItem width="100%" border="none">
                       <AccordionButton
@@ -761,7 +737,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       border="1px solid #E5E5E5"
                       _focus={{
                         boxShadow: 'none',
-
                       }}
                     >
                       <Input
@@ -1126,40 +1101,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       </InputGroup>
                     </Flex>
                   </Flex> */}
-                  <Text
-                    mt="20px"
-                    mb="8px"
-                    fontSize="16px"
-                    fontFamily="TTHoves-Medium, TTHoves"
-                    fontWeight="500"
-                    color="#000000"
-                    lineHeight="18px"
-                  >
-                    {t('SellSetting.categories')}
-                  </Text>
-                  <RadioGroup
-                    id="categoryId"
-                    name="categoryId"
-                    color={colors.text.gray}
-                    onChange={(value: string) => {
-                      formik.values.categoryId = value;
-                    }}
-                  >
-                    <Stack direction="row" spacing={6}>
-                      {categoriesData
-                        && categoriesData?.categories?.map((item) => (
-                          <Radio
-                            key={item.id}
-                            value={item.id}
-                          >
-                            {item.name}
-                          </Radio>
-                        ))}
-                    </Stack>
-                  </RadioGroup>
-                  {formik.errors.categoryId && formik.touched.categoryId ? (
-                    <div style={{ color: 'red' }}>{formik.errors.categoryId}</div>
-                  ) : null}
                   <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                     <AccordionItem width="100%" border="none">
                       <AccordionButton
@@ -1729,38 +1670,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       </InputGroup>
                     </Flex>
                   </Flex> */}
-                  <Text
-                    mt="20px"
-                    mb="8px"
-                    fontSize="16px"
-                    fontFamily="TTHoves-Medium, TTHoves"
-                    fontWeight="500"
-                    color="#000000"
-                    lineHeight="18px"
-                  >
-                    {t('SellSetting.categories')}
-                  </Text>
-                  <RadioGroup
-                    color={colors.text.gray}
-                    onChange={(value: string) => {
-                      formik.values.categoryId = value;
-                    }}
-                  >
-                    <Stack direction="row" spacing={6}>
-                      {categoriesData
-                        && categoriesData?.categories?.map((item) => (
-                          <Radio
-                            key={item.id}
-                            value={item.id}
-                          >
-                            {item.name}
-                          </Radio>
-                        ))}
-                    </Stack>
-                  </RadioGroup>
-                  {formik.errors.categoryId && formik.touched.categoryId ? (
-                    <div style={{ color: 'red' }}>{formik.errors.categoryId}</div>
-                  ) : null}
                   <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                     <AccordionItem width="100%" border="none">
                       <AccordionButton
@@ -1908,7 +1817,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         {t('SellSetting.postYourListing')}
                       </Button>
                     </Flex>
-                    {/* <Flex
+                    <Flex
                       p="20px 0 20px 0"
                       flexDirection="row"
                       justifyContent="space-between"
@@ -1927,7 +1836,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="18px"
                         >
-                          {t('SellSetting.Bounties')}
+                          {t('SellSetting.bounties')}
                         </Text>
                         <Text
                           width="200px"
@@ -1938,7 +1847,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#999999"
                           lineHeight="14px"
                         >
-                          {t('SellSetting.BountiesExplain')}
+                          {t('SellSetting.bountiesExplain')}
                         </Text>
                       </Flex>
                       <Flex
@@ -1946,7 +1855,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         justifyContent="center"
                         alignItems="flex-end"
                       >
-                        <Switch colorScheme="teal" size="lg" />
+                        <Switch
+                          isChecked={commissionRateSl}
+                          onChange={() => {
+                            setcommissionRateSl(!commissionRateSl);
+                          }}
+                          height="40px"
+                          size="lg"
+                        />
                         <InputGroup
                           mt="10px"
                           width="200px"
@@ -1956,13 +1872,18 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           border="1px solid #E5E5E5"
                         >
                           <Input
+                            id="commissionRate"
+                            name="commissionRate"
+                            value={commissionRateSl ? formik.values.commissionRate : 0}
+                            onChange={formik.handleChange}
                             fontSize="12px"
                             fontFamily="TTHoves-Regular, TTHoves"
                             fontWeight="400"
-                            color="#999999"
+                            color="#000000"
                             lineHeight="14px"
                             _focus={{
                               boxShadow: 'none',
+                              color: '#000000',
                             }}
                             placeholder="0"
                           />
@@ -2003,7 +1924,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="18px"
                         >
-                          {t('SellSetting.Royalties')}
+                          {t('SellSetting.royalties')}
                         </Text>
                         <Text
                           mt="8px"
@@ -2013,7 +1934,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#999999"
                           lineHeight="14px"
                         >
-                          {t('SellSetting.RoyaltiesExplain')}
+                          {t('SellSetting.royaltiesExplain')}
                         </Text>
                       </Flex>
                       <Flex
@@ -2025,15 +1946,21 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         alignItems="center"
                       >
                         <Text
+                          w="80px"
                           fontSize="14px"
                           fontFamily="TTHoves-Regular, TTHoves"
                           fontWeight="400"
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {t('SellSetting.Tothebeneficiary')}
+                          {t('SellSetting.toTheBeneficiary')}
                         </Text>
-                        <Progress width="378px" height="3px" borderRadius="2px" value={20} colorScheme={colors.black} />
+                        <Progress
+                          width="378px"
+                          height="3px"
+                          borderRadius="2px"
+                          value={number2PerU16(collectionsData?.collection?.royalty_rate)}
+                        />
                         <Text
                           fontSize="14px"
                           fontFamily="TTHoves-Regular, TTHoves"
@@ -2041,12 +1968,13 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          0%
+                          {number2PerU16(collectionsData?.collection?.royalty_rate)}
+                          %
                         </Text>
                       </Flex>
 
-                    </Flex> */}
-                    {/* <Flex
+                    </Flex>
+                    <Flex
                       p="20px 0 20px 0"
                       flexDirection="column"
                       justifyContent="flex-start"
@@ -2065,7 +1993,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="18px"
                         >
-                          {t('SellSetting.Tax')}
+                          {t('SellSetting.tax')}
                         </Text>
                         <Text
                           mt="8px"
@@ -2075,7 +2003,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#999999"
                           lineHeight="14px"
                         >
-                          {t('SellSetting.TaxExplain')}
+                          {t('SellSetting.taxExplain')}
                         </Text>
                       </Flex>
                       <Flex
@@ -2087,15 +2015,21 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         alignItems="center"
                       >
                         <Text
+                          w="80px"
                           fontSize="14px"
                           fontFamily="TTHoves-Regular, TTHoves"
                           fontWeight="400"
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {t('SellSetting.ToNFTMartTreasury')}
+                          {t('SellSetting.toNFTMartTreasury')}
                         </Text>
-                        <Progress width="378px" height="3px" borderRadius="2px" value={20} colorScheme={colors.black} />
+                        <Progress
+                          width="378px"
+                          height="3px"
+                          borderRadius="2px"
+                          value={number2PerU16(tax)}
+                        />
                         <Text
                           fontSize="14px"
                           fontFamily="TTHoves-Regular, TTHoves"
@@ -2103,10 +2037,11 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          0%
+                          {number2PerU16(tax)}
+                          %
                         </Text>
                       </Flex>
-                    </Flex> */}
+                    </Flex>
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>

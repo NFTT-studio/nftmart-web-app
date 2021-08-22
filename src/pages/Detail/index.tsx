@@ -25,6 +25,7 @@ import CancelDialog from './CancelDialog';
 import DealDialog from './DealDialog';
 import { getBlock } from '../../polkaSDK/api/getBlock';
 import TimeBy from './TimeBy';
+import { renderNmtNumberText } from '../../components/Balance';
 
 import {
   PINATA_SERVER,
@@ -36,11 +37,12 @@ import {
   // IconDetailshaSre,
   IconDetailsCollection,
   IconDetailsDetail,
-  HuoDong,
-  DISCORD,
   WEBSITE,
-  Facebook,
+  DISCORD,
   TWITTER,
+  IconIns,
+  medium,
+  telegram,
   // PriceIcon,
   Historyempty,
   HeadPortrait,
@@ -64,19 +66,15 @@ import { useAppSelector } from '../../hooks/redux';
 import BuyDialog from './BuyDialog';
 import OfferDialog from './OfferDialog';
 
-const propertiesArr = [1, 2, 3, 4, 5, 6];
+// const propertiesArr = [1, 2, 3, 4, 5, 6];
 const ICONS = [
-  { icon: HuoDong.default },
-  { icon: DISCORD.default },
-  { icon: TWITTER.default },
-  { icon: Facebook.default },
-  { icon: WEBSITE.default },
+  { icon: WEBSITE.default, name: 'website' },
+  { icon: DISCORD.default, name: 'discord' },
+  { icon: TWITTER.default, name: 'twitter' },
+  { icon: IconIns.default, name: 'ins' },
+  { icon: medium.default, name: 'medium' },
+  { icon: telegram.default, name: 'telegram' },
 ];
-const ICON_LIST = ICONS.map((item, index) => ({
-  src: item.icon,
-  id: index,
-  link: '',
-}));
 
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
 
@@ -143,6 +141,12 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   if (nftDataIsLoading || collectionsDateIsLoading || !nftData) {
     return <Spinner />;
   }
+  const links = collectionsData?.collection?.metadata?.links;
+  const ICON_LIST = ICONS.map((item, index) => ({
+    src: item.icon,
+    id: index,
+    link: links ? links[item.name] : '',
+  }));
 
   const logoUrl = `${PINATA_SERVER}${nftData.nftInfo.metadata.logoUrl}`;
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
@@ -179,10 +183,11 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     setIsShowOffer(true);
   };
 
-  const NoData = (width: string) => (
+  const NoData = (item:{ widths: string }) => (
     <AccordionPanel p="0px">
       <Flex
-        width={width}
+          // eslint-disable-next-line react/destructuring-assignment
+        width={item.widths}
         height="260px"
         background="#FFFFFF"
         flexDirection="column"
@@ -399,7 +404,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color="#000000"
                         lineHeight="18px"
                       >
-                        {t('Detail.Detail')}
+                        {t('Detail.detail')}
                       </Text>
                     </Flex>
                     <AccordionIcon />
@@ -624,34 +629,42 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           {collectionDescription}
                         </Text>
 
-                        {/* <Flex>
+                        <Flex>
                           {ICON_LIST.map((item) => (
-                            <Box
-                              key="index"
-                              width="40px"
-                              height="40px"
-                              borderRadius="4px 0px 0px 4px"
-                              border="1px solid #E5E5E5"
-                              display="flex"
-                              justifyContent="center"
-                              alignItems="center"
-                              _hover={{
-                                boxShadow: '0px 2px 8px 0px #E1E1E1',
-                              }}
-                            >
-                              <Image
-                                w="22px"
-                                h="22px"
-                                src={item.src}
-                              />
-                            </Box>
+                            item.link === '' ? null
+                              : (
+                                <Link
+                                  href={item.link}
+                                >
+                                  <Box
+                                    key="index"
+                                    width="40px"
+                                    height="40px"
+                                    borderRadius="4px 0px 0px 4px"
+                                    border="1px solid #E5E5E5"
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    _hover={{
+                                      boxShadow: '0px 2px 8px 0px #E1E1E1',
+                                    }}
+                                  >
+                                    <Image
+                                      w="22px"
+                                      h="22px"
+                                      src={item.src}
+                                    />
+                                  </Box>
+
+                                </Link>
+                              )
                           ))}
-                        </Flex> */}
+                        </Flex>
 
                       </AccordionPanel>
                     )
                     : (
-                      <NoData width="100%" />
+                      <NoData widths="100%" />
                     )}
                 </AccordionItem>
               </Accordion>
@@ -901,16 +914,16 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   <Button
                     width="184px"
                     height="48px"
-                    background={!isLoginAddress ? '#000000' : '#999999'}
+                    background={!isLoginAddress && Number(price) > 0 ? '#000000' : '#999999'}
                     borderRadius="4px"
                     fontSize="16px"
                     fontFamily="TTHoves-Regular, TTHoves"
                     fontWeight="500"
-                    color={!isLoginAddress ? '#FFFFFF' : '#FFFFFF'}
-                    isDisabled={isLoginAddress}
+                    color={!isLoginAddress && Number(price) > 0 ? '#FFFFFF' : '#FFFFFF'}
+                    isDisabled={isLoginAddress || Number(price) === 0}
                     onClick={handleBuy}
                   >
-                    {!isLoginAddress ? t('Detail.buyNow') : '-'}
+                    {!isLoginAddress && Number(price) > 0 ? t('Detail.buyNow') : '-'}
                   </Button>
 
                   {/* <Text
@@ -1036,7 +1049,35 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#999999"
                           lineHeight="14px"
                         >
-                          7天平均价格
+                          {t(`Detail.${selectedTime}`)}
+                          {' '}
+                          {t('Detail.average')}
+                        </Text>
+                        <Flex align="flex-start" alignItems="center">
+                          <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
+                          <Text
+                            fontSize="16px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="18px"
+                          >
+                            {renderNmtNumberText(PriceHistory?.average) || '-'}
+                          </Text>
+                        </Flex>
+                      </Flex>
+                      <Flex textAlign="center" flexDirection="column" justifyContent="center">
+                        <Text
+                          mb="2px"
+                          fontSize="12px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                        >
+                          {t(`Detail.${selectedTime}`)}
+                          {' '}
+                          {t('Detail.volume')}
                         </Text>
                         <Flex align="flex-start" alignItems="center">
                           <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
@@ -1051,36 +1092,12 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           </Text>
                         </Flex>
                       </Flex>
-                      <Flex textAlign="center" flexDirection="column" justifyContent="center">
-                        <Text
-                          mb="2px"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="14px"
-                        >
-                          7天成交量
-                        </Text>
-                        <Flex align="flex-start" alignItems="center">
-                          <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
-                          <Text
-                            fontSize="16px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#000000"
-                            lineHeight="18px"
-                          >
-                            {PriceHistory?.average || '-'}
-                          </Text>
-                        </Flex>
-                      </Flex>
                     </Flex>
-                    {PriceHistory?.price_list
+                    {PriceHistory?.price_list.length
                       ? (
                         <PriceHistoryChart PriceDate={PriceHistory.price_list} />)
                       : (
-                        <NoData width="100%" />
+                        <NoData widths="100%" />
                       )}
 
                   </AccordionPanel>
@@ -1279,7 +1296,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           </>
                         )
                         : (
-                          <NoData width="732px" />
+                          <NoData widths="732px" />
                         )}
                       <Flex justifyContent="flex-end">
                         {isLoginAddress ? (

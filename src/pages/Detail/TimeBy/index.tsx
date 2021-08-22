@@ -25,7 +25,7 @@ const TimeBy: FC<TimeByProps> = ({ selectedTime, setSelectedTime }) => {
   const [opening, setOpening] = useState(false);
   const Time = [
     { key: 'seven', value: '过去 7天 ' },
-    { key: 'recently_sold', value: '过去 14 天' },
+    { key: 'fourteen', value: '过去 14 天' },
     { key: 'thirty', value: '过去 30 天' },
     { key: 'sixty', value: '过去 60 天' },
     { key: 'ninety', value: '过去 90 天' },

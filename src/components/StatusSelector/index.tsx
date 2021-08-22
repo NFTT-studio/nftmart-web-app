@@ -15,13 +15,13 @@ const StatusSelector: FC<StatusSelectorProps> = (({ selectedArr, statusArr, hand
   return (
     <Box w="220px" display="flex" flexFlow="row wrap" justifyContent="space-between">
       {statusArr.map((status) => {
-        const isSelected = selectedArr.indexOf(status) > -1;
+        const isselected = selectedArr.indexOf(status) > -1;
         return (
           <Button
             mt="10px"
             width="105px"
             height="40px"
-            background={isSelected ? '#000000' : '#FFFFFF'}
+            background={isselected ? '#000000' : '#FFFFFF'}
             borderRadius="4px"
             key={status}
             id={status}
@@ -29,7 +29,7 @@ const StatusSelector: FC<StatusSelectorProps> = (({ selectedArr, statusArr, hand
             fontSize="14px"
             fontFamily="PingFangTC-Regular, PingFangTC"
             fontWeight="400"
-            color={isSelected ? '#FFFFFF' : '#000000'}
+            color={isselected ? '#FFFFFF' : '#000000'}
             border="1px solid #000000"
             _focus={{
               border: 'none',

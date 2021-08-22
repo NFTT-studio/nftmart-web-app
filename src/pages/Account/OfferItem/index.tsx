@@ -167,7 +167,7 @@ const OfferItem: FC<Props> = (({ offer }) => {
           fontWeight="400"
           color="#000000"
           lineHeight="20px"
-          textStroke="1px #979797"
+          textstroke="1px #979797"
         >
           in
           {' '}

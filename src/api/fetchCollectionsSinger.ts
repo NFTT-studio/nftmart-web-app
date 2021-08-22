@@ -7,7 +7,11 @@ type collections = {
       id: string,
       description: string,
       logoUrl: string,
+      // eslint-disable-next-line @typescript-eslint/ban-types
+      links: {} | undefined,
     },
+    // eslint-disable-next-line camelcase
+    royalty_rate: number,
     id: string
   }
 }

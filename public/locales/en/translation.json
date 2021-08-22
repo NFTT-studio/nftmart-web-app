@@ -99,6 +99,13 @@
     "nft": "Create a new nft",
     "required": "Required",
     "confirmClipping": "Confirm clipping",
+    "category": "Category",
+    "categoryRule": "Adding a category will help make your item discoverable on mart.You can set up to 2 categories.",
+    "royalties": "Royalties",
+    "royaltiesRule": "When users sell your work on the market, you receive ",
+    "royaltiesRuleTwo": "royalties. Royalties are capped at ", 
+    "royaltiesSchema": "The maximum royalty is 20% and cannot be less than 0",
+    "links": "Links",
     "changeImage": "Change Image"
   },
   "Browsing": {
@@ -134,7 +141,7 @@
   "Detail": {
     "Sell": "Sell",
     "title": "-NFTMart|A Professional NFT Market",
-    "Detail": "Detail",
+    "detail": "Detail",
     "properties": "Properties",
     "about": "About",
     "offers": "Offers",
@@ -179,6 +186,14 @@
     "makeOffer":"Make Offer",
     "offerExplain":"*If the owner accepts, the transaction will be automatically executed",
     "deal":"Deal",
+    "average":"day average price",
+    "volume":"day trading volume",
+    "seven":"7",
+    "fourteen":"14",
+    "thirty":"30",
+    "sixty":"60",
+    "ninety":"90",
+    "year":"last year",
     "buySuccess": "Buy Success"
   },
   "SellSetting": {
@@ -219,7 +234,7 @@
     "bountiesExplain": "Reward the person who introducess the buyer.",
     "royalties": "Royalties",
     "royaltiesExplain": "Royalties will be automatically paid to the beneficiary of the copyright of the item in the following proportion:",
-    "ToTheBeneficiary": "To the beneficiary",
+    "toTheBeneficiary": "To the beneficiary",
     "tax": "Tax",
     "taxExplain": "Listing is free!At the time of sale, a transaction tax will be levied.",
     "categories": "Categories",
