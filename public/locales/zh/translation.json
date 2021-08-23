@@ -259,12 +259,16 @@
     "expiration": "有效期"
   },
   "ProfileEdit": {
-    "title": "资料修改",
-    "nickname": "昵称：",
-    "placeholder": "请输入",
-    "avatar": "头像：",
-    "email": "邮箱：",
-    "twitter": "Twitter："
+    "portrait": "*头像",
+    "portraitRule": "要求尺寸 350×350",
+    "username": "*昵称",
+    "usernameRule": "仅支持字母、数字和中划线，80个字符以内。",
+    "emai": "邮箱",
+    "emaiRule": "80个字符以内。",
+    "twitter": "推特",
+    "twitterRule": "80个字符以内。",
+    "featuredImage": "题图",
+    "featuredImageRule": "此图片将显示在您的个人主页上，建议 600 x 400"
   },
   "Trx": {
     "inblock": "交易区块正在确认中",

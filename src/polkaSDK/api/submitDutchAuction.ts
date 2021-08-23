@@ -13,7 +13,7 @@ type submitDutchAuctionProps = {
   // eslint-disable-next-line camelcase
   expirationDate: number,
   range: number,
-  categoryId: number,
+  commissionRate: number,
   tokens: [],
   cb: Callback
 }
@@ -30,7 +30,7 @@ export const submitDutchAuction = async ({
   allow_british_auction,
   range,
   tokens,
-  categoryId,
+  commissionRate = 0,
   cb,
 }: submitDutchAuctionProps) => {
   try {
@@ -51,9 +51,10 @@ export const submitDutchAuction = async ({
     const NativeCurrencyID = 0;
 
     const minRaise = float2PerU16(range); // 50%
+    const commission = float2PerU16(commissionRate);
     const call = PolkaSDK.api.tx.nftmartAuction.submitDutchAuction(
-      NativeCurrencyID, categoryId, min_deposit, min_price, max_price,
-      deadlineBlock, tokens, allow_british_auction, minRaise,
+      NativeCurrencyID, min_deposit, min_price, max_price,
+      deadlineBlock, tokens, allow_british_auction, minRaise, commission,
     );
     await call.signAndSend(address, { signer: injector.signer }, (result: any) => txLog(result, cb.success));
   } catch (error) {
