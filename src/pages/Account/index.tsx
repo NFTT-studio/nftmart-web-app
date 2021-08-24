@@ -57,11 +57,14 @@ import OfferItem from './OfferItem';
 import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
 import useNfts from '../../hooks/reactQuery/useNfts';
+import useUser from '../../hooks/reactQuery/useUser';
 
 const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
   const { address } = match.params;
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+
+  const { data: userData } = useUser(address);
 
   const TABS = [
     {
@@ -206,7 +209,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
         position="relative"
         top="20px"
       >
-        <Image w="100%" h="180px" src={AccountBanner.default} alt="" />
+        <Image w="1396px" h="auto" src={userData?.featured_image || AccountBanner.default} alt="" />
         <Flex
           w="100%"
           flexDirection="column"
@@ -222,7 +225,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             border="3px solid #FFFFFF"
             height="auto"
             objectFit="cover"
-            src={HeadPortrait.default}
+            src={userData?.avatar || HeadPortrait.default}
           />
 
           <Text
@@ -232,7 +235,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             fontWeight="bold"
             color="#191A24"
             lineHeight="33px"
-          />
+          >
+            {userData?.name}
+          </Text>
           <Text
             mt="12px"
             fontSize="14px"

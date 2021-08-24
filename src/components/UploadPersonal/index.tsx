@@ -15,16 +15,10 @@ import {
 import { toast } from 'react-toastify';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
-import axios from 'axios';
-import { create } from 'ipfs-http-client';
 
 import {
   MAX_FILE_SIZE,
   Colors,
-  PINATA_POST_SERVER,
-  UPLOAD_OWN_SERVER,
-  IPFS_POST_SERVER,
-  PINATA_SERVER,
 } from '../../constants';
 import { t } from '../../i18n';
 import {
@@ -36,12 +30,13 @@ interface INavProps {
   imgUrl: string;
   name: string;
   uploadHandle: any;
+  proportion: any;
 }
 
 const CropperCop: React.FC<INavProps> = (props) => {
   const cropperRef = useRef<HTMLImageElement>(null);
   const [cropper, setCropper] = useState<any>();
-  const { imgUrl } = props;
+  const { imgUrl, proportion } = props;
 
   // 将base64转换为blob
   const dataURLtoBlob = (dataurl: any) => {
@@ -74,7 +69,7 @@ const CropperCop: React.FC<INavProps> = (props) => {
         guides={false}
         viewMode={2}
         // crop={onCrop}
-        aspectRatio={16 / 16}
+        aspectRatio={proportion}
         ref={cropperRef}
         onInitialized={(instance) => {
           setCropper(instance);
@@ -92,20 +87,14 @@ const CropperCop: React.FC<INavProps> = (props) => {
     </Box>
   );
 };
-
-const {
-  REACT_APP_PINATA_API_KEY,
-  REACT_APP_PINATA_API_SECRET_KEY,
-  REACT_APP_PINATA_ENABLE,
-} = process.env;
-
 export interface UploadProps {
   boxProps?: Record<string, unknown>;
   id: string;
   value?: any;
-  onChange?: (cid: string) => any;
+  onChange?: (cid: any) => any;
   mediatype: string;
   rectangle: string;
+  proportion: number;
 }
 
 const Upload: FC<UploadProps> = ({
@@ -115,6 +104,7 @@ const Upload: FC<UploadProps> = ({
   boxProps,
   mediatype,
   rectangle,
+  proportion,
   ...rest
 }) => {
   const [value, setValue] = useState(valueFromProp?.url || '');
@@ -124,64 +114,17 @@ const Upload: FC<UploadProps> = ({
   const [showCrop, setShowCrop] = useState(false);
   const [fileUrl, setFileUrl] = useState('');
   const [progresses, setProgresses] = useState(0);
+  const [fileValue, setFileValue] = useState(null);
 
   const saveToIpfs = useCallback(async (files: any[]) => {
-    if (REACT_APP_PINATA_ENABLE === 'true') {
-      setLoadingStatus(true);
-      const formData = new FormData();
-      formData.append('file', files[0]);
-
-      const owFormData = new FormData();
-      owFormData.append('file-0', files[0]);
-
-      // const result = await fetch(PINATA_POST_SERVER, {
-      //   method: 'POST',
-
-      //   headers: {
-      //     pinata_api_key: REACT_APP_PINATA_API_KEY!,
-      //     pinata_secret_api_key: REACT_APP_PINATA_API_SECRET_KEY!,
-      //   },
-
-      //   body: formData,
-
-      // });
-
-      const result = await axios.post(PINATA_POST_SERVER, formData, {
-        headers: {
-          pinata_api_key: REACT_APP_PINATA_API_KEY!,
-          pinata_secret_api_key: REACT_APP_PINATA_API_SECRET_KEY!,
-        },
-        onUploadProgress: (progress) => {
-          // 格式化成百分数
-          setProgresses(Math.floor((progress.loaded / progress.total) * 100));
-        },
-      });
-      axios.post(UPLOAD_OWN_SERVER, owFormData);
-
-      const responseData = await result;
-      setValue(responseData.data.IpfsHash);
-      setShowCrop(false);
-      setLoadingStatus(false);
-      setProgresses(0);
-      return;
-    }
-
-    const ipfs = create({ url: IPFS_POST_SERVER });
-    if (files.length === 0) {
-      return;
-    }
-    try {
-      setLoadingStatus(true);
-      const added = await ipfs.add(files[0], {
-        progress: (arg: any) => arg,
-      });
-      // console.log(added.cid.toString(), '=============');
-      setValue(added.cid.toString());
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (e: any) => {
+      setValue(e.target.result);
+      setFileValue(files[0]);
       setLoadingStatus(false);
       setShowCrop(false);
-    } catch (err) {
-      setLoadingStatus(false);
-    }
+    };
   }, []);
 
   const captureFile = useCallback((event: any) => {
@@ -217,22 +160,9 @@ const Upload: FC<UploadProps> = ({
     }
   }, [mediatype, saveToIpfs]);
 
-  const cropImage = (e: any) => {
-    if (e) {
-      e.stopPropagation();
-    }
-    setShowCrop(true);
-  };
-
   useEffect(() => {
-    if (valueFromProp.url !== !!valueFromProp.url) {
-      setValue(valueFromProp.url as string);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (onChange) onChange(value);
-  }, [value]);
+    if (onChange) onChange(fileValue);
+  }, [fileValue]);
 
   useEffect(() => {
     if (!file) {
@@ -267,7 +197,7 @@ const Upload: FC<UploadProps> = ({
         )
         : (
           <Flex
-            width="200px"
+            width={rectangle}
             height="133px"
             background="#FFFFFF"
             borderRadius="4px"
@@ -282,9 +212,6 @@ const Upload: FC<UploadProps> = ({
         )}
 
     </>
-    // <Text fontSize="14px" lineHeight="47px"  color={Colors.Success}>
-    //   {t('createUpload')}
-    // </Text>
   );
 
   const imgWrap = (
@@ -300,7 +227,7 @@ const Upload: FC<UploadProps> = ({
         <Box>
           {value ? (
             <>
-              <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />
+              <Image w="350px" h="auto" m="16px 0" src={`${value}`} />
 
               <FormLabel htmlFor="changeId">
                 <Text
@@ -324,7 +251,7 @@ const Upload: FC<UploadProps> = ({
           ) : (
             <Box>
               {file ? (
-                <CropperCop imgUrl={fileUrl} uploadHandle={saveToIpfs} name={imgName} />
+                <CropperCop imgUrl={fileUrl} uploadHandle={saveToIpfs} name={imgName} proportion={proportion} />
               ) : (
                 txtUpload
               )}
@@ -334,30 +261,10 @@ const Upload: FC<UploadProps> = ({
       )}
     </Box>
   );
-
-  // const operateBtn = (
-  //   <Box>
-  //     {value && !showCrop ? (
-  //       <Text
-  //         fontSize="14px"
-  //         lineHeight="47px"
-  //         cursor="pointer"
-  //         color={Colors.success}
-  //         onClick={cropImage}
-  //       >
-  //         {t('createCrop')}
-  //       </Text>
-  //     ) : (
-  //       ''
-  //     )}
-  //   </Box>
-  // );
-
   return (
     <Box>
       <Box {...boxProps}>
         <FormLabel htmlFor={id}>
-          {/* {txtUpload} */}
           {!showCrop ? imgWrap : ''}
         </FormLabel>
         <Input

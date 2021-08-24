@@ -7,33 +7,22 @@ import * as Yup from 'yup';
 import {
   useFormik,
 } from 'formik';
-import { toast } from 'react-toastify';
 import {
   Flex,
   Modal,
   ModalOverlay,
-  Image,
-  Switch,
-  InputRightAddon,
-  InputGroup,
-  Input,
-  Text,
-  Box,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
-import { F } from 'ramda';
-import Upload from '../../components/Upload';
+import axios from 'axios';
+import UploadPersonal from '../../components/UploadPersonal';
 import EditFormTitle from '../../components/EditFormTitle';
 import EditFromSubTitle from '../../components/EditFromSubTitle';
 import FormInput from '../../components/FormInput';
-import LeftAddonInput from '../../components/LeftAddonInput';
-import LeftImgonInput from '../../components/LeftImgonInput';
-import FromTextarea from '../../components/FromTextarea';
 import SubmitButton from '../../components/SubmitButton';
-import { createClass } from '../../polkaSDK/api/createClass';
-import { useAppSelector } from '../../hooks/redux';
 import MyModal from '../../components/MyModal';
-import MyToast, { ToastBody } from '../../components/MyToast';
+import MyToast from '../../components/MyToast';
+import { useAppSelector } from '../../hooks/redux';
+import useUser from '../../hooks/reactQuery/useUser';
 
 import {
 
@@ -43,49 +32,59 @@ const CreateCollection: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
+  const { account } = chainState;
 
-  const { account, whiteList } = chainState;
   const [isShowModal, setIsShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { data: userData } = useUser(account?.address);
+  console.log(userData);
 
   const onCloseModal = () => {
     setIsShowModal(false);
     history.push('/');
   };
 
-  useEffect(() => {
-    if (!account || whiteList.indexOf(account?.address) < 0) {
-      setIsShowModal(true);
-    }
-  }, [account, whiteList]);
-
   // const create = useCallback((formValue, formActions) => {
 
   // }, [account, history, t]);
 
   const schema = Yup.object().shape({
-    logoUrl: Yup.string().required(t('Collection.required')),
-    name: Yup.string()
-      .max(50, t('Collection.nameRule'))
-      .required(t('Collection.required')),
-    stub: Yup.string().max(50, t('Collection.urlRule')),
-    description: Yup.string().max(1000, t('Collection.descriptionRule')),
-    royalties: Yup.number().max(20, t('Collection.royaltiesSchema')).min(0, t('Collection.royaltiesSchema')),
-    cate: Yup.string().required(t('Collection.required')),
+    // portrait: Yup.string().required(t('Collection.required')),
+    // username: Yup.string()
+    //   .max(50, t('Collection.nameRule'))
+    //   .required(t('Collection.required')),
+    // stub: Yup.string().max(50, t('Collection.urlRule')),
+    // description: Yup.string().max(1000, t('Collection.descriptionRule')),
+    // royalties: Yup.number().max(20, t('Collection.royaltiesSchema')).min(0, t('Collection.royaltiesSchema')),
+    // cate: Yup.string().required(t('Collection.required')),
   });
 
   const formik = useFormik({
     initialValues: {
-      logoUrl: '',
-      username: '',
-      twitter: '',
-      emai: '',
-      medium: '',
-      telegram: '',
+      name: userData?.name,
+      avatar: userData?.avatar,
+      featured_image: userData?.featured_image,
+      twitter: userData?.twitter,
+      email: userData?.email,
     },
-    onSubmit: (values, formActions) => {
+    onSubmit: async (values, formActions) => {
       setIsSubmitting(true);
-      // create(values, formActions);
+      const formData = new FormData();
+      formData.append('id', account?.address || '');
+      formData.append('name', values.name);
+      formData.append('avatar', values.avatar);
+      formData.append('featured_image', values.featured_image);
+      formData.append('twitter', values.twitter);
+      formData.append('email', values.email);
+      await axios.post('http://test-cache.bcdata.top/api/accounts', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }).then((res) => {
+        setIsSubmitting(false);
+        history.push(`/account/${account?.address}/wallet`);
+      });
     },
     validationSchema: schema,
   });
@@ -97,31 +96,41 @@ const CreateCollection: FC = () => {
       minHeight="100vh"
     >
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="portrait">
+        <label htmlFor="avatar">
           {' '}
-          <EditFormTitle text={t('Collection.portrait')} />
-          <EditFromSubTitle text={t('Collection.portraitRule')} />
+          <EditFormTitle text={t('ProfileEdit.portrait')} />
+          <EditFromSubTitle text={t('ProfileEdit.portraitRule')} />
         </label>
-        {formik.errors.logoUrl && formik.touched.logoUrl ? (
-          <div style={{ color: 'red' }}>{formik.errors.logoUrl}</div>
+        <UploadPersonal
+          id="avatar"
+          mediatype="cutting"
+          rectangle=""
+          proportion={16 / 16}
+          value={formik.values.avatar}
+          onChange={(v) => {
+            formik.setFieldValue('avatar', v);
+          }}
+        />
+        {formik.errors.avatar && formik.touched.avatar ? (
+          <div style={{ color: 'red' }}>{formik.errors.avatar}</div>
         ) : null}
-        <label htmlFor="username">
+        <label htmlFor="name">
           {' '}
           <EditFormTitle text={t('ProfileEdit.username')} />
           <EditFromSubTitle text={t('ProfileEdit.usernameRule')} />
         </label>
-        <FormInput id="username" value={formik.values.username} onChange={formik.handleChange} />
-        {formik.errors.username && formik.touched.username ? (
-          <div style={{ color: 'red' }}>{formik.errors.username}</div>
+        <FormInput id="name" value={formik.values.name} onChange={formik.handleChange} />
+        {formik.errors.name && formik.touched.name ? (
+          <div style={{ color: 'red' }}>{formik.errors.name}</div>
         ) : null}
-        <label htmlFor="emai">
+        <label htmlFor="email">
           {' '}
           <EditFormTitle text={t('ProfileEdit.emai')} />
-          <EditFromSubTitle text={t('CProfileEdit.emaiRule')} />
+          <EditFromSubTitle text={t('ProfileEdit.emaiRule')} />
         </label>
-        <FormInput id="emai" value={formik.values.emai} onChange={formik.handleChange} />
-        {formik.errors.emai && formik.touched.emai ? (
-          <div style={{ color: 'red' }}>{formik.errors.emai}</div>
+        <FormInput id="email" value={formik.values.email} onChange={formik.handleChange} />
+        {formik.errors.email && formik.touched.email ? (
+          <div style={{ color: 'red' }}>{formik.errors.email}</div>
         ) : null}
         <label htmlFor="twitter">
           {' '}
@@ -132,11 +141,21 @@ const CreateCollection: FC = () => {
         {formik.errors.twitter && formik.touched.twitter ? (
           <div style={{ color: 'red' }}>{formik.errors.twitter}</div>
         ) : null}
-        <label htmlFor="featuredImage">
+        <label htmlFor="featured_image">
           {' '}
           <EditFormTitle text={t('ProfileEdit.featuredImage')} />
           <EditFromSubTitle text={t('ProfileEdit.featuredImageRule')} />
         </label>
+        <UploadPersonal
+          id="featured_image"
+          mediatype="cutting"
+          rectangle="600px"
+          proportion={7.6 / 1}
+          value={formik.values.featured_image}
+          onChange={(v) => {
+            formik.setFieldValue('featured_image', v);
+          }}
+        />
         <Flex
           w="600px"
           justifyContent="center"
