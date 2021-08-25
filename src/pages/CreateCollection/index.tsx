@@ -140,7 +140,7 @@ const CreateCollection: FC = () => {
       stub: '',
       description: '',
       royalties: 0,
-      cate: '',
+      cate: [],
       website: '',
       discord: '',
       twitter: '',
@@ -167,11 +167,31 @@ const CreateCollection: FC = () => {
           <EditFormTitle text={t('Collection.logo')} />
           <EditFromSubTitle text={t('Collection.logoRule')} />
         </label>
+        {formik.errors.logoUrl && formik.touched.logoUrl ? (
+          <div style={{ color: 'red' }}>{formik.errors.logoUrl}</div>
+        ) : null}
 
         <Upload
           id="logoUrl"
           mediatype="cutting"
           rectangle=""
+          proportion={16 / 16}
+          value={formik.values.logoUrl}
+          onChange={(v) => {
+            formik.values.logoUrl = v;
+          }}
+        />
+        <label htmlFor="logoUrl">
+          {' '}
+          <EditFormTitle text={t('Collection.logo')} />
+          <EditFromSubTitle text={t('Collection.logoRule')} />
+        </label>
+
+        <Upload
+          id="logoUrl"
+          mediatype="cutting"
+          rectangle="600px"
+          proportion={7.6 / 1}
           value={formik.values.logoUrl}
           onChange={(v) => {
             formik.values.logoUrl = v;
@@ -484,7 +504,8 @@ const CreateCollection: FC = () => {
               categories.map((item, index) => {
                 resultArr.splice(index, 0, item.id);
               });
-              formik.values.cate = resultArr.toString();
+              formik.values.cate = resultArr;
+              console.log(formik.values.cate);
             }}
           />
         </Flex>

@@ -1,4 +1,5 @@
 import React, { useState, MouseEventHandler } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Spinner,
   Box,
@@ -8,6 +9,7 @@ import {
   Text,
   Button,
   Center,
+  Link,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -337,19 +339,24 @@ const Home = () => {
             >
               {t('banner.content')}
             </Text>
-            <Button
-              mt="35px"
-              width="200px"
-              height="60px"
-              background="#FFFFFF"
-              borderRadius="4px"
-              fontSize="20px"
-              fontFamily="TTHoves-Bold, TTHoves"
-              fontWeight="bold"
-              color="#000000"
+            <Link
+              as={RouterLink}
+              to="/browsing"
             >
-              {t('banner.button')}
-            </Button>
+              <Button
+                mt="35px"
+                width="200px"
+                height="60px"
+                background="#FFFFFF"
+                borderRadius="4px"
+                fontSize="20px"
+                fontFamily="TTHoves-Bold, TTHoves"
+                fontWeight="bold"
+                color="#000000"
+              >
+                {t('banner.button')}
+              </Button>
+            </Link>
           </Flex>
         </Flex>
       </Flex>

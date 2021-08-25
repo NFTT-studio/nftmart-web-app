@@ -36,12 +36,13 @@ interface INavProps {
   imgUrl: string;
   name: string;
   uploadHandle: any;
+  proportion: any;
 }
 
 const CropperCop: React.FC<INavProps> = (props) => {
   const cropperRef = useRef<HTMLImageElement>(null);
   const [cropper, setCropper] = useState<any>();
-  const { imgUrl } = props;
+  const { imgUrl, proportion } = props;
 
   // 将base64转换为blob
   const dataURLtoBlob = (dataurl: any) => {
@@ -74,7 +75,7 @@ const CropperCop: React.FC<INavProps> = (props) => {
         guides={false}
         viewMode={2}
         // crop={onCrop}
-        aspectRatio={16 / 16}
+        aspectRatio={proportion}
         ref={cropperRef}
         onInitialized={(instance) => {
           setCropper(instance);
@@ -106,6 +107,7 @@ export interface UploadProps {
   onChange?: (cid: string) => any;
   mediatype: string;
   rectangle: string;
+  proportion: number;
 }
 
 const Upload: FC<UploadProps> = ({
@@ -115,6 +117,7 @@ const Upload: FC<UploadProps> = ({
   boxProps,
   mediatype,
   rectangle,
+  proportion,
   ...rest
 }) => {
   const [value, setValue] = useState(valueFromProp?.url || '');
@@ -267,7 +270,7 @@ const Upload: FC<UploadProps> = ({
         )
         : (
           <Flex
-            width="200px"
+            width={rectangle}
             height="133px"
             background="#FFFFFF"
             borderRadius="4px"
@@ -324,7 +327,7 @@ const Upload: FC<UploadProps> = ({
           ) : (
             <Box>
               {file ? (
-                <CropperCop imgUrl={fileUrl} uploadHandle={saveToIpfs} name={imgName} />
+                <CropperCop imgUrl={fileUrl} uploadHandle={saveToIpfs} name={imgName} proportion={proportion} />
               ) : (
                 txtUpload
               )}

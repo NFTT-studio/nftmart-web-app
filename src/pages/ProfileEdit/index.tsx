@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import React, {
-  FC, useCallback, useState, useEffect,
+  FC, useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -23,6 +23,7 @@ import MyModal from '../../components/MyModal';
 import MyToast from '../../components/MyToast';
 import { useAppSelector } from '../../hooks/redux';
 import useUser from '../../hooks/reactQuery/useUser';
+import { CACHE_SERVER_URL } from '../../constants';
 
 import {
 
@@ -77,7 +78,7 @@ const CreateCollection: FC = () => {
       formData.append('featured_image', values.featured_image);
       formData.append('twitter', values.twitter);
       formData.append('email', values.email);
-      await axios.post('http://test-cache.bcdata.top/api/accounts', formData, {
+      await axios.post(`${CACHE_SERVER_URL}accounts`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

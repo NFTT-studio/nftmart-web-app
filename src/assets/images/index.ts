@@ -42,6 +42,8 @@ export * as IconAllStateone from './icon_all_state@2x(1).png';
 // Detail
 export * as IconDetailsRefresh from './icon_Details_refresh@2x.png';
 export * as IconDetailsCollection from './icon_Details_collection@2x.png';
+export * as IconDetailsCollectionN from './icon_Details_collection_n@2x.png';
+export * as IconDetailsCollectionS from './icon_Details_collectio_s@2x.png';
 export * as IconDetailsDetail from './icon_Details_Detail@2x.png';
 export * as HuoDong from './huodong.png';
 export * as DISCORD from './DISCORD.png';
