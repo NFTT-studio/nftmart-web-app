@@ -39,6 +39,8 @@ import {
   IconCreate,
   IconCreateS,
   Emptyimg,
+  IconDetailshaSre,
+  IconPen,
 } from '../../assets/images';
 import {
   DEFAULT_PAGE_LIMIT,
@@ -55,11 +57,14 @@ import OfferItem from './OfferItem';
 import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
 import useNfts from '../../hooks/reactQuery/useNfts';
+import useUser from '../../hooks/reactQuery/useUser';
 
 const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
   const { address } = match.params;
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+
+  const { data: userData } = useUser(address);
 
   const TABS = [
     {
@@ -204,7 +209,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
         position="relative"
         top="20px"
       >
-        <Image w="100%" h="180px" src={AccountBanner.default} alt="" />
+        <Image w="1396px" h="auto" src={userData?.featured_image || AccountBanner.default} alt="" />
         <Flex
           w="100%"
           flexDirection="column"
@@ -220,7 +225,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             border="3px solid #FFFFFF"
             height="auto"
             objectFit="cover"
-            src={HeadPortrait.default}
+            src={userData?.avatar || HeadPortrait.default}
           />
 
           <Text
@@ -230,7 +235,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             fontWeight="bold"
             color="#191A24"
             lineHeight="33px"
-          />
+          >
+            {userData?.name}
+          </Text>
           <Text
             mt="12px"
             fontSize="14px"
@@ -242,26 +249,31 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             {dataPerson.data?.address}
           </Text>
         </Flex>
-        {/* <Flex position="absolute" right="20px" top="240px">
-          <Box
-            key="index"
-            width="40px"
-            height="40px"
-            borderRadius="4px 0px 0px 4px"
-            border="1px solid #E5E5E5"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            _hover={{
-              boxShadow: '0px 2px 8px 0px #E1E1E1',
-            }}
+        <Flex position="absolute" right="20px" top="240px">
+          <Link
+            as={RouterLink}
+            to="/profile"
           >
-            <Image
-              w="22px"
-              h="22px"
-              src={IconPen.default}
-            />
-          </Box>
+            <Box
+              key="index"
+              width="40px"
+              height="40px"
+              borderRadius="4px 0px 0px 4px"
+              border="1px solid #E5E5E5"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              _hover={{
+                boxShadow: '0px 2px 8px 0px #E1E1E1',
+              }}
+            >
+              <Image
+                w="22px"
+                h="22px"
+                src={IconPen.default}
+              />
+            </Box>
+          </Link>
           <Box
             key="index"
             width="40px"
@@ -281,7 +293,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               src={IconDetailshaSre.default}
             />
           </Box>
-        </Flex> */}
+        </Flex>
       </Flex>
       <Tabs w="100%">
         <TabList

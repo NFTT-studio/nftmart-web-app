@@ -1,183 +1,182 @@
-import React from 'react';
-import {
-  Box, Container, FormControl, FormLabel, Input, Button, Image,
-} from '@chakra-ui/react';
-import { Formik, Form, Field } from 'formik';
+/* eslint-disable react/no-children-prop */
+import React, {
+  FC, useCallback, useState, useEffect,
+} from 'react';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
+import {
+  useFormik,
+} from 'formik';
+import {
+  Flex,
+  Modal,
+  ModalOverlay,
+} from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import UploadPersonal from '../../components/UploadPersonal';
+import EditFormTitle from '../../components/EditFormTitle';
+import EditFromSubTitle from '../../components/EditFromSubTitle';
+import FormInput from '../../components/FormInput';
+import SubmitButton from '../../components/SubmitButton';
+import MyModal from '../../components/MyModal';
+import MyToast from '../../components/MyToast';
+import { useAppSelector } from '../../hooks/redux';
+import useUser from '../../hooks/reactQuery/useUser';
 
-import MainContainer from '../../layout/MainContainer';
-import { Colors } from '../../constants';
+import {
 
-const ProfileEdit = () => {
+} from '../../assets/images';
+
+const CreateCollection: FC = () => {
   const { t } = useTranslation();
+  const history = useHistory();
+  const chainState = useAppSelector((state) => state.chain);
+  const { account } = chainState;
 
-  const formLableLayout = {
-    width: '240px',
-    height: '48px',
-    htmlFor: 'name',
-    fontSize: '14px',
-    color: Colors.TextGray,
-    borderBottom: '1px solid #F3F4F8',
-    mb: '0',
-    mr: '0',
-    lineHeight: '47px',
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { data: userData } = useUser(account?.address);
+  console.log(userData);
+
+  const onCloseModal = () => {
+    setIsShowModal(false);
+    history.push('/');
   };
 
-  const formInputLayout = {
-    variant: 'flushed',
-    size: 'lg',
-    fontSize: '14px',
-    borderBottomColor: '#F3F4F8',
-  };
+  // const create = useCallback((formValue, formActions) => {
+
+  // }, [account, history, t]);
+
+  const schema = Yup.object().shape({
+    // portrait: Yup.string().required(t('Collection.required')),
+    // username: Yup.string()
+    //   .max(50, t('Collection.nameRule'))
+    //   .required(t('Collection.required')),
+    // stub: Yup.string().max(50, t('Collection.urlRule')),
+    // description: Yup.string().max(1000, t('Collection.descriptionRule')),
+    // royalties: Yup.number().max(20, t('Collection.royaltiesSchema')).min(0, t('Collection.royaltiesSchema')),
+    // cate: Yup.string().required(t('Collection.required')),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      name: userData?.name,
+      avatar: userData?.avatar,
+      featured_image: userData?.featured_image,
+      twitter: userData?.twitter,
+      email: userData?.email,
+    },
+    onSubmit: async (values, formActions) => {
+      setIsSubmitting(true);
+      const formData = new FormData();
+      formData.append('id', account?.address || '');
+      formData.append('name', values.name);
+      formData.append('avatar', values.avatar);
+      formData.append('featured_image', values.featured_image);
+      formData.append('twitter', values.twitter);
+      formData.append('email', values.email);
+      await axios.post('http://test-cache.bcdata.top/api/accounts', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }).then((res) => {
+        setIsSubmitting(false);
+        history.push(`/account/${account?.address}/wallet`);
+      });
+    },
+    validationSchema: schema,
+  });
 
   return (
-    <MainContainer title="title.profile">
-      <Box padding={2}>
-        <Container
-          width="880px"
-          minHeight="100vh"
-          backgroundColor="#fff"
-          borderBottomRadius="4px"
-          m="20px auto 148px"
+    <Flex
+      marginTop="120px"
+      w="600px"
+      minHeight="100vh"
+    >
+      <form onSubmit={formik.handleSubmit}>
+        <label htmlFor="avatar">
+          {' '}
+          <EditFormTitle text={t('ProfileEdit.portrait')} />
+          <EditFromSubTitle text={t('ProfileEdit.portraitRule')} />
+        </label>
+        <UploadPersonal
+          id="avatar"
+          mediatype="cutting"
+          rectangle=""
+          proportion={16 / 16}
+          value={formik.values.avatar}
+          onChange={(v) => {
+            formik.setFieldValue('avatar', v);
+          }}
+        />
+        {formik.errors.avatar && formik.touched.avatar ? (
+          <div style={{ color: 'red' }}>{formik.errors.avatar}</div>
+        ) : null}
+        <label htmlFor="name">
+          {' '}
+          <EditFormTitle text={t('ProfileEdit.username')} />
+          <EditFromSubTitle text={t('ProfileEdit.usernameRule')} />
+        </label>
+        <FormInput id="name" value={formik.values.name} onChange={formik.handleChange} />
+        {formik.errors.name && formik.touched.name ? (
+          <div style={{ color: 'red' }}>{formik.errors.name}</div>
+        ) : null}
+        <label htmlFor="email">
+          {' '}
+          <EditFormTitle text={t('ProfileEdit.emai')} />
+          <EditFromSubTitle text={t('ProfileEdit.emaiRule')} />
+        </label>
+        <FormInput id="email" value={formik.values.email} onChange={formik.handleChange} />
+        {formik.errors.email && formik.touched.email ? (
+          <div style={{ color: 'red' }}>{formik.errors.email}</div>
+        ) : null}
+        <label htmlFor="twitter">
+          {' '}
+          <EditFormTitle text={t('ProfileEdit.twitter')} />
+          <EditFromSubTitle text={t('ProfileEdit.twitterRule')} />
+        </label>
+        <FormInput id="twitter" value={formik.values.twitter} onChange={formik.handleChange} />
+        {formik.errors.twitter && formik.touched.twitter ? (
+          <div style={{ color: 'red' }}>{formik.errors.twitter}</div>
+        ) : null}
+        <label htmlFor="featured_image">
+          {' '}
+          <EditFormTitle text={t('ProfileEdit.featuredImage')} />
+          <EditFromSubTitle text={t('ProfileEdit.featuredImageRule')} />
+        </label>
+        <UploadPersonal
+          id="featured_image"
+          mediatype="cutting"
+          rectangle="600px"
+          proportion={7.6 / 1}
+          value={formik.values.featured_image}
+          onChange={(v) => {
+            formik.setFieldValue('featured_image', v);
+          }}
+        />
+        <Flex
+          w="600px"
+          justifyContent="center"
         >
-          <Box
-            height="48px"
-            borderBottom=" 1px solid #E9E9F0"
-            pl="20px"
-            fontWeight="600"
-            fontSize="16px"
-            lineHeight="47px"
-            color={Colors.TextBlack}
-          >
-            {t('ProfileEdit.title')}
-          </Box>
-          <Container p="0 20px">
-            <Formik
-              initialValues={{ email: '', password: '' }}
-              onSubmit={() => {
-                // console.log('aaa');
-              }}
-            >
-              <Form>
-                <Field name="name">
-                  {({
-                    form,
-                  }: {
-                    field: Record<string, unknown>;
-                    form: { errors: { name: string }; touched: { name: string } };
-                  }) => (
-                    <FormControl
-                      isInvalid={!!(form.errors.name && form.touched.name)}
-                      display="flex"
-                      alignItems="center"
-                    >
-                      <FormLabel {...formLableLayout}>{t('ProfileEdit.nickname')}</FormLabel>
-                      <Input
-                        _placeholder={{ color: Colors.TextLightGray }}
-                        id="name"
-                        placeholder={t('ProfileEdit.placeholder')}
-                        {...formInputLayout}
-                      />
-                    </FormControl>
-                  )}
-                </Field>
-                <Field name="name">
-                  {({
-                    form,
-                  }: {
-                    field: Record<string, unknown>;
-                    form: { errors: { name: string }; touched: { name: string } };
-                  }) => (
-                    <FormControl
-                      isInvalid={!!(form.errors.name && form.touched.name)}
-                      display="flex"
-                      alignItems="center"
-                    >
-                      <FormLabel {...formLableLayout}>{t('ProfileEdit.avator')}</FormLabel>
-                      <Container
-                        height="48px"
-                        lineHeight="48px"
-                        borderBottom="1px solid #F3F4F8"
-                        display="flex"
-                        alignItems="center"
-                      >
-                        <FormLabel htmlFor="file" width="32px" mb="0">
-                          <Image
-                            width="32px"
-                            height="32px"
-                            borderRadius="50%"
-                            // eslint-disable-next-line max-len
-                            src="https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/02/02/ChMkJ1bKxg6IdZk5AAK3PMpO-zEAALHfgDer-EAArdU066.jpg"
-                          />
-                        </FormLabel>
-                        <Input display="none" type="file" id="file" />
-                      </Container>
-                    </FormControl>
-                  )}
-                </Field>
-                <Field name="name">
-                  {({
-                    form,
-                  }: {
-                    field: Record<string, unknown>;
-                    form: { errors: { name: string }; touched: { name: string } };
-                  }) => (
-                    <FormControl
-                      isInvalid={!!(form.errors.name && form.touched.name)}
-                      display="flex"
-                      alignItems="center"
-                    >
-                      <FormLabel {...formLableLayout}>{t('ProfileEdit.email')}</FormLabel>
-                      <Input
-                        _placeholder={{ color: Colors.TextLightGray }}
-                        id="name"
-                        placeholder={t('ProfileEdit.placeholder')}
-                        {...formInputLayout}
-                      />
-                    </FormControl>
-                  )}
-                </Field>
-                <Field name="name">
-                  {({
-                    form,
-                  }: {
-                    field: Record<string, unknown>;
-                    form: { errors: { name: string }; touched: { name: string } };
-                  }) => (
-                    <FormControl
-                      isInvalid={!!(form.errors.name && form.touched.name)}
-                      display="flex"
-                      alignItems="center"
-                    >
-                      <FormLabel {...formLableLayout}>{t('ProfileEdit.twitter')}</FormLabel>
-                      <Input
-                        _placeholder={{ color: Colors.TextLightGray }}
-                        id="name"
-                        placeholder={t('ProfileEdit.placeholder')}
-                        {...formInputLayout}
-                      />
-                    </FormControl>
-                  )}
-                </Field>
-                <Box textAlign="center" mt="21px">
-                  <Button
-                    type="submit"
-                    backgroundColor={Colors.Primary}
-                    fontSize="14px"
-                    color="#fff"
-                    _hover={{ backgroundColor: Colors.Primary }}
-                    _focus={{ backgroundColor: Colors.Primary }}
-                  >
-                    {t('common.save')}
-                  </Button>
-                </Box>
-              </Form>
-            </Formik>
-          </Container>
-        </Container>
-      </Box>
-    </MainContainer>
+          <SubmitButton text={t('common.save')} isSubmitting={isSubmitting} />
+        </Flex>
+      </form>
+      <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+        <ModalOverlay />
+      </Modal>
+      <MyModal
+        isOpen={isShowModal}
+        type="warning"
+        isCloseable
+        title="You are not in the whitelist"
+        message="Please contact our team"
+        onClose={onCloseModal}
+      />
+      <MyToast isCloseable />
+    </Flex>
   );
 };
 
-export default ProfileEdit;
+export default CreateCollection;

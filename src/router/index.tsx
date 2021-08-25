@@ -17,6 +17,7 @@ import Detail from '../pages/Detail';
 import SellSetting from '../pages/SellSetting';
 import Collection from '../pages/Collection';
 import Account from '../pages/Account';
+import EditProfile from '../pages/ProfileEdit';
 
 export default () => (
   <Router>
@@ -32,7 +33,7 @@ export default () => (
         <Route exact strict path="/account/:address/collections" component={Account} />
         <Route exact strict path="/profile/collection/create" component={CreateCollection} />
         <Route exact strict path="/profile/nft/create/:collectionId" component={CreateNft} />
-        {/* <Route exact strict path="/profile" component={EditProfile} /> */}
+        <Route exact strict path="/profile" component={EditProfile} />
         <Route exact strict path="/sellSetting/:nftId" component={SellSetting} />
       </Switch>
     </PolkaProvider>

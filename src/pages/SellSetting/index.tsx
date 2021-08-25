@@ -107,11 +107,10 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   };
 
   const schema = Yup.object().shape({
-    categoryId: Yup.string().required(t('Create.required')),
     price: Yup.number().moreThan(0).required(t('Create.required')),
+    deposits: Yup.number().moreThan(0).required(t('Create.required')),
   });
   const schemaDutch = Yup.object().shape({
-    categoryId: Yup.string().required(t('Create.required')),
     startingPrice: Yup.string().required(t('Create.required')),
     endingPrice: Yup.string().required(t('Create.required')),
     expirationDate: Yup.string().required(t('Create.required')),
@@ -119,7 +118,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     automaticDelay: Yup.boolean().required(t('Create.required')),
   });
   const schemaEnglish = Yup.object().shape({
-    categoryId: Yup.string().required(t('Create.required')),
     startingPrice: Yup.string().required(t('Create.required')),
     endingPrice: Yup.string().required(t('Create.required')),
     expirationDate: Yup.string().required(t('Create.required')),
@@ -132,6 +130,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const formik = useFormik({
     initialValues: {
       price: '',
+      deposits: '',
       categoryId: '',
       startingPrice: '',
       endingPrice: '',
@@ -144,15 +143,15 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     },
     onSubmit: (formValue, formAction) => {
       setIsSubmitting(false);
-      // console.log(formValue);
-      // return;
+      console.log(formValue);
       const orderParams = {
         address: account!.address,
         price: formValue.price,
+        deposits: formValue.deposits,
         classId: nftData?.nftInfo.class_id,
         quantity: nftData?.nftInfo.quantity,
         tokenId: nftData?.nftInfo.token_id,
-        commissionRate: formValue.commissionRate,
+        commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
             toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
@@ -173,9 +172,11 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         orderId,
         categoryId: formValue.categoryId,
         price: formValue.price,
+        deposits: formValue.deposits,
         classId: nftData?.nftInfo.class_id,
         quantity: nftData?.nftInfo.quantity,
         tokenId: nftData?.nftInfo.token_id,
+        commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
             toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
@@ -197,9 +198,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         minPrice: formValue.endingPrice,
         expirationDate: formValue.expirationDate,
         allow_british_auction: formValue.turnToEnglishAuction,
-        range: formValue.minimumMarkup,
+        range: Number(formValue.minimumMarkup) / 100,
         tokens: [[nftData?.nftInfo.class_id, nftData?.nftInfo.token_id, 1]],
-        categoryId: formValue.categoryId,
+        commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
             toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
@@ -220,9 +221,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         InitPrice: formValue.startingPrice,
         expirationDate: formValue.expirationDate,
         allow_british_auction: formValue.automaticDelay,
-        range: formValue.minimumMarkup,
+        range: Number(formValue.minimumMarkup) / 100,
         tokens: [[nftData?.nftInfo.class_id, nftData?.nftInfo.token_id, 1]],
-        categoryId: formValue.categoryId,
+        commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
             toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
@@ -487,71 +488,82 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   {formik.errors.price && formik.touched.price ? (
                     <div style={{ color: 'red' }}>{formik.errors.price}</div>
                   ) : null}
-                  {/* <Flex
-                w="100%"
-                h="80px"
-                flexDirection="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Flex
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignItems="flex-start"
-                >
-                  <Text
-                    fontSize="16px"
-                    fontFamily="TTHoves-Medium, TTHoves"
-                    fontWeight="500"
-                    color="#000000"
-                    lineHeight="18px"
+                  <Flex
+                    w="100%"
+                    h="80px"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
                   >
-                    {t('SellSetting.Pledge')}
-                  </Text>
-                  <Text
-                    mt="8px"
-                    fontSize="12px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#858999"
-                    lineHeight="14px"
-                  >
-                    {t('SellSetting.PledgeExplain')}
-                  </Text>
-                </Flex>
-                <InputGroup
-                  width="200px"
-                  height="40px"
-                  background="#FFFFFF"
-                  borderRadius="4px"
-                  border="1px solid #E5E5E5"
-                >
-                  <Input
-                    fontSize="12px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#999999"
-                    lineHeight="14px"
-                    _focus={{
-                      boxShadow: 'none',
-                    }}
-                    placeholder={t('SellSetting.Price')}
-                  />
-                  <InputRightAddon
-                    width="72px"
-                    height="40px"
-                    background="#F4F4F4"
-                    borderRadius="0px 4px 4px 0px"
-                    border="1px solid #E5E5E5"
-                    fontSize="14px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#999999"
-                    lineHeight="14px"
-                    children="NMT"
-                  />
-                </InputGroup>
-              </Flex> */}
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        color="#000000"
+                        lineHeight="18px"
+                      >
+                        {t('SellSetting.pledge')}
+                      </Text>
+                      <Text
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.pledgeExplain')}
+                      </Text>
+                    </Flex>
+                    <InputGroup
+                      width="200px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      border="1px solid #E5E5E5"
+                    >
+                      <Input
+                        id="deposits"
+                        name="deposits"
+                        value={formik.values.deposits}
+                        onChange={formik.handleChange}
+                        fontSize="16px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#000000"
+                        lineHeight="14px"
+                        _focus={{
+                          boxShadow: 'none',
+                        }}
+                        _placeholder={{
+                          color: '#999999',
+                          fontSize: '12px',
+                        }}
+                        placeholder={t('SellSetting.price')}
+                      />
+                      <InputRightAddon
+                        width="72px"
+                        height="40px"
+                        background="#F4F4F4"
+                        borderRadius="0px 4px 4px 0px"
+                        border="1px solid #E5E5E5"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#999999"
+                        lineHeight="14px"
+                        children="NMT"
+                      />
+                    </InputGroup>
+                  </Flex>
+                  {formik.errors.deposits && formik.touched.deposits ? (
+                    <div style={{ color: 'red' }}>{formik.errors.deposits}</div>
+                  ) : null}
                   <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                     <AccordionItem width="100%" border="none">
                       <AccordionButton
@@ -776,7 +788,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         fontWeight="400"
                         color="#999999"
                         lineHeight="14px"
-                        children="Days"
+                        children="NMT"
                       />
                     </InputGroup>
                   </Flex>
@@ -2037,7 +2049,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {number2PerU16(tax)}
+                          {Math.floor(number2PerU16(tax) * 1000) / 1000}
                           %
                         </Text>
                       </Flex>

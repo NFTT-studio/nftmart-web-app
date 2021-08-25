@@ -259,12 +259,16 @@
     "expiration": "Expiration"
   },
   "ProfileEdit": {
-    "title": "Edit Profile",
-    "nickname": "Name:",
-    "placeholder": "Enter",
-    "avatar": "Avatar:",
-    "email": "Email:",
-    "twitter": "Twitter:"
+    "portrait": "*Portrait",
+    "portraitRule": "350×350 recommended",
+    "username": "*Username",
+    "usernameRule": "Only letters, numbers, and hyphens are supported,50 characters or less.",
+    "emai": "Emai",
+    "emaiRule": "80 characters or less.",
+    "twitter": "Twitter",
+    "twitterRule": "80 characters or less.",
+    "featuredImage": "Featured image",
+    "featuredImageRule": "This picture will be displayed on your personal homepage, 600 x 400 recommended"
   },
   "Trx": {
     "inblock": "Transaction in block",

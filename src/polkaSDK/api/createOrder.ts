@@ -13,7 +13,7 @@ function float2PerU16(x) {
 
 export const createOrder = async ({
   address = '', // address of current user
-  // category id
+  deposits = '',
   classId = 0, // category id
   quantity = 1,
   price = 1, // list price
@@ -28,7 +28,7 @@ export const createOrder = async ({
 
     // convert on chain precision
     const priceAmount = unit.mul(bnToBn(price));
-    const deposit = unit.mul(bnToBn('5'));
+    const deposit = unit.mul(bnToBn(deposits));
     const commissionRates = float2PerU16(commissionRate);
 
     const call = PolkaSDK.api.tx.nftmartOrder.submitOrder(
