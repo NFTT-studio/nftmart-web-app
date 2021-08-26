@@ -20,10 +20,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, useHistory, Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
+import qs from 'qs';
+import console from 'console';
 import MainContainer from '../../layout/MainContainer';
 import PriceHistoryChart from './PriceHistoryChart';
 import CancelDialog from './CancelDialog';
 import DealDialog from './DealDialog';
+import NoData from './NoData';
 import { getBlock } from '../../polkaSDK/api/getBlock';
 import TimeBy from './TimeBy';
 import { renderNmtNumberText } from '../../components/Balance';
@@ -86,11 +89,94 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const chainState = useAppSelector((state) => state.chain);
   const { t } = useTranslation();
   const history = useHistory();
+  const [isCollect, setIsCollect] = useState(false);
 
   const [remainingTime, setRemainingTime] = useState(0);
-  getBlock().then((res) => {
-    setRemainingTime(res);
-  });
+  const { account } = chainState;
+  const { nftId } = match.params;
+  const { data: nftData, isLoading: nftDataIsLoading } = useNft(nftId);
+  const collectionsId = nftId.split('-')[0];
+  const tokenId = nftId.split('-')[1];
+  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+
+  const collectNft = async (type:string) => {
+    const data = {
+      nft_id: nftId,
+      collecter_id: account?.address || '',
+      type,
+    };
+    await axios.post(`${CACHE_SERVER_URL}nfts/action/collect`, qs.stringify(data), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }).then((res) => {
+      if (type === 'status') {
+        const status = !!res.data.collect_status;
+        setIsCollect(status);
+      }
+    });
+  };
+
+  const [isShowCancel, setIsShowCancel] = useState(false);
+  const [isShowDeal, setIsShowDeal] = useState(false);
+  const [isShowBuy, setIsShowBuy] = useState(false);
+  const [isShowOffer, setIsShowOffer] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedTime, setSelectedTime] = useState('seven');
+  const [offerId, setOfferId] = useState('');
+  const [offerOwner, setOfferOwner] = useState('');
+  useEffect(() => {
+    collectNft('status');
+    getBlock().then((res) => {
+      setRemainingTime(res);
+    });
+  }, []);
+
+  const { data: token } = useToken();
+  const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
+  const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
+  if (nftDataIsLoading || collectionsDateIsLoading || !nftData) {
+    return <Spinner />;
+  }
+  const links = collectionsData?.collection?.metadata?.links;
+  const ICON_LIST = ICONS.map((item, index) => ({
+    src: item.icon,
+    id: index,
+    link: links ? links[item.name] : '',
+  }));
+
+  const logoUrl = `${PINATA_SERVER}${nftData.nftInfo.metadata.logoUrl}`;
+  const price = priceStringDivUnit(nftData?.nftInfo?.price);
+  const collectionName = collectionsData?.collection?.metadata?.name;
+  const collectionDescription = collectionsData?.collection?.metadata?.description;
+  const nftName = nftData?.nftInfo?.metadata.name;
+  const OffersArr = nftData?.nftInfo?.offers;
+
+  const ownerId = nftData?.nftInfo?.owner_id;
+  const orderId = nftData?.nftInfo?.order_id;
+  const hideFlag = false;
+  const PriceHistory = nftData?.nftInfo?.history[selectedTime];
+
+  const handleDeal = (offerIdItem:string, offerOwnerItem:string) => {
+    if (!account) {
+      history.push(`/connect?callbackUrl=item/${nftId}`);
+    }
+    setOfferId(offerIdItem);
+    setOfferOwner(offerOwnerItem);
+    setIsShowDeal(true);
+  };
+  const handleBuy = () => {
+    if (!account) {
+      history.push(`/connect?callbackUrl=item/${nftId}`);
+    }
+    setIsShowBuy(true);
+  };
+  const handleOffer = () => {
+    if (!account) {
+      history.push(`/connect?callbackUrl=item/${nftId}`);
+    }
+    setIsShowOffer(true);
+  };
 
   const timeBlock = (index:numer) => {
     const times = (index - remainingTime) * 6;
@@ -118,117 +204,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     }
     return result;
   };
-
-  const { account } = chainState;
-  const { nftId } = match.params;
-  const { data: nftData, isLoading: nftDataIsLoading } = useNft(nftId);
-  const collectionsId = nftId.split('-')[0];
-  const tokenId = nftId.split('-')[1];
-
-  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
-
-  const [isShowCancel, setIsShowCancel] = useState(false);
-  const [isShowDeal, setIsShowDeal] = useState(false);
-  const [isShowBuy, setIsShowBuy] = useState(false);
-  const [isShowOffer, setIsShowOffer] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedTime, setSelectedTime] = useState('seven');
-  const [isCollect, setIsCollect] = useState(false);
-
-  const [offerId, setOfferId] = useState('');
-  const [offerOwner, setOfferOwner] = useState('');
-
-  const { data: token } = useToken();
-  const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
-
-  const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
-
-  if (nftDataIsLoading || collectionsDateIsLoading || !nftData) {
-    return <Spinner />;
-  }
-  const links = collectionsData?.collection?.metadata?.links;
-  const ICON_LIST = ICONS.map((item, index) => ({
-    src: item.icon,
-    id: index,
-    link: links ? links[item.name] : '',
-  }));
-
-  const logoUrl = `${PINATA_SERVER}${nftData.nftInfo.metadata.logoUrl}`;
-  const price = priceStringDivUnit(nftData?.nftInfo?.price);
-  const collectionName = collectionsData?.collection?.metadata?.name;
-  const collectionDescription = collectionsData?.collection?.metadata?.description;
-  const nftName = nftData?.nftInfo?.metadata.name;
-  const OffersArr = nftData?.nftInfo?.offers;
-
-  const ownerId = nftData?.nftInfo?.owner_id;
-  const orderId = nftData?.nftInfo?.order_id;
-  const hideFlag = false;
-  const PriceHistory = nftData?.nftInfo?.history[selectedTime];
-  // console.log(PriceHistory.price_list.PriceDate);
-
-  const handleDeal = (offerIdItem:string, offerOwnerItem:string) => {
-    if (!account) {
-      history.push(`/connect?callbackUrl=item/${nftId}`);
-    }
-    setOfferId(offerIdItem);
-    setOfferOwner(offerOwnerItem);
-    setIsShowDeal(true);
-  };
-
-  const handleBuy = () => {
-    if (!account) {
-      history.push(`/connect?callbackUrl=item/${nftId}`);
-    }
-    setIsShowBuy(true);
-  };
-  const handleOffer = () => {
-    if (!account) {
-      history.push(`/connect?callbackUrl=item/${nftId}`);
-    }
-    setIsShowOffer(true);
-  };
-  const collectNft = async (type:string) => {
-    const formData = new FormData();
-    formData.append('collecter_id', account?.address || '');
-    formData.append('nft_id', nftId);
-    formData.append('type', type);
-    await axios.post(`${CACHE_SERVER_URL}nfts/action/collect`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  };
-
-  const NoData = (item:{ widths: string }) => (
-    <AccordionPanel p="0px">
-      <Flex
-          // eslint-disable-next-line react/destructuring-assignment
-        width={item.widths}
-        height="260px"
-        background="#FFFFFF"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Image
-          w="150px"
-          h="100px"
-          borderStyle="dashed"
-          src={Historyempty.default}
-        />
-        <Text
-          mt="10px"
-          fontSize="14px"
-          fontFamily="TTHoves-Regular, TTHoves"
-          fontWeight="400"
-          color="#999999"
-          lineHeight="20px"
-        >
-          {t('Detail.noDataYet')}
-        </Text>
-      </Flex>
-    </AccordionPanel>
-  );
 
   return (
     <MainContainer title={`${nftName}-${collectionName}${t('Detail.title')}`}>
@@ -766,7 +741,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     }}
                     onClick={() => {
                       setIsCollect(!isCollect);
-                      const type = isCollect ? 'collect' : 'cancle';
+                      const type = isCollect ? 'cancle' : 'collect';
                       collectNft(type);
                     }}
                   >
@@ -1622,5 +1597,4 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   );
 };
-
 export default Detail;
