@@ -55,7 +55,7 @@
     "titleOne": "Professional",
     "titleTwo": "NFT Market Place",
     "content": "The first NFT decentralized trading platform established using an independent public",
-    "button": "CREATE"
+    "button": "EXPLORE"
   },
   "extension": {
     "install": "Install",
@@ -244,6 +244,7 @@
     "title": "Account",
     "myWallet": "My wallet",
     "offers": "Offers",
+    "stars": "Stars",
     "collections": "Collections",
     "offersMade": "Offers Made",
     "offersReceived": "Offers Received",

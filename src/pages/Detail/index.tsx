@@ -19,6 +19,7 @@ import {
 
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, useHistory, Link as RouterLink } from 'react-router-dom';
+import axios from 'axios';
 import MainContainer from '../../layout/MainContainer';
 import PriceHistoryChart from './PriceHistoryChart';
 import CancelDialog from './CancelDialog';
@@ -26,8 +27,8 @@ import DealDialog from './DealDialog';
 import { getBlock } from '../../polkaSDK/api/getBlock';
 import TimeBy from './TimeBy';
 import { renderNmtNumberText } from '../../components/Balance';
-
 import {
+  CACHE_SERVER_URL,
   PINATA_SERVER,
 } from '../../constants';
 
@@ -36,6 +37,7 @@ import {
   // IconDetailsRefresh,
   // IconDetailshaSre,
   IconDetailsCollection,
+  IconDetailsCollectionS,
   IconDetailsDetail,
   WEBSITE,
   DISCORD,
@@ -54,6 +56,8 @@ import {
   ImgFillTop,
   ImgFillBottom,
   IconAuthentication,
+  IconDetailsRefresh,
+  IconDetailshaSre,
   // IconLeft,
 } from '../../assets/images';
 import useNft from '../../hooks/reactQuery/useNft';
@@ -129,6 +133,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [isShowOffer, setIsShowOffer] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedTime, setSelectedTime] = useState('seven');
+  const [isCollect, setIsCollect] = useState(false);
 
   const [offerId, setOfferId] = useState('');
   const [offerOwner, setOfferOwner] = useState('');
@@ -181,6 +186,17 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       history.push(`/connect?callbackUrl=item/${nftId}`);
     }
     setIsShowOffer(true);
+  };
+  const collectNft = async (type:string) => {
+    const formData = new FormData();
+    formData.append('collecter_id', account?.address || '');
+    formData.append('nft_id', nftId);
+    formData.append('type', type);
+    await axios.post(`${CACHE_SERVER_URL}nfts/action/collect`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   };
 
   const NoData = (item:{ widths: string }) => (
@@ -700,63 +716,68 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     />
                   </Flex>
                 </Link>
-                {/* <Flex>
-                <Box
-                  width="40px"
-                  height="40px"
-                  borderRadius="4px 0px 0px 4px"
-                  border="1px solid #E5E5E5"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  _hover={{
-                    boxShadow: '0px 2px 8px 0px #E1E1E1',
-                  }}
-                >
-                  <Image
-                    w="22px"
-                    h="22px"
-                    src={IconDetailsRefresh.default}
-                  />
-                </Box>
-                <Box
-                  width="40px"
-                  height="40px"
-                  borderTop="1px solid #E5E5E5"
-                  borderBottom="1px solid #E5E5E5"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  _hover={{
-                    boxShadow: '0px 2px 8px 0px #E1E1E1',
-                  }}
-                >
-                  <Image
-                    w="22px"
-                    h="22px"
-                    src={IconDetailshaSre.default}
-                  />
-                </Box>
-                <Box
-                  width="40px"
-                  height="40px"
-                  borderRadius="0px 4px 4px 0px"
-                  border="1px solid #E5E5E5"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  _hover={{
-                    boxShadow: '0px 2px 8px 0px #E1E1E1',
-                  }}
-                >
-                  <Image
-                    w="22px"
-                    h="22px"
-                    src={IconDetailsCollection.default}
-                  />
-                </Box>
+                <Flex>
+                  <Box
+                    width="40px"
+                    height="40px"
+                    borderRadius="4px 0px 0px 4px"
+                    border="1px solid #E5E5E5"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    _hover={{
+                      boxShadow: '0px 2px 8px 0px #E1E1E1',
+                    }}
+                  >
+                    <Image
+                      w="22px"
+                      h="22px"
+                      src={IconDetailsRefresh.default}
+                    />
+                  </Box>
+                  <Box
+                    width="40px"
+                    height="40px"
+                    borderTop="1px solid #E5E5E5"
+                    borderBottom="1px solid #E5E5E5"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    _hover={{
+                      boxShadow: '0px 2px 8px 0px #E1E1E1',
+                    }}
+                  >
+                    <Image
+                      w="22px"
+                      h="22px"
+                      src={IconDetailshaSre.default}
+                    />
+                  </Box>
+                  <Box
+                    width="40px"
+                    height="40px"
+                    borderRadius="0px 4px 4px 0px"
+                    border="1px solid #E5E5E5"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    _hover={{
+                      boxShadow: '0px 2px 8px 0px #E1E1E1',
+                    }}
+                    onClick={() => {
+                      setIsCollect(!isCollect);
+                      const type = isCollect ? 'collect' : 'cancle';
+                      collectNft(type);
+                    }}
+                  >
+                    <Image
+                      w="22px"
+                      h="22px"
+                      src={isCollect ? IconDetailsCollectionS.default : IconDetailsCollection.default}
+                    />
+                  </Box>
 
-              </Flex> */}
+                </Flex>
               </Flex>
               <Flex p="0 20px 0 20px">
                 <Text

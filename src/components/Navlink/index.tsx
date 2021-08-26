@@ -49,7 +49,7 @@ const NavLink = () => {
     // },
     {
       title: 'common.nav.navCreate',
-      path: data?.createdClassCount ? `/account/${account?.address}/wallet?id=3` : '/profile/collection/create',
+      path: data?.createdClassCount ? `/account/${account?.address}/wallet?id=4` : '/profile/collection/create',
       requiredLogin: true,
       requiredWhitelist: true,
     },
@@ -79,8 +79,8 @@ const NavLink = () => {
               marginLeft="28px"
               bordered
               onClick={() => {
-                if (nav.path === `/account/${account?.address}/wallet?id=3`) {
-                  localStorage.setItem('ButtonSelect', '3');
+                if (nav.path === `/account/${account?.address}/wallet?id=4`) {
+                  localStorage.setItem('ButtonSelect', '4');
                 }
               }}
             />

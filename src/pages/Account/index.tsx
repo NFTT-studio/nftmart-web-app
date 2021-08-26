@@ -41,6 +41,8 @@ import {
   Emptyimg,
   IconDetailshaSre,
   IconPen,
+  IconDetailsCollection,
+  IconDetailsCollectionN,
 } from '../../assets/images';
 import {
   DEFAULT_PAGE_LIMIT,
@@ -54,6 +56,7 @@ import { statusArr } from '../../constants/Status';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
 import CreateCard from './CreateCard';
 import OfferItem from './OfferItem';
+import Headers from './Header';
 import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
 import useNfts from '../../hooks/reactQuery/useNfts';
@@ -71,19 +74,16 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       id: '0', icon: IconWallet.default, iconS: IconWalletS.default, title: t('Account.myWallet'),
     },
     {
-      id: '1',
-      icon: IconCreate.default,
-      iconS: IconCreateS.default,
-      title: t('Account.Created'),
+      id: '1', icon: IconCreate.default, iconS: IconCreateS.default, title: t('Account.Created'),
     },
     {
-      id: '2', icon: IconOffers.default, iconS: IconOffersS.default, title: t('Account.offers'),
+      id: '2', icon: IconDetailsCollection.default, iconS: IconDetailsCollectionN.default, title: t('Account.stars'),
     },
     {
-      id: '3',
-      icon: IconDetailsocllections.default,
-      iconS: IconDetailsocllectionsS.default,
-      title: t('Account.collections'),
+      id: '3', icon: IconOffers.default, iconS: IconOffersS.default, title: t('Account.offers'),
+    },
+    {
+      id: '4', icon: IconDetailsocllections.default, iconS: IconDetailsocllectionsS.default, title: t('Account.collections'),
     },
   ];
   const offersMadeButton = [
@@ -201,100 +201,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   return (
     <MainContainer title={t('Home.title')}>
-      <Flex
-        w="100%"
-        flexDirection="column"
-        justifyContent="flex-start"
-        alignItems="center"
-        position="relative"
-        top="20px"
-      >
-        <Image w="1396px" h="auto" src={userData?.featured_image || AccountBanner.default} alt="" />
-        <Flex
-          w="100%"
-          flexDirection="column"
-          justifyContent="flex-start"
-          alignItems="center"
-          position="relative"
-          top="-60px"
-        >
-          <Image
-            background="#FFFFFF"
-            width="120px"
-            borderRadius="50%"
-            border="3px solid #FFFFFF"
-            height="auto"
-            objectFit="cover"
-            src={userData?.avatar || HeadPortrait.default}
-          />
-
-          <Text
-            mt="20px"
-            fontSize="28px"
-            fontFamily="TTHoves-Bold, TTHoves"
-            fontWeight="bold"
-            color="#191A24"
-            lineHeight="33px"
-          >
-            {userData?.name}
-          </Text>
-          <Text
-            mt="12px"
-            fontSize="14px"
-            fontFamily="TTHoves-Regular, TTHoves"
-            fontWeight="400"
-            color="#999999"
-            lineHeight="16px"
-          >
-            {dataPerson.data?.address}
-          </Text>
-        </Flex>
-        <Flex position="absolute" right="20px" top="240px">
-          <Link
-            as={RouterLink}
-            to="/profile"
-          >
-            <Box
-              key="index"
-              width="40px"
-              height="40px"
-              borderRadius="4px 0px 0px 4px"
-              border="1px solid #E5E5E5"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              _hover={{
-                boxShadow: '0px 2px 8px 0px #E1E1E1',
-              }}
-            >
-              <Image
-                w="22px"
-                h="22px"
-                src={IconPen.default}
-              />
-            </Box>
-          </Link>
-          <Box
-            key="index"
-            width="40px"
-            height="40px"
-            borderRadius="0px 4px 4px 0px"
-            border="1px solid #E5E5E5"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            _hover={{
-              boxShadow: '0px 2px 8px 0px #E1E1E1',
-            }}
-          >
-            <Image
-              w="22px"
-              h="22px"
-              src={IconDetailshaSre.default}
-            />
-          </Box>
-        </Flex>
-      </Flex>
+      <Headers userData={userData} dataPerson={dataPerson} />
       <Tabs w="100%">
         <TabList
           w="100%"
@@ -687,6 +594,158 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       fontWeight="400"
                       color="#999999"
                       placeholder={t('Browsing.collectionPlaceholder')}
+                      onChange={handleSearch}
+                    />
+                  </InputGroup>
+
+                  <CollectionSelector
+                    collectionArr={collections}
+                    selectedArr={selectedCollection}
+                    handleSelect={handleSelectCollection}
+                  />
+                </Flex>
+
+                <Flex width="1088px" flexDirection="column" justifyContent="flex-start">
+                  {categoriesIsLoading || nftsIsLoading
+                    ? (
+                      <Center height="15vh">
+                        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                      </Center>
+                    ) : null}
+                  <Flex h="36px">
+                    {categoriesData ? (
+                      <CategorySelector
+                        list={categoriesData!.categories}
+                        selectId={selectedCategoryId}
+                        handleSelect={handleSelectCategory}
+                      />
+                    ) : ''}
+                  </Flex>
+                  <Flex
+                    m="29px 0 20px 0"
+                    width="1088px"
+                    h="36px"
+                    flexFlow="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Text
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#999999"
+                    >
+                      {nftsDataCreate?.pages[0].pageInfo.totalNum}
+                      {' '}
+                      results
+                    </Text>
+                    <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
+                  </Flex>
+                  <Flex width="1088px" flexFlow="row wrap" justifyContent="space-between">
+                    {nftsDataCreate?.pages.length ? (
+                      <InfiniteScroll
+                        dataLength={nftsDataCreate?.pages.length * DEFAULT_PAGE_LIMIT}
+                        next={fetchNextPageNftsData}
+                        hasMore={
+                          nftsDataCreate?.pages.length * DEFAULT_PAGE_LIMIT < nftsDataCreate?.pages[0].pageInfo.totalNum
+                        }
+                        loader={<h4>Loading...</h4>}
+                        initialScrollY={1}
+                      >
+                        <SimpleGrid
+                          w="100%"
+                          columns={4}
+                          spacing={4}
+                        >
+                          {nftsDataCreate?.pages.map((page) => page.nfts.map(
+                            (nft) => <Flex m="11px"><NftCard nft={nft} /></Flex>,
+                          ))}
+                        </SimpleGrid>
+                      </InfiniteScroll>
+                    ) : (
+                      <Flex
+                        width="100%"
+                        height="260px"
+                        background="#FFFFFF"
+                        flexDirection="column"
+                        justifyContent="center"
+                        alignItems="center"
+                      >
+                        <Image
+                          w="150px"
+                          h="100px"
+                          border="1px solid #999999"
+                          borderStyle="dashed"
+                          src={Emptyimg.default}
+                        />
+                        <Text
+                          mt="10px"
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="20px"
+                        >
+                          No data yet
+                        </Text>
+                      </Flex>
+                    )}
+                  </Flex>
+                </Flex>
+              </Container>
+            </TabPanel>
+          ) : ''}
+          {selectTabId === 3 ? (
+            <TabPanel>
+              <Container mt="20px" display="flex">
+                <Flex
+                  w="260px"
+                  h="492px"
+                  flexDirection="column"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  background="#F9F9F9"
+                  borderRadius="4px"
+                  p="20px"
+                  border="1px solid #F9F9F9"
+                  mr="16px"
+                >
+                  <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="2px">
+                    <Box as="img" src={IconAllState.default} alt="" w="22px" h="22px" mr="8px" />
+                    <Text>{t('Browsing.status')}</Text>
+                  </Flex>
+
+                  <Flex width="100%" flexFlow="wrap" justifyContent="space-between">
+                    <StatusSelector
+                      statusArr={statusArr}
+                      selectedArr={selectedStatusArr}
+                      handleSelect={handleSelectStatus}
+                    />
+                  </Flex>
+                  <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 12px 0">
+                    <Box as="img" src={IconAllStateone.default} alt="" w="22px" h="22px" mr="8px" />
+                    <Text>{t('Browsing.collections')}</Text>
+                  </Flex>
+                  <InputGroup
+                    variant="unstyled"
+                    width="220px"
+                    height="40px"
+                    background="#FFFFFF"
+                    borderRadius="4px"
+                    border="1px solid #E5E5E5"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    p="0px 0 0px 12px"
+                    m="0px 0 12px 0px"
+                  >
+                    <Image w="16px" h="16px" mr="6px" src={IconSearch.default} alt="" />
+                    <Input
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#999999"
+                      placeholder={t('Browsing.collectionPlaceholder')}
                     />
                   </InputGroup>
 
@@ -889,7 +948,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               </Container>
             </TabPanel>
           ) : ''}
-          {selectTabId === 3 ? (
+          {selectTabId === 4 ? (
             <Container mt="40px">
               <SimpleGrid
                 columns={5}
