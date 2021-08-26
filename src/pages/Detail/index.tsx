@@ -21,7 +21,6 @@ import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, useHistory, Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 import qs from 'qs';
-import console from 'console';
 import MainContainer from '../../layout/MainContainer';
 import PriceHistoryChart from './PriceHistoryChart';
 import CancelDialog from './CancelDialog';
@@ -116,6 +115,17 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       }
     });
   };
+  const browse = async () => {
+    const data = {
+      nft_id: nftId,
+      viewer_id: account?.address || '',
+    };
+    await axios.post(`${CACHE_SERVER_URL}nfts/action/view`, qs.stringify(data), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+  };
 
   const [isShowCancel, setIsShowCancel] = useState(false);
   const [isShowDeal, setIsShowDeal] = useState(false);
@@ -127,6 +137,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [offerOwner, setOfferOwner] = useState('');
   useEffect(() => {
     collectNft('status');
+    browse();
     getBlock().then((res) => {
       setRemainingTime(res);
     });
