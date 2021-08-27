@@ -92,6 +92,8 @@ export * as IconTime from './icon_time.png';
 export * as IconAdd from './icon_add.png';
 export * as IconDel from './icon_del.png';
 export * as IconIns from './icon_ins.png';
+export * as IconBrowse from './icon_browse.png';
+export * as IconLiulan from './icon_liulan.png';
 // empty
 export * as Emptyimg from './empty.png';
 export * as Historyempty from './historyempty.png';

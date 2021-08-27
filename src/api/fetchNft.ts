@@ -24,6 +24,7 @@ type NftData = {
     status: Status
     token_id: string
     category: []
+    order_id: string
   }
 }
 
