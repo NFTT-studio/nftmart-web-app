@@ -83,6 +83,7 @@ const CreateCollection: FC = () => {
       address: account!.address,
       metadata: {
         logoUrl: formValue.logoUrl,
+        banner: formValue.banner,
         featuredUrl: formValue.featuredUrl,
         name: formValue.name,
         stub: formValue.stub,
@@ -97,7 +98,7 @@ const CreateCollection: FC = () => {
         },
       },
       royaltyRate: Number(formValue.royalties) / 100,
-      cate: formValue.cate,
+      cate: formValue.cate.split(','),
       cb: {
         success: (result) => {
           if (result.dispatchError) {
@@ -106,16 +107,14 @@ const CreateCollection: FC = () => {
             toast(<ToastBody title="Success" message={t('Collection.Success')} type="success" />);
             setTimeout(() => {
               history.push(`/collection/${account!.address}?collectionId=${result.events[5].event.data[1].toString()}`);
+              formActions.resetForm();
             }, 3000);
           }
-
           setIsSubmitting(false);
-          formActions.resetForm();
         },
         error: (error) => {
           toast(<ToastBody title="Error" message={error} type="error" />);
           setIsSubmitting(false);
-          formActions.resetForm();
         },
       },
     });
@@ -140,16 +139,17 @@ const CreateCollection: FC = () => {
       stub: '',
       description: '',
       royalties: 0,
-      cate: [],
+      cate: '',
       website: '',
       discord: '',
       twitter: '',
       ins: '',
       medium: '',
       telegram: '',
+      banner: '',
     },
     onSubmit: (values, formActions) => {
-      setIsSubmitting(true);
+      setIsSubmitting(false);
       create(values, formActions);
     },
     validationSchema: schema,
@@ -170,7 +170,6 @@ const CreateCollection: FC = () => {
         {formik.errors.logoUrl && formik.touched.logoUrl ? (
           <div style={{ color: 'red' }}>{formik.errors.logoUrl}</div>
         ) : null}
-
         <Upload
           id="logoUrl"
           mediatype="cutting"
@@ -181,20 +180,20 @@ const CreateCollection: FC = () => {
             formik.values.logoUrl = v;
           }}
         />
-        <label htmlFor="logoUrl">
+        <label htmlFor="banner">
           {' '}
-          <EditFormTitle text={t('Collection.logo')} />
-          <EditFromSubTitle text={t('Collection.logoRule')} />
+          <EditFormTitle text={t('Collection.banner')} />
+          <EditFromSubTitle text={t('Collection.bannerRule')} />
         </label>
 
         <Upload
-          id="logoUrl"
+          id="banner"
           mediatype="cutting"
           rectangle="600px"
-          proportion={7.6 / 1}
+          proportion={7 / 2}
           value={formik.values.logoUrl}
           onChange={(v) => {
-            formik.values.logoUrl = v;
+            formik.values.banner = v;
           }}
         />
         {formik.errors.logoUrl && formik.touched.logoUrl ? (
@@ -499,13 +498,12 @@ const CreateCollection: FC = () => {
             categories={categories}
             setCategories={setCategories}
             onChange={() => {
-              const resultArr: any[] = [];
+              const resultArr: never[] = [];
               // eslint-disable-next-line array-callback-return
               categories.map((item, index) => {
                 resultArr.splice(index, 0, item.id);
               });
-              formik.values.cate = resultArr;
-              console.log(formik.values.cate);
+              formik.values.cate = resultArr.toString();
             }}
           />
         </Flex>

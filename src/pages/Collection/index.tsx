@@ -151,7 +151,15 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
         </Flex>
       ) : ''}
 
-      <Image mt="20px" maxWidth="1364px" width="100%" src={CollectionBackground.default} alt="banner" />
+      <Image
+        mt="20px"
+        maxWidth="1364px"
+        width="100%"
+        src={collectionsData?.collection?.metadata?.banner
+          ? `${PINATA_SERVER}${collectionsData?.collection?.metadata?.banner}`
+          : CollectionBackground.default}
+        alt="banner"
+      />
       <Flex w="100%" maxWidth="1364px" direction="row" paddingTop="20px" paddingBottom="20px">
         <Avatar
           m="0 20px"

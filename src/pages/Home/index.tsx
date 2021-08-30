@@ -16,6 +16,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
   Scrollbar,
 } from 'swiper';
+import { number } from 'yup/lib/locale';
 import CategorySelector from '../../components/CategorySelector';
 import OrderCard from '../../components/OrderCard ';
 import useBanner from '../../hooks/reactQuery/useBanner';
@@ -51,8 +52,11 @@ SwiperCore.use([Scrollbar]);
 const Home = () => {
   const { t } = useTranslation();
   const [selectId, setSelectId] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const [number, setNumber] = useState(4);
+  const [pageParam, setPageParamr] = useState(1);
 
-  const { data: hotNftsData, isLoading: hotNftsIsLoading } = useHotNfts(selectId);
+  const { data: hotNftsData, isLoading: hotNftsIsLoading } = useHotNfts(number, pageParam, selectId);
   const { data: expensiveNftsData, isLoading: expensiveNftsIsLoading } = useExpensiveNfts(selectId);
   const { data: cheapNftsData, isLoading: cheapNftsIsLoading } = useCheapNfts(selectId);
 

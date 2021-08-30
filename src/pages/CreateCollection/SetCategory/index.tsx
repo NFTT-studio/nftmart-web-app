@@ -78,7 +78,7 @@ const ChangeLanguage: FC<Props> = (({
       <PopoverContent maxWidth="140px" _focus={{ boxShadow: 'none' }}>
         <PopoverArrow />
         <PopoverBody display="flex" flexDirection="column" alignItems="center">
-          {categoriesData?.categories.length ? categoriesData.categories.map((item) => (
+          {categoriesData?.categories?.length ? categoriesData.categories.map((item) => (
             <Button
               isDisabled={categories.length === 2}
               backgroundColor="#FFFFFF"

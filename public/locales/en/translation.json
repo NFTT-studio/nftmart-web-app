@@ -106,6 +106,8 @@
     "royaltiesRuleTwo": "royalties. Royalties are capped at ", 
     "royaltiesSchema": "The maximum royalty is 20% and cannot be less than 0",
     "links": "Links",
+    "banner": "Banner image",
+    "bannerRule": "This image will appear at the top of your collection page. Avoid including too much text in this banner image, as the dimensions change on different devices. 1400 x 400 recommended.",
     "changeImage": "Change Image"
   },
   "Browsing": {

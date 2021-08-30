@@ -105,6 +105,8 @@
     "royaltiesRule": "当用户在市场上出售您的作品时，您将获得版税收入。",
     "royaltiesRuleTwo": "版税上限为 ",
     "royaltiesSchema": "版税上限为 20% 且不能小于0",
+    "banner": "横幅图片",
+    "bannerRule": "此图片将显示在您的作品集页面顶部。避免在此横幅图像中包含太多文本，因为尺寸在不同设备上会发生变化，建议使用 1400 x 400。",
     "changeImage": "改变图片"
   },
   "Browsing": {

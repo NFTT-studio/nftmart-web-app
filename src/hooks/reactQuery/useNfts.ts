@@ -18,8 +18,13 @@ export default ({
   },
 );
 
-export const useHotNfts = (categoryId?: string) => useQuery(
-  [QUERY_KEYS.NFTS, hot, categoryId], () => fetchNfts({ sortBy: hot, categoryId }),
+export const useHotNfts = (number: number, pageParam:number, categoryId?: string) => useQuery(
+  [QUERY_KEYS.NFTS, hot, categoryId], () => fetchNfts({
+    sortBy: hot,
+    categoryId,
+    number,
+    pageParam,
+  }),
 );
 
 export const useExpensiveNfts = (categoryId?: string) => useQuery(
