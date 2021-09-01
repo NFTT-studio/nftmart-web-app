@@ -157,7 +157,7 @@ const OfferItem: FC<Props> = (({ offer }) => {
           color="#000000"
           lineHeight="20px"
         >
-          {formatAddress(offer?.buyer_id)}
+          {offer?.buyer_id ? formatAddress(offer?.buyer_id) : null}
         </Text>
         <Text
           width="120px"

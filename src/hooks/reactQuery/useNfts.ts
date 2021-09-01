@@ -19,7 +19,7 @@ export default ({
 );
 
 export const useHotNfts = (number: number, pageParam:number, categoryId?: string) => useQuery(
-  [QUERY_KEYS.NFTS, hot, categoryId], () => fetchNfts({
+  [QUERY_KEYS.hotNFTS, hot, categoryId], () => fetchNfts({
     sortBy: hot,
     categoryId,
     number,
@@ -27,10 +27,20 @@ export const useHotNfts = (number: number, pageParam:number, categoryId?: string
   }),
 );
 
-export const useExpensiveNfts = (categoryId?: string) => useQuery(
-  [QUERY_KEYS.NFTS, expensive, categoryId], () => fetchNfts({ sortBy: expensive, categoryId }),
+export const useExpensiveNfts = (number: number, pageParam:number, categoryId?: string) => useQuery(
+  [QUERY_KEYS.NFTS, expensive, categoryId], () => fetchNfts({
+    sortBy: expensive,
+    categoryId,
+    number,
+    pageParam,
+  }),
 );
 
-export const useCheapNfts = (categoryId?: string) => useQuery(
-  [QUERY_KEYS.NFTS, cheap, categoryId], () => fetchNfts({ sortBy: cheap, categoryId }),
+export const useCheapNfts = (number: number, pageParam:number, categoryId?: string) => useQuery(
+  [QUERY_KEYS.NFTS, cheap, categoryId], () => fetchNfts({
+    sortBy: cheap,
+    categoryId,
+    number,
+    pageParam,
+  }),
 );

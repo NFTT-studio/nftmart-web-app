@@ -94,6 +94,8 @@ export * as IconDel from './icon_del.png';
 export * as IconIns from './icon_ins.png';
 export * as IconBrowse from './icon_browse.png';
 export * as IconLiulan from './icon_liulan.png';
+export * as IconLeftw from './icon_leftw.png';
+export * as IconRightw from './icon_rightw.png';
 // empty
 export * as Emptyimg from './empty.png';
 export * as Historyempty from './historyempty.png';

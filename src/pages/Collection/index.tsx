@@ -150,24 +150,36 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
           </Flex>
         </Flex>
       ) : ''}
-
-      <Image
-        mt="20px"
-        maxWidth="1364px"
-        width="100%"
-        src={collectionsData?.collection?.metadata?.banner
-          ? `${PINATA_SERVER}${collectionsData?.collection?.metadata?.banner}`
-          : CollectionBackground.default}
-        alt="banner"
-      />
-      <Flex w="100%" maxWidth="1364px" direction="row" paddingTop="20px" paddingBottom="20px">
+      <Flex width="1364px" position="relative">
+        <Image
+          mt="20px"
+          maxWidth="1364px"
+          width="100%"
+          src={collectionsData?.collection?.metadata?.banner
+            ? `${PINATA_SERVER}${collectionsData?.collection?.metadata?.banner}`
+            : CollectionBackground.default}
+          alt="banner"
+        />
         <Avatar
+          position="absolute"
+          bottom="-50px"
+          border="3px solid #FFFFFF"
           m="0 20px"
           src={`${PINATA_SERVER}${collectionsData?.collection?.metadata.logoUrl}`}
           w="100px"
           h="100px"
+          boxShadow="0px 6px 20px 0px #D3D5DC"
         />
-        <Flex w="100%" direction="column">
+      </Flex>
+      <Flex />
+      <Flex
+        w="100%"
+        maxWidth="1364px"
+        direction="row"
+        justifyContent="space-between"
+        padding="70px 20px 20px 20px"
+      >
+        <Flex w="100%" width="301px" direction="column">
           <Flex h="33px" alignItems="center">
             <Text
               fontSize="28px"
@@ -195,155 +207,215 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
           >
             {collectionsData?.collection?.metadata.description}
           </Text>
-          <Flex mt="24px">
-            {/* <Flex mr="20px">
-              <Image
-                mR="4px"
-                w="16px"
-                h="16px"
-                src={IconDetailsocllections.default}
-              />
-              <Text
+          <Flex
+            m="20px 0"
+            width="100%"
+            flexDirection="row"
+            alignContent="center"
+          >
+            <Flex
+              width="25%"
+              flexDirection="column"
+              alignContent="center"
+            >
+              <Flex
                 fontSize="14px"
                 fontFamily="TTHoves-Regular, TTHoves"
                 fontWeight="400"
                 color="#000000"
                 lineHeight="16px"
+                justifyContent="flex-start"
+                alignItems="center"
               >
-                12,323 items
-              </Text>
+                Items
+              </Flex>
+              <Flex
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#000000"
+                lineHeight="16px"
+                justifyContent="flex-start"
+                alignItems="center"
+              >
+                12,323
+              </Flex>
             </Flex>
-            <Flex mr="20px">
-              <Image
-                mR="4px"
-                w="16px"
-                h="16px"
-                src={IconDetailsocllections.default}
-              />
-              <Text
+            <Flex
+              width="25%"
+              flexDirection="column"
+              alignContent="center"
+            >
+              <Flex
                 fontSize="14px"
                 fontFamily="TTHoves-Regular, TTHoves"
                 fontWeight="400"
                 color="#000000"
                 lineHeight="16px"
+                justifyContent="center"
+                alignItems="center"
               >
-                4,323 owners
-              </Text>
+                Owners
+              </Flex>
+              <Flex
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#000000"
+                lineHeight="16px"
+                justifyContent="center"
+                alignItems="center"
+              >
+                12,323
+              </Flex>
             </Flex>
-            <Flex mr="20px">
-              <Image
-                mR="4px"
-                w="16px"
-                h="16px"
-                src={IconDetailsocllections.default}
-              />
-              <Text
+            <Flex
+              width="25%"
+              flexDirection="column"
+              alignContent="center"
+            >
+              <Flex
                 fontSize="14px"
                 fontFamily="TTHoves-Regular, TTHoves"
                 fontWeight="400"
                 color="#000000"
                 lineHeight="16px"
+                justifyContent="center"
+                alignItems="center"
               >
-                12,993 viewers
-              </Text>
+                Viewers
+              </Flex>
+              <Flex
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#000000"
+                lineHeight="16px"
+                justifyContent="center"
+                alignItems="center"
+              >
+                12,323
+              </Flex>
             </Flex>
-            <Flex mr="20px">
-              <Image
-                mR="4px"
-                w="16px"
-                h="16px"
-                src={IconDetailsocllections.default}
-              />
-              <Text
+            <Flex
+              width="25%"
+              flexDirection="column"
+              alignContent="center"
+            >
+              <Flex
                 fontSize="14px"
                 fontFamily="TTHoves-Regular, TTHoves"
                 fontWeight="400"
                 color="#000000"
                 lineHeight="16px"
+                justifyContent="flex-end"
+                alignItems="center"
               >
-                2,301 stars
-              </Text>
-            </Flex> */}
+                Starts
+              </Flex>
+              <Flex
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#000000"
+                lineHeight="16px"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                12,323
+              </Flex>
+            </Flex>
+
+          </Flex>
+          <Flex flexDirection="column">
+            {ICON_LIST.map((item) => (
+              item.link === '' ? null
+                : (
+                  <Link
+                    href={item.link}
+                  >
+                    <Flex
+                      height="40px"
+                      justifyContent="flex-start"
+                    >
+                      <Box
+                        mr="20px"
+                        key="index"
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                      >
+                        <Image
+                          w="22px"
+                          h="22px"
+                          src={item.src}
+                        />
+                      </Box>
+                      <Flex
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#000000"
+                        lineHeight="16px"
+                        justifyContent="flex-start"
+                        alignItems="center"
+                      >
+                        {item.link}
+                      </Flex>
+                    </Flex>
+                  </Link>
+                )
+            ))}
           </Flex>
         </Flex>
-        <Flex>
-          {ICON_LIST.map((item) => (
-            item.link === '' ? null
-              : (
-                <Link
-                  href={item.link}
-                >
-                  <Box
-                    key="index"
-                    width="40px"
-                    height="40px"
-                    borderRadius="4px 0px 0px 4px"
-                    border="1px solid #E5E5E5"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    _hover={{
-                      boxShadow: '0px 2px 8px 0px #E1E1E1',
-                    }}
-                  >
-                    <Image
-                      w="22px"
-                      h="22px"
-                      src={item.src}
-                    />
-                  </Box>
-
-                </Link>
-              )
-          ))}
-        </Flex>
-
-      </Flex>
-      <Flex
-        m="0px 0 0px 0"
-        width="100%"
-        maxWidth="1364px"
-        h="36px"
-        flexDirection="column"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Flex
-          w="100%"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Text
-            fontSize="14px"
-            fontFamily="TTHoves-Regular, TTHoves"
-            fontWeight="400"
-            color="#999999"
+        <Flex width="1003px" direction="column">
+          <Flex
+            m="10px 0 0px 0"
+            width="100%"
+            maxWidth="1003px"
+            h="36px"
+            flexDirection="column"
+            justifyContent="space-between"
+            alignItems="center"
           >
-            {nftsData?.pages[0].pageInfo.totalNum}
-            {' '}
-            results
-          </Text>
-          <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
+            <Flex
+              w="100%"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
+              <Text
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#999999"
+              >
+                {nftsData?.pages[0].pageInfo.totalNum}
+                {' '}
+                results
+              </Text>
+            </Flex>
+          </Flex>
+          <InfiniteScroll
+            dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
+            next={fetchNextPage}
+            hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
+            loader={<h4>Loading...</h4>}
+            initialScrollY={1}
+          >
+            <SimpleGrid
+              w="100%"
+              m="20px 0 20px 0"
+              columns={[1, 2, 3]}
+              spacing="20px"
+            >
+              {nftsData?.pages.map((page) => page.nfts?.map(
+                (nft) => <NftCard nft={nft} />,
+              ))}
+            </SimpleGrid>
+          </InfiniteScroll>
         </Flex>
       </Flex>
-      <InfiniteScroll
-        dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
-        next={fetchNextPage}
-        hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
-        loader={<h4>Loading...</h4>}
-        initialScrollY={1}
-      >
-        <SimpleGrid
-          w="100%"
-          maxWidth="1364px"
-          m="20px 0 20px 0"
-          columns={5}
-        >
-          {nftsData?.pages.map((page) => page.nfts?.map(
-            (nft) => <Flex m="16px"><NftCard nft={nft} /></Flex>,
-          ))}
-        </SimpleGrid>
-      </InfiniteScroll>
 
     </MainContainer>
   );

@@ -38,7 +38,8 @@ const LeftAddonInput: FC<Props> = ({
       {url}
     </InputLeftAddon>
     <Input
-      fontSize="12px"
+      fontSize="14px"
+      color="#000000"
       fontFamily="TTHoves-Regular, TTHoves"
       fontWeight="400"
       placeholder=""

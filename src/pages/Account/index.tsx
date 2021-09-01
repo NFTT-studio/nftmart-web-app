@@ -4,14 +4,9 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, RouteComponentProps, useLocation } from 'react-router-dom';
 import {
-  Tabs, TabList, TabPanels, TabPanel, Flex,
-  Center,
-  Spinner,
-  Box,
+  Flex,
   Text,
   Image,
-  InputGroup,
-  Input,
   Container,
   Button,
   SimpleGrid,
@@ -23,7 +18,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import MainContainer from '../../layout/MainContainer';
 import useCategories from '../../hooks/reactQuery/useCategories';
 import CategorySelector from '../../components/CategorySelector';
-import NftCard from '../../components/NftCard';
 import useCollections from '../../hooks/reactQuery/useCollections';
 import { useAppSelector } from '../../hooks/redux';
 import {
@@ -41,8 +35,6 @@ import {
   IconCreate,
   IconCreateS,
   Emptyimg,
-  IconDetailshaSre,
-  IconPen,
   IconDetailsCollection,
   IconDetailsCollectionN,
 } from '../../assets/images';
@@ -51,8 +43,6 @@ import {
   PINATA_SERVER,
 } from '../../constants';
 import CollectionSelector from '../../components/CollectionSelector';
-import SortBy from '../../components/SortBy';
-import StatusSelector from '../../components/StatusSelector';
 import { statusArr } from '../../constants/Status';
 // import useCollections from '../../hooks/reactQuery/useCollections';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
@@ -73,23 +63,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   const { data: userData } = useUser(address);
 
-  const TABS = [
-    {
-      id: '0', icon: IconWallet.default, iconS: IconWalletS.default, title: t('Account.myWallet'),
-    },
-    {
-      id: '1', icon: IconCreate.default, iconS: IconCreateS.default, title: t('Account.Created'),
-    },
-    {
-      id: '2', icon: IconDetailsCollection.default, iconS: IconDetailsCollectionN.default, title: t('Account.stars'),
-    },
-    {
-      id: '3', icon: IconOffers.default, iconS: IconOffersS.default, title: t('Account.offers'),
-    },
-    {
-      id: '4', icon: IconDetailsocllections.default, iconS: IconDetailsocllectionsS.default, title: t('Account.collections'),
-    },
-  ];
   const offersMadeButton = [
     {
       id: '0',
@@ -162,6 +135,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       status: selectedStatusArr,
     },
   );
+
   const { data: offersSellerArr, fetchNextPage: fetchNextPagesSeller } = useNfts(
     {
       sellerId: address,
@@ -212,48 +186,117 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     setCollections(collectionsData.collections.filter(checkAdult));
   };
 
+  const TABS = [
+    {
+      id: '0',
+      icon: IconWallet.default,
+      iconS: IconWalletS.default,
+      title: t('Account.myWallet'),
+      num: userData?.ownerNftscount,
+    },
+    {
+      id: '1',
+      icon: IconCreate.default,
+      iconS: IconCreateS.default,
+      title: t('Account.Created'),
+      num: userData?.createdNftCount,
+    },
+    {
+      id: '2',
+      icon: IconDetailsCollection.default,
+      iconS: IconDetailsCollectionN.default,
+      title: t('Account.stars'),
+      num: nftsDataCollecte?.pages[0]?.pageInfo?.totalNum,
+    },
+    {
+      id: '3',
+      icon: IconOffers.default,
+      iconS: IconOffersS.default,
+      title: t('Account.offers'),
+      num: offersBuyerIdArr?.pages[0]?.pageInfo?.totalNum,
+
+    },
+    {
+      id: '4',
+      icon: IconDetailsocllections.default,
+      iconS: IconDetailsocllectionsS.default,
+      title: t('Account.collections'),
+      num: userData?.createdClassCount,
+    },
+  ];
+
   return (
     <MainContainer title={t('Home.title')}>
-      <Headers userData={userData} dataPerson={dataPerson} />
-      <Tabs w="100%">
-        <TabList
-          w="100%"
-          display="flex"
-          flexDirection="row"
-          justifyContent="flex-start"
-          alignItems="center"
-          borderBottom="1px solid #000000"
-        >
-          {TABS.map((item, index) => (
-            <Button
-              key={item.id}
-              id={item.id}
-              mr="40px"
-              mb="23px"
-              height="36px"
-              borderRadius="2px"
-              display="flex"
-              flexDirection="row"
-              justifyContent="flex-start"
-              alignItems="center"
-              onClick={handletabSelect}
-              backgroundColor={selectTabId === index ? '#000000' : '#FFFFFF'}
-            >
-              <Image w="22px" h="22px" mr="5px" src={selectTabId === index ? item.iconS : item.icon} alt="" />
-              <Text
-                fontSize="16px"
-                fontFamily="TTHoves-Medium, TTHoves"
-                fontWeight="500"
-                color={selectTabId === index ? '#FFFFFF' : '#191A24'}
-                lineHeight="18px"
-              >
-                {item.title}
-              </Text>
-            </Button>
-          ))}
-        </TabList>
+      <Flex mt="20px" width="1396px" flexDirection="column" position="relative">
+        <Image w="100%" h="auto" src={userData?.featured_image || AccountBanner.default} alt="" />
+        <Image
+          position="absolute"
+          bottom="-50px"
+          border="3px solid #FFFFFF"
+          m="0 20px"
+          boxShadow="0px 6px 20px 0px #D3D5DC"
+          background="#FFFFFF"
+          width="120px"
+          borderRadius="50%"
+          height="auto"
+          objectFit="cover"
+          src={userData?.avatar || HeadPortrait.default}
+        />
+      </Flex>
+      <Flex w="1396px" flexDirection="row" justifyContent="space-between" padding="80px 20px 20px 20px">
 
-        <TabPanels>
+        <Flex width="301px" direction="column">
+          <Headers userData={userData} dataPerson={dataPerson} />
+          <Flex
+            mt="20px"
+            w="100%"
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+          >
+            {TABS.map((item, index) => (
+              <Button
+                w="75%"
+                key={item.id}
+                id={item.id}
+                mr="40px"
+                mb="23px"
+                height="36px"
+                borderRadius="2px"
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                onClick={handletabSelect}
+                backgroundColor={selectTabId === index ? '#000000' : '#FFFFFF'}
+              >
+                <Flex h="100%" alignItems="center">
+                  <Image w="22px" h="22px" mr="5px" src={selectTabId === index ? item.iconS : item.icon} alt="" />
+                  <Text
+                    fontSize="16px"
+                    fontFamily="TTHoves-Medium, TTHoves"
+                    fontWeight="500"
+                    color={selectTabId === index ? '#FFFFFF' : '#191A24'}
+                    lineHeight="18px"
+                  >
+                    {item.title}
+                  </Text>
+                </Flex>
+                <Text
+                  fontSize="16px"
+                  fontFamily="TTHoves-Medium, TTHoves"
+                  fontWeight="500"
+                  color={selectTabId === index ? '#FFFFFF' : '#999999'}
+                  lineHeight="18px"
+                >
+                  {item.num}
+                </Text>
+              </Button>
+            ))}
+          </Flex>
+        </Flex>
+        <Flex width="1003px" direction="column">
           {selectTabId === 0 ? (
             <NftItem
               nftsData={nftsData}
@@ -315,263 +358,201 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             />
           ) : ''}
           {selectTabId === 3 ? (
-            <TabPanel>
-              <Container mt="20px" display="flex">
-                <Flex
-                  w="260px"
-                  h="492px"
-                  flexDirection="column"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  background="#F9F9F9"
-                  borderRadius="4px"
-                  p="20px"
-                  border="1px solid #F9F9F9"
-                  mr="16px"
-                >
-                  <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="2px">
-                    <Box as="img" src={IconAllState.default} alt="" w="22px" h="22px" mr="8px" />
-                    <Text>{t('Browsing.status')}</Text>
-                  </Flex>
-
-                  <Flex width="100%" flexFlow="wrap" justifyContent="space-between">
-                    <StatusSelector
-                      statusArr={statusArr}
-                      selectedArr={selectedStatusArr}
-                      handleSelect={handleSelectStatus}
-                    />
-                  </Flex>
-                  <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 12px 0">
-                    <Box as="img" src={IconAllStateone.default} alt="" w="22px" h="22px" mr="8px" />
-                    <Text>{t('Browsing.collections')}</Text>
-                  </Flex>
-                  <InputGroup
-                    variant="unstyled"
-                    width="220px"
+            <Flex width="100%" flexDirection="column" justifyContent="flex-start">
+              <Flex h="40px">
+                {offersMadeButton.map((item, index) => (
+                  <Button
+                    mr="10px"
+                    key={item.id}
+                    id={item.id}
+                    minWidth="123px"
                     height="40px"
-                    background="#FFFFFF"
-                    borderRadius="4px"
-                    border="1px solid #E5E5E5"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    p="0px 0 0px 12px"
-                    m="0px 0 12px 0px"
+                    borderRadius="4px 4px 0px 0px"
+                    border="1px solid #000000"
+                    onClick={handleButtonSelect}
+                    backgroundColor={offersMadeButtonId === index ? '#000000' : '#FFFFFF'}
                   >
-                    <Image w="16px" h="16px" mr="6px" src={IconSearch.default} alt="" />
-                    <Input
+                    <Text
                       fontSize="14px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#999999"
-                      placeholder={t('Browsing.collectionPlaceholder')}
-                    />
-                  </InputGroup>
-
-                  <CollectionSelector
-                    collectionArr={collections}
-                    selectedArr={selectedCollection}
-                    handleSelect={handleSelectCollection}
-                  />
-                </Flex>
-
-                <Flex width="1088px" flexDirection="column" justifyContent="flex-start">
-                  <Flex h="40px">
-                    {offersMadeButton.map((item, index) => (
-                      <Button
-                        mr="10px"
-                        key={item.id}
-                        id={item.id}
-                        minWidth="123px"
-                        height="40px"
-                        borderRadius="4px 4px 0px 0px"
-                        border="1px solid #000000"
-                        onClick={handleButtonSelect}
-                        backgroundColor={offersMadeButtonId === index ? '#000000' : '#FFFFFF'}
-                      >
-                        <Text
-                          fontSize="14px"
-                          fontFamily="TTHoves-Medium, TTHoves"
-                          fontWeight="500"
-                          color={offersMadeButtonId === index ? '#FFFFFF' : '#000000'}
-                          lineHeight="16px"
-                        >
-                          {item.title}
-                        </Text>
-                      </Button>
-                    ))}
-                  </Flex>
-                  <Flex width="1088px" flexDirection="column" textAlign="center">
-                    <Flex
-                      p="0 20px"
-                      width="100%"
-                      height="40px"
-                      flexFlow="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                      flexDirection="row"
-                      borderBottom="1px solid #E5E5E5"
+                      fontFamily="TTHoves-Medium, TTHoves"
+                      fontWeight="500"
+                      color={offersMadeButtonId === index ? '#FFFFFF' : '#000000'}
+                      lineHeight="16px"
                     >
-                      <Text
-                        width="224px"
-                        textAlign="left"
-                        fontSize="12px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="20px"
-                      >
-                        {t('Account.Item')}
-                      </Text>
-                      <Text
-                        width="80px"
-                        fontSize="12px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="20px"
-                      >
-                        {t('Account.unitPrice')}
-                      </Text>
-                      <Text
-                        width="60px"
-                        fontSize="12px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="20px"
-                      >
-                        {t('Account.quantity')}
-                      </Text>
-                      <Text
-                        width="60px"
-                        fontSize="12px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="20px"
-                      >
-                        {t('Account.from')}
-                      </Text>
-                      <Text
-                        width="120px"
-                        textAlign="right"
-                        fontSize="12px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="20px"
-                      >
-                        {t('Account.expiration')}
-                      </Text>
-                    </Flex>
-                    {offersMadeButtonId === 0
-                      ? (
-                        <>
-                          {offersBuyerIdArr?.pages.length ? (
-                            <InfiniteScroll
-                              dataLength={offersBuyerIdArr?.pages.length * DEFAULT_PAGE_LIMIT}
-                              next={fetchNextPagesBuyer}
-                              hasMore={offersBuyerIdArr?.pages.length
+                      {item.title}
+                    </Text>
+                  </Button>
+                ))}
+              </Flex>
+              <Flex width="100%" flexDirection="column" textAlign="center">
+                <Flex
+                  p="0 20px"
+                  width="100%"
+                  height="40px"
+                  flexFlow="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  flexDirection="row"
+                  borderBottom="1px solid #E5E5E5"
+                >
+                  <Text
+                    width="224px"
+                    textAlign="left"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#000000"
+                    lineHeight="20px"
+                  >
+                    {t('Account.Item')}
+                  </Text>
+                  <Text
+                    width="80px"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#000000"
+                    lineHeight="20px"
+                  >
+                    {t('Account.unitPrice')}
+                  </Text>
+                  <Text
+                    width="60px"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#000000"
+                    lineHeight="20px"
+                  >
+                    {t('Account.quantity')}
+                  </Text>
+                  <Text
+                    width="60px"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#000000"
+                    lineHeight="20px"
+                  >
+                    {t('Account.from')}
+                  </Text>
+                  <Text
+                    width="120px"
+                    textAlign="right"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#000000"
+                    lineHeight="20px"
+                  >
+                    {t('Account.expiration')}
+                  </Text>
+                </Flex>
+                {offersMadeButtonId === 0
+                  ? (
+                    <>
+                      {offersBuyerIdArr?.pages.length ? (
+                        <InfiniteScroll
+                          dataLength={offersBuyerIdArr?.pages.length * DEFAULT_PAGE_LIMIT}
+                          next={fetchNextPagesBuyer}
+                          hasMore={offersBuyerIdArr?.pages.length
                                 * DEFAULT_PAGE_LIMIT < offersBuyerIdArr?.pages[0].pageInfo.totalNum}
-                              loader={<h4>Loading...</h4>}
-                              initialScrollY={1}
-                            >
-                              {offersBuyerIdArr?.pages.map((page) => page?.orders?.map((item) => (
-                                <OfferItem offer={item} />
-                              )))}
-                            </InfiniteScroll>
-                          ) : (
-                            <Flex
-                              width="100%"
-                              height="260px"
-                              background="#FFFFFF"
-                              flexDirection="column"
-                              justifyContent="center"
-                              alignItems="center"
-                            >
-                              <Image
-                                w="150px"
-                                h="100px"
-                                border="1px solid #999999"
-                                borderStyle="dashed"
-                                src={Emptyimg.default}
-                              />
-                              <Text
-                                mt="10px"
-                                fontSize="14px"
-                                fontFamily="TTHoves-Regular, TTHoves"
-                                fontWeight="400"
-                                color="#999999"
-                                lineHeight="20px"
-                              >
-                                No data yet
-                              </Text>
-                            </Flex>
-                          )}
-                        </>
-                      )
-                      : null}
-                    {offersMadeButtonId === 1
-                      ? (
-                        <>
-                          {offersSellerArr?.pages.length ? (
-                            <InfiniteScroll
-                              dataLength={offersSellerArr?.pages.length * DEFAULT_PAGE_LIMIT}
-                              next={fetchNextPagesSeller}
-                              hasMore={offersSellerArr?.pages.length
+                          loader={<h4>Loading...</h4>}
+                          initialScrollY={1}
+                        >
+                          {offersBuyerIdArr?.pages.map((page) => page?.orders?.map((item) => (
+                            <OfferItem offer={item} />
+                          )))}
+                        </InfiniteScroll>
+                      ) : (
+                        <Flex
+                          width="100%"
+                          height="260px"
+                          background="#FFFFFF"
+                          flexDirection="column"
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Image
+                            w="150px"
+                            h="100px"
+                            border="1px solid #999999"
+                            borderStyle="dashed"
+                            src={Emptyimg.default}
+                          />
+                          <Text
+                            mt="10px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#999999"
+                            lineHeight="20px"
+                          >
+                            No data yet
+                          </Text>
+                        </Flex>
+                      )}
+                    </>
+                  )
+                  : null}
+                {offersMadeButtonId === 1
+                  ? (
+                    <>
+                      {offersSellerArr?.pages.length ? (
+                        <InfiniteScroll
+                          dataLength={offersSellerArr?.pages.length * DEFAULT_PAGE_LIMIT}
+                          next={fetchNextPagesSeller}
+                          hasMore={offersSellerArr?.pages.length
                                 * DEFAULT_PAGE_LIMIT < offersSellerArr?.pages[0].pageInfo.totalNum}
-                              loader={<h4>Loading...</h4>}
-                              initialScrollY={1}
-                            >
-                              {offersSellerArr?.pages.map((page) => page?.orders?.map((item) => (
-                                <OfferItem offer={item} />
-                              )))}
-                            </InfiniteScroll>
-                          ) : (
-                            <Flex
-                              width="100%"
-                              height="260px"
-                              background="#FFFFFF"
-                              flexDirection="column"
-                              justifyContent="center"
-                              alignItems="center"
-                            >
-                              <Image
-                                w="150px"
-                                h="100px"
-                                border="1px solid #999999"
-                                borderStyle="dashed"
-                                src={Emptyimg.default}
-                              />
-                              <Text
-                                mt="10px"
-                                fontSize="14px"
-                                fontFamily="TTHoves-Regular, TTHoves"
-                                fontWeight="400"
-                                color="#999999"
-                                lineHeight="20px"
-                              >
-                                No data yet
-                              </Text>
-                            </Flex>
-                          )}
-                        </>
-                      )
-                      : null}
-                    {/* {offersMadeArr ? offersMadeArr?.orders?.map((item, index) => (
+                          loader={<h4>Loading...</h4>}
+                          initialScrollY={1}
+                        >
+                          {offersSellerArr?.pages.map((page) => page?.orders?.map((item) => (
+                            <OfferItem offer={item} />
+                          )))}
+                        </InfiniteScroll>
+                      ) : (
+                        <Flex
+                          width="100%"
+                          height="260px"
+                          background="#FFFFFF"
+                          flexDirection="column"
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Image
+                            w="150px"
+                            h="100px"
+                            border="1px solid #999999"
+                            borderStyle="dashed"
+                            src={Emptyimg.default}
+                          />
+                          <Text
+                            mt="10px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#999999"
+                            lineHeight="20px"
+                          >
+                            No data yet
+                          </Text>
+                        </Flex>
+                      )}
+                    </>
+                  )
+                  : null}
+                {/* {offersMadeArr ? offersMadeArr?.orders?.map((item, index) => (
 
                     )) : ''} */}
-                  </Flex>
-                </Flex>
-              </Container>
-            </TabPanel>
+              </Flex>
+            </Flex>
           ) : ''}
           {selectTabId === 4 ? (
-            <Container mt="40px">
+            <Container>
               <SimpleGrid
-                columns={5}
-                spacing={4}
+                columns={4}
+                spacing={20}
               >
                 {isPerson ? <CreateCard /> : ''}
                 {collectionsData ? collectionsData.collections.map((item) => (
@@ -605,8 +586,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               </SimpleGrid>
             </Container>
           ) : ''}
-        </TabPanels>
-      </Tabs>
+        </Flex>
+      </Flex>
+
     </MainContainer>
   );
 };

@@ -19,7 +19,7 @@ const NoData: FC<Props> = (({
 }) => {
   const { t } = useTranslation();
   return (
-    <AccordionPanel p="0px">
+    <Flex p="0px">
       <Flex
         // eslint-disable-next-line react/destructuring-assignment
         width={widths}
@@ -46,7 +46,7 @@ const NoData: FC<Props> = (({
           {t('Detail.noDataYet')}
         </Text>
       </Flex>
-    </AccordionPanel>
+    </Flex>
   );
 });
 export default NoData;

@@ -8,8 +8,6 @@ import {
   Link,
 } from '@chakra-ui/react';
 import {
-  AccountBanner,
-  HeadPortrait,
   IconDetailshaSre,
   IconPen,
 } from '../../../assets/images';
@@ -23,31 +21,18 @@ const Header: FC<Props> = (({ userData, dataPerson }) => (
     w="100%"
     flexDirection="column"
     justifyContent="flex-start"
-    alignItems="center"
+    alignItems="flex-start"
     position="relative"
-    top="20px"
+    top="0px"
   >
-    <Image w="1396px" h="auto" src={userData?.featured_image || AccountBanner.default} alt="" />
     <Flex
       w="100%"
       flexDirection="column"
       justifyContent="flex-start"
-      alignItems="center"
-      position="relative"
-      top="-60px"
+      alignItems="flex-start"
     >
-      <Image
-        background="#FFFFFF"
-        width="120px"
-        borderRadius="50%"
-        border="3px solid #FFFFFF"
-        height="auto"
-        objectFit="cover"
-        src={userData?.avatar || HeadPortrait.default}
-      />
-
       <Text
-        mt="20px"
+        w="100%"
         fontSize="28px"
         fontFamily="TTHoves-Bold, TTHoves"
         fontWeight="bold"
@@ -57,7 +42,8 @@ const Header: FC<Props> = (({ userData, dataPerson }) => (
         {userData?.name}
       </Text>
       <Text
-        mt="12px"
+        w="100%"
+        mt="24px"
         fontSize="14px"
         fontFamily="TTHoves-Regular, TTHoves"
         fontWeight="400"
@@ -67,7 +53,7 @@ const Header: FC<Props> = (({ userData, dataPerson }) => (
         {dataPerson.data?.address}
       </Text>
     </Flex>
-    <Flex position="absolute" right="20px" top="240px">
+    <Flex position="absolute" right="0px" top="0px">
       <Link
         as={RouterLink}
         to="/profile"

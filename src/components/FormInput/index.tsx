@@ -18,12 +18,18 @@ const FormInput: FC<Props> = ({ id, value, onChange }) => (
     background="#FFFFFF"
     borderRadius="4px"
     border="1px solid #E5E5E5"
-    fontSize="12px"
+    fontSize="14px"
     fontFamily="TTHoves-Regular, TTHoves"
     fontWeight="400"
-    color="#999999"
+    color="#0000000"
     onChange={onChange}
     value={value}
+    _placeholder={
+      {
+        fontSize: '12px',
+        color: '0000000',
+      }
+    }
   />
 );
 
