@@ -12,6 +12,7 @@ function float2PerU16(x) {
 
 const defaultClassMetadata: ClassMetadata = {
   logoUrl: '', // class img url of class
+  banner: '',
   featuredUrl: '',
   name: '', // name of nft asset
   stub: '', // website url

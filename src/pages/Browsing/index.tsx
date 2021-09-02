@@ -106,7 +106,7 @@ const Browsing = () => {
 
   return (
     <MainContainer title={t('Browsing.title')}>
-      <Container mt="40px" display="flex">
+      <Container width="1280px" mt="40px" display="flex" justifyContent="space-between">
         <Flex
           w="260px"
           h="492px"
@@ -174,7 +174,7 @@ const Browsing = () => {
 
         </Flex>
 
-        <Flex width="1088px" flexDirection="column" justifyContent="flex-start">
+        <Flex width="1003px" flexDirection="column" justifyContent="flex-start">
           {categoriesIsLoading || collectionsIsLoading || nftsIsLoading
             ? (
               <Center height="100%">
@@ -193,12 +193,13 @@ const Browsing = () => {
           </Flex>
           <Flex
             m="29px 0 20px 0"
-            width="1088px"
+            width="100%"
             h="36px"
             flexFlow="row"
             justifyContent="space-between"
             alignItems="center"
           >
+            <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
             <Text
               fontSize="14px"
               fontFamily="TTHoves-Regular, TTHoves"
@@ -209,7 +210,6 @@ const Browsing = () => {
               {' '}
               {t('results')}
             </Text>
-            <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
           </Flex>
           <Flex width="1088px">
             {nftsData?.pages.length
@@ -222,11 +222,13 @@ const Browsing = () => {
                   initialScrollY={1}
                 >
                   <SimpleGrid
-                    w="100%"
-                    columns={4}
+                    width="100%"
+                    m="0px 0 20px 0"
+                    columns={[1, 2, 3]}
+                    spacing="22px"
                   >
                     {nftsData?.pages.map((page) => page.orders.map(
-                      (nft) => <Flex m="11px"><OrderCard nft={nft} /></Flex>,
+                      (nft) => <Flex mt="11px"><OrderCard nft={nft} /></Flex>,
                     ))}
                   </SimpleGrid>
                 </InfiniteScroll>

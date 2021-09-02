@@ -44,7 +44,7 @@ import { useAppSelector } from '../../hooks/redux';
 import BuyDialog from './BuyDialog';
 import OfferDialog from './OfferDialog';
 
-// const propertiesArr = [1, 2, 3, 4, 5, 6];
+const propertiesArr = [1, 2, 3, 4, 5, 6];
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
 
 const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
@@ -242,7 +242,12 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           justifyContent="space-between"
           alignItems="flex-start"
         >
-          <DetailLeft nftData={nftData} collectionsData={collectionsData} logoUrl={logoUrl} />
+          <DetailLeft
+            nftData={nftData}
+            collectionsData={collectionsData}
+            logoUrl={logoUrl}
+            propertiesArr={propertiesArr}
+          />
           <DetailRight
             nftData={nftData}
             collectionsData={collectionsData}
@@ -257,235 +262,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             token={token}
             setIsShowOffer={setIsShowOffer}
           />
-        </Flex>
-        <Flex width="100%" justifyContent="space-around" />
-        <Flex justifyContent="flex-end">
-          <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
-            <AccordionItem width="100%" border="none">
-              <AccordionButton
-                height="62px"
-                width="100%"
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                p="0 20px"
-                borderBottom="1px solid #E5E5E5"
-                outline="none"
-                _focus={{
-                  textDecoration: 'none',
-                  boxShadow: 'none',
-                }}
-              >
-                <Flex height="100%" alignItems="center">
-                  <Image
-                    mr="8px"
-                    w="22px"
-                    h="22px"
-                    src={IconOffersDetail.default}
-                  />
-                  <Text
-                    fontSize="16px"
-                    fontFamily="TTHoves-Medium, TTHoves"
-                    fontWeight="500"
-                    color="#000000"
-                    lineHeight="18px"
-                  >
-                    {t('Detail.activities')}
-                  </Text>
-                </Flex>
-                <AccordionIcon />
-              </AccordionButton>
-              {hideFlag
-                ? (
-                  <AccordionPanel p="0 20px">
-                    <Flex w="100%" flexDirection="column" justifyContent="flex-start">
-                      <Flex h="40px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
-                        <Text
-                          w="136px"
-                          textAlign="left"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="20px"
-                        >
-                          {t('Detail.Event')}
-                        </Text>
-                        <Text
-                          w="136px"
-                          textAlign="center"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="20px"
-                        >
-                          {t('Detail.UnitPrice')}
-                        </Text>
-                        <Text
-                          w="136px"
-                          textAlign="center"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="20px"
-                        >
-                          {t('Detail.Quantity')}
-                        </Text>
-                        <Text
-                          w="136px"
-                          textAlign="center"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="20px"
-                        >
-                          {t('Detail.from')}
-                        </Text>
-                        <Text
-                          w="136px"
-                          textAlign="center"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="20px"
-                        >
-                          {t('Detail.To')}
-                        </Text>
-                        <Text
-                          w="136px"
-                          textAlign="right"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="20px"
-                        >
-                          {t('Detail.Date')}
-                        </Text>
-
-                      </Flex>
-                      {OfferssUnitArr.map((item) => (
-                        <Flex
-                          key={item}
-                          h="54px"
-                          w="100%"
-                          flexDirection="row"
-                          justifyContent="space-between"
-                          align="center"
-                        >
-                          <Text
-                            w="136px"
-                            textAlign="left"
-                            fontSize="14px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#000000"
-                            lineHeight="20px"
-                          >
-                            Listing
-                          </Text>
-                          <Text
-                            w="136px"
-                            display="flex"
-                            flexDirection="row"
-                            justifyContent="center"
-                            fontSize="14px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#000000"
-                            lineHeight="20px"
-                          >
-                            29084
-                            <Text
-                              ml="3px"
-                              color="#999999"
-                            >
-                              NMT
-                            </Text>
-                          </Text>
-                          <Text
-                            w="136px"
-                            textAlign="center"
-                            fontSize="14px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#000000"
-                            lineHeight="20px"
-                          >
-                            6
-                          </Text>
-                          <Text
-                            w="136px"
-                            textAlign="center"
-                            fontSize="14px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#3D00FF"
-                            lineHeight="20px"
-                          >
-                            4tf...fp
-                          </Text>
-                          <Text
-                            w="136px"
-                            textAlign="center"
-                            fontSize="14px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#000000"
-                            lineHeight="20px"
-                          />
-                          <Text
-                            w="136px"
-                            textAlign="right"
-                            fontSize="14px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#000000"
-                            lineHeight="20px"
-                          >
-                            i minutes
-                          </Text>
-                        </Flex>
-                      ))}
-
-                    </Flex>
-                  </AccordionPanel>
-                )
-                : (
-                  <AccordionPanel p="0px">
-                    <Flex
-                      width="100%"
-                      height="260px"
-                      background="#FFFFFF"
-                      flexDirection="column"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      <Image
-                        w="150px"
-                        h="100px"
-                        src={Historyempty.default}
-                      />
-                      <Text
-                        mt="10px"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#999999"
-                        lineHeight="20px"
-                      >
-                        {t('Detail.noOffersDataYet')}
-                      </Text>
-                    </Flex>
-                  </AccordionPanel>
-                )}
-
-            </AccordionItem>
-          </Accordion>
         </Flex>
         {isShowBuy && (
           <BuyDialog

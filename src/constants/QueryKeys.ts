@@ -12,6 +12,7 @@ export const QUERY_KEYS = {
   WHITELIST: 'WHITELIST',
   ACCOUNTS: 'ACCOUNTS',
   NFTSCollect: 'NFTSCollect',
+  hotNFTS: 'hotNFTS',
 };
 
 export const DEFAULT_PAGE_LIMIT = 20;

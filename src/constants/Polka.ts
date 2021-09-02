@@ -9,7 +9,7 @@ export const TYPES = {
   CurrencyIdOf: 'CurrencyId',
   Amount: 'i128',
   AmountOf: 'Amount',
-  CategoryId: 'u32',
+  CategoryId: 'GlobalId',
   CategoryIdOf: 'CategoryId',
   ClassId: 'u32',
   ClassIdOf: 'ClassId',
@@ -37,7 +37,7 @@ export const TYPES = {
     description: 'Vec<u8>',
     createBlock: 'Compact<BlockNumberOf>',
     royaltyRate: 'Compact<PerU16>',
-    categoryId: 'Compact<CategoryId>',
+    categoryIds: 'Vec<CategoryId>',
   },
   TokenInfoOf: {
     metadata: 'NFTMetadata',

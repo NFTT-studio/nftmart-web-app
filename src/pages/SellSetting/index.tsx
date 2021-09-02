@@ -131,7 +131,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     initialValues: {
       price: '',
       deposits: '',
-      categoryId: '',
       startingPrice: '',
       endingPrice: '',
       expirationDate: '',
@@ -142,8 +141,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       commissionRate: 0,
     },
     onSubmit: (formValue, formAction) => {
-      setIsSubmitting(false);
-      console.log(formValue);
+      setIsSubmitting(true);
       const orderParams = {
         address: account!.address,
         price: formValue.price,

@@ -22,7 +22,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { InfiniteData } from 'react-query';
 import { renderNmtNumberText } from '../../../components/Balance';
 import { getBlock } from '../../../polkaSDK/api/getBlock';
-import StatusSelector from '../../../components/StatusSelector';
+import StatusSelectorRow from '../../../components/StatusSelectorRow';
 import CollectionSelector from '../../../components/CollectionSelector';
 import CategorySelector from '../../../components/CategorySelector';
 import NftCard from '../../../components/NftCard';
@@ -90,153 +90,84 @@ const NftItem: FC<Props> = (({
 }) => {
   const { t } = useTranslation();
   return (
-    <Flex m="16px">
-      <Container mt="20px" display="flex">
-        <Flex
-          w="260px"
-          h="492px"
-          flexDirection="column"
-          justifyContent="flex-start"
-          alignItems="center"
-          background="#F9F9F9"
-          borderRadius="4px"
-          p="20px"
-          border="1px solid #F9F9F9"
-          mr="16px"
+    <Flex width="100%" flexDirection="column" justifyContent="flex-start">
+      {categoriesIsLoading || nftsIsLoading
+        ? (
+          <Center height="15vh">
+            <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+          </Center>
+        ) : null}
+      <Flex
+        width="100%"
+        h="36px"
+        flexFlow="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Flex>
+          <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
+          <StatusSelectorRow statusArr={statusArr} selectedArr={selectedStatusArr} handleSelect={handleSelectStatus} />
+        </Flex>
+        <Text
+          fontSize="14px"
+          fontFamily="TTHoves-Regular, TTHoves"
+          fontWeight="400"
+          color="#999999"
         >
-          <Flex h="21px" width="100%" flexDirection="row" alignItems="center" mb="2px">
-            <Box as="img" src={IconAllState.default} alt="" w="22px" h="22px" mr="8px" />
-            <Text>{t('Browsing.status')}</Text>
-          </Flex>
-
-          <Flex width="100%" flexFlow="wrap" justifyContent="space-between">
-            <StatusSelector
-              statusArr={statusArr}
-              selectedArr={selectedStatusArr}
-              handleSelect={handleSelectStatus}
-            />
-          </Flex>
-          <Flex h="21px" width="100%" flexDirection="row" alignItems="center" m="22px 0 12px 0">
-            <Box as="img" src={IconAllStateone.default} alt="" w="22px" h="22px" mr="8px" />
-            <Text>{t('Browsing.collections')}</Text>
-          </Flex>
-          <InputGroup
-            variant="unstyled"
-            width="220px"
-            height="40px"
+          {nftsData?.pages[0].pageInfo.totalNum}
+          {' '}
+          results
+        </Text>
+      </Flex>
+      <Flex width="100%" flexFlow="row wrap">
+        {nftsData?.pages.length ? (
+          <InfiniteScroll
+            dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
+            next={fetchNextPageNftsData}
+            hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
+            loader={<h4>Loading...</h4>}
+            initialScrollY={1}
+          >
+            <SimpleGrid
+              w="100%"
+              m="20px 0 20px 0"
+              columns={[1, 2, 3]}
+              spacing="21px"
+            >
+              {nftsData?.pages.map((page) => page.nfts.map(
+                (nft) => <NftCard nft={nft} />,
+              ))}
+            </SimpleGrid>
+          </InfiniteScroll>
+        ) : (
+          <Flex
+            width="100%"
+            height="260px"
             background="#FFFFFF"
-            borderRadius="4px"
-            border="1px solid #E5E5E5"
-            display="flex"
+            flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            p="0px 0 0px 12px"
-            m="0px 0 12px 0px"
           >
-            <Image w="16px" h="16px" mr="6px" src={IconSearch.default} alt="" />
-            <Input
-              fontSize="14px"
-              fontFamily="TTHoves-Regular, TTHoves"
-              fontWeight="400"
-              color="#999999"
-              placeholder={t('Browsing.collectionPlaceholder')}
-              onChange={handleSearch}
+            <Image
+              w="150px"
+              h="100px"
+              border="1px solid #999999"
+              borderStyle="dashed"
+              src={Emptyimg.default}
             />
-          </InputGroup>
-
-          <CollectionSelector
-            collectionArr={collections}
-            selectedArr={selectedCollection}
-            handleSelect={handleSelectCollection}
-          />
-        </Flex>
-
-        <Flex width="1088px" flexDirection="column" justifyContent="flex-start">
-          {categoriesIsLoading || nftsIsLoading
-            ? (
-              <Center height="15vh">
-                <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
-              </Center>
-            ) : null}
-          <Flex h="36px">
-            {categoriesData ? (
-              <CategorySelector
-                list={categoriesData!.categories}
-                selectId={selectedCategoryId}
-                handleSelect={handleSelectCategory}
-              />
-            ) : ''}
-          </Flex>
-          <Flex
-            m="29px 0 20px 0"
-            width="1088px"
-            h="36px"
-            flexFlow="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
             <Text
+              mt="10px"
               fontSize="14px"
               fontFamily="TTHoves-Regular, TTHoves"
               fontWeight="400"
               color="#999999"
+              lineHeight="20px"
             >
-              {nftsData?.pages[0].pageInfo.totalNum}
-              {' '}
-              results
+              No data yet
             </Text>
-            <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
           </Flex>
-          <Flex width="1088px" flexFlow="row wrap" justifyContent="space-between">
-            {nftsData?.pages.length ? (
-              <InfiniteScroll
-                dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
-                next={fetchNextPageNftsData}
-                hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
-                loader={<h4>Loading...</h4>}
-                initialScrollY={1}
-              >
-                <SimpleGrid
-                  w="100%"
-                  columns={4}
-                  spacing={4}
-                >
-                  {nftsData?.pages.map((page) => page.nfts.map(
-                    (nft) => <Flex m="11px"><NftCard nft={nft} /></Flex>,
-                  ))}
-                </SimpleGrid>
-              </InfiniteScroll>
-            ) : (
-              <Flex
-                width="100%"
-                height="260px"
-                background="#FFFFFF"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Image
-                  w="150px"
-                  h="100px"
-                  border="1px solid #999999"
-                  borderStyle="dashed"
-                  src={Emptyimg.default}
-                />
-                <Text
-                  mt="10px"
-                  fontSize="14px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  color="#999999"
-                  lineHeight="20px"
-                >
-                  No data yet
-                </Text>
-              </Flex>
-            )}
-          </Flex>
-        </Flex>
-      </Container>
+        )}
+      </Flex>
     </Flex>
   );
 });
