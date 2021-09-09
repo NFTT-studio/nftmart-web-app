@@ -88,7 +88,7 @@ const OfferItem: FC<Props> = (({ offer }) => {
             width="auto"
             height="40px"
             borderRadius="4px"
-            src={`${PINATA_SERVER}${offer.metadata.logoUrl}`}
+            src={`${PINATA_SERVER}${offer?.metadata?.logoUrl}`}
             alt=""
           />
           <Flex
@@ -109,10 +109,10 @@ const OfferItem: FC<Props> = (({ offer }) => {
               color="#000000"
               lineHeight="20px"
             >
-              {offer?.class.name}
+              {offer?.class?.name}
             </Text>
             <Text>
-              {offer?.metadata.name}
+              {offer?.metadata?.name}
             </Text>
           </Flex>
         </Flex>

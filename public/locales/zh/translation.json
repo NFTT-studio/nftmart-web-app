@@ -195,6 +195,11 @@
     "sixty":"60",
     "ninety":"90",
     "year":"去年",
+    "cancelTips": "有人已经参与竞拍，无法修改售卖设置", 
+    "placeABid": "出价竞拍",
+    "placeABidExplain": "* 如果没有人在",
+    "placeABidExplainTwo": "前出更高价格，您将获得这个作品。",
+    "placeABidMust": "必须大于等于",
     "buySuccess": "购买成功"
   },
   "SellSetting": {
@@ -212,7 +217,9 @@
     "startingPrice": "起始价格",
     "startingPriceExplain": "将从这个价格开始降价",
     "endingPrice": "截止价格",
-    "endingPriceExplain": "竞拍价每30分钟一次，按照线性方式在截止时间到达的时候，降价到这个价格。",
+    "endingPriceExplain": "如果买家接受这个价格，就可以立即成交。",
+    "fixedPrice": "一口价",
+    "fixedPriceExplain": "竞拍价每30分钟一次，按照线性方式在截止时间到达的时候，降价到这个价格。",   
     "expirationDate": "截止时间",
     "expirationDateExplain": "如果截止时间到来的时候无人竞拍，将自动结束。",
     "turnToEnglishAuction": "转为英式拍卖",

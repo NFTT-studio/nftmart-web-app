@@ -1,4 +1,4 @@
-import React, { useState, MouseEventHandler } from 'react';
+import React, { useState, MouseEventHandler, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Spinner,
@@ -12,34 +12,25 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { useQueryClient } from 'react-query';
 import SwiperCore, {
   Scrollbar,
 } from 'swiper';
-import { number } from 'yup/lib/locale';
 import CategorySelector from '../../components/CategorySelector';
 import OrderCard from '../../components/OrderCard ';
 import useBanner from '../../hooks/reactQuery/useBanner';
 import { useCheapNfts, useExpensiveNfts, useHotNfts } from '../../hooks/reactQuery/useNfts';
 import useCategories from '../../hooks/reactQuery/useCategories';
 import MainContainer from '../../layout/MainContainer';
-import MotionBox from './MotionBox';
 import Banner from './Banner';
+import { getBlock } from '../../polkaSDK/api/getBlock';
 
 import {
-  IconHome,
-  IconCheapest,
-  iconExpensive,
   IconLeftw,
   IconRightw,
 } from '../../assets/images';
 
 import 'swiper/swiper.min.css';
 import 'swiper/components/scrollbar/scrollbar.min.css';
-import {
-  QUERY_KEYS,
-} from '../../constants';
 
 SwiperCore.use([Scrollbar]);
 
@@ -67,6 +58,41 @@ const Home = () => {
 
   const { data: bannerData, isLoading: bannerIsLoading } = useBanner();
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  useEffect(() => {
+    getBlock().then((res) => {
+      setRemainingTime(res);
+    });
+  }, []);
+  // console.log(remainingTime, 1);
+
+  const timeBlock = (index:numer) => {
+    const times = (index - remainingTime) * 6;
+
+    let theTime = parseInt(times.toString(), 10);
+    let middle = 0;
+    let hour = 0;
+
+    if (theTime > 60) {
+      middle = parseInt((theTime / 60).toString(), 10);
+      theTime = parseInt((theTime % 60).toString(), 10);
+      if (middle > 60) {
+        hour = parseInt((middle / 60).toString(), 10);
+        middle = parseInt((middle % 60).toString(), 10);
+      }
+    }
+    // let result = null;
+    let result = `${parseInt(theTime.toString(), 10)}`;
+    if (middle > 0) {
+      result = `${parseInt(middle.toString(), 10)}:${result}`;
+    }
+    if (hour > 0) {
+      result = `${parseInt(hour.toString(), 10)}:${result}`;
+      // result = `${parseInt(hour.toString(), 10)}`;
+    }
+    return result;
+  };
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectId(event.currentTarget.id);
@@ -77,14 +103,14 @@ const Home = () => {
       <Banner />
       {categoriesData
         ? (
-          <Flex width="1280px">
+          <Flex width="1364px">
             <CategorySelector list={categoriesData.categories} selectId={selectId} handleSelect={handleSelect} />
           </Flex>
         )
         : null}
 
       <Flex width="100%" minWidth="1364px" justifyContent="center">
-        <Flex width="1280px" flexDirection="column">
+        <Flex width="1364px" flexDirection="column">
 
           {hotNftsIsLoading || expensiveNftsIsLoading || cheapNftsIsLoading || bannerIsLoading || categoriesIsLoading
             ? (
@@ -153,7 +179,7 @@ const Home = () => {
               ? (
                 <Stack direction="row" height="353px" spacing="20px">
                   {hotNftsData.orders.map((order) => (
-                    <OrderCard nft={order} />
+                    <OrderCard nft={order} remainingTime={remainingTime} />
                   ))}
                 </Stack>
               )
@@ -220,7 +246,7 @@ const Home = () => {
               ? (
                 <Stack direction="row" height="353px" spacing="20px">
                   {expensiveNftsData.orders.map((order) => (
-                    <OrderCard nft={order} />
+                    <OrderCard nft={order} remainingTime={remainingTime} />
                   ))}
                 </Stack>
               )
@@ -286,7 +312,7 @@ const Home = () => {
               ? (
                 <Stack direction="row" height="353px" spacing="20px">
                   {cheapNftsData.orders.map((order) => (
-                    <OrderCard nft={order} />
+                    <OrderCard nft={order} remainingTime={remainingTime} />
                   ))}
                 </Stack>
               )

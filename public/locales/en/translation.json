@@ -196,6 +196,11 @@
     "sixty":"60",
     "ninety":"90",
     "year":"last year",
+    "cancelTips": "Someone have participated in the auction,so the slling settings cannot be modified.",
+    "placeABid": "Place a bid",
+    "placeABidExplain": "* If no one has offered a higher price before ",
+    "placeABidExplainTwo": ", you will get this item",
+    "placeABidMust": "Must be greater than ",
     "buySuccess": "Buy Success"
   },
   "SellSetting": {
@@ -214,6 +219,8 @@
     "startingPriceExplain": "A gradual reduction will begin at this price.",
     "endingPrice": "Ending Price",
     "endingPriceExplain": "Must be less than or equal to the starting price. The price will progress linearly to this amount until the expiration date.Price reduction every 30 minutes;",
+    "fixedPrice": "Fixed price",            
+    "fixedPriceExplain": "If the buyer accepts the price, it can be traded immediately.",
     "expirationDate": "Expiration date",
     "expirationDateExplain": "If no one bids by the expiration date, it will be cancelled",
     "turnToEnglishAuction": "Turn to English Auction",

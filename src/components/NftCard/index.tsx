@@ -1,4 +1,7 @@
-import React, { FC } from 'react';
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable no-mixed-operators */
+import React, { FC, useState, useEffect } from 'react';
+import Countdown from 'react-countdown';
 import {
   HTMLChakraProps,
   Box,
@@ -9,41 +12,73 @@ import {
 } from '@chakra-ui/react';
 import { Shimmer } from 'react-shimmer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { useTranslation } from 'react-i18next';
-import { useHistory, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { IPFS_URL } from '../../constants';
-import { priceStringDivUnit } from '../../utils/format';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { renderNmtNumberText } from '../Balance';
 
 import {
-  PriceIcon,
   IconTime,
   HeadPortrait,
 } from '../../assets/images';
 import MotionBox from '../MotionBox';
 
 type NftCardProps = {
-  nft: Order
+  nft: Order,
+  remainingTime:number,
 } & HTMLChakraProps<'div'>
 
 const NftCard: FC<NftCardProps> = ({
   nft,
+  remainingTime,
 }) => {
-  const { t } = useTranslation();
-  const history = useHistory();
+  const [events, setEvents] = useState(
+    {
+      times: 0,
+      day: 0,
+      hour: 0,
+      minute: 0,
+      second: 0,
+    },
+  );
+
+  const countFun = (index:number) => {
+    const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
+    // eslint-disable-next-line no-param-reassign
+    const day = (Math.floor((times / 1000 / 3600 / 24)));
+    const hour = (Math.floor((times / 1000 / 3600) % 24));
+    const minute = (Math.floor((times / 1000 / 60) % 60));
+    const second = (Math.floor(times / 1000 % 60));
+    if (times > 0) {
+      setEvents({
+        times,
+        day,
+        hour,
+        minute,
+        second,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (nft?.type && remainingTime) {
+      countFun(nft.deadline);
+      console.log(remainingTime);
+    }
+  }, [remainingTime]);
 
   const price = renderNmtNumberText(nft.price);
   return (
     <Link
+      key={nft?.metadata.name}
       width="320px"
       height="354px"
       as={RouterLink}
-      to={`/item/${nft?.id}`}
+      to={`/item/${nft.id}`}
     >
       <MotionBox
         width="320px"
-        height="354px"
+        height="100%"
         backgroundColor="#fff"
         borderRadius="4px"
         cursor="pointer"
@@ -87,7 +122,7 @@ const NftCard: FC<NftCardProps> = ({
             fontSize="12px"
             color="#FFFFFF"
           >
-            <Box userSelect="none">{nft?.class.name}</Box>
+            <Box userSelect="none">{nft?.class?.name}</Box>
           </Box>
           <Box
             mt="8px"
@@ -163,15 +198,19 @@ const NftCard: FC<NftCardProps> = ({
                 {nft?.metadata.name}
               </Text>
             </Flex>
-            {1 ? (
+            {nft?.type && Number(events.day) > 0 ? (
               <Box textAlign="right" display="flex" justifyContent="center">
                 <Flex align="flex-start" alignItems="center">
                   <Box w="16px" h="16px" src={IconTime.default} as="img" alt="" mr="4px" />
-                  <Box color="#FFFFFF">3 days left</Box>
+                  <Box color="#FFFFFF">
+                    {events.day}
+                    {' '}
+                    days left
+                  </Box>
                 </Flex>
               </Box>
             ) : null}
-            {0 / 1 ? (
+            {nft?.type && Number(events.second) === 0 ? (
               <Box textAlign="right" display="flex" justifyContent="center">
                 <Flex align="flex-start" alignItems="center">
                   <Box color="#999999" mr="6px">Last</Box>
@@ -181,15 +220,14 @@ const NftCard: FC<NftCardProps> = ({
                     fontWeight="400"
                     color="#FFFFFF"
                     lineHeight="16px"
-                    mr="9px"
                   >
-                    12,823
+                    {price}
                   </Box>
                   <Box color="#999999">NMT</Box>
                 </Flex>
               </Box>
             ) : null}
-            {0 / 1 ? (
+            {nft?.type && Number(events.day) < 0 ? (
               <Box
                 fontSize="12px"
                 fontFamily="TTHoves-Medium, TTHoves"
@@ -200,7 +238,21 @@ const NftCard: FC<NftCardProps> = ({
                 display="flex"
                 justifyContent="center"
               >
-                <Flex align="flex-start" alignItems="center">
+                <Flex align="flex-start" alignItems="center" position="relative">
+                  <Flex
+                    position="absolute"
+                    top="17px"
+                    right="105px"
+                    width="18px"
+                    fontSize="15px"
+                    letterSpacing="8px"
+                  >
+                    <Countdown
+                      autoStart
+                      daysInHours
+                      date={Date.now() + events.times}
+                    />
+                  </Flex>
                   <Box
                     width="18px"
                     height="22px"
@@ -210,9 +262,7 @@ const NftCard: FC<NftCardProps> = ({
                     justifyContent="center"
                     alignItems="center"
                     mr="1px"
-                  >
-                    2
-                  </Box>
+                  />
                   <Box
                     width="18px"
                     height="22px"
@@ -222,13 +272,13 @@ const NftCard: FC<NftCardProps> = ({
                     justifyContent="center"
                     alignItems="center"
                     mr="3px"
-                  >
-                    2
-                  </Box>
+                  />
 
                   <Box
                     fontSize="12px"
                     color="#FFFFFF"
+                    position="relative"
+                    zIndex={9}
                   >
                     :
                   </Box>
@@ -242,9 +292,7 @@ const NftCard: FC<NftCardProps> = ({
                     display="flex"
                     justifyContent="center"
                     alignItems="center"
-                  >
-                    2
-                  </Box>
+                  />
                   <Box
                     width="18px"
                     height="22px"
@@ -253,10 +301,9 @@ const NftCard: FC<NftCardProps> = ({
                     display="flex"
                     justifyContent="center"
                     alignItems="center"
-                  >
-                    2
-                  </Box>
+                  />
                 </Flex>
+
               </Box>
             ) : null}
           </Box>

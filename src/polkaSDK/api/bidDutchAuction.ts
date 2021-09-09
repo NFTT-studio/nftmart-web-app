@@ -34,7 +34,7 @@ export const bidBritishAuction = async ({
 }: bidBritishAuctionProps) => {
   try {
     const injector = await web3FromAddress(address);
-
+    console.log(auctionCreatorAddress, auctionId);
     // eslint-disable-next-line prefer-const
     let [auction, bid, block] = await Promise.all([
       PolkaSDK.api.query.nftmartAuction.dutchAuctions(auctionCreatorAddress, auctionId),
@@ -53,7 +53,7 @@ export const bidBritishAuction = async ({
           return;
         }
         const uselessPrice = 0; // The real price used will be calculated by Dutch auction logic.
-        call = PolkaSDK.api.tx.nftmartAuction.bidDutchAuction(uselessPrice, auctionCreatorAddress, auctionId);
+        call = PolkaSDK.api.tx.nftmartAuction.bidDutchAuction(uselessPrice, auctionCreatorAddress, auctionId, null, utf8ToHex('hello bidDutchAuction'));
       } else {
         // This if branch is at least the second bidding.
 
@@ -66,7 +66,7 @@ export const bidBritishAuction = async ({
         const minRaise = perU16ToFloat(auction.minRaise);
         const lowest = (1 + minRaise) * (bid.lastBidPrice / unit);
         if (price > lowest) {
-          call = PolkaSDK.api.tx.nftmartAuction.bidDutchAuction(price * unit, auctionCreatorAddress, auctionId);
+          call = PolkaSDK.api.tx.nftmartAuction.bidDutchAuction(price * unit, auctionCreatorAddress, auctionId, null, utf8ToHex('hello bidDutchAuction'));
         } else {
           console.log('price %s NMT should be greater than %s NMT', price, lowest);
           return;

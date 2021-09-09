@@ -23,8 +23,8 @@ const CreateCard: FC<Props> = (({ collectionId }) => {
 
     >
       <Flex
-        width="260px"
-        height="316px"
+        width="230px"
+        height="286px"
         borderRadius="4px"
         border="1px solid #000000"
         flexDirection="column"

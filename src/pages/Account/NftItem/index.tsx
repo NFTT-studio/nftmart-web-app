@@ -4,15 +4,9 @@ import React, {
 } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
-  Link,
   Flex,
   Image,
   Text,
-  TabPanel,
-  Container,
-  Box,
-  InputGroup,
-  Input,
   Center,
   Spinner,
   SimpleGrid,
@@ -20,18 +14,11 @@ import {
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { InfiniteData } from 'react-query';
-import { renderNmtNumberText } from '../../../components/Balance';
-import { getBlock } from '../../../polkaSDK/api/getBlock';
 import StatusSelectorRow from '../../../components/StatusSelectorRow';
-import CollectionSelector from '../../../components/CollectionSelector';
-import CategorySelector from '../../../components/CategorySelector';
 import NftCard from '../../../components/NftCard';
 import SortBy from '../../../components/SortBy';
 
 import {
-  IconAllState,
-  IconAllStateone,
-  IconSearch,
   Emptyimg,
 } from '../../../assets/images';
 
@@ -57,18 +44,11 @@ interface Props {
   statusArr: string[],
   selectedStatusArr: string[],
   handleSelectStatus: MouseEventHandler<HTMLButtonElement>,
-  collections: Collection[],
-  selectedCollection: string|undefined,
-  handleSelectCollection: MouseEventHandler<HTMLButtonElement>,
   nftsData: InfiniteData<Nfts> | undefined
-  handleSearch:ChangeEventHandler<HTMLInputElement>,
-  categoriesData:Categories| undefined,
-  selectedCategoryId:string
-  handleSelectCategory:MouseEventHandler<HTMLButtonElement>,
   fetchNextPageNftsData: any,
   selectedSort: any,
   setSelectedSort: any,
-
+  remainingTime:number
 }
 const NftItem: FC<Props> = (({
   nftsData,
@@ -77,16 +57,10 @@ const NftItem: FC<Props> = (({
   handleSelectStatus,
   categoriesIsLoading,
   nftsIsLoading,
-  collections,
-  selectedCollection,
-  handleSelectCollection,
-  handleSearch,
-  categoriesData,
-  selectedCategoryId,
-  handleSelectCategory,
   fetchNextPageNftsData,
   selectedSort,
   setSelectedSort,
+  remainingTime,
 }) => {
   const { t } = useTranslation();
   return (
@@ -135,7 +109,7 @@ const NftItem: FC<Props> = (({
               spacing="21px"
             >
               {nftsData?.pages.map((page) => page.nfts.map(
-                (nft) => <NftCard nft={nft} />,
+                (nft) => <NftCard nft={nft} remainingTime={remainingTime} />,
               ))}
             </SimpleGrid>
           </InfiniteScroll>

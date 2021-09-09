@@ -20,6 +20,7 @@ import useCategories from '../../hooks/reactQuery/useCategories';
 import CategorySelector from '../../components/CategorySelector';
 import useCollections from '../../hooks/reactQuery/useCollections';
 import { useAppSelector } from '../../hooks/redux';
+import { getBlock } from '../../polkaSDK/api/getBlock';
 import {
   IconAllState,
   IconAllStateone,
@@ -42,7 +43,6 @@ import {
   DEFAULT_PAGE_LIMIT,
   PINATA_SERVER,
 } from '../../constants';
-import CollectionSelector from '../../components/CollectionSelector';
 import { statusArr } from '../../constants/Status';
 // import useCollections from '../../hooks/reactQuery/useCollections';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
@@ -86,6 +86,13 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
   const [selectedCollection, setSelectedCollectionArr] = useState();
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  useEffect(() => {
+    getBlock().then((res) => {
+      setRemainingTime(res);
+    });
+  }, []);
 
   const [selectTabId, setSelectTabId] = useState(Number(localStorage.getItem('ButtonSelect')) || 0);
   const handletabSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -305,16 +312,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               handleSelectStatus={handleSelectStatus}
               categoriesIsLoading={categoriesIsLoading}
               nftsIsLoading={nftsIsLoading}
-              collections={collections}
-              selectedCollection={selectedCollection}
-              handleSelectCollection={handleSelectCollection}
-              handleSearch={handleSearch}
-              categoriesData={categoriesData}
-              selectedCategoryId={selectedCategoryId}
-              handleSelectCategory={handleSelectCategory}
               fetchNextPageNftsData={fetchNextPageNftsData}
               selectedSort={selectedSort}
               setSelectedSort={setSelectedSort}
+              remainingTime={remainingTime}
             />
           ) : ''}
           {selectTabId === 1 ? (
@@ -325,16 +326,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               handleSelectStatus={handleSelectStatus}
               categoriesIsLoading={categoriesIsLoading}
               nftsIsLoading={nftsIsLoading}
-              collections={collections}
-              selectedCollection={selectedCollection}
-              handleSelectCollection={handleSelectCollection}
-              handleSearch={handleSearch}
-              categoriesData={categoriesData}
-              selectedCategoryId={selectedCategoryId}
-              handleSelectCategory={handleSelectCategory}
               fetchNextPageNftsData={fetchNextPageNftsDataCreate}
               selectedSort={selectedSort}
               setSelectedSort={setSelectedSort}
+              remainingTime={remainingTime}
             />
           ) : ''}
           {selectTabId === 2 ? (
@@ -345,16 +340,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               handleSelectStatus={handleSelectStatus}
               categoriesIsLoading={categoriesIsLoading}
               nftsIsLoading={nftsIsLoading}
-              collections={collections}
-              selectedCollection={selectedCollection}
-              handleSelectCollection={handleSelectCollection}
-              handleSearch={handleSearch}
-              categoriesData={categoriesData}
-              selectedCategoryId={selectedCategoryId}
-              handleSelectCategory={handleSelectCategory}
               fetchNextPageNftsData={fetchNextPageNftsDataCollecte}
               selectedSort={selectedSort}
               setSelectedSort={setSelectedSort}
+              remainingTime={remainingTime}
             />
           ) : ''}
           {selectTabId === 3 ? (
@@ -552,7 +541,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             <Container>
               <SimpleGrid
                 columns={4}
-                spacing={20}
+                spacing={6}
               >
                 {isPerson ? <CreateCard /> : ''}
                 {collectionsData ? collectionsData.collections.map((item) => (
@@ -562,12 +551,12 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                   >
                     <Flex
                       key={item.id}
-                      width="260px"
+                      width="230px"
                       borderRadius="4px"
                       border="1px solid #000000"
                       flexDirection="column"
                     >
-                      <Image w="100%" h="260px" src={`${PINATA_SERVER}${item.metadata.logoUrl}`} alt="" />
+                      <Image w="100%" h="230px" src={`${PINATA_SERVER}${item.metadata.logoUrl}`} alt="" />
                       <Text
                         w="100%"
                         background="#000000"
@@ -578,7 +567,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                         fontWeight="400"
                         color="#FFFFFF"
                       >
-                        {item.metadata.name}
+                        {item.metadata?.name}
                       </Text>
                     </Flex>
                   </Link>

@@ -37,6 +37,7 @@ import useParams from '../../hooks/url/useParams';
 import { statusArr } from '../../constants/Status';
 import Sort from '../../constants/Sort';
 import { DEFAULT_PAGE_LIMIT } from '../../constants';
+import { getBlock } from '../../polkaSDK/api/getBlock';
 
 const Browsing = () => {
   const { t } = useTranslation();
@@ -48,6 +49,13 @@ const Browsing = () => {
   const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
   const [selectedCollection, setSelectedCollectionIdArr] = useState();
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  useEffect(() => {
+    getBlock().then((res) => {
+      setRemainingTime(res);
+    });
+  }, []);
 
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
   const { data: collectionsData, isLoading: collectionsIsLoading } = useCollections({});
@@ -228,7 +236,7 @@ const Browsing = () => {
                     spacing="22px"
                   >
                     {nftsData?.pages.map((page) => page.orders.map(
-                      (nft) => <Flex mt="11px"><OrderCard nft={nft} /></Flex>,
+                      (nft) => <Flex mt="11px"><OrderCard nft={nft} remainingTime={remainingTime} /></Flex>,
                     ))}
                   </SimpleGrid>
                 </InfiniteScroll>
