@@ -11,22 +11,100 @@ import { Link as RouterLink } from 'react-router-dom';
 import MotionBox from '../MotionBox';
 
 import {
-  banner12,
-  banner13,
-  banner21,
-  banner22,
-  banner23,
-  banner24,
-  banner31,
-  banner34,
-  banner35,
-  banner36,
+  banner01,
+  banner02,
+  banner03,
+  banner04,
+  banner05,
+  banner06,
+  banner07,
+  banner08,
+  banner09,
+  banner10,
   bannerLeft,
 } from '../../../assets/banner';
 
 const Banner = ((
 ) => {
   const { t } = useTranslation();
+  const bannerImgLeft = [
+    {
+      id: '0',
+      icon: banner10.default,
+      url: '51-1',
+      w: '205px',
+      h: '205px',
+    },
+  ];
+  const bannerImgMiddle = [
+    {
+      id: '0',
+      icon: banner09.default,
+      url: '51-1',
+      w: '410px',
+      h: '615px',
+    },
+  ];
+  const bannerImgRight = [
+    {
+      id: '0',
+      icon: banner08.default,
+      url: '51-1',
+      w: '205px',
+      h: '205px',
+    },
+    {
+      id: '0',
+      icon: banner07.default,
+      url: '51-1',
+      w: '205px',
+      h: '205px',
+    },
+    {
+      id: '0',
+      icon: banner06.default,
+      url: '51-1',
+      w: '205px',
+      h: '205px',
+    },
+  ];
+  const bannerBottom = [
+    {
+      id: '0',
+      icon: banner01.default,
+      url: '51-1',
+      w: '205px',
+      h: '205px',
+    },
+    {
+      id: '0',
+      icon: banner02.default,
+      url: '51-1',
+      w: '410px',
+      h: '205px',
+    },
+    {
+      id: '0',
+      icon: banner03.default,
+      url: '51-1',
+      w: '205px',
+      h: '205px',
+    },
+    {
+      id: '0',
+      icon: banner04.default,
+      url: '51-1',
+      w: '205px',
+      h: '205px',
+    },
+    {
+      id: '0',
+      icon: banner05.default,
+      url: '51-1',
+      w: '205px',
+      h: '205px',
+    },
+  ];
   return (
     <Flex
       w="100vw"
@@ -53,57 +131,75 @@ const Banner = ((
         >
           <Flex>
             <Flex
-              width="615"
-              height="410px"
+              width="820px"
+              height="615px"
             >
-              <MotionBox
-                backgroundColor="#000"
-                cursor="pointer"
-                _hover={{ boxShadow: 'lg' }}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
+              <Flex
+                width="205px"
+                flexDirection="column"
+                justifyContent="flex-end"
               >
-                <Image
-                  width="410px"
-                  height="410px"
-                  border="1px solid #4D4D4D"
-                  src={banner22.default}
-                />
-              </MotionBox>
+                {bannerImgLeft.map((item) => (
+                  <MotionBox
+                    key={item.id}
+                    backgroundColor="#000"
+                    cursor="pointer"
+                    _hover={{ boxShadow: 'lg' }}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Image
+                      width={item.w}
+                      height={item.h}
+                      src={item.icon}
+                    />
+                  </MotionBox>
+                ))}
+              </Flex>
+              <Flex
+                width="410px"
+                flexDirection="column"
+                justifyContent="flex-end"
+              >
+                {bannerImgMiddle.map((item) => (
+                  <MotionBox
+                    key={item.id}
+                    backgroundColor="#000"
+                    cursor="pointer"
+                    _hover={{ boxShadow: 'lg' }}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Image
+                      width={item.w}
+                      height={item.h}
+                      src={item.icon}
+                    />
+                  </MotionBox>
+                ))}
+              </Flex>
 
               <Flex
+                width="205px"
                 flexDirection="column"
-                justifyContent="flex-start"
-                alignItems="flex-end"
+                justifyContent="flex-end"
               >
-                <MotionBox
-                  backgroundColor="#000"
-                  cursor="pointer"
-                  _hover={{ boxShadow: 'lg' }}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Image
-                    width="205px"
-                    height="205px"
-                    border="1px solid #4D4D4D"
-                    src={banner12.default}
-                  />
-                </MotionBox>
-                <MotionBox
-                  backgroundColor="#000"
-                  cursor="pointer"
-                  _hover={{ boxShadow: 'lg' }}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Image
-                    width="205px"
-                    height="205px"
-                    border="1px solid #4D4D4D"
-                    src={banner13.default}
-                  />
-                </MotionBox>
+                {bannerImgRight.map((item) => (
+                  <MotionBox
+                    key={item.id}
+                    backgroundColor="#000"
+                    cursor="pointer"
+                    _hover={{ boxShadow: 'lg' }}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Image
+                      width={item.w}
+                      height={item.h}
+                      src={item.icon}
+                    />
+                  </MotionBox>
+                ))}
               </Flex>
             </Flex>
           </Flex>
@@ -112,152 +208,22 @@ const Banner = ((
             justifyContent="flex-start"
             alignItems="flex-end"
           >
-            <MotionBox
-              backgroundColor="#000"
-              cursor="pointer"
-              _hover={{ boxShadow: 'lg' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Image
-                width="205px"
-                height="205px"
-                border="1px solid #4D4D4D"
-                src={banner21.default}
-              />
-            </MotionBox>
-            <MotionBox
-              backgroundColor="#000"
-              cursor="pointer"
-              _hover={{ boxShadow: 'lg' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Image
-                width="205px"
-                height="205px"
-                border="1px solid #4D4D4D"
-                src={banner22.default}
-              />
-            </MotionBox>
-            <MotionBox
-              backgroundColor="#000"
-              cursor="pointer"
-              _hover={{ boxShadow: 'lg' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Image
-                width="205px"
-                height="205px"
-                border="1px solid #4D4D4D"
-                src={banner23.default}
-              />
-            </MotionBox>
-            <MotionBox
-              backgroundColor="#000"
-              cursor="pointer"
-              _hover={{ boxShadow: 'lg' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Image
-                width="205px"
-                height="205px"
-                border="1px solid #4D4D4D"
-                src={banner24.default}
-              />
-            </MotionBox>
-          </Flex>
-          <Flex
-            flexDirection="row"
-            justifyContent="flex-start"
-            alignItems="flex-end"
-          >
-            <MotionBox
-              backgroundColor="#000"
-              cursor="pointer"
-              _hover={{ boxShadow: 'lg' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Image
-                width="205px"
-                height="205px"
-                border="1px solid #4D4D4D"
-                src={banner31.default}
-              />
-            </MotionBox>
-            <MotionBox
-              backgroundColor="#000"
-              cursor="pointer"
-              _hover={{ boxShadow: 'lg' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Image
-                width="205px"
-                height="205px"
-                border="1px solid #4D4D4D"
-                src={banner34.default}
-              />
-            </MotionBox>
-            <MotionBox
-              backgroundColor="#000"
-              cursor="pointer"
-              _hover={{ boxShadow: 'lg' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Image
-                width="205px"
-                height="205px"
-                border="1px solid #4D4D4D"
-                src={banner34.default}
-              />
-            </MotionBox>
-            <MotionBox
-              backgroundColor="#000"
-              cursor="pointer"
-              _hover={{ boxShadow: 'lg' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Image
-                width="205px"
-                height="205px"
-                border="1px solid #4D4D4D"
-                src={banner34.default}
-              />
-            </MotionBox>
-            <MotionBox
-              backgroundColor="#000"
-              cursor="pointer"
-              _hover={{ boxShadow: 'lg' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Image
-                width="205px"
-                height="205px"
-                border="1px solid #4D4D4D"
-                src={banner35.default}
-              />
-            </MotionBox>
-            <MotionBox
-              backgroundColor="#000"
-              cursor="pointer"
-              _hover={{ boxShadow: 'lg' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Image
-                width="205px"
-                height="205px"
-                border="1px solid #4D4D4D"
-                src={banner36.default}
-              />
-            </MotionBox>
+            {bannerBottom.map((item) => (
+              <MotionBox
+                key={item.id}
+                backgroundColor="#000"
+                cursor="pointer"
+                _hover={{ boxShadow: 'lg' }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Image
+                  width={item.w}
+                  height={item.h}
+                  src={item.icon}
+                />
+              </MotionBox>
+            ))}
           </Flex>
         </Flex>
         <Flex

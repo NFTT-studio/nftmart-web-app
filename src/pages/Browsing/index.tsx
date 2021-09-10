@@ -231,9 +231,10 @@ const Browsing = () => {
                 >
                   <SimpleGrid
                     width="100%"
-                    m="0px 0 20px 0"
+                    p="0 5px"
+                    m="0px 0px 20px 0px"
                     columns={[1, 2, 3]}
-                    spacing="22px"
+                    spacing="20px"
                   >
                     {nftsData?.pages.map((page) => page.orders.map(
                       (nft) => <Flex mt="11px"><OrderCard nft={nft} remainingTime={remainingTime} /></Flex>,
