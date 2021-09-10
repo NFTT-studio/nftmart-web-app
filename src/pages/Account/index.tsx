@@ -17,7 +17,6 @@ import { parse } from 'search-params';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MainContainer from '../../layout/MainContainer';
 import useCategories from '../../hooks/reactQuery/useCategories';
-import CategorySelector from '../../components/CategorySelector';
 import useCollections from '../../hooks/reactQuery/useCollections';
 import { useAppSelector } from '../../hooks/redux';
 import { getBlock } from '../../polkaSDK/api/getBlock';
@@ -59,7 +58,6 @@ import useUser from '../../hooks/reactQuery/useUser';
 const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
   const { address } = match.params;
-  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
 
   const { data: userData } = useUser(address);
 

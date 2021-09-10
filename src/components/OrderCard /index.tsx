@@ -282,6 +282,36 @@ const NftCard: FC<NftCardProps> = ({
                     :
                   </Box>
                   <Box
+                    ml="3px"
+                    width="18px"
+                    height="22px"
+                    background="#FFFFFF"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="1px"
+                  />
+                  <Box
+                    width="18px"
+                    height="22px"
+                    background="#FFFFFF"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="3px"
+                  />
+
+                  <Box
+                    fontSize="12px"
+                    color="#FFFFFF"
+                    position="relative"
+                    zIndex={9}
+                  >
+                    :
+                  </Box>
+                  <Box
                     mr="1px"
                     ml="3px"
                     width="18px"

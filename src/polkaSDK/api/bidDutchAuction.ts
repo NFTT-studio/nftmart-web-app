@@ -76,6 +76,7 @@ export const bidBritishAuction = async ({
         address, { signer: injector.signer }, (result: any) => txLog(result, cb.success),
       );
     } else {
+      cb.error('auction %s not found');
       console.log('auction %s not found', auctionId);
     }
   } catch (error) {

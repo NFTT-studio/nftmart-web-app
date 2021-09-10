@@ -32,6 +32,7 @@ const NftCard: FC<NftCardProps> = ({
   nft,
   remainingTime,
 }) => {
+  const type = nft?.auction?.type;
   const [events, setEvents] = useState(
     {
       times: 0,
@@ -61,9 +62,8 @@ const NftCard: FC<NftCardProps> = ({
   };
 
   useEffect(() => {
-    if (nft?.type && remainingTime) {
-      countFun(nft.deadline);
-      console.log(remainingTime);
+    if (type && remainingTime) {
+      countFun(nft?.auction?.deadline);
     }
   }, [remainingTime]);
 
@@ -198,7 +198,7 @@ const NftCard: FC<NftCardProps> = ({
                 {nft?.metadata.name}
               </Text>
             </Flex>
-            {nft?.type && Number(events.day) > 0 ? (
+            {type && Number(events.day) > 2 ? (
               <Box textAlign="right" display="flex" justifyContent="center">
                 <Flex align="flex-start" alignItems="center">
                   <Box w="16px" h="16px" src={IconTime.default} as="img" alt="" mr="4px" />
@@ -210,7 +210,7 @@ const NftCard: FC<NftCardProps> = ({
                 </Flex>
               </Box>
             ) : null}
-            {nft?.type && Number(events.second) === 0 ? (
+            {type && Number(events.times) === 0 ? (
               <Box textAlign="right" display="flex" justifyContent="center">
                 <Flex align="flex-start" alignItems="center">
                   <Box color="#999999" mr="6px">Last</Box>
@@ -227,7 +227,7 @@ const NftCard: FC<NftCardProps> = ({
                 </Flex>
               </Box>
             ) : null}
-            {nft?.type && Number(events.day) < 0 ? (
+            {type && Number(events.day) < 3 && Number(events.times) > 0 ? (
               <Box
                 fontSize="12px"
                 fontFamily="TTHoves-Medium, TTHoves"
@@ -247,13 +247,46 @@ const NftCard: FC<NftCardProps> = ({
                     fontSize="15px"
                     letterSpacing="8px"
                   >
-                    <Countdown
-                      autoStart
-                      daysInHours
-                      date={Date.now() + events.times}
-                    />
+                    {Number(events.times)
+                      ? (
+                        <Countdown
+                          autoStart
+                          daysInHours
+                          date={Date.now() + events.times}
+                        />
+                      ) : null}
                   </Flex>
                   <Box
+                    width="18px"
+                    height="22px"
+                    background="#FFFFFF"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="1px"
+                  />
+                  <Box
+                    width="18px"
+                    height="22px"
+                    background="#FFFFFF"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="3px"
+                  />
+
+                  <Box
+                    fontSize="12px"
+                    color="#FFFFFF"
+                    position="relative"
+                    zIndex={9}
+                  >
+                    :
+                  </Box>
+                  <Box
+                    ml="3px"
                     width="18px"
                     height="22px"
                     background="#FFFFFF"

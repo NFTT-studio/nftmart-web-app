@@ -2,14 +2,11 @@ import React, { useState, MouseEventHandler, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Spinner,
-  Box,
   Image,
   Stack,
   Flex,
   Text,
-  Button,
   Center,
-  Link,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import SwiperCore, {
@@ -66,33 +63,6 @@ const Home = () => {
     });
   }, []);
   // console.log(remainingTime, 1);
-
-  const timeBlock = (index:numer) => {
-    const times = (index - remainingTime) * 6;
-
-    let theTime = parseInt(times.toString(), 10);
-    let middle = 0;
-    let hour = 0;
-
-    if (theTime > 60) {
-      middle = parseInt((theTime / 60).toString(), 10);
-      theTime = parseInt((theTime % 60).toString(), 10);
-      if (middle > 60) {
-        hour = parseInt((middle / 60).toString(), 10);
-        middle = parseInt((middle % 60).toString(), 10);
-      }
-    }
-    // let result = null;
-    let result = `${parseInt(theTime.toString(), 10)}`;
-    if (middle > 0) {
-      result = `${parseInt(middle.toString(), 10)}:${result}`;
-    }
-    if (hour > 0) {
-      result = `${parseInt(hour.toString(), 10)}:${result}`;
-      // result = `${parseInt(hour.toString(), 10)}`;
-    }
-    return result;
-  };
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectId(event.currentTarget.id);
