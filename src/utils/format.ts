@@ -48,3 +48,4 @@ export const NumberToString = (nmtNumber: string) => {
   return nmtBn.toString();
 };
 export const toFixedDecimals = (n: NumberValue, place = 8) => toBigNumber(n).toFormat(place);
+export const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;

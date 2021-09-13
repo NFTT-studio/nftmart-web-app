@@ -212,10 +212,12 @@ const Upload: FC<UploadProps> = ({
         setShowCrop(true);
         setImgName(currentFile.name);
       } else {
-        setValue('');
         setFile(currentFile);
+        setValue('');
+        setShowCrop(false);
         saveToIpfs(event.target.files);
         setImgName(currentFile.name);
+        setShowCrop(false);
       }
     }
   }, [mediatype, saveToIpfs]);

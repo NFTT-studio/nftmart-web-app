@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import Countdown from 'react-countdown';
 import {
   Flex,
   Container,
   Text,
   Image,
   Button,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Spinner,
   Modal,
   ModalOverlay,
@@ -21,6 +17,7 @@ import axios from 'axios';
 import qs from 'qs';
 import MainContainer from '../../layout/MainContainer';
 import CancelDialog from './CancelDialog';
+import CancelAuctionDialog from './CancelAuctionDialog';
 import DealDialog from './DealDialog';
 import DetailLeft from './DetailLeft';
 import DetailRight from './DetailRight';
@@ -30,24 +27,27 @@ import {
   PINATA_SERVER,
 } from '../../constants';
 
-import {
-  Historyempty,
-  IconOffersDetail,
-} from '../../assets/images';
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import useToken from '../../hooks/reactQuery/useToken';
+import useAccount from '../../hooks/reactQuery/useAccount';
 
 import { priceStringDivUnit } from '../../utils/format';
 import useIsLoginAddress from '../../hooks/utils/useIsLoginAddress';
 import { useAppSelector } from '../../hooks/redux';
 import BuyDialog from './BuyDialog';
 import OfferDialog from './OfferDialog';
+import DutchDialog from './DutchDialog';
+import BritishDialog from './BritishDialog';
+import FixedDialog from './FixedDialog';
 
 const propertiesArr = [1, 2, 3, 4, 5, 6];
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
 
 const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
+  function number2PerU16(x) {
+    return (x / 65535) * 100;
+  }
   const chainState = useAppSelector((state) => state.chain);
   const { t } = useTranslation();
   const history = useHistory();
@@ -90,12 +90,47 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   };
 
   const [isShowCancel, setIsShowCancel] = useState(false);
+  const [isCancelAuction, setIsCancelAuction] = useState(false);
   const [isShowDeal, setIsShowDeal] = useState(false);
   const [isShowBuy, setIsShowBuy] = useState(false);
   const [isShowOffer, setIsShowOffer] = useState(false);
+  const [isShowDutch, setIsShowDutch] = useState(false);
+  const [isShowBritish, setIsShowBritish] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [offerId, setOfferId] = useState('');
   const [offerOwner, setOfferOwner] = useState('');
+  const [events, setEvents] = useState(
+    {
+      times: 0,
+      day: 0,
+      hour: 0,
+      minute: 0,
+      second: 0,
+    },
+  );
+  const [isShowFixed, setIsShowFixed] = useState(false);
+
+  const countFun = (index:number) => {
+    const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
+    // eslint-disable-next-line no-param-reassign
+    const day = (Math.floor((times / 1000 / 3600 / 24)));
+    const hour = (Math.floor((times / 1000 / 3600) % 24));
+    const minute = (Math.floor((times / 1000 / 60) % 60));
+    // eslint-disable-next-line no-mixed-operators
+    const second = (Math.floor(times / 1000 % 60));
+    if (times > 0) {
+      setEvents({
+        times,
+        day,
+        hour,
+        minute,
+        second,
+      });
+    }
+  };
+
+  const type = nftData?.nftInfo?.auction?.type || false;
+  const deadline = nftData?.nftInfo?.auction?.deadline;
   useEffect(() => {
     collectNft('status');
     browse();
@@ -103,6 +138,11 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       setRemainingTime(res);
     });
   }, []);
+  useEffect(() => {
+    if (type && remainingTime) {
+      countFun(deadline);
+    }
+  }, [remainingTime]);
 
   const { data: token } = useToken();
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
@@ -118,11 +158,16 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const ownerId = nftData?.nftInfo?.owner_id;
   const orderId = nftData?.nftInfo?.order_id;
-  const hideFlag = false;
+  const termOfValidity = !!((nftData?.nftInfo?.auction?.deadline - remainingTime) > 0);
+  const auctionId = nftData?.nftInfo?.auction?.id;
+  const initPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.init_price);
+  const minRaise = price * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
+  const creatorId = nftData?.nftInfo?.auction?.creator_id;
+  // console.log(creatorId);
 
   return (
     <MainContainer title={`${nftName}-${collectionName}${t('Detail.title')}`}>
-      {isLoginAddress ? (
+      {!type && isLoginAddress ? (
         <>
           {nftData?.nftInfo.status === 'Selling'
             ? (
@@ -182,7 +227,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     </Button>
                   </Flex>
                 </Flex>
-
               </Flex>
             )
             : (
@@ -226,7 +270,154 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             )}
         </>
       ) : ''}
-
+      {type && isLoginAddress ? (
+        <>
+          {termOfValidity
+            ? (
+              <Flex
+                minWidth="1364px"
+                w="100vw"
+                background="#F9F9F9"
+                justifyContent="center"
+                h="80px"
+                alignItems="center"
+              >
+                <Flex
+                  h="100%"
+                  width="1364px"
+                  justifyContent="flex-end"
+                >
+                  <Flex
+                    width="100%"
+                    h="100%"
+                    maxWidth="1364px"
+                    justifyContent="flex-end"
+                    alignItems="center"
+                  >
+                    <Text
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#999999"
+                    >
+                      {t('Detail.cancelTips')}
+                    </Text>
+                    <Flex h="100%" alignItems="center">
+                      <Button
+                        ml="30px"
+                        width="110px"
+                        height="40px"
+                        background="#FFFFFF"
+                        borderRadius="4px"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#000000"
+                        lineHeight="16px"
+                        border="1px solid #000000"
+                        _hover={{
+                          background: '#000000',
+                          color: '#FFFFFF',
+                        }}
+                        onClick={() => setIsCancelAuction(true)}
+                      >
+                        {t('Detail.cancel')}
+                      </Button>
+                      {/* <Button
+                      ml="10px"
+                      width="110px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#000000"
+                      lineHeight="16px"
+                      border="1px solid #000000"
+                      _hover={{
+                        background: '#000000',
+                        color: '#FFFFFF',
+                      }}
+                      onClick={() => history.push(`/sellSetting/${nftId}`)}
+                    >
+                      {t('Detail.setting')}
+                    </Button> */}
+                    </Flex>
+                  </Flex>
+                </Flex>
+              </Flex>
+            )
+            : (
+              <Flex
+                w="100vw"
+                background="#F9F9F9"
+                justifyContent="center"
+                h="80px"
+                alignItems="center"
+              >
+                <Flex
+                  width="100%"
+                  h="100%"
+                  maxWidth="1364px"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                >
+                  <Text
+                    fontSize="14px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#999999"
+                  >
+                    {t('Detail.cancelTips')}
+                  </Text>
+                  <Flex h="100%" alignItems="center">
+                    <Button
+                      ml="30px"
+                      width="110px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#000000"
+                      lineHeight="16px"
+                      border="1px solid #000000"
+                      _hover={{
+                        background: '#000000',
+                        color: '#FFFFFF',
+                      }}
+                      onClick={() => setIsCancelAuction(true)}
+                    >
+                      {t('Detail.cancel')}
+                    </Button>
+                    {/* <Button
+                      ml="10px"
+                      width="110px"
+                      height="40px"
+                      background="#FFFFFF"
+                      borderRadius="4px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#000000"
+                      lineHeight="16px"
+                      border="1px solid #000000"
+                      _hover={{
+                        background: '#000000',
+                        color: '#FFFFFF',
+                      }}
+                      onClick={() => history.push(`/sellSetting/${nftId}`)}
+                    >
+                      {t('Detail.setting')}
+                    </Button> */}
+                  </Flex>
+                </Flex>
+              </Flex>
+            )}
+        </>
+      ) : ''}
       <Container
         mt="40px"
         display="flex"
@@ -260,7 +451,15 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setIsShowDeal={setIsShowDeal}
             setIsShowBuy={setIsShowBuy}
             token={token}
+            OfferssUnitArr={OfferssUnitArr}
             setIsShowOffer={setIsShowOffer}
+            setIsCollect={setIsCollect}
+            collectNft={collectNft}
+            types={type}
+            deadline={deadline}
+            setIsShowBritish={setIsShowBritish}
+            setIsShowDutch={setIsShowDutch}
+            setIsShowFixed={setIsShowFixed}
           />
         </Flex>
         {isShowBuy && (
@@ -275,6 +474,20 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             ownerId={ownerId}
           />
         )}
+        {isShowFixed && (
+          <FixedDialog
+            isShowFixed={isShowFixed}
+            setIsShowFixed={setIsShowFixed}
+            price={nftData.nftInfo.auction?.hammer_price}
+            logoUrl={logoUrl}
+            nftName={nftName}
+            collectionName={collectionName}
+            orderId={orderId}
+            ownerId={ownerId}
+            creatorId={creatorId}
+            auctionId={auctionId}
+          />
+        )}
         {isShowOffer && (
           <OfferDialog
             isShowOffer={isShowOffer}
@@ -284,12 +497,42 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             tokenId={tokenId}
           />
         )}
+        {isShowBritish && (
+          <BritishDialog
+            isShowBritish={isShowBritish}
+            setIsShowBritish={setIsShowBritish}
+            moreThan={minRaise || Number(initPrice)}
+            creatorId={creatorId}
+            auctionId={auctionId}
+          />
+        )}
+        {isShowDutch && (
+          <DutchDialog
+            isShowDutch={isShowDutch}
+            setIsShowDutch={setIsShowDutch}
+            price={priceStringDivUnit(nftData.nftInfo.auction?.price)}
+            logoUrl={logoUrl}
+            nftName={nftName}
+            collectionName={collectionName}
+            creatorId={creatorId}
+            auctionId={auctionId}
+          />
+        )}
         {isShowCancel && (
           <CancelDialog
             isShowCancel={isShowCancel}
             setIsShowCancel={setIsShowCancel}
             orderId={orderId}
             nftId={nftId}
+          />
+        )}
+        {isCancelAuction && (
+          <CancelAuctionDialog
+            isShowCancel={isCancelAuction}
+            setIsShowCancel={setIsCancelAuction}
+            orderId={orderId}
+            auctionId={auctionId}
+            type={type}
           />
         )}
         {isShowDeal && (

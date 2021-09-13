@@ -1,5 +1,9 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
-import React, { FC, MouseEventHandler, useState } from 'react';
+import React, {
+  FC, MouseEventHandler, useState, useEffect,
+} from 'react';
+import Countdown from 'react-countdown';
 import {
   Flex,
   Image,
@@ -92,8 +96,15 @@ interface Props {
   setIsShowOffer: React.Dispatch<React.SetStateAction<boolean>>,
   token:{ token: string; } | undefined,
   OfferssUnitArr:[],
+  setIsCollect:React.Dispatch<React.SetStateAction<boolean>>,
+  collectNft:any,
+  types:string
+  deadline:number,
+  setIsShowBritish:React.Dispatch<React.SetStateAction<boolean>>,
+  setIsShowDutch:React.Dispatch<React.SetStateAction<boolean>>,
+  setIsShowFixed:React.Dispatch<React.SetStateAction<boolean>>,
 }
-const DetailLeft: FC<Props> = (({
+const DetailRight: FC<Props> = (({
   nftData,
   collectionsData,
   account,
@@ -107,6 +118,13 @@ const DetailLeft: FC<Props> = (({
   token,
   setIsShowOffer,
   OfferssUnitArr,
+  setIsCollect,
+  collectNft,
+  types,
+  deadline,
+  setIsShowBritish,
+  setIsShowDutch,
+  setIsShowFixed,
 }) => {
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
@@ -117,6 +135,39 @@ const DetailLeft: FC<Props> = (({
   const nftName = nftData?.nftInfo?.metadata.name;
   const OffersArr = nftData?.nftInfo?.offers;
   const PriceHistory = nftData?.nftInfo?.history[selectedTime];
+  const [events, setEvents] = useState(
+    {
+      times: 0,
+      day: 0,
+      hour: 0,
+      minute: 0,
+      second: 0,
+    },
+  );
+
+  const countFun = (index:number) => {
+    const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
+    // eslint-disable-next-line no-param-reassign
+    const day = (Math.floor((times / 1000 / 3600 / 24)));
+    const hour = (Math.floor((times / 1000 / 3600) % 24));
+    const minute = (Math.floor((times / 1000 / 60) % 60));
+    // eslint-disable-next-line no-mixed-operators
+    const second = (Math.floor(times / 1000 % 60));
+    if (times > 0) {
+      setEvents({
+        times,
+        day,
+        hour,
+        minute,
+        second,
+      });
+    }
+  };
+  useEffect(() => {
+    if (types && remainingTime) {
+      countFun(deadline);
+    }
+  }, [remainingTime]);
   const { t } = useTranslation();
 
   const handleDeal = (offerIdItem:string, offerOwnerItem:string) => {
@@ -346,96 +397,111 @@ const DetailLeft: FC<Props> = (({
             </Flex>
           </Link>
         </Flex>
-
-        {/* <Flex
-              w="100%"
-              height="40px"
-              background="#F14E1D"
-              borderRadius="4px"
-              alignItems="center"
-              pl="20px"
-            >
-              <Flex alignItems="center" mr="30px">
-                <Image
-                  mr="8px"
-                  w="16px"
-                  h="16px"
-                  src={IconDetailsCollection.default}
-                />
-                <Text
-                  fontSize="14px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  color="#FFFFFF"
-                >
-                  Sale ends in 4 days (2021-4-1 14:32:12)
-                </Text>
-              </Flex>
-            </Flex> */}
         <Flex
           w="100%"
-          flexDirection="column"
+          h="100%"
+          flexDirection="row"
           justifyContent="space-between"
           alignItems="flex-start"
           p="0 20px 0 20px"
         >
-          <Flex h="100%" flexDirection="column" justifyContent="center">
-            <Text
-              fontSize="14px"
-              fontFamily="TTHoves-Regular, TTHoves"
-              fontWeight="400"
-              color="#999999"
-              lineHeight="16px"
-              mb="12px"
-            >
-              {t('Detail.currentPrice')}
-            </Text>
-            <Flex flexDirection="column" justifyContent="flex-start">
-              <Flex height="43px" flexDirection="row" alignItems="flex-end">
-                <Text
-                  fontSize="36px"
-                  fontFamily="TTHoves-Bold, TTHoves"
-                  fontWeight="bold"
-                  color="#333333"
-                  lineHeight="43px"
-                >
-                  {Number(price) ? price : '-'}
-                </Text>
-                <Text
-                  m="0 0 8px 4px"
-                  fontSize="14px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  color="#999999"
-                >
-                  {Number(price) ? `NMT ($${token?.price * Number(price)})` : null}
-                </Text>
-                {/* <Image
+          <Flex flexDirection="column">
+            <Flex h="100%" flexDirection="column" justifyContent="center">
+              <Text
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#999999"
+                lineHeight="16px"
+                mb="12px"
+              >
+                {t('Detail.currentPrice')}
+              </Text>
+              <Flex flexDirection="column" justifyContent="flex-start">
+                <Flex height="43px" flexDirection="row" alignItems="flex-end">
+                  <Text
+                    fontSize="36px"
+                    fontFamily="TTHoves-Bold, TTHoves"
+                    fontWeight="bold"
+                    color="#333333"
+                    lineHeight="43px"
+                  >
+                    {types ? (
+                      price
+                    ) : null}
+                    {!types ? (
+                      Number(price) ? price : '-'
+                    ) : null}
+                  </Text>
+                  <Text
+                    m="0 0 8px 4px"
+                    fontSize="14px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#999999"
+                  >
+                    {Number(price) ? `NMT ($${token?.price * Number(price)})` : null}
+                  </Text>
+                  {/* <Image
                       m="0 0 8px 10px"
                       w="20px"
                       h="20px"
                       src={IconDetailsCollection.default}
                     /> */}
+                </Flex>
               </Flex>
             </Flex>
-          </Flex>
-          <Flex h="100%" m="20px 0" flexDirection="column" justifyContent="center">
-            <Button
-              width="184px"
-              height="48px"
-              background={!isLoginAddress && Number(price) > 0 ? '#000000' : '#999999'}
-              borderRadius="4px"
-              fontSize="16px"
-              fontFamily="TTHoves-Regular, TTHoves"
-              fontWeight="500"
-              color={!isLoginAddress && Number(price) > 0 ? '#FFFFFF' : '#FFFFFF'}
-              isDisabled={isLoginAddress || Number(price) === 0}
-              onClick={handleBuy}
-            >
-              {!isLoginAddress && Number(price) > 0 ? t('Detail.buyNow') : '-'}
-            </Button>
+            <Flex h="100%" m="20px 0" flexDirection="column" justifyContent="center">
+              {types === 'Dutch' ? (
+                <Button
+                  width="184px"
+                  height="48px"
+                  background={!isLoginAddress ? '#000000' : '#999999'}
+                  borderRadius="4px"
+                  fontSize="16px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="500"
+                  color={!isLoginAddress ? '#FFFFFF' : '#FFFFFF'}
+                  isDisabled={isLoginAddress || Number(events.times) === 0}
+                  onClick={() => setIsShowDutch(true)}
+                >
+                  {!isLoginAddress ? t('Detail.placeBid') : '-'}
+                </Button>
+              ) : null}
+              {types === 'British' ? (
+                <Button
+                  width="184px"
+                  height="48px"
+                  background={!isLoginAddress ? '#000000' : '#999999'}
+                  borderRadius="4px"
+                  fontSize="16px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="500"
+                  color={!isLoginAddress ? '#FFFFFF' : '#FFFFFF'}
+                  isDisabled={isLoginAddress || Number(events.times) === 0}
+                  onClick={() => setIsShowBritish(true)}
+                >
+                  {!isLoginAddress ? t('Detail.placeBid') : '-'}
+                </Button>
+              ) : null}
+              {!types ? (
+                <Button
+                  width="184px"
+                  height="48px"
+                  background={!isLoginAddress && Number(price) > 0 ? '#000000' : '#999999'}
+                  borderRadius="4px"
+                  fontSize="16px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="500"
+                  color={!isLoginAddress && Number(price) > 0 ? '#FFFFFF' : '#FFFFFF'}
+                  isDisabled={isLoginAddress || Number(price) === 0}
+                  onClick={handleBuy}
+                >
+                  {!isLoginAddress && Number(price) > 0 ? t('Detail.buyNow') : '-'}
+                </Button>
+              ) : null}
 
-            {/* <Text
+              {/* <Text
                   fontSize="14px"
                   fontFamily="TTHoves-Regular, TTHoves"
                   fontWeight="400"
@@ -443,9 +509,137 @@ const DetailLeft: FC<Props> = (({
                 >
                   * Extend 30 minutes after bidding
                 </Text> */}
+            </Flex>
           </Flex>
+          {types && Number(events.day) < 4 && Number(events.times) > 0 ? (
+            <Flex flexDirection="column" h="100%" justifyContent="flex-start">
+              <Text
+                color="#000000"
+                align="center"
+                fontSize="16px"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
+                textAlign="right"
+                mb="12px"
+              >
+                Auction onds in
+              </Text>
+              <Box
+                fontSize="12px"
+                fontFamily="TTHoves-Medium, TTHoves"
+                fontWeight="500"
+                color="#FFFFFF"
+                lineHeight="14px"
+                textAlign="right"
+                display="flex"
+                justifyContent="flex-end"
+                position="relative"
+              >
+                <Flex
+                  position="absolute"
+                  top="4px"
+                  right="102px"
+                  width="18px"
+                  fontSize="15px"
+                  letterSpacing="8px"
+                >
+                  {Number(events.times)
+                    ? (
+                      <Countdown
+                        daysInHours
+                        autoStart
+                        date={Date.now() + Number(events.times)}
+                      />
+                    ) : null}
+                </Flex>
+                <Flex align="flex-start" alignItems="center" color="#FFFFFF">
+                  <Box
+                    width="18px"
+                    height="22px"
+                    background="red"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="2px"
+                  />
+                  <Box
+                    width="18px"
+                    height="22px"
+                    background="red"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  />
+                  <Text
+                    fontSize="12px"
+                    width="6px"
+                    color="#000000"
+                    textAlign="center"
+                    position="relative"
+                    zIndex="9"
+                  >
+                    :
+                  </Text>
+                  <Box
+                    width="18px"
+                    height="22px"
+                    background="red"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="2px"
+                  />
+                  <Box
+                    width="18px"
+                    height="22px"
+                    background="red"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="0px"
+                  />
+                  <Text
+                    fontSize="12px"
+                    width="6px"
+                    color="#000000"
+                    textAlign="center"
+                    position="relative"
+                    zIndex="9"
+                  >
+                    :
+                  </Text>
+                  <Box
+                    mr="2px"
+                    width="18px"
+                    height="22px"
+                    background="red"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  />
+                  <Box
+                    width="18px"
+                    height="22px"
+                    background="red"
+                    borderRadius="1px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  />
+                </Flex>
+              </Box>
+            </Flex>
+          ) : null}
         </Flex>
-        {/* <Flex
+        {Number(nftData.nftInfo.auction?.hammer_price)
+          ? (
+            <Flex
               width="788px"
               height="65px"
               background="#F9F9F9"
@@ -453,7 +647,7 @@ const DetailLeft: FC<Props> = (({
               justifyContent="space-between"
               alignItems="center"
               p="0 20px 0 20px"
-              m="20px 0 32px 0px"
+              m="0px 0 20px 0px"
             >
               <Text
                 fontSize="14px"
@@ -473,7 +667,7 @@ const DetailLeft: FC<Props> = (({
                   display="flex"
                   flexDirection="row"
                 >
-                  {t('Detail.Fixedprice')}
+                  {t('Detail.fixedPrice')}
                   <Text
                     m="0 3px"
                     fontSize="14px"
@@ -481,7 +675,7 @@ const DetailLeft: FC<Props> = (({
                     fontWeight="400"
                     color="#000000"
                   >
-                    {price}
+                    {priceStringDivUnit(nftData.nftInfo.auction?.hammer_price)}
                   </Text>
                   NMT
                 </Text>
@@ -498,14 +692,15 @@ const DetailLeft: FC<Props> = (({
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
                       color="#3D00FF"
-                      onClick={handleBuy}
+                      onClick={() => { setIsShowFixed(true); }}
                     >
-                      {t('Detail.BuyNow')}
+                      {t('Detail.buyNow')}
                     </Button>
                   )}
               </Flex>
-
-            </Flex> */}
+            </Flex>
+          )
+          : null}
       </Flex>
       <Flex
         p="0 20px 0 20px"
@@ -991,4 +1186,4 @@ const DetailLeft: FC<Props> = (({
 
   );
 });
-export default DetailLeft;
+export default DetailRight;

@@ -149,7 +149,7 @@ const CreateCollection: FC = () => {
       banner: '',
     },
     onSubmit: (values, formActions) => {
-      setIsSubmitting(false);
+      setIsSubmitting(true);
       create(values, formActions);
     },
     validationSchema: schema,
