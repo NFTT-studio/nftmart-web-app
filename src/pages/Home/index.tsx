@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, MouseEventHandler, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
@@ -7,6 +8,8 @@ import {
   Flex,
   Text,
   Center,
+  Box,
+  Button,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import SwiperCore, {
@@ -23,6 +26,7 @@ import { getBlock } from '../../polkaSDK/api/getBlock';
 
 import {
   IconLeftw,
+  Historyempty,
   IconRightw,
 } from '../../assets/images';
 
@@ -65,6 +69,9 @@ const Home = () => {
   // console.log(remainingTime, 1);
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
+    setPageParamr(0);
+    setPageParamE(0);
+    setPageParamC(0);
     setSelectId(event.currentTarget.id);
   };
 
@@ -81,38 +88,43 @@ const Home = () => {
 
       <Flex width="100%" minWidth="1364px" justifyContent="center">
         <Flex width="1364px" flexDirection="column">
-
-          {hotNftsIsLoading || expensiveNftsIsLoading || cheapNftsIsLoading || bannerIsLoading || categoriesIsLoading
-            ? (
-              <Center height="100%">
-                <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
-              </Center>
-            ) : null}
-
           <Flex width="100%" flexDirection="column" mt="40px">
             <Flex
-              h="21px"
+              h="38px"
               width="100%"
               flexDirection="row"
               justifyContent="space-between"
               alignItems="center"
               mb="19px"
             >
-              <Text>{t('Home.hottest')}</Text>
+              <Text
+                fontSize="32px"
+                fontFamily="TTHoves-Bold, TTHove"
+                fontWeight="bold"
+                color="#000000"
+                lineHeight="38px"
+              >
+                {t('Home.hottest')}
+
+              </Text>
               <Flex h="21px">
-                <Flex
-                  h="25px"
-                  w="25px"
+                <Button
+                  as="button"
+                  minWidth="0px"
+                  padding="0px"
+                  h="32px"
+                  w="32px"
                   background="#000000"
                   borderRadius="50%"
                   justifyContent="center"
                   alignItems="center"
+                  isDisabled={pageParam === 0}
                   onClick={() => {
                     if (pageParam > 0) {
                       setPageParamr(pageParam - 1);
                       setTimeout(() => {
                         refetchHot();
-                      }, 500);
+                      }, 10);
                     }
                   }}
                 >
@@ -120,21 +132,25 @@ const Home = () => {
                     height="18px"
                     src={IconLeftw.default}
                   />
-                </Flex>
-                <Flex
+                </Button>
+                <Button
+                  as="button"
+                  minWidth="0px"
+                  padding="0px"
                   ml="20px"
-                  h="25px"
-                  w="25px"
+                  h="32px"
+                  w="32px"
                   borderRadius="50%"
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
+                  isDisabled={!(pageParam + 1 < Number(hotNftsData?.pageInfo.pageSize))}
                   onClick={() => {
-                    if (pageParam < hotNftsData?.pageInfo.totalNum) {
+                    if (pageParam + 1 < Number(hotNftsData?.pageInfo.pageSize)) {
                       setPageParamr(pageParam + 1);
                       setTimeout(() => {
                         refetchHot();
-                      }, 500);
+                      }, 10);
                     }
                   }}
                 >
@@ -142,38 +158,82 @@ const Home = () => {
                     height="18px"
                     src={IconRightw.default}
                   />
-                </Flex>
+                </Button>
               </Flex>
             </Flex>
-            {hotNftsData?.orders.length
+            {hotNftsIsLoading
               ? (
-                <Stack direction="row" height="353px" spacing="20px">
-                  {hotNftsData.orders.map((order) => (
-                    <OrderCard nft={order} remainingTime={remainingTime} />
-                  ))}
-                </Stack>
-              )
-              : null}
+                <Center height="353px">
+                  <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                </Center>
+              ) : hotNftsData?.orders.length
+                ? (
+                  <Stack direction="row" height="353px" spacing="20px">
+                    {hotNftsData.orders.map((order) => (
+                      <OrderCard nft={order} remainingTime={remainingTime} />
+                    ))}
+                  </Stack>
+                )
+                : (
+                  <Flex
+                    width="100%"
+                    height="353px"
+                    background="#FFFFFF"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Image
+                      w="150px"
+                      h="100px"
+                      borderStyle="dashed"
+                      src={Historyempty.default}
+                    />
+                    <Text
+                      mt="10px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#999999"
+                      lineHeight="20px"
+                    >
+                      {t('Detail.noDataYet')}
+                    </Text>
+                  </Flex>
+                )}
           </Flex>
 
           <Flex width="100%" flexDirection="column" mt="40px">
             <Flex
-              h="21px"
+              h="38px"
               width="100%"
               flexDirection="row"
               justifyContent="space-between"
               alignItems="center"
               mb="19px"
             >
-              <Text>{t('Home.expensive')}</Text>
+              <Text
+                fontSize="32px"
+                fontFamily="TTHoves-Bold, TTHove"
+                fontWeight="bold"
+                color="#000000"
+                lineHeight="38px"
+              >
+                {t('Home.expensive')}
+
+              </Text>
               <Flex h="21px">
-                <Flex
-                  h="25px"
-                  w="25px"
+                <Button
+                  as="button"
+                  minWidth="0px"
+                  padding="0px"
+                  h="32px"
+                  w="32px"
                   background="#000000"
                   borderRadius="50%"
                   justifyContent="center"
                   alignItems="center"
+                  isDisabled={pageParamE === 0}
                   onClick={() => {
                     if (pageParamE > 0) {
                       setPageParamE(pageParamE - 1);
@@ -187,17 +247,21 @@ const Home = () => {
                     height="18px"
                     src={IconLeftw.default}
                   />
-                </Flex>
-                <Flex
+                </Button>
+                <Button
+                  as="button"
+                  minWidth="0px"
+                  padding="0px"
                   ml="20px"
-                  h="25px"
-                  w="25px"
+                  h="32px"
+                  w="32px"
                   borderRadius="50%"
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
+                  isDisabled={!(pageParamE + 1 < Number(expensiveNftsData?.pageInfo.pageSize))}
                   onClick={() => {
-                    if (expensiveNftsData && pageParamE + 1 < expensiveNftsData?.pageInfo.totalNum) {
+                    if (expensiveNftsData && pageParamE + 1 < expensiveNftsData?.pageInfo.pageSize) {
                       setPageParamE(pageParamE + 1);
                       setTimeout(() => {
                         refetchExpensive();
@@ -209,37 +273,81 @@ const Home = () => {
                     height="18px"
                     src={IconRightw.default}
                   />
-                </Flex>
+                </Button>
               </Flex>
             </Flex>
-            {expensiveNftsData?.orders.length
+            {expensiveNftsIsLoading
               ? (
-                <Stack direction="row" height="353px" spacing="20px">
-                  {expensiveNftsData.orders.map((order) => (
-                    <OrderCard nft={order} remainingTime={remainingTime} />
-                  ))}
-                </Stack>
-              )
-              : null}
+                <Center height="353px">
+                  <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                </Center>
+              ) : (expensiveNftsData?.orders.length
+                ? (
+                  <Stack direction="row" height="353px" spacing="20px">
+                    {expensiveNftsData.orders.map((order) => (
+                      <OrderCard nft={order} remainingTime={remainingTime} />
+                    ))}
+                  </Stack>
+                )
+                : (
+                  <Flex
+                    width="100%"
+                    height="353px"
+                    background="#FFFFFF"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Image
+                      w="150px"
+                      h="100px"
+                      borderStyle="dashed"
+                      src={Historyempty.default}
+                    />
+                    <Text
+                      mt="10px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#999999"
+                      lineHeight="20px"
+                    >
+                      {t('Detail.noDataYet')}
+                    </Text>
+                  </Flex>
+                ))}
           </Flex>
           <Flex width="100%" flexDirection="column" mt="40px">
             <Flex
-              h="21px"
+              h="38px"
               width="100%"
               flexDirection="row"
               justifyContent="space-between"
               alignItems="center"
               mb="19px"
             >
-              <Text>{t('Home.cheapest')}</Text>
+              <Text
+                fontSize="32px"
+                fontFamily="TTHoves-Bold, TTHove"
+                fontWeight="bold"
+                color="#000000"
+                lineHeight="38px"
+              >
+                {t('Home.cheapest')}
+
+              </Text>
               <Flex h="21px">
-                <Flex
-                  h="25px"
-                  w="25px"
+                <Button
+                  as="button"
+                  minWidth="0px"
+                  padding="0px"
+                  h="32px"
+                  w="32px"
                   background="#000000"
                   borderRadius="50%"
                   justifyContent="center"
                   alignItems="center"
+                  isDisabled={pageParamC === 0}
                   onClick={() => {
                     if (pageParamC > 0) {
                       setPageParamC(pageParamC - 1);
@@ -253,17 +361,21 @@ const Home = () => {
                     height="18px"
                     src={IconLeftw.default}
                   />
-                </Flex>
-                <Flex
+                </Button>
+                <Button
+                  as="button"
+                  minWidth="0px"
+                  padding="0px"
                   ml="20px"
-                  h="25px"
-                  w="25px"
+                  h="32px"
+                  w="32px"
                   borderRadius="50%"
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
+                  isDisabled={!(pageParamC + 1 < Number(cheapNftsData?.pageInfo.pageSize))}
                   onClick={() => {
-                    if (cheapNftsData && pageParamC + 1 < cheapNftsData?.pageInfo.totalNum) {
+                    if (cheapNftsData && pageParamC + 1 < cheapNftsData?.pageInfo.pageSize) {
                       setPageParamC(pageParamC + 1);
                       setTimeout(() => {
                         refetchExpensive();
@@ -275,18 +387,50 @@ const Home = () => {
                     height="18px"
                     src={IconRightw.default}
                   />
-                </Flex>
+                </Button>
               </Flex>
             </Flex>
-            {cheapNftsData?.orders.length
+            {cheapNftsIsLoading
               ? (
-                <Stack direction="row" height="353px" spacing="20px">
-                  {cheapNftsData.orders.map((order) => (
-                    <OrderCard nft={order} remainingTime={remainingTime} />
-                  ))}
-                </Stack>
-              )
-              : null}
+                <Center height="353px">
+                  <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                </Center>
+              ) : cheapNftsData?.orders.length
+                ? (
+                  <Stack direction="row" height="353px" spacing="20px">
+                    {cheapNftsData.orders.map((order) => (
+                      <OrderCard nft={order} remainingTime={remainingTime} />
+                    ))}
+                  </Stack>
+                )
+                : (
+                  <Flex
+                    width="100%"
+                    height="353px"
+                    background="#FFFFFF"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Image
+                      w="150px"
+                      h="100px"
+                      borderStyle="dashed"
+                      src={Historyempty.default}
+                    />
+                    <Text
+                      mt="10px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#999999"
+                      lineHeight="20px"
+                    >
+                      {t('Detail.noDataYet')}
+                    </Text>
+                  </Flex>
+                )}
+
           </Flex>
         </Flex>
       </Flex>

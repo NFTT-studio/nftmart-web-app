@@ -6,11 +6,6 @@ import {
   Text,
   Image,
   Button,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Spinner,
   Modal,
   ModalOverlay,
@@ -44,6 +39,7 @@ import BuyDialog from './BuyDialog';
 import OfferDialog from './OfferDialog';
 import DutchDialog from './DutchDialog';
 import BritishDialog from './BritishDialog';
+import FixedDialog from './FixedDialog';
 
 const propertiesArr = [1, 2, 3, 4, 5, 6];
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
@@ -112,6 +108,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       second: 0,
     },
   );
+  const [isShowFixed, setIsShowFixed] = useState(false);
 
   const countFun = (index:number) => {
     const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
@@ -462,6 +459,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             deadline={deadline}
             setIsShowBritish={setIsShowBritish}
             setIsShowDutch={setIsShowDutch}
+            setIsShowFixed={setIsShowFixed}
           />
         </Flex>
         {isShowBuy && (
@@ -474,6 +472,20 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             collectionName={collectionName}
             orderId={orderId}
             ownerId={ownerId}
+          />
+        )}
+        {isShowFixed && (
+          <FixedDialog
+            isShowFixed={isShowFixed}
+            setIsShowFixed={setIsShowFixed}
+            price={nftData.nftInfo.auction?.hammer_price}
+            logoUrl={logoUrl}
+            nftName={nftName}
+            collectionName={collectionName}
+            orderId={orderId}
+            ownerId={ownerId}
+            creatorId={creatorId}
+            auctionId={auctionId}
           />
         )}
         {isShowOffer && (
@@ -498,7 +510,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           <DutchDialog
             isShowDutch={isShowDutch}
             setIsShowDutch={setIsShowDutch}
-            price={price}
+            price={priceStringDivUnit(nftData.nftInfo.auction?.price)}
             logoUrl={logoUrl}
             nftName={nftName}
             collectionName={collectionName}

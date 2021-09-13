@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, {
   useState, useEffect, MouseEventHandler, ChangeEventHandler,
 } from 'react';
@@ -32,6 +33,7 @@ import {
   IconAllState,
   IconAllStateone,
   Emptyimg,
+  Historyempty,
 } from '../../assets/images';
 import useParams from '../../hooks/url/useParams';
 import { statusArr } from '../../constants/Status';
@@ -170,25 +172,25 @@ const Browsing = () => {
               onChange={handleSearch}
             />
           </InputGroup>
-          {collectionsArr?.length
-
-            ? (
-              <CollectionSelector
-                collectionArr={collectionsArr}
-                selectedArr={selectedCollection}
-                handleSelect={handleSelectCollection}
-              />
-            ) : <Image w="100%" h="auto" mr="" src={Emptyimg.default} alt="" />}
-
-        </Flex>
-
-        <Flex width="1003px" flexDirection="column" justifyContent="flex-start">
-          {categoriesIsLoading || collectionsIsLoading || nftsIsLoading
+          {}
+          {collectionsIsLoading
             ? (
               <Center height="100%">
                 <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
               </Center>
-            ) : null}
+            ) : (collectionsArr?.length
+              ? (
+                <CollectionSelector
+                  collectionArr={collectionsArr}
+                  selectedArr={selectedCollection}
+                  handleSelect={handleSelectCollection}
+                />
+              ) : <Image w="100%" h="auto" mr="" src={Emptyimg.default} alt="" />)}
+
+        </Flex>
+
+        <Flex width="1003px" flexDirection="column" justifyContent="flex-start">
+
           <Flex h="36px">
             {categoriesData
               ? (
@@ -220,55 +222,59 @@ const Browsing = () => {
             </Text>
           </Flex>
           <Flex width="1088px">
-            {nftsData?.pages.length
+            {nftsIsLoading
               ? (
-                <InfiniteScroll
-                  dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
-                  next={fetchNextPage}
-                  hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
-                  loader={<h4>Loading...</h4>}
-                  initialScrollY={1}
-                >
-                  <SimpleGrid
+                <Center width="100%" height="353px">
+                  <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                </Center>
+              ) : nftsData?.pages[0].pageInfo.totalNum
+                ? (
+                  <InfiniteScroll
+                    dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
+                    next={fetchNextPage}
+                    hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
+                    loader={<h4>Loading...</h4>}
+                    initialScrollY={1}
+                  >
+                    <SimpleGrid
+                      width="100%"
+                      p="0 5px"
+                      m="0px 0px 20px 0px"
+                      columns={[1, 2, 3]}
+                      spacing="20px"
+                    >
+                      {nftsData?.pages.map((page) => page.orders.map(
+                        (nft) => <Flex mt="11px"><OrderCard nft={nft} remainingTime={remainingTime} /></Flex>,
+                      ))}
+                    </SimpleGrid>
+                  </InfiniteScroll>
+                ) : (
+                  <Flex
                     width="100%"
-                    p="0 5px"
-                    m="0px 0px 20px 0px"
-                    columns={[1, 2, 3]}
-                    spacing="20px"
+                    height="353px"
+                    background="#FFFFFF"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="center"
                   >
-                    {nftsData?.pages.map((page) => page.orders.map(
-                      (nft) => <Flex mt="11px"><OrderCard nft={nft} remainingTime={remainingTime} /></Flex>,
-                    ))}
-                  </SimpleGrid>
-                </InfiniteScroll>
-              ) : (
-                <Flex
-                  width="100%"
-                  height="260px"
-                  background="#FFFFFF"
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Image
-                    w="150px"
-                    h="100px"
-                    border="1px solid #999999"
-                    borderStyle="dashed"
-                    src={Emptyimg.default}
-                  />
-                  <Text
-                    mt="10px"
-                    fontSize="14px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#999999"
-                    lineHeight="20px"
-                  >
-                    No data yet
-                  </Text>
-                </Flex>
-              )}
+                    <Image
+                      w="150px"
+                      h="100px"
+                      borderStyle="dashed"
+                      src={Historyempty.default}
+                    />
+                    <Text
+                      mt="10px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#999999"
+                      lineHeight="20px"
+                    >
+                      {t('Detail.noDataYet')}
+                    </Text>
+                  </Flex>
+                )}
           </Flex>
         </Flex>
       </Container>

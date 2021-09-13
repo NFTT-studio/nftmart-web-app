@@ -30,6 +30,7 @@ import {
   medium,
   telegram,
   IconDetailsocllections,
+  Emptyimg,
 } from '../../assets/images';
 import {
   PINATA_SERVER,
@@ -227,7 +228,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="flex-start"
                 alignItems="center"
               >
-                Items
+                {t('class.Items')}
               </Flex>
               <Flex
                 fontSize="14px"
@@ -238,6 +239,34 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="flex-start"
                 alignItems="center"
               >
+                {nftsData?.pages[0].pageInfo.totalNum}
+              </Flex>
+            </Flex>
+            <Flex
+              width="25%"
+              flexDirection="column"
+              alignContent="center"
+            >
+              <Flex
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#000000"
+                lineHeight="16px"
+                justifyContent="center"
+                alignItems="center"
+              >
+                {t('class.Owners')}
+              </Flex>
+              <Flex
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#000000"
+                lineHeight="16px"
+                justifyContent="center"
+                alignItems="center"
+              >
                 12,323
               </Flex>
             </Flex>
@@ -255,35 +284,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                Owners
-              </Flex>
-              <Flex
-                fontSize="14px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                color="#000000"
-                lineHeight="16px"
-                justifyContent="center"
-                alignItems="center"
-              >
-                12,323
-              </Flex>
-            </Flex>
-            <Flex
-              width="25%"
-              flexDirection="column"
-              alignContent="center"
-            >
-              <Flex
-                fontSize="14px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                color="#000000"
-                lineHeight="16px"
-                justifyContent="center"
-                alignItems="center"
-              >
-                Viewers
+                {t('class.Viewers')}
               </Flex>
               <Flex
                 fontSize="14px"
@@ -311,7 +312,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="flex-end"
                 alignItems="center"
               >
-                Starts
+                {t('class.Starts')}
               </Flex>
               <Flex
                 fontSize="14px"
@@ -396,24 +397,53 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               </Text>
             </Flex>
           </Flex>
-          <InfiniteScroll
-            dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
-            next={fetchNextPage}
-            hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
-            loader={<h4>Loading...</h4>}
-            initialScrollY={1}
-          >
-            <SimpleGrid
-              w="100%"
-              m="20px 0 20px 0"
-              columns={[1, 2, 3]}
-              spacing="20px"
-            >
-              {nftsData?.pages.map((page) => page.nfts?.map(
-                (nft) => <NftCard nft={nft} />,
-              ))}
-            </SimpleGrid>
-          </InfiniteScroll>
+          {nftsData?.pages[0].pageInfo.totalNum
+            ? (
+              <InfiniteScroll
+                dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
+                next={fetchNextPage}
+                hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
+                loader={<h4>Loading...</h4>}
+                initialScrollY={1}
+              >
+                <SimpleGrid
+                  w="100%"
+                  m="20px 0 20px 0"
+                  columns={[1, 2, 3]}
+                  spacing="20px"
+                >
+                  {nftsData?.pages.map((page) => page.nfts?.map(
+                    (nft) => <NftCard nft={nft} />,
+                  ))}
+                </SimpleGrid>
+              </InfiniteScroll>
+            ) : (
+              <Flex
+                width="100%"
+                height="500px"
+                background="#FFFFFF"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Image
+                  w="150px"
+                  h="100px"
+                  borderStyle="dashed"
+                  src={Emptyimg.default}
+                />
+                <Text
+                  mt="10px"
+                  fontSize="14px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#999999"
+                  lineHeight="20px"
+                >
+                  No data yet
+                </Text>
+              </Flex>
+            )}
         </Flex>
       </Flex>
 

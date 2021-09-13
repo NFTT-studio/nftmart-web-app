@@ -192,6 +192,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             id="logoUrl"
             mediatype="nocutting"
             rectangle=""
+            proportion={16 / 16}
             value={formik.values.logoUrl}
             onChange={(v) => {
               formik.setFieldValue('logoUrl', v);

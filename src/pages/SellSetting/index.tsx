@@ -138,7 +138,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       turnToEnglishAuction: false,
       endingPriceSl: false,
       commissionRate: 0,
-      fixedPrice: 0,
+      fixedPrice: '',
     },
     onSubmit: (formValue, formAction) => {
       setIsSubmitting(true);
@@ -217,7 +217,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       const britishParams = {
         address: account!.address,
         InitPrice: formValue.startingPrice,
-        hammer_price: Number(formValue.fixedPrice),
+        hammerPrice: Number(formValue.fixedPrice),
         expirationDate: formValue.expirationDate,
         allow_british_auction: formValue.automaticDelay,
         range: Number(formValue.minimumMarkup) / 100,
@@ -249,9 +249,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         submitDutchAuction(dutchParams as any);
       }
       if (selectId === 2) {
-        console.log(britishParams);
-        setIsSubmitting(false);
-        return;
         submitBritishAuction(britishParams as any);
       }
     },
@@ -1200,7 +1197,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         color="#858999"
                         lineHeight="14px"
                       >
-                        {t('SellSetting.startingPriceExplain')}
+                        {t('SellSetting.startingPriceEng')}
                       </Text>
                     </Flex>
                     <InputGroup

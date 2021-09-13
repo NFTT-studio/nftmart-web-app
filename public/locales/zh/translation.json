@@ -216,6 +216,7 @@
     "priceExplain": "在卖出或者取消之前，商品将一直售卖。",
     "startingPrice": "起始价格",
     "startingPriceExplain": "将从这个价格开始降价",
+    "startingPriceEng": "从这个价格开始加价竞拍",
     "endingPrice": "截止价格",
     "endingPriceExplain": "如果买家接受这个价格，就可以立即成交。",
     "fixedPrice": "一口价",
@@ -279,6 +280,12 @@
     "twitterRule": "80个字符以内。",
     "featuredImage": "题图",
     "featuredImageRule": "此图片将显示在您的个人主页上，建议 600 x 400"
+  },
+  "class": {
+    "Items": "作品",
+    "Owners": "持有",
+    "Viewers": "浏览",
+    "Starts": "收藏"
   },
   "Trx": {
     "inblock": "交易区块正在确认中",

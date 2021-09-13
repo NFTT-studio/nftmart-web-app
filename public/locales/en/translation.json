@@ -75,9 +75,9 @@
   "Home": {
     "title": "NFTMart-A Professional NFT Market",
     "more": "more",
-    "hottest": "Hottest",
-    "expensive": "Expensive",
-    "cheapest": "Cheapest"
+    "hottest": "HOTTEST",
+    "expensive": "EXPENSIVE",
+    "cheapest": "CHEAPEST"
   },
   "Collection": {
     "title": "-NFTMart|A Professional NFT Market",
@@ -217,6 +217,7 @@
     "priceExplain": "Will be on sale until you transfer this item or cancel it.",
     "startingPrice": "Starting Price",
     "startingPriceExplain": "A gradual reduction will begin at this price.",
+    "startingPriceEng": "From that price, bid up",
     "endingPrice": "Ending Price",
     "endingPriceExplain": "Must be less than or equal to the starting price. The price will progress linearly to this amount until the expiration date.Price reduction every 30 minutes;",
     "fixedPrice": "Fixed price",            
@@ -279,6 +280,12 @@
     "twitterRule": "80 characters or less.",
     "featuredImage": "Featured image",
     "featuredImageRule": "This picture will be displayed on your personal homepage, 600 x 400 recommended"
+  },
+  "class": {
+    "Items": "Items",
+    "Owners": "Owners",
+    "Viewers": "Viewers",
+    "Starts": "Starts"
   },
   "Trx": {
     "inblock": "Transaction in block",

@@ -102,6 +102,7 @@ interface Props {
   deadline:number,
   setIsShowBritish:React.Dispatch<React.SetStateAction<boolean>>,
   setIsShowDutch:React.Dispatch<React.SetStateAction<boolean>>,
+  setIsShowFixed:React.Dispatch<React.SetStateAction<boolean>>,
 }
 const DetailRight: FC<Props> = (({
   nftData,
@@ -123,6 +124,7 @@ const DetailRight: FC<Props> = (({
   deadline,
   setIsShowBritish,
   setIsShowDutch,
+  setIsShowFixed,
 }) => {
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
@@ -673,7 +675,7 @@ const DetailRight: FC<Props> = (({
                     fontWeight="400"
                     color="#000000"
                   >
-                    {price}
+                    {priceStringDivUnit(nftData.nftInfo.auction?.hammer_price)}
                   </Text>
                   NMT
                 </Text>
@@ -690,7 +692,7 @@ const DetailRight: FC<Props> = (({
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
                       color="#3D00FF"
-                      onClick={handleBuy}
+                      onClick={() => { setIsShowFixed(true); }}
                     >
                       {t('Detail.buyNow')}
                     </Button>
