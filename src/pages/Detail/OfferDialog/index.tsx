@@ -64,35 +64,6 @@ const OfferDialog: FC<Props> = (({
   const cancelRef = useRef<HTMLDivElement>(null);
   const oneMonth = (60 * 60 * 24 * 30) / 6;
 
-  const add0 = (m) => (m < 10 ? `0${m}` : m);
-  const format = (shijianchuo) => {
-    const times = new Date(shijianchuo);
-    const y = times.getFullYear();
-    const m = times.getMonth() + 1;
-    const d = times.getDate();
-    const h = times.getHours();
-    const mm = times.getMinutes();
-    const s = times.getSeconds();
-    return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
-  };
-  const timestamp1 = (index) => Date.parse(index);
-  const timeDiffer = (minDate, maxDate) => {
-    if (minDate || maxDate) { return 0; }
-    const msecDiffer = maxDate.getTime() - minDate.getTime();
-
-    const days = Math.floor(msecDiffer / (24 * 3600 * 1000));
-
-    const hours = Math.floor(msecDiffer % (24 * 3600 * 1000));
-
-    onExpiration(hours);
-    return hours;
-  };
-
-  const schema = Yup.object().shape({
-    // during: Yup.string().required(t('Create.required')),
-    price: Yup.number().moreThan(0).required(t('Create.required')),
-  });
-
   const formik = useFormik({
     initialValues: {
       categoryId,

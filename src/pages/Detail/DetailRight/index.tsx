@@ -103,6 +103,8 @@ interface Props {
   setIsShowBritish:React.Dispatch<React.SetStateAction<boolean>>,
   setIsShowDutch:React.Dispatch<React.SetStateAction<boolean>>,
   setIsShowFixed:React.Dispatch<React.SetStateAction<boolean>>,
+  recipientsId:string,
+  setIshowReceive:React.Dispatch<React.SetStateAction<boolean>>,
 }
 const DetailRight: FC<Props> = (({
   nftData,
@@ -125,15 +127,20 @@ const DetailRight: FC<Props> = (({
   setIsShowBritish,
   setIsShowDutch,
   setIsShowFixed,
+  recipientsId,
+  setIshowReceive,
 }) => {
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
 
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
+  const auctionPrice = priceStringDivUnit(nftData?.nftInfo?.auction.price);
   const collectionName = collectionsData?.collection?.metadata?.name;
   const nftName = nftData?.nftInfo?.metadata.name;
   const OffersArr = nftData?.nftInfo?.offers;
+  const auctionStatus = nftData?.nftInfo?.auction.status;
+
   const PriceHistory = nftData?.nftInfo?.history[selectedTime];
   const [events, setEvents] = useState(
     {
@@ -144,7 +151,7 @@ const DetailRight: FC<Props> = (({
       second: 0,
     },
   );
-
+  console.log(recipientsId);
   const countFun = (index:number) => {
     const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
     // eslint-disable-next-line no-param-reassign
@@ -216,6 +223,17 @@ const DetailRight: FC<Props> = (({
       // result = `${parseInt(hour.toString(), 10)}`;
     }
     return result;
+  };
+  const add0 = (m) => (m < 10 ? `0${m}` : m);
+  const format = (time:string) => {
+    const times = new Date(time);
+    const y = times.getFullYear();
+    const m = times.getMonth() + 1;
+    const d = times.getDate();
+    const h = times.getHours();
+    const mm = times.getMinutes();
+    const s = times.getSeconds();
+    return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
   };
   const TABS = [
     {
@@ -427,7 +445,7 @@ const DetailRight: FC<Props> = (({
                     lineHeight="43px"
                   >
                     {types ? (
-                      price
+                      auctionPrice
                     ) : null}
                     {!types ? (
                       Number(price) ? price : '-'
@@ -452,7 +470,7 @@ const DetailRight: FC<Props> = (({
               </Flex>
             </Flex>
             <Flex h="100%" m="20px 0" flexDirection="column" justifyContent="center">
-              {types === 'Dutch' ? (
+              {types === 'Dutch' && events.times > 0 ? (
                 <Button
                   width="184px"
                   height="48px"
@@ -468,7 +486,7 @@ const DetailRight: FC<Props> = (({
                   {!isLoginAddress ? t('Detail.placeBid') : '-'}
                 </Button>
               ) : null}
-              {types === 'British' ? (
+              {types === 'British' && events.times > 0 ? (
                 <Button
                   width="184px"
                   height="48px"
@@ -498,6 +516,21 @@ const DetailRight: FC<Props> = (({
                   onClick={handleBuy}
                 >
                   {!isLoginAddress && Number(price) > 0 ? t('Detail.buyNow') : '-'}
+                </Button>
+              ) : null}
+              {recipientsId === account?.address && events.times === 0 && auctionStatus === 'Created' ? (
+                <Button
+                  width="184px"
+                  height="48px"
+                  background="#000000"
+                  borderRadius="4px"
+                  fontSize="16px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="500"
+                  color="#FFFFFF"
+                  onClick={() => setIshowReceive(true)}
+                >
+                  {t('Detail.receive')}
                 </Button>
               ) : null}
 
@@ -637,7 +670,7 @@ const DetailRight: FC<Props> = (({
             </Flex>
           ) : null}
         </Flex>
-        {Number(nftData.nftInfo.auction?.hammer_price)
+        {Number(nftData.nftInfo.auction?.hammer_price) && Number(events.times) > 0
           ? (
             <Flex
               width="788px"
@@ -811,9 +844,9 @@ const DetailRight: FC<Props> = (({
                             color="#000000"
                             lineHeight="20px"
                           >
-                            {item?.order?.seller_id
+                            {item.bidder_id ? formatAddress(item.bidder_id) : (item?.order?.seller_id
                               ? formatAddress(item?.order?.seller_id)
-                              : formatAddress(item?.order?.buyer_id)}
+                              : formatAddress(item?.order?.buyer_id))}
                           </Text>
                           <Text
                             w="136px"
@@ -826,7 +859,7 @@ const DetailRight: FC<Props> = (({
                             color="#000000"
                             lineHeight="20px"
                           >
-                            {priceStringDivUnit(item?.order?.price)}
+                            {item.price ? priceStringDivUnit(item.price) : priceStringDivUnit(item?.order?.price)}
                             <Text
                               ml="3px"
                               color="#999999"
@@ -860,7 +893,7 @@ const DetailRight: FC<Props> = (({
                               color="#000000"
                               lineHeight="20px"
                             >
-                              -
+                              {item.timestamp ? format(item.timestamp) : '-'}
                             </Text>
                           )}
                           {item?.order?.deadline && isLoginAddress && item.order.status_id === 'Created' ? (

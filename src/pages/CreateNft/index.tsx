@@ -97,7 +97,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       setIsSubmitting(true);
       mint(formValue, {
         success: () => {
-          toast(<ToastBody title="Success" message={t('Create.success')} type="success" />);
+          toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
           setIsSubmitting(false);
           formAction.resetForm();
           setTimeout(() => {

@@ -4,18 +4,20 @@ import PolkaSDK from '..';
 import { txLog } from '../../utils/txLog';
 
 type redeemBritishAuctionProps = {
+  address: string,
   auctionCreatorAddress: string,
   auctionId: number,
   cb: Callback
 }
 
-export const redeemBritishAuction = async ({
+export const redeemDutchAuction = async ({
+  address,
   auctionCreatorAddress,
   auctionId,
   cb,
 }: redeemBritishAuctionProps) => {
   try {
-    const injector = await web3FromAddress(auctionCreatorAddress);
+    const injector = await web3FromAddress(address);
     const call = PolkaSDK.api.tx.nftmartAuction.redeemDutchAuction(
       auctionCreatorAddress, auctionId,
     );

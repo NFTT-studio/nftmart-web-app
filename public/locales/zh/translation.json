@@ -200,6 +200,7 @@
     "placeABidExplain": "* 如果没有人在",
     "placeABidExplainTwo": "前出更高价格，您将获得这个作品。",
     "placeABidMust": "必须大于等于",
+    "receive": "领取",
     "buySuccess": "购买成功"
   },
   "SellSetting": {
