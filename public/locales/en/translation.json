@@ -201,6 +201,7 @@
     "placeABidExplain": "* If no one has offered a higher price before ",
     "placeABidExplainTwo": ", you will get this item",
     "placeABidMust": "Must be greater than ",
+    "receive": "Receive",
     "buySuccess": "Buy Success"
   },
   "SellSetting": {

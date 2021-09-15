@@ -19,6 +19,7 @@ import MainContainer from '../../layout/MainContainer';
 import CancelDialog from './CancelDialog';
 import CancelAuctionDialog from './CancelAuctionDialog';
 import DealDialog from './DealDialog';
+import ReceiveDialog from './ReceiveDialog';
 import DetailLeft from './DetailLeft';
 import DetailRight from './DetailRight';
 import { getBlock } from '../../polkaSDK/api/getBlock';
@@ -92,6 +93,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [isShowCancel, setIsShowCancel] = useState(false);
   const [isCancelAuction, setIsCancelAuction] = useState(false);
   const [isShowDeal, setIsShowDeal] = useState(false);
+  const [isShowReceive, setIshowReceive] = useState(false);
   const [isShowBuy, setIsShowBuy] = useState(false);
   const [isShowOffer, setIsShowOffer] = useState(false);
   const [isShowDutch, setIsShowDutch] = useState(false);
@@ -163,7 +165,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const initPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.init_price);
   const minRaise = price * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
   const creatorId = nftData?.nftInfo?.auction?.creator_id;
-  // console.log(creatorId);
+  const recipientsId = nftData?.nftInfo?.offers[0].bidder_id;
+  console.log(recipientsId);
 
   return (
     <MainContainer title={`${nftName}-${collectionName}${t('Detail.title')}`}>
@@ -460,6 +463,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setIsShowBritish={setIsShowBritish}
             setIsShowDutch={setIsShowDutch}
             setIsShowFixed={setIsShowFixed}
+            recipientsId={recipientsId}
+            setIshowReceive={setIshowReceive}
           />
         </Flex>
         {isShowBuy && (
@@ -542,6 +547,15 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             offerId={offerId}
             offerOwner={offerOwner}
             orderId={nftData?.nftInfo.status === 'Selling' ? orderId : ''}
+          />
+        )}
+        {isShowReceive && (
+          <ReceiveDialog
+            isShowReceive={isShowReceive}
+            setIshowReceive={setIshowReceive}
+            auctionId={auctionId}
+            creatorId={creatorId}
+            type={type}
           />
         )}
       </Container>
