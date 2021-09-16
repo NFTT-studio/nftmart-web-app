@@ -24,9 +24,7 @@ import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-date-picker';
 
 import { useHistory } from 'react-router-dom';
-import { number } from 'yup';
 import * as Yup from 'yup';
-import { time } from 'console';
 import { useQueryClient } from 'react-query';
 import { submitOffer } from '../../../polkaSDK/api/submitOffer';
 import { useAppSelector } from '../../../hooks/redux';
@@ -64,6 +62,11 @@ const OfferDialog: FC<Props> = (({
   const cancelRef = useRef<HTMLDivElement>(null);
   const oneMonth = (60 * 60 * 24 * 30) / 6;
 
+  const schema = Yup.object().shape({
+    price: Yup.number().moreThan(0).required(t('Create.required')),
+    during: Yup.number().moreThan(0).required(t('Create.required')),
+  });
+
   const formik = useFormik({
     initialValues: {
       categoryId,
@@ -82,7 +85,7 @@ const OfferDialog: FC<Props> = (({
         tokenId: Number(tokenId),
         quantity: 1,
         price: Number(formValue?.price),
-        during: oneMonth,
+        during: Number(formValue?.during),
         cb: {
           success: (result) => {
             if (result.dispatchError) {
@@ -205,6 +208,9 @@ const OfferDialog: FC<Props> = (({
                   children="NMT"
                 />
               </InputGroup>
+              {formik.errors.price && formik.touched.price ? (
+                <div style={{ color: 'red' }}>{formik.errors.price}</div>
+              ) : null}
               <Text
                 mb="23px"
                 fontSize="12px"
@@ -249,13 +255,35 @@ const OfferDialog: FC<Props> = (({
                 // eslint-disable-next-line react/no-children-prop
                   children={t('Detail.inAday')}
                 />
-                <DatePicker
-                  onChange={onChange}
-                  value={value}
-                  clearIcon={null}
-                  minDate={new Date()}
-                  required
-                  calendarIcon={(
+                <Input
+                  id="during"
+                  name="during"
+                  value={formik.values.during}
+                  onChange={formik.handleChange}
+                  fontSize="16px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  lineHeight="14px"
+                  color="#000000"
+                  _focus={{
+                    boxShadow: 'none',
+                    color: '#000000',
+                    border: '1px solid #000000',
+                  }}
+                  _after={{
+                    boxShadow: 'none',
+                    color: '#000000',
+                    border: '1px solid #000000',
+                  }}
+                  placeholder="Day"
+                  _placeholder={{
+                    color: '#999999',
+                    fontSize: '12px',
+                  }}
+                />
+                <InputRightAddon
+                  // eslint-disable-next-line react/no-children-prop
+                  children={(
                     <Image
                       w="22px"
                       h="22px"
@@ -265,19 +293,10 @@ const OfferDialog: FC<Props> = (({
 )}
                 />
 
-                {/* <DatePicker
-                  onChange={formik.handleChange}
-                  value={formik.values.during}
-                  calendarIcon={(
-                    <Image
-                      w="22px"
-                      h="22px"
-                      borderStyle="dashed"
-                      src={IconCalendar.default}
-                    />
-)}
-                /> */}
               </InputGroup>
+              {formik.errors.during && formik.touched.during ? (
+                <div style={{ color: 'red' }}>{formik.errors.during}</div>
+              ) : null}
               <Flex w="100%" justifyContent="center" pt="10px">
                 <Button
                   isLoading={isSubmitting}

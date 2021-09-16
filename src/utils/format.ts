@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { bnToBn } from '@polkadot/util';
 import { unit as UnitBn } from '../polkaSDK/utils/unit';
 import { toBigNumber } from './bigNumber';
@@ -49,3 +50,11 @@ export const NumberToString = (nmtNumber: string) => {
 };
 export const toFixedDecimals = (n: NumberValue, place = 8) => toBigNumber(n).toFormat(place);
 export const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+export const currentPrice = (maxPrice: number, minPrice: number, deadline: number, currentBlock: number, createdBlock:number) => {
+  // eslint-disable-next-line no-mixed-operators
+  const downPrice = minPrice + (maxPrice - minPrice) * Math.floor((deadline - currentBlock) / 30 * 60 / 6) / Math.floor((deadline - createdBlock) / 30 * 60 / 6);
+  if (deadline < currentBlock) {
+    return minPrice;
+  }
+  return downPrice;
+};

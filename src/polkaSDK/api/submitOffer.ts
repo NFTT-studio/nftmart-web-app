@@ -21,25 +21,26 @@ type submitOfferProps = {
 export const submitOffer = async ({
   address = '', // address of current user
   categoryId = 0,
-  classId = 0, // category id
   quantity = 1,
   price = 1,
+  classId,
   tokenId = 0, // token id
-  during = oneMonth, // during block num ,need to be conver from timestamp
+  during = 0, // during block num ,need to be conver from timestamp
   cb,
 }: submitOfferProps) => {
   try {
     const injector = await web3FromAddress(address);
     const currentBlockNumber = bnToBn(await PolkaSDK.api.query.system.number());
+    const durings = (60 * 60 * 24 * during) / 6;
+    const commissionRate = 0;
 
     const priceAmount = unit.mul(bnToBn(price));
-
     const call = PolkaSDK.api.tx.nftmartOrder.submitOffer(
       NATIVE_CURRENCY_ID,
-      categoryId,
       priceAmount,
-      currentBlockNumber.add(bnToBn(during)),
+      currentBlockNumber.add(bnToBn(durings)),
       [[classId, tokenId, quantity]],
+      commissionRate,
     );
     await call.signAndSend(address, { signer: injector.signer }, (result: any) => txLog(result, cb.success));
   } catch (error) {
