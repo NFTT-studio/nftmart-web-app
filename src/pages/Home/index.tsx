@@ -124,7 +124,7 @@ const Home = () => {
                       setPageParamr(pageParam - 1);
                       setTimeout(() => {
                         refetchHot();
-                      }, 10);
+                      }, 1);
                     }
                   }}
                 >
@@ -150,7 +150,7 @@ const Home = () => {
                       setPageParamr(pageParam + 1);
                       setTimeout(() => {
                         refetchHot();
-                      }, 10);
+                      }, 1);
                     }
                   }}
                 >
@@ -168,7 +168,7 @@ const Home = () => {
                 </Center>
               ) : hotNftsData?.orders.length
                 ? (
-                  <Stack direction="row" spacing="20px">
+                  <Stack direction="row" spacing="26px">
                     {hotNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
@@ -239,7 +239,7 @@ const Home = () => {
                       setPageParamE(pageParamE - 1);
                       setTimeout(() => {
                         refetchExpensive();
-                      }, 10);
+                      }, 1);
                     }
                   }}
                 >
@@ -265,7 +265,7 @@ const Home = () => {
                       setPageParamE(pageParamE + 1);
                       setTimeout(() => {
                         refetchExpensive();
-                      }, 10);
+                      }, 1);
                     }
                   }}
                 >
@@ -283,7 +283,7 @@ const Home = () => {
                 </Center>
               ) : (expensiveNftsData?.orders.length
                 ? (
-                  <Stack direction="row" spacing="20px">
+                  <Stack direction="row" spacing="26px">
                     {expensiveNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
@@ -352,8 +352,8 @@ const Home = () => {
                     if (pageParamC > 0) {
                       setPageParamC(pageParamC - 1);
                       setTimeout(() => {
-                        refetchExpensive();
-                      }, 10);
+                        refetchCheap();
+                      }, 1);
                     }
                   }}
                 >
@@ -378,8 +378,8 @@ const Home = () => {
                     if (cheapNftsData && pageParamC + 1 < cheapNftsData?.pageInfo.pageSize) {
                       setPageParamC(pageParamC + 1);
                       setTimeout(() => {
-                        refetchExpensive();
-                      }, 10);
+                        refetchCheap();
+                      }, 1);
                     }
                   }}
                 >
@@ -397,7 +397,7 @@ const Home = () => {
                 </Center>
               ) : cheapNftsData?.orders.length
                 ? (
-                  <Stack direction="row" spacing="20px">
+                  <Stack direction="row" spacing="26px">
                     {cheapNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}

@@ -22,7 +22,7 @@ export const redeemDutchAuction = async ({
       auctionCreatorAddress, auctionId,
     );
     await call.signAndSend(
-      auctionCreatorAddress, { signer: injector.signer }, (result: any) => txLog(result, cb.success),
+      address, { signer: injector.signer }, (result: any) => txLog(result, cb.success),
     );
   } catch (error) {
     cb.error(error.toString());

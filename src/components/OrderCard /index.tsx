@@ -253,11 +253,11 @@ const NftCard: FC<NftCardProps> = ({
                 <Flex align="flex-start" alignItems="center" position="relative">
                   <Flex
                     position="absolute"
-                    top="17px"
-                    right="105px"
+                    // top="17px"
+                    left="5px"
                     width="18px"
                     fontSize="15px"
-                    letterSpacing="8px"
+                    letterSpacing="8.4px"
                   >
                     <Countdown
                       autoStart

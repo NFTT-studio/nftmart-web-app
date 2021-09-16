@@ -96,6 +96,8 @@ export * as IconBrowse from './icon_browse.png';
 export * as IconLiulan from './icon_liulan.png';
 export * as IconLeftw from './icon_leftw.png';
 export * as IconRightw from './icon_rightw.png';
+export * as IconRankDown from './icon_rank_down.png';
+export * as IconRankUp from './icon_rank_up.png';
 // empty
 export * as Emptyimg from './empty.png';
 export * as Historyempty from './historyempty.png';

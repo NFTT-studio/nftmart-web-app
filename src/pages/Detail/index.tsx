@@ -175,7 +175,9 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const initPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.init_price);
   const minRaise = price * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
   const creatorId = nftData?.nftInfo?.auction?.creator_id;
-  const recipientsId = nftData?.nftInfo?.offers[0]?.bidder_id;
+  const offersLength = nftData?.nftInfo?.offers.length;
+  const recipientsId = nftData?.nftInfo?.offers[(nftData?.nftInfo?.offers.length - 1)]?.bidder_id;
+  console.log(orderId);
 
   return (
     <>
@@ -334,6 +336,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               color="#000000"
                               lineHeight="16px"
                               border="1px solid #000000"
+                              isDisabled={offersLength > 1}
                               _hover={{
                                 background: '#000000',
                                 color: '#FFFFFF',
@@ -403,6 +406,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             color="#000000"
                             lineHeight="16px"
                             border="1px solid #000000"
+                            isDisabled={offersLength > 1}
                             _hover={{
                               background: '#000000',
                               color: '#FFFFFF',
@@ -441,7 +445,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               mt="0px"
               display="flex"
               flexDirection="column"
-              width="100%"
+              w="1364px"
               height="100%"
               justifyContent="flex-start"
             >
@@ -550,7 +554,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 </Flex>
               </Flex>
               <Flex
-                w="100%"
+                w="1364px"
                 flexDirection="row"
                 justifyContent="space-between"
                 alignItems="flex-start"
@@ -644,7 +648,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               <CancelDialog
                 isShowCancel={isShowCancel}
                 setIsShowCancel={setIsShowCancel}
-                orderId={orderId}
+                orderId={nftData?.nftInfo.status === 'Selling' ? orderId : ''}
                 nftId={nftId}
               />
               )}

@@ -30,6 +30,8 @@ import {
   IconAuthentication,
   // IconLeft,
   Historyempty,
+  IconRankDown,
+  IconRankUp,
 } from '../../../assets/images';
 
 interface Props {
@@ -114,7 +116,7 @@ const DetailRight: FC<Props> = (({
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
 
-  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+  const formatAddress = (addr: string) => `${addr?.slice(0, 4)}...${addr?.slice(-4)}`;
   const price = nftData?.nftInfo?.price ? priceStringDivUnit(nftData?.nftInfo?.price) : null;
   const auctionPrice = nftData?.nftInfo?.auction?.price ? priceStringDivUnit(nftData?.nftInfo?.auction?.price) : null;
   const collectionName = collectionsData?.collection?.metadata?.name;
@@ -361,13 +363,26 @@ const DetailRight: FC<Props> = (({
                     color="#999999"
                   >
                     {Number(price) ? `NMT ($${token?.price * Number(price)})` : null}
+                    {Number(auctionPrice) ? `NMT ($${token?.price * Number(auctionPrice)})` : null}
                   </Text>
-                  {/* <Image
-                      m="0 0 8px 10px"
-                      w="20px"
-                      h="20px"
-                      src={IconDetailsCollection.default}
-                    /> */}
+                  {Number(auctionPrice) && types === 'Dutch'
+                    ? (
+                      <Image
+                        m="0 0 8px 10px"
+                        w="20px"
+                        h="20px"
+                        src={IconRankDown.default}
+                      />
+                    ) : null}
+                  {Number(auctionPrice) && types === 'British'
+                    ? (
+                      <Image
+                        m="0 0 8px 10px"
+                        w="20px"
+                        h="20px"
+                        src={IconRankUp.default}
+                      />
+                    ) : null}
                 </Flex>
               </Flex>
             </Flex>
@@ -473,11 +488,12 @@ const DetailRight: FC<Props> = (({
               >
                 <Flex
                   position="absolute"
-                  top="4px"
-                  right="102px"
-                  width="18px"
-                  fontSize="15px"
-                  letterSpacing="8px"
+                  left="6px"
+                  top="7px"
+                  fontSize="14px"
+                  letterSpacing="8.1px"
+                  fontFamily="PingFangSC-Medium, PingFang SC"
+                  fontweight="500"
                 >
                   {Number(events.times)
                     ? (
@@ -491,7 +507,7 @@ const DetailRight: FC<Props> = (({
                 <Flex align="flex-start" alignItems="center" color="#FFFFFF">
                   <Box
                     width="18px"
-                    height="22px"
+                    height="28px"
                     background="red"
                     borderRadius="1px"
                     display="flex"
@@ -501,7 +517,7 @@ const DetailRight: FC<Props> = (({
                   />
                   <Box
                     width="18px"
-                    height="22px"
+                    height="28px"
                     background="red"
                     borderRadius="1px"
                     display="flex"
@@ -514,13 +530,13 @@ const DetailRight: FC<Props> = (({
                     color="#000000"
                     textAlign="center"
                     position="relative"
-                    zIndex="9"
+                    zIndex="2"
                   >
                     :
                   </Text>
                   <Box
                     width="18px"
-                    height="22px"
+                    height="28px"
                     background="red"
                     borderRadius="1px"
                     display="flex"
@@ -530,7 +546,7 @@ const DetailRight: FC<Props> = (({
                   />
                   <Box
                     width="18px"
-                    height="22px"
+                    height="28px"
                     background="red"
                     borderRadius="1px"
                     display="flex"
@@ -544,14 +560,14 @@ const DetailRight: FC<Props> = (({
                     color="#000000"
                     textAlign="center"
                     position="relative"
-                    zIndex="9"
+                    zIndex="2"
                   >
                     :
                   </Text>
                   <Box
                     mr="2px"
                     width="18px"
-                    height="22px"
+                    height="28px"
                     background="red"
                     borderRadius="1px"
                     display="flex"
@@ -560,7 +576,7 @@ const DetailRight: FC<Props> = (({
                   />
                   <Box
                     width="18px"
-                    height="22px"
+                    height="28px"
                     background="red"
                     borderRadius="1px"
                     display="flex"
@@ -575,7 +591,7 @@ const DetailRight: FC<Props> = (({
         {Number(nftData.nftInfo.auction?.hammer_price) && Number(events.times) > 0
           ? (
             <Flex
-              width="788px"
+              width="100%"
               height="65px"
               background="#F9F9F9"
               flexDirection="row"
@@ -852,6 +868,7 @@ const DetailRight: FC<Props> = (({
                   fontWeight="500"
                   color="#000000"
                   onClick={handleOffer}
+                  isDisabled={!!(types)}
                 >
                   {t('Detail.makeOffer')}
                 </Button>
