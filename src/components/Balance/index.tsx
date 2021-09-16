@@ -60,14 +60,14 @@ export const renderNmtNumberText = (balanceText: string) => {
   return (
     <>
       <Flex display="inline-flex">
-        <Text fontSize="sm" fontWeight="bold">
+        <Text>
           {integer}
           {decimal ? '.' : ''}
         </Text>
-        <Text fontSize="sm" fontWeight="bold" marginRight={1}>
+        <Text marginRight={1}>
           {decimal && decimal.substring(0, 3)}
         </Text>
-        <Text fontSize="sm" fontWeight="bold">
+        <Text>
           {unit}
         </Text>
       </Flex>

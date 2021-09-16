@@ -43,12 +43,13 @@ const Header: FC<Props> = (({ userData, dataPerson }) => (
       </Text>
       <Text
         w="100%"
-        mt="24px"
-        fontSize="14px"
-        fontFamily="TTHoves-Regular, TTHoves"
-        fontWeight="400"
-        color="#999999"
-        lineHeight="16px"
+        mt="10px"
+        fontSize="16px"
+        fontFamily="TTHoves-Thin, TTHoves"
+        fontWeight="100"
+        color="#000000"
+        lineHeight="18px"
+        wordBreak="break-all"
       >
         {dataPerson.data?.address}
       </Text>

@@ -59,26 +59,6 @@ import MyToast, { ToastBody } from '../../components/MyToast';
 
 const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { t } = useTranslation();
-  const ButtonArr = [
-    {
-      id: 0,
-      title: t('SellSetting.setPrice'),
-      subtitle: t('SellSetting.sellAtaFixedPrice'),
-      isDisabled: false,
-    },
-    {
-      id: 1,
-      title: t('SellSetting.dutchAuction'),
-      subtitle: t('SellSetting.sellAtaDecliningPrice'),
-      isDisabled: false,
-    },
-    {
-      id: 2,
-      title: t('SellSetting.englishAuction'),
-      subtitle: t('SellSetting.auctionToTheHighestBidder'),
-      isDisabled: false,
-    },
-  ];
   const [tax, setTax] = useState(0);
   getTax().then((res) => {
     setTax(Number(res.toString()));
@@ -99,8 +79,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [endingPriceSl, setEndingPriceSl] = useState(false);
   const [commissionRateSl, setcommissionRateSl] = useState(false);
 
-  const firstOffer = nftData?.nftInfo?.offers[0];
-  const orderId = firstOffer?.order_id;
+  const orderId = nftData?.nftInfo?.order_id;
+  const type = nftData?.nftInfo?.auction?.type || false;
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectId(Number(event.currentTarget.id));
@@ -126,6 +106,26 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   function number2PerU16(x) {
     return (x / 65535.0) * 100;
   }
+  const ButtonArr = [
+    {
+      id: 0,
+      title: t('SellSetting.setPrice'),
+      subtitle: t('SellSetting.sellAtaFixedPrice'),
+      isDisabled: false,
+    },
+    {
+      id: 1,
+      title: t('SellSetting.dutchAuction'),
+      subtitle: t('SellSetting.sellAtaDecliningPrice'),
+      isDisabled: !!(selectId === 0 && Number(nftData?.nftInfo?.price) && !type),
+    },
+    {
+      id: 2,
+      title: t('SellSetting.englishAuction'),
+      subtitle: t('SellSetting.auctionToTheHighestBidder'),
+      isDisabled: !!(selectId === 0 && Number(nftData?.nftInfo?.price) && !type),
+    },
+  ];
   const formik = useFormik({
     initialValues: {
       price: '',
@@ -152,7 +152,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
-            toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
+            toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
             setIsSubmitting(false);
             formAction.resetForm();
             setTimeout(() => {
@@ -177,7 +177,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
-            toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
+            toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
             setIsSubmitting(false);
             formAction.resetForm();
             setTimeout(() => {
@@ -201,7 +201,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
-            toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
+            toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
             setIsSubmitting(false);
             formAction.resetForm();
             setTimeout(() => {
@@ -225,7 +225,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
-            toast(<ToastBody title="Success" message={t('Create.Success')} type="success" />);
+            toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
             setTimeout(() => {
               setIsSubmitting(false);
               formAction.resetForm();

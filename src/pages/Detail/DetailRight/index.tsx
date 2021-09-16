@@ -8,12 +8,7 @@ import {
   Flex,
   Image,
   Text,
-  AccordionPanel,
-  AccordionItem,
-  Accordion,
   Box,
-  AccordionIcon,
-  AccordionButton,
   Link,
   Button,
 } from '@chakra-ui/react';
@@ -29,19 +24,11 @@ import { renderNmtNumberText } from '../../../components/Balance';
 import {
   // IconDetailsRefresh,
   // IconDetailshaSre,
-  IconDetailsCollection,
-  IconDetailsCollectionS,
   IconDetailsDetail,
   // PriceIcon,
   HeadPortrait,
-  IconPriceHistory,
-  Iconprice,
   IconAuthentication,
-  IconDetailsRefresh,
-  IconDetailshaSre,
   // IconLeft,
-  IconBrowse,
-  IconLiulan,
   Historyempty,
 } from '../../../assets/images';
 
@@ -87,7 +74,6 @@ interface Props {
   } | undefined,
   account:InjectedAccountWithMeta | null,
   isLoginAddress:boolean,
-  isCollect:boolean,
   remainingTime:number,
   setOfferId: React.Dispatch<React.SetStateAction<string>>,
   setOfferOwner: React.Dispatch<React.SetStateAction<string>>,
@@ -96,8 +82,6 @@ interface Props {
   setIsShowOffer: React.Dispatch<React.SetStateAction<boolean>>,
   token:{ token: string; } | undefined,
   OfferssUnitArr:[],
-  setIsCollect:React.Dispatch<React.SetStateAction<boolean>>,
-  collectNft:any,
   types:string
   deadline:number,
   setIsShowBritish:React.Dispatch<React.SetStateAction<boolean>>,
@@ -111,7 +95,6 @@ const DetailRight: FC<Props> = (({
   collectionsData,
   account,
   isLoginAddress,
-  isCollect,
   remainingTime,
   setOfferId,
   setOfferOwner,
@@ -120,8 +103,6 @@ const DetailRight: FC<Props> = (({
   token,
   setIsShowOffer,
   OfferssUnitArr,
-  setIsCollect,
-  collectNft,
   types,
   deadline,
   setIsShowBritish,
@@ -134,12 +115,12 @@ const DetailRight: FC<Props> = (({
   const [selectedTime, setSelectedTime] = useState('seven');
 
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
-  const price = priceStringDivUnit(nftData?.nftInfo?.price);
-  const auctionPrice = priceStringDivUnit(nftData?.nftInfo?.auction.price);
+  const price = nftData?.nftInfo?.price ? priceStringDivUnit(nftData?.nftInfo?.price) : null;
+  const auctionPrice = nftData?.nftInfo?.auction?.price ? priceStringDivUnit(nftData?.nftInfo?.auction?.price) : null;
   const collectionName = collectionsData?.collection?.metadata?.name;
   const nftName = nftData?.nftInfo?.metadata.name;
   const OffersArr = nftData?.nftInfo?.offers;
-  const auctionStatus = nftData?.nftInfo?.auction.status;
+  const auctionStatus = nftData?.nftInfo?.auction?.status ? nftData?.nftInfo?.auction?.status : null;
 
   const PriceHistory = nftData?.nftInfo?.history[selectedTime];
   const [events, setEvents] = useState(
@@ -151,7 +132,6 @@ const DetailRight: FC<Props> = (({
       second: 0,
     },
   );
-  console.log(recipientsId);
   const countFun = (index:number) => {
     const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
     // eslint-disable-next-line no-param-reassign
@@ -254,125 +234,25 @@ const DetailRight: FC<Props> = (({
     setSelectTabId(Number(event.currentTarget.id));
   };
   return (
-    <Flex width="788px" flexDirection="column">
+    <Flex width="748px" flexDirection="column">
       <Flex
-        width="788px"
+        width="100%"
         flexDirection="column"
         justifyContent="flex-start"
         borderBottom="1px solid #000000"
       >
-
-        <Flex p="0 20px 0 20px" width="100%" h="40px" justifyContent="flex-end" alignItems="center">
-          {nftData?.nftInfo?.view_count ? (
-            <Flex h="22px" justifyContent="flex-start" alignItems="center" mr="20px">
-              <Image
-                mr="4px"
-                w="16px"
-                h="16px"
-                src={IconBrowse.default}
-              />
-              <Text
-                fontSize="14px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                color="#000000"
-              >
-                {nftData?.nftInfo?.view_count}
-              </Text>
-            </Flex>
-          ) : null}
-          {nftData?.nftInfo?.collect_count ? (
-            <Flex h="22px" justifyContent="flex-start" alignItems="center">
-              <Image
-                mr="4px"
-                w="16px"
-                h="16px"
-                src={IconLiulan.default}
-              />
-              <Text
-                fontSize="14px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                color="#000000"
-              >
-                {nftData?.nftInfo?.collect_count}
-              </Text>
-            </Flex>
-          ) : null}
-
-          <Flex>
-            <Box
-              width="40px"
-              height="40px"
-              borderRadius="4px 0px 0px 4px"
-              border="1px solid #E5E5E5"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              _hover={{
-                boxShadow: '0px 2px 8px 0px #E1E1E1',
-              }}
-            >
-              <Image
-                w="22px"
-                h="22px"
-                src={IconDetailsRefresh.default}
-              />
-            </Box>
-            <Box
-              width="40px"
-              height="40px"
-              borderTop="1px solid #E5E5E5"
-              borderBottom="1px solid #E5E5E5"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              _hover={{
-                boxShadow: '0px 2px 8px 0px #E1E1E1',
-              }}
-            >
-              <Image
-                w="22px"
-                h="22px"
-                src={IconDetailshaSre.default}
-              />
-            </Box>
-            <Box
-              width="40px"
-              height="40px"
-              borderRadius="0px 4px 4px 0px"
-              border="1px solid #E5E5E5"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              _hover={{
-                boxShadow: '0px 2px 8px 0px #E1E1E1',
-              }}
-              onClick={() => {
-                setIsCollect(!isCollect);
-                const type = isCollect ? 'cancle' : 'collect';
-                collectNft(type);
-              }}
-            >
-              <Image
-                w="22px"
-                h="22px"
-                src={isCollect ? IconDetailsCollectionS.default : IconDetailsCollection.default}
-              />
-            </Box>
-
-          </Flex>
-        </Flex>
-        <Flex flexDirection="column" p="0 20px 0 20px">
+        <Flex flexDirection="column" p="0 0px 0 0px" alignItems="flex-start">
           <Text
-            fontSize="40px"
+            fontSize="54px"
             fontFamily="TTHoves-Bold, TTHoves"
             fontWeight="bold"
-            color="#333333"
+            color="#000000"
+            lineHeight="64px"
           >
             {nftName}
           </Text>
           <Link
+            mt="10px"
             as={RouterLink}
             to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
           >
@@ -396,42 +276,64 @@ const DetailRight: FC<Props> = (({
             </Flex>
           </Link>
           <Link
+            display="inline-block"
             as={RouterLink}
             to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
           >
-            <Flex p="20px 0" justifyContent="flex-start" alignItems="center">
+            <Flex p="20px 0 0 0" justifyContent="flex-start" alignItems="center">
               <Image pr="4px" w="50px" h="auto" src={HeadPortrait.default} />
-              <Text
-                color="#000000"
-                align="center"
-                fontSize="16px"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                whiteSpace="nowrap"
-                textAlign="start"
-              >
-                作者名字
-              </Text>
+              <Flex flexDirection="column">
+                <Text
+                  color="#000000"
+                  align="center"
+                  fontSize="16px"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  textAlign="start"
+                  fontFamily="TTHoves-Medium, TTHoves"
+                  fontWeight="500"
+                  lineHeight="18px"
+                >
+                  作者名字
+                </Text>
+                <Text
+                  mt="2px"
+                  color="#999999"
+                  align="center"
+                  fontSize="12px"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  textAlign="start"
+                  fontFamily="TTHoves-Thin, TTHoves"
+                  fontWeight="100"
+                  lineHeight="14px"
+                >
+                  Owner
+                </Text>
+              </Flex>
             </Flex>
           </Link>
         </Flex>
         <Flex
+          mt="30px"
           w="100%"
           h="100%"
           flexDirection="row"
           justifyContent="space-between"
           alignItems="flex-start"
-          p="0 20px 0 20px"
+          p="0 0px 0 0px"
         >
           <Flex flexDirection="column">
             <Flex h="100%" flexDirection="column" justifyContent="center">
               <Text
-                fontSize="14px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                color="#999999"
-                lineHeight="16px"
-                mb="12px"
+                fontSize="24px"
+                fontFamily="TTHoves-Medium, TTHoves"
+                fontWeight="500"
+                color="#000000"
+                lineHeight="29px"
+                mb="8px"
               >
                 {t('Detail.currentPrice')}
               </Text>
@@ -440,8 +342,8 @@ const DetailRight: FC<Props> = (({
                   <Text
                     fontSize="36px"
                     fontFamily="TTHoves-Bold, TTHoves"
-                    fontWeight="bold"
-                    color="#333333"
+                    fontWeight="500"
+                    color="#000000"
                     lineHeight="43px"
                   >
                     {types ? (
@@ -452,8 +354,8 @@ const DetailRight: FC<Props> = (({
                     ) : null}
                   </Text>
                   <Text
-                    m="0 0 8px 4px"
-                    fontSize="14px"
+                    m="0 0 0px 4px"
+                    fontSize="24px"
                     fontFamily="TTHoves-Regular, TTHoves"
                     fontWeight="400"
                     color="#999999"
@@ -469,7 +371,7 @@ const DetailRight: FC<Props> = (({
                 </Flex>
               </Flex>
             </Flex>
-            <Flex h="100%" m="20px 0" flexDirection="column" justifyContent="center">
+            <Flex h="100%" m="16px 0 35px 0" flexDirection="column" justifyContent="center">
               {types === 'Dutch' && events.times > 0 ? (
                 <Button
                   width="184px"
@@ -736,7 +638,7 @@ const DetailRight: FC<Props> = (({
           : null}
       </Flex>
       <Flex
-        p="0 20px 0 20px"
+        p="0 0px 0 0px"
         mt="20px"
         w="100%"
         display="flex"
@@ -773,7 +675,7 @@ const DetailRight: FC<Props> = (({
         ))}
       </Flex>
       {selectTabId === 0 ? (
-        <Box p="20px">
+        <Box p="20px 0">
           <Flex w="100%" flexDirection="column" justifyContent="flex-start">
             {OffersArr.length
               ? (

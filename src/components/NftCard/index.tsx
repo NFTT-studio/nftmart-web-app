@@ -72,7 +72,7 @@ const NftCard: FC<NftCardProps> = ({
     <Link
       key={nft?.metadata.name}
       width="320px"
-      height="354px"
+      height="396px"
       as={RouterLink}
       to={`/item/${nft.id}`}
     >
@@ -95,7 +95,7 @@ const NftCard: FC<NftCardProps> = ({
           wrapperProps={{
             style: {
               width: '320px',
-              height: '210px',
+              height: '219px',
               display: 'flex',
               justifyContent: 'center',
             },
@@ -108,32 +108,39 @@ const NftCard: FC<NftCardProps> = ({
           }}
           src={IPFS_URL + nft?.metadata.logoUrl}
           effect="blur"
-          fallback={<Shimmer height={210} width={320} />}
+          fallback={<Shimmer height={219} width={320} />}
         />
         )}
-        <Box borderRadius="0 0 4px 4px" h="100%" display="flex" flexDirection="column" backgroundColor="#000000">
+        <Box
+          padding="0 20px"
+          borderRadius="0 0 4px 4px"
+          h="100%"
+          display="flex"
+          flexDirection="column"
+          backgroundColor="#000000"
+        >
           <Box
-            mt="16px"
+            mt="18px"
             display="flex"
             justifyContent="space-between"
-            p="0 16px"
-            height="17px"
-            lineHeight="17px"
+            lineHeight="14px"
             fontSize="12px"
-            color="#FFFFFF"
+            color="#999999"
+            fontFamily="TTHoves-Light, TTHoves"
           >
             <Box userSelect="none">{nft?.class?.name}</Box>
           </Box>
           <Box
-            mt="8px"
+            mt="3px"
             display="flex"
             justifyContent="space-between"
-            padding="0 16px 8px 16px"
-            paddingBottom=""
-            fontWeight="600"
+            fontWeight="500"
             color="#000000"
+            fontSize="16px"
+            lineHeight="18px"
+            fontFamily="TTHoves-Medium, TTHoves"
           >
-            <Box pr={2}>
+            <Box>
               {nft?.metadata && (
               <Text
                 maxWidth="100%"
@@ -151,45 +158,54 @@ const NftCard: FC<NftCardProps> = ({
             </Box>
           </Box>
           <Box
+            mt="13px"
             display="flex"
             justifyContent="space-between"
-            padding="0 16px 0px 16px"
-            paddingBottom=""
-            fontWeight="600"
-            color="#000000"
           >
             {nft?.price && (
             <Box textAlign="right" display="flex" justifyContent="center">
-              <Flex align="flex-start" alignItems="center">
-                <Box color="#FFFFFF">{price}</Box>
-                <Text
+              <Flex flexDirection="column" alignItems="flex-start">
+                <Box
+                  height="24px"
                   color="#FFFFFF"
+                  fontWeight="500"
+                  fontFamily="TTHoves-Medium, TTHoves"
+                  lineHeight="24px"
+                  fontSize="20px"
                 >
-                  NMT
-                </Text>
+                  {Number(nft?.price) ? price : '' }
+                  {Number(nft?.price) ? 'NMT' : '' }
+                </Box>
+                <Box
+                  mt="2px"
+                  color="#999999"
+                  fontWeight="300"
+                  fontFamily="TTHoves-Light, TTHoves"
+                  lineHeight="14px"
+                  fontSize="12px"
+                >
+                  list price
+                </Box>
               </Flex>
             </Box>
             )}
           </Box>
           <Box
-            mt="0px"
+            mt="14px"
             display="flex"
             justifyContent="space-between"
-            m="0 16px"
-            fontSize="12px"
+            fontSize="14px"
             fontFamily="TTHoves-Regular, TTHoves"
-            fontWeight="400"
+            fontWeight="500"
             color="#FFFFFF"
-            lineHeight="14px"
+            lineHeight="16px"
             borderTop="1px solid #999999"
             h="100%"
           >
             <Flex justifyContent="center" alignItems="center">
-              <Image pr="4px" w="22px" h="22px" src={HeadPortrait.default} />
+              <Image pr="4px" w="auto" h="26px" src={HeadPortrait.default} />
               <Text
-                color="#FFFFFF"
                 align="center"
-                fontSize="16px"
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"

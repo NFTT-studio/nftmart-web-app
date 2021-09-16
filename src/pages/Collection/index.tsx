@@ -87,7 +87,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
       setIsPerson(true);
     }
   }, [collectionsData?.collection?.creator_id, address, dataPerson]);
-
+  // isLoading
   if (isLoading) {
     return (
       <Center height="100vh">
@@ -151,11 +151,11 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
           </Flex>
         </Flex>
       ) : ''}
-      <Flex width="1364px" position="relative">
+      <Flex width="1440px" position="relative">
         <Image
-          mt="20px"
-          maxWidth="1364px"
+          maxWidth="1440px"
           width="100%"
+          height="280px"
           src={collectionsData?.collection?.metadata?.banner
             ? `${PINATA_SERVER}${collectionsData?.collection?.metadata?.banner}`
             : CollectionBackground.default}
@@ -165,7 +165,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
           position="absolute"
           bottom="-50px"
           border="3px solid #FFFFFF"
-          m="0 20px"
+          m="0 40px"
           src={`${PINATA_SERVER}${collectionsData?.collection?.metadata.logoUrl}`}
           w="100px"
           h="100px"
@@ -175,10 +175,10 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
       <Flex />
       <Flex
         w="100%"
-        maxWidth="1364px"
+        maxWidth="1440px"
         direction="row"
         justifyContent="space-between"
-        padding="70px 20px 20px 20px"
+        padding="81px 40px 20px 40px"
       >
         <Flex w="100%" width="301px" direction="column">
           <Flex h="33px" alignItems="center">
@@ -186,7 +186,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               fontSize="28px"
               fontFamily="TTHoves-Bold, TTHoves"
               fontWeight="bold"
-              color="#191A24"
+              color="#000000"
               lineHeight="33px"
             >
               {collectionsData?.collection?.metadata.name}
@@ -199,7 +199,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             />
           </Flex>
           <Text
-            mt="12px"
+            mt="10px"
             fontSize="14px"
             fontFamily="TTHoves-Light, TTHoves"
             fontWeight="300"
@@ -209,7 +209,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             {collectionsData?.collection?.metadata.description}
           </Text>
           <Flex
-            m="20px 0"
+            m="40px 0"
             width="100%"
             flexDirection="row"
             alignContent="center"
@@ -221,8 +221,8 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             >
               <Flex
                 fontSize="14px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
+                fontFamily="TTHoves-Thin, TTHoves"
+                fontWeight="100"
                 color="#000000"
                 lineHeight="16px"
                 justifyContent="flex-start"
@@ -239,7 +239,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="flex-start"
                 alignItems="center"
               >
-                {nftsData?.pages[0].pageInfo.totalNum}
+                {nftsData?.pages[0].pageInfo.totalNum || 0}
               </Flex>
             </Flex>
             <Flex
@@ -249,8 +249,8 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             >
               <Flex
                 fontSize="14px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
+                fontFamily="TTHoves-Thin, TTHoves"
+                fontWeight="100"
                 color="#000000"
                 lineHeight="16px"
                 justifyContent="center"
@@ -277,8 +277,8 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             >
               <Flex
                 fontSize="14px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
+                fontFamily="TTHoves-Thin, TTHoves"
+                fontWeight="100"
                 color="#000000"
                 lineHeight="16px"
                 justifyContent="center"
@@ -305,8 +305,8 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             >
               <Flex
                 fontSize="14px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
+                fontFamily="TTHoves-Thin, TTHoves"
+                fontWeight="100"
                 color="#000000"
                 lineHeight="16px"
                 justifyContent="flex-end"
@@ -340,7 +340,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                       justifyContent="flex-start"
                     >
                       <Box
-                        mr="20px"
+                        mr="15px"
                         key="index"
                         display="flex"
                         justifyContent="center"

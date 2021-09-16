@@ -141,7 +141,7 @@ const DetailLeft: FC<Props> = (({
       </Flex>
       <Flex width="560px">
         <Accordion width="560px" defaultIndex={[0, 2]} allowMultiple>
-          <AccordionItem width="100%" border="none">
+          <AccordionItem mt="36px" width="100%" border="none">
             <AccordionButton
               height="62px"
               width="100%"
@@ -225,7 +225,7 @@ const DetailLeft: FC<Props> = (({
               </Text>
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem width="100%" border="none">
+          <AccordionItem mt="20px" width="100%" border="none">
             <AccordionButton
               height="62px"
               width="100%"
@@ -345,7 +345,7 @@ const DetailLeft: FC<Props> = (({
               )}
 
           </AccordionItem>
-          <AccordionItem width="100%" border="none">
+          <AccordionItem mt="20px" width="100%" border="none">
             <AccordionButton
               height="62px"
               width="100%"
