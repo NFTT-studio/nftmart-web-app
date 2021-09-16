@@ -107,7 +107,7 @@ const Home = () => {
                 {t('Home.hottest')}
 
               </Text>
-              <Flex h="21px">
+              <Flex>
                 <Button
                   as="button"
                   minWidth="0px"
@@ -163,12 +163,12 @@ const Home = () => {
             </Flex>
             {hotNftsIsLoading
               ? (
-                <Center height="353px">
+                <Center height="396px">
                   <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                 </Center>
               ) : hotNftsData?.orders.length
                 ? (
-                  <Stack direction="row" height="353px" spacing="20px">
+                  <Stack direction="row" spacing="20px">
                     {hotNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
@@ -222,7 +222,7 @@ const Home = () => {
                 {t('Home.expensive')}
 
               </Text>
-              <Flex h="21px">
+              <Flex>
                 <Button
                   as="button"
                   minWidth="0px"
@@ -278,12 +278,12 @@ const Home = () => {
             </Flex>
             {expensiveNftsIsLoading
               ? (
-                <Center height="353px">
+                <Center height="396px">
                   <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                 </Center>
               ) : (expensiveNftsData?.orders.length
                 ? (
-                  <Stack direction="row" height="353px" spacing="20px">
+                  <Stack direction="row" spacing="20px">
                     {expensiveNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
@@ -336,7 +336,7 @@ const Home = () => {
                 {t('Home.cheapest')}
 
               </Text>
-              <Flex h="21px">
+              <Flex>
                 <Button
                   as="button"
                   minWidth="0px"
@@ -392,12 +392,12 @@ const Home = () => {
             </Flex>
             {cheapNftsIsLoading
               ? (
-                <Center height="353px">
+                <Center height="396px">
                   <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                 </Center>
               ) : cheapNftsData?.orders.length
                 ? (
-                  <Stack direction="row" height="353px" spacing="20px">
+                  <Stack direction="row" spacing="20px">
                     {cheapNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}

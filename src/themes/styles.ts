@@ -103,6 +103,16 @@ const obj = {
     '.css-rwn23e': {
       background: '#000000 !important',
     },
+    '.css-1sbcbqr': {
+      span: {
+        width: '130px !important',
+        display: 'inline-block',
+        test: {
+          width: '30px !important',
+          display: 'inline-block',
+        },
+      },
+    },
   }),
 };
 

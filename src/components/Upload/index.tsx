@@ -229,11 +229,11 @@ const Upload: FC<UploadProps> = ({
     setShowCrop(true);
   };
 
-  useEffect(() => {
-    if (valueFromProp.url !== !!valueFromProp.url) {
-      setValue(valueFromProp.url as string);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (valueFromProp.url !== !!valueFromProp.url) {
+  //     setValue(valueFromProp.url as string);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (onChange) onChange(value);

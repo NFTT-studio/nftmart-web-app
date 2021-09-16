@@ -12,15 +12,18 @@ import { ImgAdd } from '../../../assets/images';
 
 interface Props {
   collectionId?: string
+  account?: any,
 }
-const CreateCard: FC<Props> = (({ collectionId }) => {
+const CreateCard: FC<Props> = (({ account, collectionId }) => {
   const { t } = useTranslation();
 
   return (
     <Link
       as={RouterLink}
-      to={collectionId ? `/profile/nft/create/${collectionId}` : '/profile/collection/create'}
-
+      to={`/account/${account?.address}/wallet?id=5`}
+      onClick={() => {
+        localStorage.setItem('ButtonSelect', '5');
+      }}
     >
       <Flex
         width="230px"

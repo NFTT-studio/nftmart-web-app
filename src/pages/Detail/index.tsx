@@ -9,6 +9,8 @@ import {
   Spinner,
   Modal,
   ModalOverlay,
+  Center,
+  Box,
 } from '@chakra-ui/react';
 
 import { useTranslation } from 'react-i18next';
@@ -27,6 +29,14 @@ import {
   CACHE_SERVER_URL,
   PINATA_SERVER,
 } from '../../constants';
+import {
+  IconDetailsCollection,
+  IconDetailsCollectionS,
+  IconDetailsRefresh,
+  IconDetailshaSre,
+  IconBrowse,
+  IconLiulan,
+} from '../../assets/images';
 
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
@@ -149,11 +159,11 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { data: token } = useToken();
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
   const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
-  if (nftDataIsLoading || collectionsDateIsLoading || !nftData) {
-    return <Spinner />;
-  }
+  // if (nftDataIsLoading || collectionsDateIsLoading || !nftData) {
+  //   return <Spinner />;
+  // }
 
-  const logoUrl = `${PINATA_SERVER}${nftData.nftInfo.metadata.logoUrl}`;
+  const logoUrl = `${PINATA_SERVER}${nftData?.nftInfo.metadata.logoUrl}`;
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
   const collectionName = collectionsData?.collection?.metadata?.name;
   const nftName = nftData?.nftInfo?.metadata.name;
@@ -165,50 +175,174 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const initPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.init_price);
   const minRaise = price * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
   const creatorId = nftData?.nftInfo?.auction?.creator_id;
-  const recipientsId = nftData?.nftInfo?.offers[0].bidder_id;
-  console.log(recipientsId);
+  const recipientsId = nftData?.nftInfo?.offers[0]?.bidder_id;
 
   return (
-    <MainContainer title={`${nftName}-${collectionName}${t('Detail.title')}`}>
-      {!type && isLoginAddress ? (
-        <>
-          {nftData?.nftInfo.status === 'Selling'
-            ? (
-              <Flex
-                minWidth="1364px"
-                w="100vw"
-                background="#F9F9F9"
-                justifyContent="center"
-                h="80px"
-                alignItems="center"
-              >
-                <Flex
-                  h="100%"
-                  width="1364px"
-                  justifyContent="flex-end"
-                >
-                  <Flex h="100%" alignItems="center">
-                    <Button
-                      ml="30px"
-                      width="110px"
-                      height="40px"
-                      background="#FFFFFF"
-                      borderRadius="4px"
-                      fontSize="14px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#000000"
-                      lineHeight="16px"
-                      border="1px solid #000000"
-                      _hover={{
-                        background: '#000000',
-                        color: '#FFFFFF',
-                      }}
-                      onClick={() => setIsShowCancel(true)}
+    <>
+      {nftDataIsLoading || collectionsDateIsLoading || !nftData ? (
+        <Center width="100%" height="100vh">
+          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+        </Center>
+      )
+        : (
+          <MainContainer title={`${nftName}-${collectionName}${t('Detail.title')}`}>
+            {!type && isLoginAddress ? (
+              <>
+                {nftData?.nftInfo.status === 'Selling'
+                  ? (
+                    <Flex
+                      minWidth="1364px"
+                      w="100vw"
+                      background="#F9F9F9"
+                      justifyContent="center"
+                      h="80px"
+                      alignItems="center"
                     >
-                      {t('Detail.cancel')}
-                    </Button>
-                    <Button
+                      <Flex
+                        h="100%"
+                        width="1364px"
+                        justifyContent="flex-end"
+                      >
+                        <Flex h="100%" alignItems="center">
+                          <Button
+                            ml="30px"
+                            width="110px"
+                            height="40px"
+                            background="#FFFFFF"
+                            borderRadius="4px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="16px"
+                            border="1px solid #000000"
+                            _hover={{
+                              background: '#000000',
+                              color: '#FFFFFF',
+                            }}
+                            onClick={() => setIsShowCancel(true)}
+                          >
+                            {t('Detail.cancel')}
+                          </Button>
+                          <Button
+                            ml="10px"
+                            width="110px"
+                            height="40px"
+                            background="#FFFFFF"
+                            borderRadius="4px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="16px"
+                            border="1px solid #000000"
+                            _hover={{
+                              background: '#000000',
+                              color: '#FFFFFF',
+                            }}
+                            onClick={() => history.push(`/sellSetting/${nftId}`)}
+                          >
+                            {t('Detail.setting')}
+                          </Button>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                  )
+                  : (
+                    <Flex
+                      w="100vw"
+                      background="#F9F9F9"
+                      justifyContent="center"
+                      h="80px"
+                      alignItems="center"
+                    >
+                      <Flex
+                        width="100%"
+                        h="100%"
+                        maxWidth="1364px"
+                        justifyContent="flex-end"
+                      >
+                        <Flex h="100%" alignItems="center">
+                          <Button
+                            ml="10px"
+                            width="110px"
+                            height="40px"
+                            background="#FFFFFF"
+                            borderRadius="4px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="16px"
+                            border="1px solid #000000"
+                            _hover={{
+                              background: '#000000',
+                              color: '#FFFFFF',
+                            }}
+                            onClick={() => history.push(`/sellSetting/${nftId}`)}
+                          >
+                            {t('Detail.Sell')}
+                          </Button>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                  )}
+              </>
+            ) : ''}
+            {type && isLoginAddress ? (
+              <>
+                {termOfValidity
+                  ? (
+                    <Flex
+                      minWidth="1364px"
+                      w="100vw"
+                      background="#F9F9F9"
+                      justifyContent="center"
+                      h="80px"
+                      alignItems="center"
+                    >
+                      <Flex
+                        h="100%"
+                        width="1364px"
+                        justifyContent="flex-end"
+                      >
+                        <Flex
+                          width="100%"
+                          h="100%"
+                          maxWidth="1364px"
+                          justifyContent="flex-end"
+                          alignItems="center"
+                        >
+                          <Text
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#999999"
+                          >
+                            {t('Detail.cancelTips')}
+                          </Text>
+                          <Flex h="100%" alignItems="center">
+                            <Button
+                              ml="30px"
+                              width="110px"
+                              height="40px"
+                              background="#FFFFFF"
+                              borderRadius="4px"
+                              fontSize="14px"
+                              fontFamily="TTHoves-Regular, TTHoves"
+                              fontWeight="400"
+                              color="#000000"
+                              lineHeight="16px"
+                              border="1px solid #000000"
+                              _hover={{
+                                background: '#000000',
+                                color: '#FFFFFF',
+                              }}
+                              onClick={() => setIsCancelAuction(true)}
+                            >
+                              {t('Detail.cancel')}
+                            </Button>
+                            {/* <Button
                       ml="10px"
                       width="110px"
                       height="40px"
@@ -227,27 +361,57 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       onClick={() => history.push(`/sellSetting/${nftId}`)}
                     >
                       {t('Detail.setting')}
-                    </Button>
-                  </Flex>
-                </Flex>
-              </Flex>
-            )
-            : (
-              <Flex
-                w="100vw"
-                background="#F9F9F9"
-                justifyContent="center"
-                h="80px"
-                alignItems="center"
-              >
-                <Flex
-                  width="100%"
-                  h="100%"
-                  maxWidth="1364px"
-                  justifyContent="flex-end"
-                >
-                  <Flex h="100%" alignItems="center">
-                    <Button
+                    </Button> */}
+                          </Flex>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                  )
+                  : (
+                    <Flex
+                      w="100vw"
+                      background="#F9F9F9"
+                      justifyContent="center"
+                      h="80px"
+                      alignItems="center"
+                    >
+                      <Flex
+                        width="100%"
+                        h="100%"
+                        maxWidth="1364px"
+                        justifyContent="flex-end"
+                        alignItems="center"
+                      >
+                        <Text
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                        >
+                          {t('Detail.cancelTips')}
+                        </Text>
+                        <Flex h="100%" alignItems="center">
+                          <Button
+                            ml="30px"
+                            width="110px"
+                            height="40px"
+                            background="#FFFFFF"
+                            borderRadius="4px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="16px"
+                            border="1px solid #000000"
+                            _hover={{
+                              background: '#000000',
+                              color: '#FFFFFF',
+                            }}
+                            onClick={() => setIsCancelAuction(true)}
+                          >
+                            {t('Detail.cancel')}
+                          </Button>
+                          {/* <Button
                       ml="10px"
                       width="110px"
                       height="40px"
@@ -265,305 +429,259 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                       onClick={() => history.push(`/sellSetting/${nftId}`)}
                     >
-                      {t('Detail.Sell')}
-                    </Button>
-                  </Flex>
-                </Flex>
-              </Flex>
-            )}
-        </>
-      ) : ''}
-      {type && isLoginAddress ? (
-        <>
-          {termOfValidity
-            ? (
-              <Flex
-                minWidth="1364px"
-                w="100vw"
-                background="#F9F9F9"
-                justifyContent="center"
-                h="80px"
-                alignItems="center"
-              >
-                <Flex
-                  h="100%"
-                  width="1364px"
-                  justifyContent="flex-end"
-                >
-                  <Flex
-                    width="100%"
-                    h="100%"
-                    maxWidth="1364px"
-                    justifyContent="flex-end"
-                    alignItems="center"
-                  >
+                      {t('Detail.setting')}
+                    </Button> */}
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                  )}
+              </>
+            ) : ''}
+            <Container
+              mt="0px"
+              display="flex"
+              flexDirection="column"
+              width="100%"
+              height="100%"
+              justifyContent="flex-start"
+            >
+              <Flex m="26px 0 22px 0" p="0 20px 0 20px" width="100%" h="40px" justifyContent="flex-end" alignItems="center">
+                {nftData?.nftInfo?.view_count ? (
+                  <Flex h="22px" justifyContent="flex-start" alignItems="center" mr="20px">
+                    <Image
+                      mr="4px"
+                      w="16px"
+                      h="16px"
+                      src={IconBrowse.default}
+                    />
                     <Text
                       fontSize="14px"
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
-                      color="#999999"
+                      color="#000000"
                     >
-                      {t('Detail.cancelTips')}
+                      {nftData?.nftInfo?.view_count}
                     </Text>
-                    <Flex h="100%" alignItems="center">
-                      <Button
-                        ml="30px"
-                        width="110px"
-                        height="40px"
-                        background="#FFFFFF"
-                        borderRadius="4px"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="16px"
-                        border="1px solid #000000"
-                        _hover={{
-                          background: '#000000',
-                          color: '#FFFFFF',
-                        }}
-                        onClick={() => setIsCancelAuction(true)}
-                      >
-                        {t('Detail.cancel')}
-                      </Button>
-                      {/* <Button
-                      ml="10px"
-                      width="110px"
-                      height="40px"
-                      background="#FFFFFF"
-                      borderRadius="4px"
+                  </Flex>
+                ) : null}
+                {nftData?.nftInfo?.collect_count ? (
+                  <Flex h="22px" justifyContent="flex-start" alignItems="center">
+                    <Image
+                      mr="4px"
+                      w="16px"
+                      h="16px"
+                      src={IconLiulan.default}
+                    />
+                    <Text
                       fontSize="14px"
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
                       color="#000000"
-                      lineHeight="16px"
-                      border="1px solid #000000"
-                      _hover={{
-                        background: '#000000',
-                        color: '#FFFFFF',
-                      }}
-                      onClick={() => history.push(`/sellSetting/${nftId}`)}
                     >
-                      {t('Detail.setting')}
-                    </Button> */}
-                    </Flex>
+                      {nftData?.nftInfo?.collect_count}
+                    </Text>
                   </Flex>
-                </Flex>
-              </Flex>
-            )
-            : (
-              <Flex
-                w="100vw"
-                background="#F9F9F9"
-                justifyContent="center"
-                h="80px"
-                alignItems="center"
-              >
-                <Flex
-                  width="100%"
-                  h="100%"
-                  maxWidth="1364px"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                >
-                  <Text
-                    fontSize="14px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#999999"
+                ) : null}
+
+                <Flex>
+                  <Box
+                    ml="28px"
+                    width="32px"
+                    height="32px"
+                    borderRadius="50%"
+                    border="1px solid #E5E5E5"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    _hover={{
+                      boxShadow: '0px 2px 8px 0px #E1E1E1',
+                    }}
                   >
-                    {t('Detail.cancelTips')}
-                  </Text>
-                  <Flex h="100%" alignItems="center">
-                    <Button
-                      ml="30px"
-                      width="110px"
-                      height="40px"
-                      background="#FFFFFF"
-                      borderRadius="4px"
-                      fontSize="14px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#000000"
-                      lineHeight="16px"
-                      border="1px solid #000000"
-                      _hover={{
-                        background: '#000000',
-                        color: '#FFFFFF',
-                      }}
-                      onClick={() => setIsCancelAuction(true)}
-                    >
-                      {t('Detail.cancel')}
-                    </Button>
-                    {/* <Button
-                      ml="10px"
-                      width="110px"
-                      height="40px"
-                      background="#FFFFFF"
-                      borderRadius="4px"
-                      fontSize="14px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#000000"
-                      lineHeight="16px"
-                      border="1px solid #000000"
-                      _hover={{
-                        background: '#000000',
-                        color: '#FFFFFF',
-                      }}
-                      onClick={() => history.push(`/sellSetting/${nftId}`)}
-                    >
-                      {t('Detail.setting')}
-                    </Button> */}
-                  </Flex>
+                    <Image
+                      w="22px"
+                      h="22px"
+                      src={IconDetailsRefresh.default}
+                    />
+                  </Box>
+                  <Box
+                    ml="28px"
+                    width="32px"
+                    height="32px"
+                    borderRadius="50%"
+                    border="1px solid #E5E5E5"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    _hover={{
+                      boxShadow: '0px 2px 8px 0px #E1E1E1',
+                    }}
+                  >
+                    <Image
+                      w="22px"
+                      h="22px"
+                      src={IconDetailshaSre.default}
+                    />
+                  </Box>
+                  <Box
+                    ml="28px"
+                    width="32px"
+                    height="32px"
+                    borderRadius="50%"
+                    border="1px solid #E5E5E5"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    _hover={{
+                      boxShadow: '0px 2px 8px 0px #E1E1E1',
+                    }}
+                    onClick={() => {
+                      setIsCollect(!isCollect);
+                      const types = isCollect ? 'cancle' : 'collect';
+                      collectNft(types);
+                    }}
+                  >
+                    <Image
+                      w="22px"
+                      h="22px"
+                      src={isCollect ? IconDetailsCollectionS.default : IconDetailsCollection.default}
+                    />
+                  </Box>
+
                 </Flex>
               </Flex>
-            )}
-        </>
-      ) : ''}
-      <Container
-        mt="40px"
-        display="flex"
-        flexDirection="column"
-        width="100%"
-        height="100%"
-        justifyContent="flex-start"
-      >
+              <Flex
+                w="100%"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="flex-start"
+              >
+                <DetailLeft
+                  nftData={nftData}
+                  collectionsData={collectionsData}
+                  logoUrl={logoUrl}
+                  propertiesArr={propertiesArr}
+                />
+                <DetailRight
+                  nftData={nftData}
+                  collectionsData={collectionsData}
+                  account={account}
+                  isLoginAddress={isLoginAddress}
+                  remainingTime={remainingTime}
+                  setOfferId={setOfferId}
+                  setOfferOwner={setOfferOwner}
+                  setIsShowDeal={setIsShowDeal}
+                  setIsShowBuy={setIsShowBuy}
+                  token={token}
+                  OfferssUnitArr={OfferssUnitArr}
+                  setIsShowOffer={setIsShowOffer}
+                  types={type}
+                  deadline={deadline}
+                  setIsShowBritish={setIsShowBritish}
+                  setIsShowDutch={setIsShowDutch}
+                  setIsShowFixed={setIsShowFixed}
+                  recipientsId={recipientsId}
+                  setIshowReceive={setIshowReceive}
+                />
+              </Flex>
 
-        <Flex
-          w="100%"
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="flex-start"
-        >
-          <DetailLeft
-            nftData={nftData}
-            collectionsData={collectionsData}
-            logoUrl={logoUrl}
-            propertiesArr={propertiesArr}
-          />
-          <DetailRight
-            nftData={nftData}
-            collectionsData={collectionsData}
-            account={account}
-            isLoginAddress={isLoginAddress}
-            isCollect={isCollect}
-            remainingTime={remainingTime}
-            setOfferId={setOfferId}
-            setOfferOwner={setOfferOwner}
-            setIsShowDeal={setIsShowDeal}
-            setIsShowBuy={setIsShowBuy}
-            token={token}
-            OfferssUnitArr={OfferssUnitArr}
-            setIsShowOffer={setIsShowOffer}
-            setIsCollect={setIsCollect}
-            collectNft={collectNft}
-            types={type}
-            deadline={deadline}
-            setIsShowBritish={setIsShowBritish}
-            setIsShowDutch={setIsShowDutch}
-            setIsShowFixed={setIsShowFixed}
-            recipientsId={recipientsId}
-            setIshowReceive={setIshowReceive}
-          />
-        </Flex>
-        {isShowBuy && (
-          <BuyDialog
-            isShowBuy={isShowBuy}
-            setIsShowBuy={setIsShowBuy}
-            price={price}
-            logoUrl={logoUrl}
-            nftName={nftName}
-            collectionName={collectionName}
-            orderId={orderId}
-            ownerId={ownerId}
-          />
+              {isShowBuy && (
+              <BuyDialog
+                isShowBuy={isShowBuy}
+                setIsShowBuy={setIsShowBuy}
+                price={price}
+                logoUrl={logoUrl}
+                nftName={nftName}
+                collectionName={collectionName}
+                orderId={orderId}
+                ownerId={ownerId}
+              />
+              )}
+              {isShowFixed && (
+              <FixedDialog
+                isShowFixed={isShowFixed}
+                setIsShowFixed={setIsShowFixed}
+                price={nftData.nftInfo.auction?.hammer_price}
+                logoUrl={logoUrl}
+                nftName={nftName}
+                collectionName={collectionName}
+                orderId={orderId}
+                ownerId={ownerId}
+                creatorId={creatorId}
+                auctionId={auctionId}
+              />
+              )}
+              {isShowOffer && (
+              <OfferDialog
+                isShowOffer={isShowOffer}
+                setIsShowOffer={setIsShowOffer}
+                classId={collectionsId}
+                categoryId={nftData.nftInfo.category?.id}
+                tokenId={tokenId}
+              />
+              )}
+              {isShowBritish && (
+              <BritishDialog
+                isShowBritish={isShowBritish}
+                setIsShowBritish={setIsShowBritish}
+                moreThan={minRaise || Number(initPrice)}
+                creatorId={creatorId}
+                auctionId={auctionId}
+              />
+              )}
+              {isShowDutch && (
+              <DutchDialog
+                isShowDutch={isShowDutch}
+                setIsShowDutch={setIsShowDutch}
+                price={priceStringDivUnit(nftData.nftInfo.auction?.price)}
+                logoUrl={logoUrl}
+                nftName={nftName}
+                collectionName={collectionName}
+                creatorId={creatorId}
+                auctionId={auctionId}
+              />
+              )}
+              {isShowCancel && (
+              <CancelDialog
+                isShowCancel={isShowCancel}
+                setIsShowCancel={setIsShowCancel}
+                orderId={orderId}
+                nftId={nftId}
+              />
+              )}
+              {isCancelAuction && (
+              <CancelAuctionDialog
+                isShowCancel={isCancelAuction}
+                setIsShowCancel={setIsCancelAuction}
+                orderId={orderId}
+                auctionId={auctionId}
+                type={type}
+              />
+              )}
+              {isShowDeal && (
+              <DealDialog
+                isShowDeal={isShowDeal}
+                setIsShowDeal={setIsShowDeal}
+                offerId={offerId}
+                offerOwner={offerOwner}
+                orderId={nftData?.nftInfo.status === 'Selling' ? orderId : ''}
+              />
+              )}
+              {isShowReceive && (
+              <ReceiveDialog
+                isShowReceive={isShowReceive}
+                setIshowReceive={setIshowReceive}
+                auctionId={auctionId}
+                creatorId={creatorId}
+                type={type}
+              />
+              )}
+            </Container>
+            <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+              <ModalOverlay />
+            </Modal>
+          </MainContainer>
         )}
-        {isShowFixed && (
-          <FixedDialog
-            isShowFixed={isShowFixed}
-            setIsShowFixed={setIsShowFixed}
-            price={nftData.nftInfo.auction?.hammer_price}
-            logoUrl={logoUrl}
-            nftName={nftName}
-            collectionName={collectionName}
-            orderId={orderId}
-            ownerId={ownerId}
-            creatorId={creatorId}
-            auctionId={auctionId}
-          />
-        )}
-        {isShowOffer && (
-          <OfferDialog
-            isShowOffer={isShowOffer}
-            setIsShowOffer={setIsShowOffer}
-            classId={collectionsId}
-            categoryId={nftData.nftInfo.category?.id}
-            tokenId={tokenId}
-          />
-        )}
-        {isShowBritish && (
-          <BritishDialog
-            isShowBritish={isShowBritish}
-            setIsShowBritish={setIsShowBritish}
-            moreThan={minRaise || Number(initPrice)}
-            creatorId={creatorId}
-            auctionId={auctionId}
-          />
-        )}
-        {isShowDutch && (
-          <DutchDialog
-            isShowDutch={isShowDutch}
-            setIsShowDutch={setIsShowDutch}
-            price={priceStringDivUnit(nftData.nftInfo.auction?.price)}
-            logoUrl={logoUrl}
-            nftName={nftName}
-            collectionName={collectionName}
-            creatorId={creatorId}
-            auctionId={auctionId}
-          />
-        )}
-        {isShowCancel && (
-          <CancelDialog
-            isShowCancel={isShowCancel}
-            setIsShowCancel={setIsShowCancel}
-            orderId={orderId}
-            nftId={nftId}
-          />
-        )}
-        {isCancelAuction && (
-          <CancelAuctionDialog
-            isShowCancel={isCancelAuction}
-            setIsShowCancel={setIsCancelAuction}
-            orderId={orderId}
-            auctionId={auctionId}
-            type={type}
-          />
-        )}
-        {isShowDeal && (
-          <DealDialog
-            isShowDeal={isShowDeal}
-            setIsShowDeal={setIsShowDeal}
-            offerId={offerId}
-            offerOwner={offerOwner}
-            orderId={nftData?.nftInfo.status === 'Selling' ? orderId : ''}
-          />
-        )}
-        {isShowReceive && (
-          <ReceiveDialog
-            isShowReceive={isShowReceive}
-            setIshowReceive={setIshowReceive}
-            auctionId={auctionId}
-            creatorId={creatorId}
-            type={type}
-          />
-        )}
-      </Container>
-      <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
-        <ModalOverlay />
-      </Modal>
-    </MainContainer>
-
+    </>
   );
 };
 export default Detail;

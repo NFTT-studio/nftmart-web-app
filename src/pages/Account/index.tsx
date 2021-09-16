@@ -56,6 +56,7 @@ import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
 import useNfts from '../../hooks/reactQuery/useNfts';
 import useUser from '../../hooks/reactQuery/useUser';
+import CreateCollection from '../CreateCollection/index';
 
 const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
@@ -242,28 +243,34 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
         )
         : (
           <>
-            <Flex mt="20px" width="1396px" flexDirection="column" position="relative">
-              <Image w="100%" h="auto" src={userData?.featured_image || AccountBanner.default} alt="" />
+            <Flex width="1440px" flexDirection="column" position="relative">
+              <Image
+                w="100%"
+                maxWidth="1440px"
+                h="280px"
+                src={userData?.featured_image || AccountBanner.default}
+                alt=""
+              />
               <Image
                 position="absolute"
-                bottom="-50px"
+                bottom="-54px"
                 border="3px solid #FFFFFF"
-                m="0 20px"
+                m="0 40px"
                 boxShadow="0px 6px 20px 0px #D3D5DC"
                 background="#FFFFFF"
-                width="120px"
+                width="auto"
                 borderRadius="50%"
-                height="auto"
+                height="108px"
                 objectFit="cover"
                 src={userData?.avatar || HeadPortrait.default}
               />
             </Flex>
-            <Flex w="1396px" flexDirection="row" justifyContent="space-between" padding="80px 20px 20px 20px">
+            <Flex w="1440px" flexDirection="row" justifyContent="space-between" padding="81px 40px 20px 40px">
 
               <Flex width="301px" direction="column">
                 <Headers userData={userData} dataPerson={dataPerson} />
                 <Flex
-                  mt="20px"
+                  mt="53px"
                   w="100%"
                   display="flex"
                   flexDirection="column"
@@ -292,7 +299,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                           fontSize="16px"
                           fontFamily="TTHoves-Medium, TTHoves"
                           fontWeight="500"
-                          color={selectTabId === index ? '#FFFFFF' : '#191A24'}
+                          color={selectTabId === index ? '#FFFFFF' : '#999999'}
                           lineHeight="18px"
                         >
                           {item.title}
@@ -551,7 +558,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       columns={4}
                       spacing={6}
                     >
-                      {isPerson ? <CreateCard /> : ''}
+                      {isPerson ? <CreateCard account={account} /> : ''}
                       {collectionsData ? collectionsData.collections.map((item) => (
                         <Link
                           as={RouterLink}
@@ -582,6 +589,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       )) : ''}
                     </SimpleGrid>
                   </Container>
+                ) : ''}
+
+                {selectTabId === 5 ? (
+                  <CreateCollection />
                 ) : ''}
               </Flex>
             </Flex>
