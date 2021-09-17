@@ -59,5 +59,6 @@ export const currentPrice = (maxPrice: number, minPrice: number, deadline: numbe
   }
   // eslint-disable-next-line no-mixed-operators
   const downPrice = maxPrice - Math.ceil((maxPrice - minPrice) * Math.floor((currentBlock - createdBlock) / 300) / Math.floor((deadline - createdBlock) / 300));
-  return priceStringDivUnit(downPrice.toString());
+
+  return nmtNumberToString(downPrice.toString());
 };

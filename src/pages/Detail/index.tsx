@@ -592,6 +592,11 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   recipientsId={recipientsId}
                   setIshowReceive={setIshowReceive}
                   setIsAllowBritish={setIsAllowBritish}
+                  reGetBlock={
+                  getBlock().then((res) => {
+                    setRemainingTime(res);
+                  })
+}
                 />
               </Flex>
 

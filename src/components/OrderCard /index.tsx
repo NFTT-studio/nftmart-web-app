@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-mixed-operators */
 import React, { FC, useState, useEffect } from 'react';
@@ -16,6 +17,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { IPFS_URL } from '../../constants';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { renderNmtNumberText } from '../Balance';
+import { priceStringDivUnit, currentPrice } from '../../utils/format';
 
 import {
   IconTime,
@@ -67,7 +69,10 @@ const NftCard: FC<NftCardProps> = ({
     }
   }, [remainingTime]);
 
+  const types = nft?.type || false;
+  console.log(types);
   const price = renderNmtNumberText(nft.price);
+  const duchPrice = currentPrice(Number(nft?.max_price), Number(nft?.min_price), Number(nft?.deadline), remainingTime, Number(nft?.block_created));
   return (
     <Link
       key={nft?.metadata.name}
@@ -169,7 +174,21 @@ const NftCard: FC<NftCardProps> = ({
                   lineHeight="24px"
                   fontSize="20px"
                 >
-                  {price}
+                  {types === 'Dutch' && !nft?.allow_british_auction ? (
+                    renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
+                  ) : null}
+                  {types === 'Dutch' && nft?.allow_british_auction && nft?.bid_count === 0 ? (
+                    renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
+                  ) : null}
+                  {types === 'Dutch' && nft?.allow_british_auction && nft?.bid_count > 0 ? (
+                    price
+                  ) : null}
+                  {!types ? (
+                    price
+                  ) : null}
+                  {types === 'British' ? (
+                    price
+                  ) : null}
                   NMT
                 </Box>
                 <Box
