@@ -103,7 +103,7 @@ const NftCard: FC<NftCardProps> = ({
           style={{
             objectFit: 'cover',
             width: '100%',
-            maxHeight: '100%',
+            height: '100%',
             borderRadius: '4px 4px 0 0 ',
           }}
           src={IPFS_URL + nft?.metadata.logoUrl}
@@ -114,7 +114,7 @@ const NftCard: FC<NftCardProps> = ({
         <Box
           padding="0 20px"
           borderRadius="0 0 4px 4px"
-          h="100%"
+          h="177px"
           display="flex"
           flexDirection="column"
           backgroundColor="#000000"

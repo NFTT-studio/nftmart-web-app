@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import Countdown from 'react-countdown';
 import {
@@ -43,7 +44,7 @@ import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import useToken from '../../hooks/reactQuery/useToken';
 import useAccount from '../../hooks/reactQuery/useAccount';
 
-import { priceStringDivUnit } from '../../utils/format';
+import { priceStringDivUnit, currentPrice } from '../../utils/format';
 import useIsLoginAddress from '../../hooks/utils/useIsLoginAddress';
 import { useAppSelector } from '../../hooks/redux';
 import BuyDialog from './BuyDialog';
@@ -51,6 +52,7 @@ import OfferDialog from './OfferDialog';
 import DutchDialog from './DutchDialog';
 import BritishDialog from './BritishDialog';
 import FixedDialog from './FixedDialog';
+import AllowBritishDialog from './AllowBritishDialog';
 
 const propertiesArr = [1, 2, 3, 4, 5, 6];
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
@@ -107,6 +109,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [isShowBuy, setIsShowBuy] = useState(false);
   const [isShowOffer, setIsShowOffer] = useState(false);
   const [isShowDutch, setIsShowDutch] = useState(false);
+  const [allowBritish, setIsAllowBritish] = useState(false);
   const [isShowBritish, setIsShowBritish] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [offerId, setOfferId] = useState('');
@@ -174,10 +177,13 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const auctionId = nftData?.nftInfo?.auction?.id;
   const initPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.init_price);
   const minRaise = price * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
+  const minActionRaise = priceStringDivUnit(nftData?.nftInfo?.auction?.price) * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
   const creatorId = nftData?.nftInfo?.auction?.creator_id;
   const offersLength = nftData?.nftInfo?.offers.length;
-  const recipientsId = nftData?.nftInfo?.offers[(nftData?.nftInfo?.offers.length - 1)]?.bidder_id;
-  console.log(orderId);
+  const recipientsId = nftData?.nftInfo?.offers[0]?.bidder_id;
+  const allowBritishAuction = nftData?.nftInfo?.auction?.allow_british_auction || false;
+  const bidCount = nftData?.nftInfo?.auction?.bid_count || false;
+  const duchPrice = currentPrice(Number(nftData?.nftInfo?.auction?.max_price), Number(nftData?.nftInfo?.auction?.min_price), Number(nftData?.nftInfo?.auction?.deadline), remainingTime, Number(nftData?.nftInfo?.auction?.block_created));
 
   return (
     <>
@@ -585,6 +591,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   setIsShowFixed={setIsShowFixed}
                   recipientsId={recipientsId}
                   setIshowReceive={setIshowReceive}
+                  setIsAllowBritish={setIsAllowBritish}
                 />
               </Flex>
 
@@ -633,16 +640,25 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               />
               )}
               {isShowDutch && (
-              <DutchDialog
-                isShowDutch={isShowDutch}
-                setIsShowDutch={setIsShowDutch}
-                price={priceStringDivUnit(nftData.nftInfo.auction?.price)}
-                logoUrl={logoUrl}
-                nftName={nftName}
-                collectionName={collectionName}
-                creatorId={creatorId}
-                auctionId={auctionId}
-              />
+                <DutchDialog
+                  isShowDutch={isShowDutch}
+                  setIsShowDutch={setIsShowDutch}
+                  price={duchPrice}
+                  logoUrl={logoUrl}
+                  nftName={nftName}
+                  collectionName={collectionName}
+                  creatorId={creatorId}
+                  auctionId={auctionId}
+                />
+              )}
+              {allowBritish && (
+                <AllowBritishDialog
+                  isShowBritish={allowBritish}
+                  setIsShowBritish={setIsAllowBritish}
+                  moreThan={minActionRaise || Number(priceStringDivUnit(nftData?.nftInfo?.auction?.price))}
+                  creatorId={creatorId}
+                  auctionId={auctionId}
+                />
               )}
               {isShowCancel && (
               <CancelDialog
