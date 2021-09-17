@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { web3FromAddress } from '@polkadot/extension-dapp';
 
 import { bnToBn } from '@polkadot/util';
@@ -25,7 +26,7 @@ function perU16ToFloat(x) {
   return Number(x) / 65535.0;
 }
 
-export const bidBritishAuction = async ({
+export const bidDutchAuction = async ({
   address,
   auctionCreatorAddress,
   auctionId,
@@ -33,8 +34,8 @@ export const bidBritishAuction = async ({
   cb,
 }: bidBritishAuctionProps) => {
   try {
+    console.log(price);
     const injector = await web3FromAddress(address);
-    console.log(auctionCreatorAddress, auctionId);
     // eslint-disable-next-line prefer-const
     let [auction, bid, block] = await Promise.all([
       PolkaSDK.api.query.nftmartAuction.dutchAuctions(auctionCreatorAddress, auctionId),
@@ -43,26 +44,25 @@ export const bidBritishAuction = async ({
     ]);
     const currentBlock = Number(block.block.header.number);
     if (auction.isSome && bid.isSome) {
+      console.log(2);
       auction = auction.unwrap();
       bid = bid.unwrap();
       let call;
       if (bid.lastBidAccount.isNone) {
         // This is the first bidding.
         if (currentBlock > auction.deadline) {
-          console.log('auction closed');
+          console.log('auction closed', 1);
           return;
         }
         const uselessPrice = 0; // The real price used will be calculated by Dutch auction logic.
         call = PolkaSDK.api.tx.nftmartAuction.bidDutchAuction(uselessPrice, auctionCreatorAddress, auctionId, null, 'hello bidDutchAuction');
       } else {
         // This if branch is at least the second bidding.
-
-        const deadline = await getAuctionDeadline(true, 0, bid.lastBidBlock);
-        if (currentBlock > deadline) {
-          console.log('auction closed');
-          return;
-        }
-
+        // const deadline = await getAuctionDeadline(true, 0, bid.lastBidBlock);
+        // if (currentBlock > Number(deadline.toString())) {
+        //   console.log('auction closed', 2, currentBlock, deadline);
+        //   return;
+        // }
         const minRaise = perU16ToFloat(auction.minRaise);
         const lowest = (1 + minRaise) * (bid.lastBidPrice / unit);
         if (price > lowest) {

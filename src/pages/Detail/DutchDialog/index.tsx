@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 import { useHistory } from 'react-router-dom';
-import { bidBritishAuction } from '../../../polkaSDK/api/bidDutchAuction';
+import { bidDutchAuction } from '../../../polkaSDK/api/bidDutchAuction';
 import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
 import MyToast, { ToastBody } from '../../../components/MyToast';
@@ -47,7 +47,7 @@ const BuyDialog: FC<Props> = (({
 
   const onSubmit = () => {
     setIsSubmitting(true);
-    bidBritishAuction({
+    bidDutchAuction({
       address: account!.address,
       auctionCreatorAddress: creatorId,
       auctionId: Number(auctionId),

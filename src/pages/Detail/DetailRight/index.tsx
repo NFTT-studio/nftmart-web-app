@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 import React, {
@@ -18,7 +19,7 @@ import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import NoData from '../NoData';
 import TimeBy from '../TimeBy';
 import PriceHistoryChart from '../PriceHistoryChart';
-import { priceStringDivUnit } from '../../../utils/format';
+import { priceStringDivUnit, currentPrice } from '../../../utils/format';
 import { renderNmtNumberText } from '../../../components/Balance';
 
 import {
@@ -91,6 +92,7 @@ interface Props {
   setIsShowFixed:React.Dispatch<React.SetStateAction<boolean>>,
   recipientsId:string,
   setIshowReceive:React.Dispatch<React.SetStateAction<boolean>>,
+  setIsAllowBritish:React.Dispatch<React.SetStateAction<boolean>>,
 }
 const DetailRight: FC<Props> = (({
   nftData,
@@ -112,6 +114,7 @@ const DetailRight: FC<Props> = (({
   setIsShowFixed,
   recipientsId,
   setIshowReceive,
+  setIsAllowBritish,
 }) => {
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
@@ -119,10 +122,14 @@ const DetailRight: FC<Props> = (({
   const formatAddress = (addr: string) => `${addr?.slice(0, 4)}...${addr?.slice(-4)}`;
   const price = nftData?.nftInfo?.price ? priceStringDivUnit(nftData?.nftInfo?.price) : null;
   const auctionPrice = nftData?.nftInfo?.auction?.price ? priceStringDivUnit(nftData?.nftInfo?.auction?.price) : null;
+
+  const duchPrice = currentPrice(Number(nftData?.nftInfo?.auction?.max_price), Number(nftData?.nftInfo?.auction?.min_price), Number(nftData?.nftInfo?.auction?.deadline), remainingTime, Number(nftData?.nftInfo?.auction?.block_created));
   const collectionName = collectionsData?.collection?.metadata?.name;
   const nftName = nftData?.nftInfo?.metadata.name;
   const OffersArr = nftData?.nftInfo?.offers;
   const auctionStatus = nftData?.nftInfo?.auction?.status ? nftData?.nftInfo?.auction?.status : null;
+  const allowBritishAuction = nftData?.nftInfo?.auction?.allow_british_auction || false;
+  const bidCount = nftData?.nftInfo?.auction?.bid_count || false;
 
   const PriceHistory = nftData?.nftInfo?.history[selectedTime];
   const [events, setEvents] = useState(
@@ -348,7 +355,16 @@ const DetailRight: FC<Props> = (({
                     color="#000000"
                     lineHeight="43px"
                   >
-                    {types ? (
+                    {types === 'British' ? (
+                      auctionPrice
+                    ) : null}
+                    {types === 'Dutch' && !allowBritishAuction ? (
+                      duchPrice
+                    ) : null}
+                    {types === 'Dutch' && allowBritishAuction && Number(bidCount) === 0 ? (
+                      duchPrice
+                    ) : null}
+                    {types === 'Dutch' && allowBritishAuction && Number(bidCount) > 0 ? (
                       auctionPrice
                     ) : null}
                     {!types ? (
@@ -362,18 +378,46 @@ const DetailRight: FC<Props> = (({
                     fontWeight="400"
                     color="#999999"
                   >
-                    {Number(price) ? `NMT ($${token?.price * Number(price)})` : null}
-                    {Number(auctionPrice) ? `NMT ($${token?.price * Number(auctionPrice)})` : null}
-                  </Text>
-                  {Number(auctionPrice) && types === 'Dutch'
-                    ? (
-                      <Image
-                        m="0 0 8px 10px"
-                        w="20px"
-                        h="20px"
-                        src={IconRankDown.default}
-                      />
+                    {types === 'British' ? (
+                      Number(auctionPrice) ? `NMT ($${token?.price * Number(auctionPrice)})` : null
                     ) : null}
+                    {types === 'Dutch' && !allowBritishAuction ? (
+                      Number(duchPrice) ? `NMT ($${token?.price * Number(duchPrice)})` : null
+                    ) : null}
+                    {types === 'Dutch' && allowBritishAuction && Number(bidCount) === 0 ? (
+                      Number(duchPrice) ? `NMT ($${token?.price * Number(duchPrice)})` : null
+                    ) : null}
+                    {types === 'Dutch' && allowBritishAuction && Number(bidCount) > 0 ? (
+                      Number(auctionPrice) ? `NMT ($${token?.price * Number(auctionPrice)})` : null
+                    ) : null}
+                    {!types ? (
+                      Number(price) ? `NMT ($${token?.price * Number(price)})` : null
+                    ) : null}
+                  </Text>
+                  {types === 'Dutch' && !allowBritishAuction ? (
+                    <Image
+                      m="0 0 8px 10px"
+                      w="20px"
+                      h="20px"
+                      src={IconRankDown.default}
+                    />
+                  ) : null}
+                  {types === 'Dutch' && allowBritishAuction && Number(bidCount) === 0 ? (
+                    <Image
+                      m="0 0 8px 10px"
+                      w="20px"
+                      h="20px"
+                      src={IconRankDown.default}
+                    />
+                  ) : null}
+                  {types === 'Dutch' && allowBritishAuction && Number(bidCount) > 0 ? (
+                    <Image
+                      m="0 0 8px 10px"
+                      w="20px"
+                      h="20px"
+                      src={IconRankUp.default}
+                    />
+                  ) : null}
                   {Number(auctionPrice) && types === 'British'
                     ? (
                       <Image
@@ -398,7 +442,13 @@ const DetailRight: FC<Props> = (({
                   fontWeight="500"
                   color={!isLoginAddress ? '#FFFFFF' : '#FFFFFF'}
                   isDisabled={isLoginAddress || Number(events.times) === 0}
-                  onClick={() => setIsShowDutch(true)}
+                  onClick={() => {
+                    if (allowBritishAuction && Number(bidCount) > 0) {
+                      setIsAllowBritish(true);
+                    } else {
+                      setIsShowDutch(true);
+                    }
+                  }}
                 >
                   {!isLoginAddress ? t('Detail.placeBid') : '-'}
                 </Button>

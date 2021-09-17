@@ -16,10 +16,12 @@ export const takeOrder = async ({
 }) => {
   try {
     const injector = await web3FromAddress(address);
-
+    const commissionAgent = null;
     const call = PolkaSDK.api.tx.nftmartOrder.takeOrder(
       orderId,
       orderOwner,
+      commissionAgent,
+      'hello takeOrder',
     );
     const res = await call.signAndSend(
       address, { signer: injector.signer }, (result: any) => txLog(result, cb.success),
