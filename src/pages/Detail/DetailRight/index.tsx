@@ -93,6 +93,7 @@ interface Props {
   recipientsId:string,
   setIshowReceive:React.Dispatch<React.SetStateAction<boolean>>,
   setIsAllowBritish:React.Dispatch<React.SetStateAction<boolean>>,
+  reGetBlock:any
 }
 const DetailRight: FC<Props> = (({
   nftData,
@@ -115,6 +116,7 @@ const DetailRight: FC<Props> = (({
   recipientsId,
   setIshowReceive,
   setIsAllowBritish,
+  reGetBlock,
 }) => {
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
@@ -444,8 +446,10 @@ const DetailRight: FC<Props> = (({
                   isDisabled={isLoginAddress || Number(events.times) === 0}
                   onClick={() => {
                     if (allowBritishAuction && Number(bidCount) > 0) {
+                      reGetBlock();
                       setIsAllowBritish(true);
                     } else {
+                      reGetBlock();
                       setIsShowDutch(true);
                     }
                   }}
