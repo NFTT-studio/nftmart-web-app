@@ -14,6 +14,7 @@ import {
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
+import { useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { bidDutchAuction } from '../../../polkaSDK/api/bidDutchAuction';
 import { useAppSelector } from '../../../hooks/redux';
@@ -21,6 +22,10 @@ import useAccount from '../../../hooks/reactQuery/useAccount';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 import useToken from '../../../hooks/reactQuery/useToken';
 import { priceStringDivUnit } from '../../../utils/format';
+
+import {
+  QUERY_KEYS,
+} from '../../../constants';
 
 interface Props {
   creatorId: string,
@@ -35,6 +40,7 @@ interface Props {
 const BuyDialog: FC<Props> = (({
   price, nftName, collectionName, logoUrl, isShowDutch, setIsShowDutch, creatorId, auctionId,
 }) => {
+  const queryCliet = useQueryClient();
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
   const { data: token } = useToken();
@@ -56,13 +62,15 @@ const BuyDialog: FC<Props> = (({
         success: (result) => {
           if (result.dispatchError) {
             toast(<ToastBody title="Error" message={t('Detail.buyError')} type="error" />);
+            setIsSubmitting(false);
           } else {
             toast(<ToastBody title="Success" message={t('Detail.buySuccess')} type="success" />);
             setTimeout(() => {
-              history.push(`/account/${account?.address}/wallet`);
+              queryCliet.refetchQueries(QUERY_KEYS.NFT);
+              setIsSubmitting(false);
+              setIsShowDutch(false);
             }, 3000);
           }
-          setIsSubmitting(false);
         },
         error: (error: string) => {
           toast(<ToastBody title="Error" message={error} type="error" />);

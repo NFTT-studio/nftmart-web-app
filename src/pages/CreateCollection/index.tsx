@@ -208,7 +208,7 @@ const CreateCollection: FC = () => {
             id="banner"
             mediatype="cutting"
             rectangle="600px"
-            proportion={7 / 2}
+            proportion={1440 / 280}
             value={formik.values.logoUrl}
             onChange={(v) => {
               formik.values.banner = v;

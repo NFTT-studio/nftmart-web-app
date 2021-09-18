@@ -158,6 +158,21 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       countFun(deadline);
     }
   }, [remainingTime]);
+  useEffect(() => {
+    getBlock().then((res) => {
+      setRemainingTime(res);
+    });
+  }, [allowBritish]);
+  useEffect(() => {
+    getBlock().then((res) => {
+      setRemainingTime(res);
+    });
+  }, [isShowDutch]);
+  useEffect(() => {
+    getBlock().then((res) => {
+      setRemainingTime(res);
+    });
+  }, [isShowDutch]);
 
   const { data: token } = useToken();
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
@@ -327,7 +342,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             fontWeight="400"
                             color="#999999"
                           >
-                            {t('Detail.cancelTips')}
+                            {bidCount > 0 ? t('Detail.cancelTips') : null}
                           </Text>
                           <Flex h="100%" alignItems="center">
                             <Button
@@ -397,7 +412,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           fontWeight="400"
                           color="#999999"
                         >
-                          {t('Detail.cancelTips')}
+                          {bidCount > 0 ? t('Detail.cancelTips') : null}
                         </Text>
                         <Flex h="100%" alignItems="center">
                           <Button
@@ -592,11 +607,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   recipientsId={recipientsId}
                   setIshowReceive={setIshowReceive}
                   setIsAllowBritish={setIsAllowBritish}
-                  reGetBlock={
-                  getBlock().then((res) => {
-                    setRemainingTime(res);
-                  })
-}
                 />
               </Flex>
 

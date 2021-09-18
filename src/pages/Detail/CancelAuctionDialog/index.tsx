@@ -90,7 +90,7 @@ const CancelAuctionDialog: FC<Props> = (({
             fontWeight="400"
             color="#999999"
           >
-            {t('Detail.cancelDesc')}
+            {t('Detail.cancelAuction')}
           </Text>
           <Flex w="100%" justifyContent="flex-end" pt="10px">
             <Button

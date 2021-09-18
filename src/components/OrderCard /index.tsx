@@ -1,8 +1,9 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-mixed-operators */
 import React, { FC, useState, useEffect } from 'react';
-import Countdown from 'react-countdown';
+import Countdown, { zeroPad } from 'react-countdown';
 import {
   HTMLChakraProps,
   Box,
@@ -73,6 +74,113 @@ const NftCard: FC<NftCardProps> = ({
   console.log(types);
   const price = renderNmtNumberText(nft.price);
   const duchPrice = currentPrice(Number(nft?.max_price), Number(nft?.min_price), Number(nft?.deadline), remainingTime, Number(nft?.block_created));
+
+  const front = (time) => {
+    const b = time.toString().split('.');
+    return b[0];
+  };
+  const hinder = (time) => {
+    const b = time.toString().split('.');
+    return b[1];
+  };
+  const renderer = ({
+    hours, minutes, seconds,
+  }) => (
+    <Flex w="136px" align="flex-start" alignItems="center" position="relative">
+      <Box
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mr="2px"
+      >
+        {front(Number(zeroPad(hours)) / 10) || 0}
+      </Box>
+      <Box
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mr="3px"
+      >
+        {hinder(Number(zeroPad(hours)) / 10) || 0}
+      </Box>
+      <Box
+        fontSize="12px"
+        color="#FFFFFF"
+      >
+        :
+      </Box>
+      <Box
+        ml="3px"
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mr="2px"
+      >
+        {front(Number(zeroPad(minutes)) / 10) || 0}
+      </Box>
+      <Box
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mr="3px"
+      >
+        {hinder(Number(zeroPad(minutes)) / 10) || 0}
+      </Box>
+
+      <Box
+        fontSize="12px"
+        color="#FFFFFF"
+      >
+        :
+      </Box>
+      <Box
+        mr="2px"
+        ml="3px"
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {front(Number(zeroPad(seconds)) / 10) || 0}
+      </Box>
+      <Box
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {hinder(Number(zeroPad(seconds)) / 10) || 0}
+      </Box>
+    </Flex>
+  );
   return (
     <Link
       key={nft?.metadata.name}
@@ -269,102 +377,15 @@ const NftCard: FC<NftCardProps> = ({
                 display="flex"
                 justifyContent="center"
               >
-                <Flex align="flex-start" alignItems="center" position="relative">
-                  <Flex
-                    position="absolute"
-                    // top="17px"
-                    left="5px"
-                    width="18px"
-                    fontSize="15px"
-                    letterSpacing="8.4px"
-                  >
+                {Number(events.times)
+                  ? (
                     <Countdown
                       autoStart
                       daysInHours
                       date={Date.now() + Number(events.times)}
+                      renderer={renderer}
                     />
-                  </Flex>
-                  <Box
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="1px"
-                  />
-                  <Box
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="3px"
-                  />
-
-                  <Box
-                    fontSize="12px"
-                    color="#FFFFFF"
-                    position="relative"
-                    zIndex={9}
-                  >
-                    :
-                  </Box>
-                  <Box
-                    ml="3px"
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="1px"
-                  />
-                  <Box
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="3px"
-                  />
-
-                  <Box
-                    fontSize="12px"
-                    color="#FFFFFF"
-                    position="relative"
-                    zIndex={9}
-                  >
-                    :
-                  </Box>
-                  <Box
-                    mr="1px"
-                    ml="3px"
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  />
-                  <Box
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  />
-                </Flex>
-
+                  ) : null}
               </Box>
             ) : null}
           </Box>

@@ -4,7 +4,7 @@
 import React, {
   FC, MouseEventHandler, useState, useEffect,
 } from 'react';
-import Countdown from 'react-countdown';
+import Countdown, { zeroPad } from 'react-countdown';
 import {
   Flex,
   Image,
@@ -93,7 +93,6 @@ interface Props {
   recipientsId:string,
   setIshowReceive:React.Dispatch<React.SetStateAction<boolean>>,
   setIsAllowBritish:React.Dispatch<React.SetStateAction<boolean>>,
-  reGetBlock:any
 }
 const DetailRight: FC<Props> = (({
   nftData,
@@ -116,7 +115,6 @@ const DetailRight: FC<Props> = (({
   recipientsId,
   setIshowReceive,
   setIsAllowBritish,
-  reGetBlock,
 }) => {
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
@@ -244,6 +242,124 @@ const DetailRight: FC<Props> = (({
   const handletabSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectTabId(Number(event.currentTarget.id));
   };
+  const front = (time) => {
+    const b = time.toString().split('.');
+    return b[0];
+  };
+  const hinder = (time) => {
+    const b = time.toString().split('.');
+    return b[1];
+  };
+  const renderer = ({
+    hours, minutes, seconds,
+  }) => (
+    <Box
+      fontSize="12px"
+      fontFamily="TTHoves-Medium, TTHoves"
+      fontWeight="500"
+      color="#FFFFFF"
+      lineHeight="14px"
+      textAlign="right"
+      display="flex"
+      justifyContent="flex-end"
+      position="relative"
+    >
+      <Flex align="flex-start" alignItems="center" color="#FFFFFF">
+        <Box
+          width="18px"
+          height="28px"
+          background="red"
+          borderRadius="1px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          mr="2px"
+        >
+          {front(Number(zeroPad(hours)) / 10) || 0}
+        </Box>
+        <Box
+          width="18px"
+          height="28px"
+          background="red"
+          borderRadius="1px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+
+          {hinder(Number(zeroPad(hours)) / 10) || 0}
+        </Box>
+        <Text
+          fontSize="12px"
+          width="6px"
+          color="#000000"
+          textAlign="center"
+          position="relative"
+          zIndex="2"
+        >
+          :
+        </Text>
+        <Box
+          width="18px"
+          height="28px"
+          background="red"
+          borderRadius="1px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          mr="2px"
+        >
+          {front(Number(zeroPad(minutes)) / 10) || 0}
+        </Box>
+        <Box
+          width="18px"
+          height="28px"
+          background="red"
+          borderRadius="1px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          mr="0px"
+        >
+          {hinder(Number(zeroPad(minutes)) / 10) || 0}
+        </Box>
+        <Text
+          fontSize="12px"
+          width="6px"
+          color="#000000"
+          textAlign="center"
+          position="relative"
+          zIndex="2"
+        >
+          :
+        </Text>
+        <Box
+          mr="2px"
+          width="18px"
+          height="28px"
+          background="red"
+          borderRadius="1px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          {front(Number(zeroPad(seconds)) / 10) || 0}
+        </Box>
+        <Box
+          width="18px"
+          height="28px"
+          background="red"
+          borderRadius="1px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          {hinder(Number(zeroPad(seconds)) / 10) || 0}
+        </Box>
+      </Flex>
+    </Box>
+
+  );
   return (
     <Flex width="748px" flexDirection="column">
       <Flex
@@ -446,10 +562,8 @@ const DetailRight: FC<Props> = (({
                   isDisabled={isLoginAddress || Number(events.times) === 0}
                   onClick={() => {
                     if (allowBritishAuction && Number(bidCount) > 0) {
-                      reGetBlock();
                       setIsAllowBritish(true);
                     } else {
-                      reGetBlock();
                       setIsShowDutch(true);
                     }
                   }}
@@ -529,116 +643,15 @@ const DetailRight: FC<Props> = (({
               >
                 Auction onds in
               </Text>
-              <Box
-                fontSize="12px"
-                fontFamily="TTHoves-Medium, TTHoves"
-                fontWeight="500"
-                color="#FFFFFF"
-                lineHeight="14px"
-                textAlign="right"
-                display="flex"
-                justifyContent="flex-end"
-                position="relative"
-              >
-                <Flex
-                  position="absolute"
-                  left="6px"
-                  top="7px"
-                  fontSize="14px"
-                  letterSpacing="8.1px"
-                  fontFamily="PingFangSC-Medium, PingFang SC"
-                  fontweight="500"
-                >
-                  {Number(events.times)
-                    ? (
-                      <Countdown
-                        daysInHours
-                        autoStart
-                        date={Date.now() + Number(events.times)}
-                      />
-                    ) : null}
-                </Flex>
-                <Flex align="flex-start" alignItems="center" color="#FFFFFF">
-                  <Box
-                    width="18px"
-                    height="28px"
-                    background="red"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="2px"
+              {Number(events.times)
+                ? (
+                  <Countdown
+                    autoStart
+                    daysInHours
+                    date={Date.now() + Number(events.times)}
+                    renderer={renderer}
                   />
-                  <Box
-                    width="18px"
-                    height="28px"
-                    background="red"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  />
-                  <Text
-                    fontSize="12px"
-                    width="6px"
-                    color="#000000"
-                    textAlign="center"
-                    position="relative"
-                    zIndex="2"
-                  >
-                    :
-                  </Text>
-                  <Box
-                    width="18px"
-                    height="28px"
-                    background="red"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="2px"
-                  />
-                  <Box
-                    width="18px"
-                    height="28px"
-                    background="red"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="0px"
-                  />
-                  <Text
-                    fontSize="12px"
-                    width="6px"
-                    color="#000000"
-                    textAlign="center"
-                    position="relative"
-                    zIndex="2"
-                  >
-                    :
-                  </Text>
-                  <Box
-                    mr="2px"
-                    width="18px"
-                    height="28px"
-                    background="red"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  />
-                  <Box
-                    width="18px"
-                    height="28px"
-                    background="red"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  />
-                </Flex>
-              </Box>
+                ) : null}
             </Flex>
           ) : null}
         </Flex>
@@ -851,7 +864,8 @@ const DetailRight: FC<Props> = (({
                             >
                               in
                               {' '}
-                              {timeBlock(item?.order?.deadline)}
+
+                              {Number(timeBlock(item?.order?.deadline)) > 0 ? timeBlock(item?.order?.deadline) : '-'}
                               {' '}
                               hours
                             </Text>
@@ -868,7 +882,7 @@ const DetailRight: FC<Props> = (({
                               {item.timestamp ? format(item.timestamp) : '-'}
                             </Text>
                           )}
-                          {item?.order?.deadline && isLoginAddress && item.order.status_id === 'Created' ? (
+                          {Number(timeBlock(item?.order?.deadline)) > 0 && isLoginAddress && item.order.status_id === 'Created' ? (
                             <Text
                               w="136px"
                               textAlign="right"
