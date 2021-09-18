@@ -1793,23 +1793,52 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         >
                           {t('SellSetting.listing')}
                         </Text>
-                        <Text
-                          mt="12px"
-                          fontSize="14px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#000000"
-                          lineHeight="16px"
-                        >
-                          {t('SellSetting.listingExplainOne')}
-                          {'  '}
-                          {formik.values.price || 0}
-                          NMT
-                          {t('SellSetting.listingExplainTwo')}
-                          {'  '}
-                          {formik.values.price || 0}
-                          NMT
-                        </Text>
+                        {selectId === 0 ? (
+                          <Text
+                            mt="12px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="16px"
+                          >
+                            {t('SellSetting.listingExplainOne')}
+                            {'  '}
+                            {formik.values.price || 0}
+                            NMT
+                            {t('SellSetting.listingExplainTwo')}
+                            {'  '}
+                            {formik.values.price || 0}
+                            NMT
+                          </Text>
+                        )
+                          : null}
+                        {selectId === 1 ? (
+                          <Text
+                            mt="12px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="16px"
+                          >
+                            Dutch auction
+                          </Text>
+                        )
+                          : null}
+                        {selectId === 2 ? (
+                          <Text
+                            mt="12px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="16px"
+                          >
+                            English auction
+                          </Text>
+                        )
+                          : null}
                       </Flex>
                       <Button
                         isLoading={isSubmitting}
@@ -1979,7 +2008,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {number2PerU16(collectionsData?.collection?.royalty_rate)}
+                          {number2PerU16(collectionsData?.collection?.royalty_rate).toFixed(1)}
                           %
                         </Text>
                       </Flex>

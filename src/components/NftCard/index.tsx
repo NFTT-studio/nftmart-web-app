@@ -3,7 +3,8 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-mixed-operators */
 import React, { FC, useState, useEffect } from 'react';
-import Countdown from 'react-countdown';
+import Countdown, { zeroPad } from 'react-countdown';
+
 import {
   HTMLChakraProps,
   Box,
@@ -69,7 +70,112 @@ const NftCard: FC<NftCardProps> = ({
       countFun(nft?.auction?.deadline);
     }
   }, [remainingTime]);
+  const front = (time) => {
+    const b = time.toString().split('.');
+    return b[0];
+  };
+  const hinder = (time) => {
+    const b = time.toString().split('.');
+    return b[1];
+  };
+  const renderer = ({
+    hours, minutes, seconds,
+  }) => (
+    <Flex w="136px" align="flex-start" alignItems="center" position="relative">
+      <Box
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mr="2px"
+      >
+        {front(Number(zeroPad(hours)) / 10) || 0}
+      </Box>
+      <Box
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mr="3px"
+      >
+        {hinder(Number(zeroPad(hours)) / 10) || 0}
+      </Box>
+      <Box
+        fontSize="12px"
+        color="#FFFFFF"
+      >
+        :
+      </Box>
+      <Box
+        ml="3px"
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mr="2px"
+      >
+        {front(Number(zeroPad(minutes)) / 10) || 0}
+      </Box>
+      <Box
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mr="3px"
+      >
+        {hinder(Number(zeroPad(minutes)) / 10) || 0}
+      </Box>
 
+      <Box
+        fontSize="12px"
+        color="#FFFFFF"
+      >
+        :
+      </Box>
+      <Box
+        mr="2px"
+        ml="3px"
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {front(Number(zeroPad(seconds)) / 10) || 0}
+      </Box>
+      <Box
+        width="18px"
+        height="22px"
+        lineHeight="22px"
+        background="#FFFFFF"
+        borderRadius="1px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {hinder(Number(zeroPad(seconds)) / 10) || 0}
+      </Box>
+    </Flex>
+  );
   const price = renderNmtNumberText(nft.price);
   const duchPrice = currentPrice(Number(nft?.auction?.max_price), Number(nft?.auction?.min_price), Number(nft?.auction?.deadline), remainingTime, Number(nft?.auction?.block_created));
   return (
@@ -184,14 +290,15 @@ const NftCard: FC<NftCardProps> = ({
                     renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
                   ) : null}
                   {type === 'Dutch' && nft?.auction?.allow_british_auction && nft?.auction?.bid_count > 0 ? (
-                    price
+                    renderNmtNumberText((Number(nft?.auction?.price)).toString())
                   ) : null}
                   {!type ? (
                     Number(nft?.price) ? price : ''
                   ) : null}
                   {type === 'British' ? (
-                    price
+                    renderNmtNumberText((Number(nft?.auction?.price)).toString())
                   ) : null}
+                  {Number(nft?.auction?.price) ? 'NMT' : '' }
                   {Number(nft?.price) ? 'NMT' : '' }
                 </Box>
                 <Box
@@ -272,105 +379,15 @@ const NftCard: FC<NftCardProps> = ({
                 display="flex"
                 justifyContent="center"
               >
-                <Flex align="flex-start" alignItems="center" position="relative">
-                  <Flex
-                    position="absolute"
-                    // top="17px"
-                    left="5px"
-                    width="18px"
-                    fontSize="15px"
-                    letterSpacing="8.4px"
-                  >
-                    {Number(events.times)
-                      ? (
-                        <Countdown
-                          autoStart
-                          daysInHours
-                          date={Date.now() + events.times}
-                        />
-                      ) : null}
-                  </Flex>
-                  <Box
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="1px"
-                  />
-                  <Box
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="3px"
-                  />
-
-                  <Box
-                    fontSize="12px"
-                    color="#FFFFFF"
-                    position="relative"
-                    zIndex={9}
-                  >
-                    :
-                  </Box>
-                  <Box
-                    ml="3px"
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="1px"
-                  />
-                  <Box
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mr="3px"
-                  />
-
-                  <Box
-                    fontSize="12px"
-                    color="#FFFFFF"
-                    position="relative"
-                    zIndex={9}
-                  >
-                    :
-                  </Box>
-                  <Box
-                    mr="1px"
-                    ml="3px"
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  />
-                  <Box
-                    width="18px"
-                    height="22px"
-                    background="#FFFFFF"
-                    borderRadius="1px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  />
-                </Flex>
-
+                {Number(events.times)
+                  ? (
+                    <Countdown
+                      autoStart
+                      daysInHours
+                      date={Date.now() + Number(events.times)}
+                      renderer={renderer}
+                    />
+                  ) : null}
               </Box>
             ) : null}
           </Box>

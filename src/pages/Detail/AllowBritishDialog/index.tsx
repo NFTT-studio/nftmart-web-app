@@ -61,7 +61,7 @@ const OfferDialog: FC<Props> = (({
       price: '',
     },
     onSubmit: (formValue, formAction) => {
-      setIsSubmitting(false);
+      setIsSubmitting(true);
       bidDutchAuction({
         address: account!.address,
         auctionCreatorAddress: creatorId,

@@ -128,22 +128,9 @@ const DealDialog: FC<Props> = (({
             fontWeight="400"
             color="#999999"
           >
-            {t('Detail.dealDesc')}
+            {t('Detail.dealReceive')}
           </Text>
           <Flex w="100%" justifyContent="flex-end" pt="10px">
-            <Button
-              bg="#FFFFFF"
-              color="#000000"
-              border="1px #000000 solid"
-              fontSize="14px"
-              fontFamily="TTHoves-Medium, TTHoves"
-              fontWeight="500"
-              lineHeight="20px"
-              borderRadius="4px"
-              onClick={() => setIshowReceive(false)}
-            >
-              {t('common.no')}
-            </Button>
             <Button
               isLoading={isSubmitting}
               bg="#000000"
