@@ -1,16 +1,18 @@
+/* eslint-disable no-nested-ternary */
 import React, { FC, useEffect } from 'react';
 import {
   Container, Flex, Button, Image,
 } from '@chakra-ui/react';
 
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { useWindowScroll } from 'react-use';
 import NavLink from '../Navlink';
 import AccountPopover from '../AccountPopover';
 import ChangeLanguage from '../ChangeLanguage';
 import Network from '../Network';
+
 import {
   LogoSrc,
   LogoWhite,
@@ -27,6 +29,7 @@ export interface HeaderProps {
 const Header: FC<HeaderProps> = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const { y } = useWindowScroll();
 
   const chainState = useAppSelector((state) => state.chain);
@@ -45,7 +48,7 @@ const Header: FC<HeaderProps> = () => {
     <Flex
       as="header"
       justify="space-between"
-      backgroundColor={y > 0 ? 'white' : 'black'}
+      backgroundColor={location.pathname === '/' ? y > 820 ? 'white' : 'black' : 'white'}
       position="fixed"
       top={0}
       left={0}
@@ -73,7 +76,7 @@ const Header: FC<HeaderProps> = () => {
             display="block"
             width="158px"
             height="auto"
-            src={y > 0 ? LogoSrc.default : LogoWhite.default}
+            src={location.pathname === '/' ? y > 820 ? LogoSrc.default : LogoWhite.default : LogoSrc.default}
           />
         </Flex>
         <Network />

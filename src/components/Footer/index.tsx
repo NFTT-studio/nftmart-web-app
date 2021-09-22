@@ -1,8 +1,9 @@
 import {
-  Box, Flex, Text,
+  Box, Flex, Text, Link,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   GithubLogo,
   GithubLogoHover,
@@ -76,30 +77,35 @@ export default function Footer() {
             {iconList.map(({
               id, src, hoverSrc, link,
             }) => (
-              <Box
-                ml={id !== 0 ? '30px' : 0}
-                role="group"
-                key={src.default}
-                onClick={() => window.open(link, '_blank')}
+              <Link
+                as={RouterLink}
+                to={link}
               >
                 <Box
-                  as="img"
-                  alt=""
-                  src={src.default}
-                  width="32px"
-                  cursor="pointer"
-                  _groupHover={{ display: 'none' }}
-                />
-                <Box
-                  as="img"
-                  alt=""
-                  display="none"
-                  src={hoverSrc.default}
-                  width="32px"
-                  cursor="pointer"
-                  _groupHover={{ display: 'block' }}
-                />
-              </Box>
+                  ml={id !== 0 ? '30px' : 0}
+                  role="group"
+                  key={src.default}
+                  onClick={() => window.open(link, '_blank')}
+                >
+                  <Box
+                    as="img"
+                    alt=""
+                    src={src.default}
+                    width="32px"
+                    cursor="pointer"
+                    _groupHover={{ display: 'none' }}
+                  />
+                  <Box
+                    as="img"
+                    alt=""
+                    display="none"
+                    src={hoverSrc.default}
+                    width="32px"
+                    cursor="pointer"
+                    _groupHover={{ display: 'block' }}
+                  />
+                </Box>
+              </Link>
             ))}
           </Box>
         </Box>

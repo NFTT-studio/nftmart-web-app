@@ -13,7 +13,7 @@ import {
 
 type CollectionSelectorProps = {
   collectionArr: Collection[],
-  selectedArr: string|undefined,
+  selectedArr: string[],
   handleSelect: MouseEventHandler<HTMLButtonElement>
 } & HTMLChakraProps<'div'>
 
@@ -26,86 +26,50 @@ const CollectionSelector: FC<CollectionSelectorProps> = (({ selectedArr, collect
     h="234px"
     overflowY="scroll"
   >
-    <Button
-      id=""
-      onClick={handleSelect}
-      display="flex"
-      justifyContent="flex-start"
-      alignItems="center"
-      background="none"
-      h="30px"
-      padding="0px 0 0 0"
-      m="8px 0 8px 0 !important"
-      outline="none"
-      _hover={{ background: 'none' }}
-      _focus={{
-        border: 'none',
-        textDecoration: 'none',
-      }}
-    >
-      {selectedArr === ''
-        ? <Image w="30px" h="30px" mr="8px" src={IconChecked.default} alt="" />
-        : (
-          <Image
-            w="30px"
-            h="30px"
-            mr="8px"
-            borderRadius="50%"
-            src={Polkadot.default}
-            alt=""
-          />
-        )}
-      <Text
-        fontSize="14px"
-        fontFamily="TTHoves-Regular, TTHoves"
-        fontWeight="400"
-        color="#191A24"
-      >
-        All
-      </Text>
-    </Button>
-    {collectionArr?.map((collection) => (
-      <Button
-        key={collection.id}
-        id={collection.id}
-        onClick={handleSelect}
-        display="flex"
-        justifyContent="flex-start"
-        alignItems="center"
-        background="none"
-        h="30px"
-        padding="0px 0 0 0"
-        m="8px 0 8px 0 !important"
-        outline="none"
-        _hover={{ background: 'none' }}
-        _focus={{
-          border: 'none',
-          textDecoration: 'none',
-        }}
-      >
-        {selectedArr === (collection.id)
-          ? <Image w="30px" h="30px" mr="8px" src={IconChecked.default} alt="" />
-          : (
-            <Image
-              w="30px"
-              h="30px"
-              mr="8px"
-              borderRadius="50%"
-              src={`${PINATA_SERVER}${collection?.metadata.logoUrl}`}
-              alt=""
-            />
-          )}
-        <Text
-          fontSize="14px"
-          fontFamily="TTHoves-Regular, TTHoves"
-          fontWeight="400"
-          color="#191A24"
+    {collectionArr?.map((collection) => {
+      const isselected = selectedArr.indexOf(collection.id) > -1;
+      return (
+        <Button
+          key={collection.id}
+          id={collection.id}
+          onClick={handleSelect}
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
+          background="none"
+          h="30px"
+          padding="0px 0 0 0"
+          m="8px 0 8px 0 !important"
+          outline="none"
+          _hover={{ background: 'none' }}
+          _focus={{
+            border: 'none',
+            textDecoration: 'none',
+          }}
         >
-          {collection.metadata.name}
-        </Text>
-      </Button>
-
-    ))}
+          {isselected
+            ? <Image w="30px" h="30px" mr="8px" src={IconChecked.default} alt="" />
+            : (
+              <Image
+                w="30px"
+                h="30px"
+                mr="8px"
+                borderRadius="50%"
+                src={`${PINATA_SERVER}${collection?.metadata.logoUrl}`}
+                alt=""
+              />
+            )}
+          <Text
+            fontSize="14px"
+            fontFamily="TTHoves-Regular, TTHoves"
+            fontWeight="400"
+            color="#191A24"
+          >
+            {collection.metadata.name}
+          </Text>
+        </Button>
+      );
+    })}
   </Flex>
 ));
 

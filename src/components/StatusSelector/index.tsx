@@ -32,7 +32,7 @@ const StatusSelector: FC<StatusSelectorProps> = (({ selectedArr, statusArr, hand
             color={isselected ? '#FFFFFF' : '#000000'}
             border="1px solid #000000"
             _focus={{
-              border: 'none',
+              border: '1px solid #000000',
               textDecoration: 'none',
             }}
           >
