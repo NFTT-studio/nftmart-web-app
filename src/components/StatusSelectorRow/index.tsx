@@ -32,7 +32,7 @@ const StatusSelectorRow: FC<StatusSelectorRowProps> = (({ selectedArr, statusArr
             color={isselected ? '#FFFFFF' : '#000000'}
             border="1px solid #999999"
             _focus={{
-              border: 'none',
+              border: '1px solid #000000',
               textDecoration: 'none',
             }}
           >

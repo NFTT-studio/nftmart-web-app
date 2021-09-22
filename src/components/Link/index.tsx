@@ -1,4 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom';
+/* eslint-disable no-nested-ternary */
+/* eslint-disable max-len */
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import {
   Text, Link, HTMLChakraProps, LinkProps,
 } from '@chakra-ui/react';
@@ -15,6 +17,7 @@ export interface NLinkProps extends HTMLChakraProps<'p'> {
 }
 
 const NLink: FC<NLinkProps> = (props) => {
+  const location = useLocation();
   const { t } = useTranslation();
   const { y } = useWindowScroll();
   const {
@@ -44,11 +47,11 @@ const NLink: FC<NLinkProps> = (props) => {
           as={RouterLink}
           key={title}
           to={path}
-          color={active ? `${y > 0 ? '#000000' : 'white'}` : '#999'}
+          color={location.pathname === '/' ? active ? `${y > 820 ? '#000000' : 'white'}` : '#999' : active ? '#000000' : '#999'}
           _after={active && bordered ? borderBottom : {}}
           _hover={{
             textDecoration: 'none',
-            color: y > 0 ? '#000000' : 'white',
+            color: location.pathname === '/' ? y > 0 ? '#000000' : 'white' : '#000000',
           }}
           _focus={{
             border: 'none',

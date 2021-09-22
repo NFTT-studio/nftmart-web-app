@@ -49,7 +49,7 @@ const Browsing = () => {
 
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
-  const [selectedCollection, setSelectedCollectionIdArr] = useState();
+  const [selectedCollection, setSelectedCollectionIdArr] = useState<string[]>([]);
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const [remainingTime, setRemainingTime] = useState(0);
 
@@ -88,7 +88,12 @@ const Browsing = () => {
   };
 
   const handleSelectCollection: MouseEventHandler<HTMLButtonElement> = (event) => {
-    setSelectedCollectionIdArr(event.currentTarget.id);
+    const selected = event.currentTarget.id;
+    setSelectedCollectionIdArr(
+      selectedCollection.indexOf(selected) > -1
+        ? without(selectedCollection, event.currentTarget.id)
+        : union(selectedCollection, [event.currentTarget.id]),
+    );
   };
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -207,10 +212,10 @@ const Browsing = () => {
             h="36px"
             flexFlow="row"
             justifyContent="space-between"
-            alignItems="center"
+            alignItems="flex-end"
           >
-            <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
             <Text
+              ml="4px"
               fontSize="14px"
               fontFamily="TTHoves-Regular, TTHoves"
               fontWeight="400"
@@ -220,6 +225,7 @@ const Browsing = () => {
               {' '}
               {t('results')}
             </Text>
+            <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
           </Flex>
           <Flex width="1088px">
             {nftsIsLoading

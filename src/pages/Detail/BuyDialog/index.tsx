@@ -187,7 +187,7 @@ const BuyDialog: FC<Props> = (({
                 </Text>
                 <Text>
                   (≈$
-                  {Number(price) * Number(token?.price)}
+                  {(Number(price) * Number(token?.price)).toFixed(2)}
                   )
                 </Text>
               </Flex>
@@ -245,7 +245,7 @@ const BuyDialog: FC<Props> = (({
                 </Text>
                 <Text>
                   (≈$
-                  {Number(price) * Number(token?.price)}
+                  {(Number(price) * Number(token?.price)).toFixed(2)}
                   )
                 </Text>
               </Flex>

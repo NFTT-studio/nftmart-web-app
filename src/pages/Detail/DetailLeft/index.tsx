@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 import React, { FC } from 'react';
 import {
@@ -207,6 +209,9 @@ const DetailLeft: FC<Props> = (({
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
                       color="#3D00FF"
+                      onClick={() => {
+                        localStorage.setItem('ButtonSelect', '1');
+                      }}
                     >
                       {nftData ? formatAddress(nftData?.nftInfo?.creator_id) : ''}
                     </Link>
@@ -396,7 +401,7 @@ const DetailLeft: FC<Props> = (({
                   </Text>
 
                   <Flex>
-                    {ICON_LIST.map((item) => (
+                    {ICON_LIST.map((item, index) => (
                       item.link === '' ? null
                         : (
                           <Link
@@ -406,8 +411,11 @@ const DetailLeft: FC<Props> = (({
                               key="index"
                               width="40px"
                               height="40px"
-                              borderRadius="4px 0px 0px 4px"
-                              border="1px solid #E5E5E5"
+                              borderRadius={index === 0 ? '4px 0px 0px 4px' : index === ICON_LIST.length - 1 ? '0px 4px 4px 0px' : ''}
+                              borderTop="1px solid #E5E5E5"
+                              borderBottom="1px solid #E5E5E5"
+                              borderLeft="1px solid #E5E5E5"
+                              borderRight={index === ICON_LIST.length - 1 ? '1px solid #E5E5E5' : ''}
                               display="flex"
                               justifyContent="center"
                               alignItems="center"

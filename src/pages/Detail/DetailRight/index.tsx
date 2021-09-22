@@ -405,7 +405,10 @@ const DetailRight: FC<Props> = (({
           <Link
             display="inline-block"
             as={RouterLink}
-            to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
+            to={`/account/${nftData?.nftInfo?.owner_id}/wallet`}
+            onClick={() => {
+              localStorage.setItem('ButtonSelect', '0');
+            }}
           >
             <Flex p="20px 0 0 0" justifyContent="flex-start" alignItems="center">
               <Image pr="4px" w="50px" h="auto" src={HeadPortrait.default} />
@@ -422,7 +425,7 @@ const DetailRight: FC<Props> = (({
                   fontWeight="500"
                   lineHeight="18px"
                 >
-                  作者名字
+                  拥有者名字
                 </Text>
                 <Text
                   mt="2px"
@@ -497,19 +500,19 @@ const DetailRight: FC<Props> = (({
                     color="#999999"
                   >
                     {types === 'British' ? (
-                      Number(auctionPrice) ? `NMT ($${token?.price * Number(auctionPrice)})` : null
+                      Number(auctionPrice) ? `NMT ($${(token?.price * Number(auctionPrice)).toFixed(2)})` : null
                     ) : null}
                     {types === 'Dutch' && !allowBritishAuction ? (
-                      Number(duchPrice) ? `NMT ($${token?.price * Number(duchPrice)})` : null
+                      Number(duchPrice) ? `NMT ($${(token?.price * Number(duchPrice)).toFixed(2)})` : null
                     ) : null}
                     {types === 'Dutch' && allowBritishAuction && Number(bidCount) === 0 ? (
-                      Number(duchPrice) ? `NMT ($${token?.price * Number(duchPrice)})` : null
+                      Number(duchPrice) ? `NMT ($${(token?.price * Number(duchPrice)).toFixed(2)})` : null
                     ) : null}
                     {types === 'Dutch' && allowBritishAuction && Number(bidCount) > 0 ? (
-                      Number(auctionPrice) ? `NMT ($${token?.price * Number(auctionPrice)})` : null
+                      Number(auctionPrice) ? `NMT ($${(token?.price * Number(auctionPrice)).toFixed(2)})` : null
                     ) : null}
                     {!types ? (
-                      Number(price) ? `NMT ($${token?.price * Number(price)})` : null
+                      Number(price) ? `NMT ($${(token?.price * Number(price)).toFixed(2)})` : null
                     ) : null}
                   </Text>
                   {types === 'Dutch' && !allowBritishAuction ? (
