@@ -82,6 +82,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       royaltyRate: collectionsData?.collection.royalty_rate,
       cb,
     };
+    console.log(normalizedFormData.metadata.fileType);
     mintNft(normalizedFormData);
   }, [account?.address, collectionId]);
 
@@ -92,6 +93,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       name: '',
       stub: '',
       description: '',
+      fileType: '',
     },
     onSubmit: (formValue, formAction) => {
       setIsSubmitting(true);
@@ -194,8 +196,9 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             rectangle=""
             proportion={16 / 16}
             value={formik.values.logoUrl}
-            onChange={(v) => {
+            onChange={(v, b) => {
               formik.setFieldValue('logoUrl', v);
+              formik.setFieldValue('fileType', b);
             }}
           />
           {/* <label htmlFor="featuredUrl">

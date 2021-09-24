@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
-  FC, useState, useCallback, useEffect, useRef,
+  FC, useState, useCallback, useEffect, useRef, SetStateAction, Dispatch,
 } from 'react';
 import {
   Input,
@@ -11,6 +11,7 @@ import {
   CircularProgress,
   CircularProgressLabel,
   Flex,
+  AspectRatio,
 } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import Cropper from 'react-cropper';
@@ -104,7 +105,7 @@ export interface UploadProps {
   boxProps?: Record<string, unknown>;
   id: string;
   value?: any;
-  onChange?: (cid: string) => any;
+  onChange?: (cid: string, b: string,) => any;
   mediatype: string;
   rectangle: string;
   proportion: number;
@@ -120,6 +121,7 @@ const Upload: FC<UploadProps> = ({
   proportion,
   ...rest
 }) => {
+  const [fileType, setFileType] = useState('');
   const [value, setValue] = useState(valueFromProp?.url || '');
   const [isLoading, setLoadingStatus] = useState(false);
   const [imgName, setImgName] = useState('');
@@ -192,32 +194,34 @@ const Upload: FC<UploadProps> = ({
       event.stopPropagation();
       event.preventDefault();
       const currentFile = event.target.files[0];
-      const fileType = currentFile.name
+      const fileTypes = currentFile.name
         .substring(currentFile.name.lastIndexOf('.') + 1)
         .toLowerCase();
-
-      if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'gif' && fileType !== 'jpeg') {
-        toast(<ToastBody title={t('createUploadFiletype')} message="" type="warning" />);
-        setLoadingStatus(false);
-        return;
-      }
+      // if (fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg') {
+      //   toast(<ToastBody title={t('createUploadFiletype')} message="" type="warning" />);
+      //   setLoadingStatus(false);
+      //   return;
+      // }
       if (currentFile.size >= MAX_FILE_SIZE) {
         toast(<ToastBody title={t('createUploadOverflow')} message="" type="warning" />);
         setLoadingStatus(false);
         return;
       }
+      setImgName(currentFile.name);
       if (mediatype === 'cutting') {
+        setFileType(fileTypes);
+        console.log(fileType);
         setValue('');
         setFile(currentFile);
         setShowCrop(true);
-        setImgName(currentFile.name);
       } else {
+        setFileType(fileTypes);
         setFile(currentFile);
         setValue('');
         setShowCrop(false);
         saveToIpfs(event.target.files);
-        setImgName(currentFile.name);
         setShowCrop(false);
+        console.log(value, 11111, fileTypes, fileTypes);
       }
     }
   }, [mediatype, saveToIpfs]);
@@ -236,7 +240,7 @@ const Upload: FC<UploadProps> = ({
   // }, []);
 
   useEffect(() => {
-    if (onChange) onChange(value);
+    if (onChange) onChange(value, fileType);
   }, [value]);
 
   useEffect(() => {
@@ -305,7 +309,18 @@ const Upload: FC<UploadProps> = ({
         <Box>
           {value ? (
             <>
-              <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />
+              {fileType === 'mp4' || fileType === 'mp3'
+                ? (
+                  <AspectRatio w="560px" height="auto">
+                    <iframe
+                      title="naruto"
+                      src={`${PINATA_SERVER}${value}`}
+                      allowFullScreen
+                      frameBorder="0"
+                    />
+                  </AspectRatio>
+                )
+                : <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />}
 
               <FormLabel htmlFor="changeId">
                 <Text

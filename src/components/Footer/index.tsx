@@ -57,7 +57,7 @@ export default function Footer() {
       <Flex
         p="0"
         maxWidth="1364px"
-        minWidth="1364px"
+        w="100%"
         display="flex"
         flexWrap="wrap"
         justifyContent="space-between"
@@ -78,6 +78,7 @@ export default function Footer() {
               id, src, hoverSrc, link,
             }) => (
               <Link
+                key={id}
                 as={RouterLink}
                 to={link}
               >

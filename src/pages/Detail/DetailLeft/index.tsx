@@ -13,6 +13,7 @@ import {
   AccordionIcon,
   AccordionButton,
   Link,
+  AspectRatio,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
@@ -125,12 +126,28 @@ const DetailLeft: FC<Props> = (({
             position="absolute"
             right="0px"
           />
-          <Image
-            m="20px"
-            maxWidth="520px"
-            height="auto"
-            src={logoUrl}
-          />
+          {nftData?.nftInfo?.metadata?.fileType === 'mp4' || nftData?.nftInfo?.metadata?.fileType === 'mp3'
+            ? (
+              <AspectRatio
+                m="20px"
+                width="520px"
+              >
+                <iframe
+                  title="naruto"
+                  src={`${PINATA_SERVER + nftData?.nftInfo?.metadata.logoUrl}?rel=0&amp;autoplay=1`}
+                  allowFullScreen
+                  frameBorder="0"
+                />
+              </AspectRatio>
+            )
+            : (
+              <Image
+                m="20px"
+                maxWidth="520px"
+                height="auto"
+                src={logoUrl}
+              />
+            )}
           <Image
             position="absolute"
             left="0px"

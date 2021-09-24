@@ -12,6 +12,7 @@ import {
   Text,
   Link,
   Image,
+  AspectRatio,
 } from '@chakra-ui/react';
 import { Shimmer } from 'react-shimmer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -200,27 +201,39 @@ const NftCard: FC<NftCardProps> = ({
         flexDirection="column"
       >
 
-        {nft?.metadata && (
-        <LazyLoadImage
-          wrapperProps={{
-            style: {
-              width: '320px',
-              height: '219px',
-              display: 'flex',
-              justifyContent: 'center',
-            },
-          }}
-          style={{
-            objectFit: 'cover',
-            width: '100%',
-            height: '100%',
-            borderRadius: '4px 4px 0 0 ',
-          }}
-          src={IPFS_URL + nft?.metadata.logoUrl}
-          effect="blur"
-          fallback={<Shimmer height={219} width={320} />}
-        />
-        )}
+        {nft?.metadata
+          && nft?.metadata?.fileType === 'mp4' || nft?.metadata?.fileType === 'mp3'
+          ? (
+            <AspectRatio w="320px" height="219px">
+              <iframe
+                title="naruto"
+                src={IPFS_URL + nft?.metadata.logoUrl}
+                allowFullScreen
+                frameBorder="0"
+              />
+            </AspectRatio>
+          )
+          : (
+            <LazyLoadImage
+              wrapperProps={{
+                style: {
+                  width: '320px',
+                  height: '219px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                },
+              }}
+              style={{
+                objectFit: 'cover',
+                width: '100%',
+                height: '100%',
+                borderRadius: '4px 4px 0 0 ',
+              }}
+              src={IPFS_URL + nft?.metadata.logoUrl}
+              effect="blur"
+              fallback={<Shimmer height={219} width={320} />}
+            />
+          )}
         <Box
           padding="0 20px"
           borderRadius="0 0 4px 4px"
