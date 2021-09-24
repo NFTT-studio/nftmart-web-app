@@ -25,6 +25,7 @@ import {
   ModalOverlay,
   Switch,
   Progress,
+  AspectRatio,
 } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -283,12 +284,30 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               h="12px"
               src={IconLeft.default}
             />
-            <Image
-              m="0 20px 0 10px"
-              w="auto"
-              h="40px"
-              src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.logoUrl}`}
-            />
+            {nftData?.nftInfo?.metadata?.fileType === 'mp4' || nftData?.nftInfo?.metadata?.fileType === 'mp3'
+              ? (
+                <AspectRatio
+                  m="0 20px 0 10px"
+                  minW="80px"
+                  h="40px"
+                >
+                  <iframe
+                    title="naruto"
+                    src={PINATA_SERVER + nftData?.nftInfo?.metadata.logoUrl}
+                    allowFullScreen
+                    frameBorder="0"
+                  />
+                </AspectRatio>
+              )
+              : (
+                <Image
+                  m="0 20px 0 10px"
+                  w="auto"
+                  h="40px"
+                  src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.logoUrl}`}
+                />
+              )}
+
             <Flex
               flexDirection="column"
               justifyContent="center"

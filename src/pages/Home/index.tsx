@@ -10,6 +10,7 @@ import {
   Center,
   Box,
   Button,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import SwiperCore, {
@@ -80,14 +81,14 @@ const Home = () => {
       <Banner />
       {categoriesData
         ? (
-          <Flex width="1364px">
+          <Flex width="100%" maxWidth="1364px">
             <CategorySelector list={categoriesData.categories} selectId={selectId} handleSelect={handleSelect} />
           </Flex>
         )
         : null}
 
-      <Flex width="100%" minWidth="1364px" justifyContent="center">
-        <Flex width="1364px" flexDirection="column">
+      <Flex width="100%" maxWidth="1364px" justifyContent="center">
+        <Flex width="100%" maxWidth="1364px" flexDirection="column">
           <Flex width="100%" flexDirection="column" mt="40px">
             <Flex
               h="38px"
@@ -168,11 +169,11 @@ const Home = () => {
                 </Center>
               ) : hotNftsData?.orders.length
                 ? (
-                  <Stack direction="row" spacing="26px">
+                  <SimpleGrid columns={[2, 4]} direction="row" spacing="26px">
                     {hotNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
-                  </Stack>
+                  </SimpleGrid>
                 )
                 : (
                   <Flex
@@ -283,11 +284,11 @@ const Home = () => {
                 </Center>
               ) : (expensiveNftsData?.orders.length
                 ? (
-                  <Stack direction="row" spacing="26px">
+                  <SimpleGrid columns={[2, 4]} direction="row" spacing="26px">
                     {expensiveNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
-                  </Stack>
+                  </SimpleGrid>
                 )
                 : (
                   <Flex
@@ -397,11 +398,11 @@ const Home = () => {
                 </Center>
               ) : cheapNftsData?.orders.length
                 ? (
-                  <Stack direction="row" spacing="26px">
+                  <SimpleGrid columns={[2, 4]} direction="row" spacing="26px">
                     {cheapNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
-                  </Stack>
+                  </SimpleGrid>
                 )
                 : (
                   <Flex

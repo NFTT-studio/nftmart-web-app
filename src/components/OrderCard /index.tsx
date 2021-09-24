@@ -11,6 +11,7 @@ import {
   Text,
   Link,
   Image,
+  AspectRatio,
 } from '@chakra-ui/react';
 import { Shimmer } from 'react-shimmer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -31,7 +32,7 @@ type NftCardProps = {
   remainingTime:number,
 } & HTMLChakraProps<'div'>
 
-const NftCard: FC<NftCardProps> = ({
+const OrderCard: FC<NftCardProps> = ({
   nft,
   remainingTime,
 }) => {
@@ -71,15 +72,14 @@ const NftCard: FC<NftCardProps> = ({
   }, [remainingTime]);
 
   const types = nft?.type || false;
-  console.log(types);
   const price = renderNmtNumberText(nft.price);
   const duchPrice = currentPrice(Number(nft?.max_price), Number(nft?.min_price), Number(nft?.deadline), remainingTime, Number(nft?.block_created));
 
-  const front = (time) => {
+  const front = (time:number) => {
     const b = time.toString().split('.');
     return b[0];
   };
-  const hinder = (time) => {
+  const hinder = (time:number) => {
     const b = time.toString().split('.');
     return b[1];
   };
@@ -183,7 +183,7 @@ const NftCard: FC<NftCardProps> = ({
   );
   return (
     <Link
-      key={nft?.metadata.name}
+      key={nft.id}
       width="320px"
       height="396px"
       as={RouterLink}
@@ -202,27 +202,39 @@ const NftCard: FC<NftCardProps> = ({
         display="flex"
         flexDirection="column"
       >
-        {nft?.metadata && (
-        <LazyLoadImage
-          wrapperProps={{
-            style: {
-              width: '320px',
-              height: '219px',
-              display: 'flex',
-              justifyContent: 'center',
-            },
-          }}
-          style={{
-            objectFit: 'cover',
-            width: '100%',
-            height: '100%',
-            borderRadius: '4px 4px 0 0 ',
-          }}
-          src={IPFS_URL + nft?.metadata.logoUrl}
-          effect="blur"
-          placeholder={<Shimmer height={219} width={320} />}
-        />
-        )}
+        {nft?.metadata
+          && nft?.metadata?.fileType === 'mp4' || nft?.metadata?.fileType === 'mp3'
+          ? (
+            <AspectRatio w="320px" height="219px">
+              <iframe
+                title="naruto"
+                src={IPFS_URL + nft?.metadata.logoUrl}
+                allowFullScreen
+                frameBorder="0"
+              />
+            </AspectRatio>
+          )
+          : (
+            <LazyLoadImage
+              wrapperProps={{
+                style: {
+                  width: '320px',
+                  height: '219px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                },
+              }}
+              style={{
+                objectFit: 'cover',
+                width: '100%',
+                height: '100%',
+                borderRadius: '4px 4px 0 0 ',
+              }}
+              src={IPFS_URL + nft?.metadata.logoUrl}
+              effect="blur"
+              fallback={<Shimmer height={219} width={320} />}
+            />
+          )}
         <Box
           padding="0 20px"
           borderRadius="0 0 4px 4px"
@@ -397,4 +409,4 @@ const NftCard: FC<NftCardProps> = ({
   );
 };
 
-export default NftCard;
+export default OrderCard;

@@ -139,16 +139,12 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { data: offersBuyerIdArr, fetchNextPage: fetchNextPagesBuyer } = useNfts(
     {
       buyerId: address,
-      collectionId: selectedCollection,
-      status: selectedStatusArr,
     },
   );
 
   const { data: offersSellerArr, fetchNextPage: fetchNextPagesSeller } = useNfts(
     {
       sellerId: address,
-      collectionId: selectedCollection,
-      status: selectedStatusArr,
     },
   );
 

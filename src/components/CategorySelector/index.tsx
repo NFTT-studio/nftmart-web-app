@@ -33,6 +33,7 @@ const CategorySelector: FC<CategorySelectorProps> = (({ list, selectId, handleSe
       </Button>
       {list?.map((category) => (
         <Button
+          key={category.id}
           height="36px"
           padding="0 16px"
           background={selectId === category.id ? '#000000' : ''}
@@ -41,7 +42,6 @@ const CategorySelector: FC<CategorySelectorProps> = (({ list, selectId, handleSe
           fontFamily="TTHoves-Medium, TTHoves"
           fontWeight="500"
           color={selectId === category.id ? '#FFFFFF' : '#999999'}
-          key={category.id}
           id={category.id}
           m="0 40px 0 0"
           onClick={handleSelect}

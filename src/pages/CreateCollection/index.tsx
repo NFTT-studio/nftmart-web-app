@@ -104,7 +104,7 @@ const CreateCollection: FC = () => {
           if (result.dispatchError) {
             toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
           } else {
-            toast(<ToastBody title="Success" message={t('Collection.Success')} type="success" />);
+            toast(<ToastBody title="Success" message={t('common.Success')} type="success" />);
             setTimeout(() => {
               history.push(`/collection/${account!.address}?collectionId=${result.events[5].event.data[1].toString()}`);
               formActions.resetForm();

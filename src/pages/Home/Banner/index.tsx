@@ -54,14 +54,14 @@ const Banner = ((
       h: '205px',
     },
     {
-      id: '0',
+      id: '1',
       icon: banner07.default,
       url: '51-1',
       w: '205px',
       h: '205px',
     },
     {
-      id: '0',
+      id: '2',
       icon: banner06.default,
       url: '51-1',
       w: '205px',
@@ -77,28 +77,28 @@ const Banner = ((
       h: '205px',
     },
     {
-      id: '0',
+      id: '1',
       icon: banner02.default,
       url: '51-1',
       w: '410px',
       h: '205px',
     },
     {
-      id: '0',
+      id: '2',
       icon: banner03.default,
       url: '51-1',
       w: '205px',
       h: '205px',
     },
     {
-      id: '0',
+      id: '3',
       icon: banner04.default,
       url: '51-1',
       w: '205px',
       h: '205px',
     },
     {
-      id: '0',
+      id: '4',
       icon: banner05.default,
       url: '51-1',
       w: '205px',
@@ -113,7 +113,7 @@ const Banner = ((
       justifyContent="center"
       mb="40px"
     >
-      <Flex maxWidth="1364px" minWidth="1364px" position="relative" justifyContent="space-between">
+      <Flex width="100%" maxWidth="1364px" position="relative" justifyContent="space-between">
         <Flex height="100%" alignItems="center">
           <Image
             width="30px"

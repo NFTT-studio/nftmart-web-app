@@ -94,6 +94,15 @@ const Browsing = () => {
         ? without(selectedCollection, event.currentTarget.id)
         : union(selectedCollection, [event.currentTarget.id]),
     );
+    // if (collectionsData) {
+    //   collectionsData.collections?.forEach((index) => {
+    //     if (selectedCollection.indexOf(selected) > -1) {
+    //       collectionsArr.splice(index, 1);
+    //       collectionsArr.unshift(index);
+    //       console.log(collectionsArr);
+    //     }
+    //   });
+    // }
   };
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
