@@ -64,7 +64,6 @@ export * as CollectionBackground from './img_bg_Collection.png';
 // account
 export * as AccountBanner from './img_Profile_bg@2x.png';
 export * as ImgAdd from './img_add.png';
-export * as Img from './img.jpg';
 
 // icon
 export * as IconPen from './icon_pen.png';

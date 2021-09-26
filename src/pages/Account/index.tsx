@@ -1,6 +1,7 @@
 import React, {
   useState, MouseEventHandler, useEffect, ChangeEventHandler,
 } from 'react';
+import Identicon from 'react-identicons';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, RouteComponentProps, useLocation } from 'react-router-dom';
 import {
@@ -247,19 +248,26 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                 src={userData?.featured_image || AccountBanner.default}
                 alt=""
               />
-              <Image
-                position="absolute"
-                bottom="-54px"
-                border="3px solid #FFFFFF"
-                m="0 40px"
-                boxShadow="0px 6px 20px 0px #D3D5DC"
-                background="#FFFFFF"
-                width="auto"
-                borderRadius="50%"
-                height="108px"
-                objectFit="cover"
-                src={userData?.avatar || HeadPortrait.default}
-              />
+              {userData?.avatar ? (
+                <Image
+                  position="absolute"
+                  bottom="-54px"
+                  border="3px solid #FFFFFF"
+                  m="0 40px"
+                  boxShadow="0px 6px 20px 0px #D3D5DC"
+                  background="#FFFFFF"
+                  width="auto"
+                  borderRadius="50%"
+                  height="108px"
+                  objectFit="cover"
+                  src={userData?.avatar || HeadPortrait.default}
+                />
+              ) : (
+                <Identicon
+                  className="identicon"
+                  string={address}
+                />
+              )}
             </Flex>
             <Flex w="1440px" flexDirection="row" justifyContent="space-between" padding="81px 40px 20px 40px">
 

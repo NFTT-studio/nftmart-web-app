@@ -214,7 +214,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 {nftData?.nftInfo.status === 'Selling'
                   ? (
                     <Flex
-                      minWidth="1364px"
                       w="100vw"
                       background="#F9F9F9"
                       justifyContent="center"
@@ -223,7 +222,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     >
                       <Flex
                         h="100%"
-                        width="1364px"
+                        maxWidth="1364px"
+                        w="100%"
                         justifyContent="flex-end"
                       >
                         <Flex h="100%" alignItems="center">
@@ -317,7 +317,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 {termOfValidity
                   ? (
                     <Flex
-                      minWidth="1364px"
                       w="100vw"
                       background="#F9F9F9"
                       justifyContent="center"

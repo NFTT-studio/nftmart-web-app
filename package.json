@@ -49,6 +49,7 @@
     "react-helmet": "^6.1.0",
     "react-i18next": "^11.10.0",
     "react-icons": "^3.0.0",
+    "react-identicons": "^1.2.5",
     "react-infinite-scroll-component": "^6.1.0",
     "react-lazy-load-image-component": "^1.5.1",
     "react-query": "^3.16.0",

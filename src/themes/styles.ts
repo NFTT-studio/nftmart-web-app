@@ -113,6 +113,18 @@ const obj = {
         },
       },
     },
+    '.identicon': {
+      position: 'absolute',
+      bottom: '-54px',
+      border: '3px solid #FFFFFF',
+      m: '0 40px',
+      boxShadow: '0px 6px 20px 0px #D3D5DC',
+      background: '#FFFFFF',
+      borderRadius: '50%',
+      width: 'auto !important',
+      height: '108px !important',
+      objectFit: 'cover',
+    },
   }),
 };
 
