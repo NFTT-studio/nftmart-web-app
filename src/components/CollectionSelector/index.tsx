@@ -30,23 +30,8 @@ const CollectionSelector: FC<CollectionSelectorProps> = (({ selectedArr, collect
     {collectionArr?.map((collection, index) => {
       const isselected = selectedArr.indexOf(collection.id) > -1;
       if (isselected) {
-        collectionArr.splice(index, 1);
-        setTimeout(() => {
-          collectionArr.push(collection);
-          console.log(collectionArr, 1);
-        }, 100);
-        // console.log(collection);
-        // break;
+        collectionArr.unshift(collectionArr.splice(index, 1)[0]);
       }
-      // for (let i = 0; i < collectionArr.length; i++) {
-      //   if (isselected) {
-      //     collectionArr.splice(i, 1);
-      //     collectionArr.push(collection);
-      //     console.log(collection);
-      //     break;
-      //   }
-      // }
-
       return (
         <Button
           key={collection.id}
