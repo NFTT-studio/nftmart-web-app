@@ -49,7 +49,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const { collectionId } = match.params;
   const { account, whiteList } = chainState;
   const [isShowModal, setIsShowModal] = useState(false);
-
+  const [preview, setIsPreview] = useState(false);
+  console.log(preview);
   const onCloseModal = () => {
     setIsShowModal(false);
     history.push('/');
@@ -82,14 +83,13 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       royaltyRate: collectionsData?.collection.royalty_rate,
       cb,
     };
-    console.log(normalizedFormData.metadata.fileType);
     mintNft(normalizedFormData);
   }, [account?.address, collectionId]);
 
   const formik = useFormik({
     initialValues: {
       logoUrl: '',
-      featuredUrl: '',
+      previewUrl: '',
       name: '',
       stub: '',
       description: '',
@@ -199,8 +199,35 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             onChange={(v, b) => {
               formik.setFieldValue('logoUrl', v);
               formik.setFieldValue('fileType', b);
+              console.log(b);
+              if (b !== 'gif' && b !== 'png' && b !== 'jpg' && b !== 'jpg' && b !== '' && b !== 'jpeg') {
+                setIsPreview(true);
+              } else {
+                setIsPreview(false);
+              }
             }}
           />
+          {preview
+            ? (
+              <>
+                <label htmlFor="previewUrl">
+                  {' '}
+                  <EditFormTitle text={t('Create.preview')} />
+                  <EditFromSubTitle text={t('Create.previewRule')} />
+                </label>
+                <Upload
+                  id="previewUrl"
+                  mediatype="img"
+                  rectangle=""
+                  proportion={16 / 16}
+                  value={formik.values.previewUrl}
+                  onChange={(v, b) => {
+                    formik.setFieldValue('previewUrl', v);
+                  }}
+                />
+              </>
+            ) : null}
+
           {/* <label htmlFor="featuredUrl">
             {' '}
             <EditFormTitle text={t('Create.featured')} />

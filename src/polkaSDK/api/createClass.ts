@@ -31,7 +31,7 @@ export const createClass = async ({
     const metadataStr = JSON.stringify(metadata);
     const royaltyRates = float2PerU16(royaltyRate);
     const res = await PolkaSDK.api.tx.nftmart
-      .createClass(metadataStr, name, '', royaltyRates, TOKEN_TRANSFERABLE_BURNABLE, cate)
+      .createClass(metadataStr, null, '', royaltyRates, TOKEN_TRANSFERABLE_BURNABLE, cate)
       .signAndSend(address, { signer: injector.signer }, (result: any) => txLog(result, cb.success));
     return res;
   } catch (error) {

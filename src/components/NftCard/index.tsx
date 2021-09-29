@@ -17,10 +17,16 @@ import {
 import { Shimmer } from 'react-shimmer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link as RouterLink } from 'react-router-dom';
+import ReactAudioPlayer from 'react-audio-player';
+import {
+  Player,
+} from 'video-react';
 import { IPFS_URL } from '../../constants';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { renderNmtNumberText } from '../Balance';
 import { priceStringDivUnit, currentPrice } from '../../utils/format';
+// eslint-disable-next-line import/no-unresolved
+import '../../../node_modules/video-react/dist/video-react.css';
 
 import {
   IconTime,
@@ -202,18 +208,8 @@ const NftCard: FC<NftCardProps> = ({
       >
 
         {nft?.metadata
-          && nft?.metadata?.fileType === 'mp4' || nft?.metadata?.fileType === 'mp3'
+          && nft?.metadata?.fileType === 'jpg' || nft?.metadata?.fileType === 'jpge' || nft?.metadata?.fileType === 'png' || nft?.metadata?.fileType === 'gif'
           ? (
-            <AspectRatio w="320px" height="219px">
-              <iframe
-                title="naruto"
-                src={IPFS_URL + nft?.metadata.logoUrl}
-                allowFullScreen
-                frameBorder="0"
-              />
-            </AspectRatio>
-          )
-          : (
             <LazyLoadImage
               wrapperProps={{
                 style: {
@@ -233,6 +229,60 @@ const NftCard: FC<NftCardProps> = ({
               effect="blur"
               fallback={<Shimmer height={219} width={320} />}
             />
+          )
+          : (
+            nft?.metadata?.previewUrl
+              ? nft?.metadata?.fileType === 'mp4'
+                ? (
+                  <Box
+                    width="320px"
+                    height="219px"
+                    maxWidth="420px"
+                  >
+                    <Player
+                      width="100%"
+                      height="219px"
+                      poster={`${IPFS_URL}${nft?.metadata?.previewUrl}`}
+                    >
+                      <source style={{ height: 'auto' }} src={`${IPFS_URL}${nft?.metadata.previewUrl}`} />
+                    </Player>
+                  </Box>
+                )
+                : (
+                  <Box
+                    width="320px"
+                    height="219px"
+                    maxWidth="420px"
+                  >
+                    <Player
+                      width="100%"
+                      height="100%"
+                      poster={`${IPFS_URL}${nft?.metadata?.previewUrl}`}
+                    >
+                      <source style={{ height: 'auto' }} src={`${IPFS_URL}${nft?.metadata.previewUrl}`} />
+                    </Player>
+                  </Box>
+                ) : (
+                  <LazyLoadImage
+                    wrapperProps={{
+                      style: {
+                        width: '320px',
+                        height: '219px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                      },
+                    }}
+                    style={{
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: '4px 4px 0 0 ',
+                    }}
+                    src={IPFS_URL + nft?.metadata.logoUrl}
+                    effect="blur"
+                    fallback={<Shimmer height={219} width={320} />}
+                  />
+              )
           )}
         <Box
           padding="0 20px"
