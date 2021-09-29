@@ -86,6 +86,7 @@ const CropperCop: React.FC<INavProps> = (props) => {
         // crop={onCrop}
         aspectRatio={proportion}
         ref={cropperRef}
+        autoCropArea={1}
         onInitialized={(instance) => {
           setCropper(instance);
         }}
@@ -205,6 +206,11 @@ const Upload: FC<UploadProps> = ({
       const fileTypes = currentFile.name
         .substring(currentFile.name.lastIndexOf('.') + 1)
         .toLowerCase();
+      if (fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg' && fileTypes !== 'mp4' && fileTypes !== 'mp3' && fileTypes !== 'svg' && fileTypes !== 'ogg' && fileTypes !== 'wav' && fileTypes !== 'webm') {
+        toast(<ToastBody title={t('common.imgFiletype')} message="" type="warning" />);
+        setLoadingStatus(false);
+        return;
+      }
       if (mediatype === 'img' && fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg') {
         toast(<ToastBody title={t('common.imgFiletype')} message="" type="warning" />);
         setLoadingStatus(false);

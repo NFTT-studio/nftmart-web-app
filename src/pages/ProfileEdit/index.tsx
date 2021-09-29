@@ -25,10 +25,6 @@ import { useAppSelector } from '../../hooks/redux';
 import useUser from '../../hooks/reactQuery/useUser';
 import { CACHE_SERVER_URL } from '../../constants';
 
-import {
-
-} from '../../assets/images';
-
 const CreateCollection: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -108,6 +104,7 @@ const CreateCollection: FC = () => {
           rectangle=""
           proportion={16 / 16}
           value={formik.values.avatar}
+          edit={userData?.avatar}
           onChange={(v) => {
             formik.setFieldValue('avatar', v);
           }}
@@ -151,8 +148,9 @@ const CreateCollection: FC = () => {
           id="featured_image"
           mediatype="cutting"
           rectangle="600px"
-          proportion={7.6 / 1}
+          proportion={1440 / 280}
           value={formik.values.featured_image}
+          edit={userData?.featured_image}
           onChange={(v) => {
             formik.setFieldValue('featured_image', v);
           }}

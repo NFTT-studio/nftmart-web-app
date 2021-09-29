@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 
 import {
@@ -129,25 +131,29 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             >
               {t('Collection.Editprofile')}
             </Button> */}
-            <Button
-              width="137px"
-              height="40px"
-              background="#FFFFFF"
-              borderRadius="4px"
-              border="1px solid #000000"
-              fontSize="14px"
-              fontFamily="TTHoves-Regular, TTHoves"
-              fontWeight="400"
-              color="#000000"
-              lineHeight="16px"
-              _hover={{
-                background: '#000000',
-                color: '#FFFFFF',
-              }}
-              onClick={handleCreate}
+            <Link
+              href={`/profile/nft/create/${classId}`}
             >
-              {t('Collection.addItem')}
-            </Button>
+              <Button
+                width="137px"
+                height="40px"
+                background="#FFFFFF"
+                borderRadius="4px"
+                border="1px solid #000000"
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#000000"
+                lineHeight="16px"
+                _hover={{
+                  background: '#000000',
+                  color: '#FFFFFF',
+                }}
+                onClick={handleCreate}
+              >
+                {t('Collection.addItem')}
+              </Button>
+            </Link>
           </Flex>
         </Flex>
       ) : ''}
@@ -267,7 +273,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                12,323
+                {collectionsData?.collection.collect_count || 0}
               </Flex>
             </Flex>
             <Flex
@@ -295,7 +301,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                12,323
+                {collectionsData?.collection.view_count || 0}
               </Flex>
             </Flex>
             <Flex
@@ -323,12 +329,46 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="flex-end"
                 alignItems="center"
               >
-                12,323
+                {collectionsData?.collection.collect_count || 0}
               </Flex>
             </Flex>
 
           </Flex>
-          <Flex flexDirection="column">
+          <Flex>
+            {ICON_LIST.map((item, index) => (
+              item.link === '' ? null
+                : (
+                  <Link
+                    href={item.link}
+                  >
+                    <Box
+                      key="index"
+                      width="40px"
+                      height="40px"
+                      borderRadius={index === 0 ? '4px 0px 0px 4px' : index === ICON_LIST.length - 1 ? '0px 4px 4px 0px' : ''}
+                      borderTop="1px solid #E5E5E5"
+                      borderBottom="1px solid #E5E5E5"
+                      borderLeft="1px solid #E5E5E5"
+                      borderRight={index === ICON_LIST.length - 1 ? '1px solid #E5E5E5' : ''}
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      _hover={{
+                        boxShadow: '0px 2px 8px 0px #E1E1E1',
+                      }}
+                    >
+                      <Image
+                        w="22px"
+                        h="22px"
+                        src={item.src}
+                      />
+                    </Box>
+
+                  </Link>
+                )
+            ))}
+          </Flex>
+          {/* <Flex flexDirection="column">
             {ICON_LIST.map((item) => (
               item.link === '' ? null
                 : (
@@ -368,6 +408,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 )
             ))}
           </Flex>
+         */}
         </Flex>
         <Flex width="1003px" direction="column">
           <Flex
@@ -384,17 +425,17 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
               <Text
                 fontSize="14px"
                 fontFamily="TTHoves-Regular, TTHoves"
                 fontWeight="400"
                 color="#999999"
               >
-                {nftsData?.pages[0].pageInfo.totalNum}
+                {nftsData?.pages[0].pageInfo.totalNum || 0}
                 {' '}
                 results
               </Text>
+              <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
             </Flex>
           </Flex>
           {nftsData?.pages[0].pageInfo.totalNum
