@@ -49,8 +49,8 @@
     },
     "clickToCopy": "点击拷贝",
     "viewInScan": "查看",
-    "switchAccounts": "Switch accounts",
-    "success": "Copy success"
+    "switchAccounts": "切换账号",
+    "success": "复制成功"
   },
   "banner": {
     "titleOne": "专业的",
@@ -285,7 +285,7 @@
     "twitter": "推特",
     "twitterRule": "80个字符以内。",
     "featuredImage": "题图",
-    "featuredImageRule": "此图片将显示在您的个人主页上，建议 600 x 400"
+    "featuredImageRule": "此图片将显示在您的个人主页上，建议 1440 x 280"
   },
   "class": {
     "Items": "作品",

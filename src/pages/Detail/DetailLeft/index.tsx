@@ -291,7 +291,7 @@ const DetailLeft: FC<Props> = (({
               </Text>
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem mt="20px" width="100%" border="none">
+          {/* <AccordionItem mt="20px" width="100%" border="none">
             <AccordionButton
               height="62px"
               width="100%"
@@ -410,7 +410,7 @@ const DetailLeft: FC<Props> = (({
                 </AccordionPanel>
               )}
 
-          </AccordionItem>
+          </AccordionItem> */}
           <AccordionItem mt="20px" width="100%" border="none">
             <AccordionButton
               height="62px"

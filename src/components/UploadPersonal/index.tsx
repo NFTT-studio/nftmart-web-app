@@ -19,6 +19,7 @@ import 'cropperjs/dist/cropper.css';
 import {
   MAX_FILE_SIZE,
   Colors,
+  PINATA_SERVER,
 } from '../../constants';
 import { t } from '../../i18n';
 import {
@@ -70,6 +71,7 @@ const CropperCop: React.FC<INavProps> = (props) => {
         viewMode={2}
         // crop={onCrop}
         aspectRatio={proportion}
+        autoCropArea={1}
         ref={cropperRef}
         onInitialized={(instance) => {
           setCropper(instance);
@@ -95,6 +97,7 @@ export interface UploadProps {
   mediatype: string;
   rectangle: string;
   proportion: number;
+  edit?: any;
 }
 
 const Upload: FC<UploadProps> = ({
@@ -105,9 +108,10 @@ const Upload: FC<UploadProps> = ({
   mediatype,
   rectangle,
   proportion,
+  edit,
   ...rest
 }) => {
-  const [value, setValue] = useState(valueFromProp?.url || '');
+  const [value, setValue] = useState(edit || '');
   const [isLoading, setLoadingStatus] = useState(false);
   const [imgName, setImgName] = useState('');
   const [file, setFile] = useState(null);
@@ -229,7 +233,7 @@ const Upload: FC<UploadProps> = ({
             <>
               <Image w="350px" h="auto" m="16px 0" src={`${value}`} />
 
-              <FormLabel htmlFor="changeId">
+              <FormLabel htmlFor={id}>
                 <Text
                   fontSize="14px"
                   lineHeight="47px"
@@ -241,7 +245,7 @@ const Upload: FC<UploadProps> = ({
                 </Text>
               </FormLabel>
               <Input
-                id="changeId"
+                id={id}
                 display="none"
                 type="file"
                 onChange={captureFile}
