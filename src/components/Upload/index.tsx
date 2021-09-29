@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   FC, useState, useCallback, useEffect, useRef, SetStateAction, Dispatch,
@@ -18,6 +20,12 @@ import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import axios from 'axios';
 import { create } from 'ipfs-http-client';
+import ReactAudioPlayer from 'react-audio-player';
+import {
+  Player,
+} from 'video-react';
+// eslint-disable-next-line import/no-unresolved
+import '../../../node_modules/video-react/dist/video-react.css';
 
 import {
   MAX_FILE_SIZE,
@@ -197,6 +205,11 @@ const Upload: FC<UploadProps> = ({
       const fileTypes = currentFile.name
         .substring(currentFile.name.lastIndexOf('.') + 1)
         .toLowerCase();
+      if (mediatype === 'img' && fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg') {
+        toast(<ToastBody title={t('common.imgFiletype')} message="" type="warning" />);
+        setLoadingStatus(false);
+        return;
+      }
       // if (fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg') {
       //   toast(<ToastBody title={t('createUploadFiletype')} message="" type="warning" />);
       //   setLoadingStatus(false);
@@ -210,7 +223,6 @@ const Upload: FC<UploadProps> = ({
       setImgName(currentFile.name);
       if (mediatype === 'cutting') {
         setFileType(fileTypes);
-        console.log(fileType);
         setValue('');
         setFile(currentFile);
         setShowCrop(true);
@@ -221,7 +233,6 @@ const Upload: FC<UploadProps> = ({
         setShowCrop(false);
         saveToIpfs(event.target.files);
         setShowCrop(false);
-        console.log(value, 11111, fileTypes, fileTypes);
       }
     }
   }, [mediatype, saveToIpfs]);
@@ -309,20 +320,28 @@ const Upload: FC<UploadProps> = ({
         <Box>
           {value ? (
             <>
-              {fileType === 'mp4' || fileType === 'mp3'
+              {fileType === 'jpg' || fileType === 'png' || fileType === 'gif' || fileType === 'jpeg'
                 ? (
-                  <AspectRatio w="560px" height="auto">
-                    <iframe
-                      title="naruto"
-                      src={`${PINATA_SERVER}${value}`}
-                      allowFullScreen
-                      frameBorder="0"
-                    />
-                  </AspectRatio>
+                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />
                 )
-                : <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />}
+                : (
+                  fileType === 'mp4'
+                    ? (
+                      <Box maxWidth="420px">
+                        <Player width="100%">
+                          <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${value}`} />
+                        </Player>
+                      </Box>
+                    )
+                    : (
+                      <ReactAudioPlayer
+                        src={`${PINATA_SERVER}${value}`}
+                        controls
+                      />
+                    )
+                )}
 
-              <FormLabel htmlFor="changeId">
+              <FormLabel htmlFor={id}>
                 <Text
                   fontSize="14px"
                   lineHeight="47px"
@@ -334,7 +353,7 @@ const Upload: FC<UploadProps> = ({
                 </Text>
               </FormLabel>
               <Input
-                id="changeId"
+                id={id}
                 display="none"
                 type="file"
                 onChange={captureFile}

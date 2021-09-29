@@ -26,6 +26,7 @@
     "error": "错误",
     "submit": "提交",
     "noDataYet": "还没有数据",
+    "imgFiletype":"图片格式不对",
     "nav": {
       "navHome": "首页",
       "navBrowsing": "浏览",
@@ -107,7 +108,7 @@
     "royaltiesSchema": "版税上限为 20% 且不能小于0",
     "banner": "横幅图片",
     "bannerRule": "此图片将显示在您的作品集页面顶部。避免在此横幅图像中包含太多文本，因为尺寸在不同设备上会发生变化，建议使用 1400 x 400。",
-    "changeImage": "改变图片"
+    "changeImage": "改变"
   },
   "Browsing": {
     "title": "浏览",
@@ -123,8 +124,8 @@
     "headerTitle": "创建作品集-NFTMart|专业的NFT交易市场",
     "title": "常规设置",
     "createCollection": "创建NFT",
-    "logo": "*图片",
-    "logoRule": "支持的文件类型：JPG、PNG、GIF。最大大小：100MB",
+    "logo": "*图片、视频或者音频",
+    "logoRule": "文件类型支持：JPG、PNG、GIF、SVG、MP4、WEBM、WAV、OGG, 文件大小 100 MB以内",
     "featured": "题图",
     "featuredRule": "此图像将用于在作品集列表页面. 600 x 400。",
     "name": "*名称",
@@ -137,6 +138,8 @@
     "collection": "创建新作品集",
     "nft": "创建一个新的NFT",
     "Required": "必填",
+    "preview":"预览图片",
+    "previewRule":"由于您已包含多媒体，因此您需要为作品卡片显示提供图像（PNG、JPG 或 GIF），文件大小 1 MB",
     "ConfirmClipping": "确认裁剪"
   },
   "Detail": {

@@ -42,6 +42,7 @@
     "ramda": "^0.27.1",
     "rc-util": "^5.13.2",
     "react": "^17.0.2",
+    "react-audio-player": "^0.17.0",
     "react-countdown": "^2.3.2",
     "react-cropper": "^2.1.7",
     "react-date-picker": "^8.2.0",
@@ -64,6 +65,7 @@
     "search-params": "^4.0.1",
     "swiper": "^6.7.1",
     "typescript": "^3.9.5",
+    "video-react": "^0.14.1",
     "web-vitals": "^0.2.2",
     "yup": "^0.32.9"
   },

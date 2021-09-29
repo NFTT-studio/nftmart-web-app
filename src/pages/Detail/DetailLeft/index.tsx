@@ -17,6 +17,10 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+import ReactAudioPlayer from 'react-audio-player';
+import {
+  Player,
+} from 'video-react';
 import NoData from '../NoData';
 
 import {
@@ -126,7 +130,52 @@ const DetailLeft: FC<Props> = (({
             position="absolute"
             right="0px"
           />
-          {nftData?.nftInfo?.metadata?.fileType === 'mp4' || nftData?.nftInfo?.metadata?.fileType === 'mp3'
+          {nftData?.nftInfo?.metadata?.fileType === 'jpg' || nftData?.nftInfo?.metadata?.fileType === 'png' || nftData?.nftInfo?.metadata?.fileType === 'gif' || nftData?.nftInfo?.metadata?.fileType === 'jpeg'
+            ? (
+              <Image
+                m="20px"
+                maxWidth="520px"
+                height="auto"
+                src={logoUrl}
+              />
+            )
+            : (
+              nftData?.nftInfo?.metadata?.fileType === 'mp4'
+                ? (
+                  <Box
+                    m="20px"
+                    width="520px"
+                    height="auto"
+                  >
+                    <Player
+                      autoPlay
+                      width="100%"
+                      height="100%"
+                      poster={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.previewUrl}`}
+                    >
+                      <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.logoUrl}`} />
+                    </Player>
+                  </Box>
+                )
+                : (
+                  <Box
+                    m="20px"
+                    width="520px"
+                    height="auto"
+                  >
+                    <Player
+                      autoPlay
+                      width="100%"
+                      height="100%"
+                      poster={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.previewUrl}`}
+                    >
+                      <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.logoUrl}`} />
+                    </Player>
+                  </Box>
+                )
+            )}
+
+          {/* {nftData?.nftInfo?.metadata?.fileType === 'mp4' || nftData?.nftInfo?.metadata?.fileType === 'mp3'
             ? (
               <AspectRatio
                 m="20px"
@@ -141,13 +190,8 @@ const DetailLeft: FC<Props> = (({
               </AspectRatio>
             )
             : (
-              <Image
-                m="20px"
-                maxWidth="520px"
-                height="auto"
-                src={logoUrl}
-              />
-            )}
+
+            )} */}
           <Image
             position="absolute"
             left="0px"

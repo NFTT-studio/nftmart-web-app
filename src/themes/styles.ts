@@ -125,6 +125,23 @@ const obj = {
       height: '108px !important',
       objectFit: 'cover',
     },
+    '.video-react-big-play-button': {
+      width: '54px !important',
+      height: '54px!important',
+      borderRadius: '50% !important',
+      lineHeight: '50px !important',
+      top: 'calc(50% - 27px) !important',
+      left: 'calc(50% - 27px) !important',
+    },
+    '.video-react-poster': {
+      height: '100% !important',
+      backgroundRepeat: 'no-repeat !important',
+      backgroundSize: 'cover !important',
+    },
+    '.video-react-fluid': {
+      height: '100% !important',
+    },
+
   }),
 };
 
