@@ -425,7 +425,7 @@ const DetailRight: FC<Props> = (({
                   fontWeight="500"
                   lineHeight="18px"
                 >
-                  拥有者名字
+                  {nftData?.nftInfo?.owner?.name || formatAddress(nftData?.nftInfo?.owner?.id)}
                 </Text>
                 <Text
                   mt="2px"
@@ -602,8 +602,11 @@ const DetailRight: FC<Props> = (({
                   color={!isLoginAddress && Number(price) > 0 ? '#FFFFFF' : '#FFFFFF'}
                   isDisabled={isLoginAddress || Number(price) === 0}
                   onClick={handleBuy}
+                  _hover={{
+                    // background: '#000000',
+                  }}
                 >
-                  {!isLoginAddress && Number(price) > 0 ? t('Detail.buyNow') : '-'}
+                  {t('Detail.buyNow')}
                 </Button>
               ) : null}
               {recipientsId === account?.address && events.times === 0 && auctionStatus === 'Created' ? (

@@ -122,7 +122,7 @@
   },
   "Create": {
     "headerTitle": "创建作品集-NFTMart|专业的NFT交易市场",
-    "title": "常规设置",
+    "title": "创建作品-NFTMart|专业的NFT交易市场",
     "createCollection": "创建NFT",
     "logo": "*图片、视频或者音频",
     "logoRule": "文件类型支持：JPG、PNG、GIF、SVG、MP4、WEBM、WAV、OGG, 文件大小 100 MB以内",
@@ -239,7 +239,7 @@
     "pledgeExplain": "在取消或者售出后，将自动解除质押。",
     "atLeast": "最少",
     "Instructions": "介绍",
-    "InstructionsExplain": "NFTmart是一个去中心化的 NFT 交易平台，你所有的操作都将在区块链上进行，任何人都可以通过区块链购买你的 NFT，而不仅仅是通过 NFTMart.io 网站。",
+    "InstructionsExplain": "NFTMart是一个去中心化的 NFT 交易平台，你所有的操作都将在区块链上进行，任何人都可以通过区块链购买你的 NFT，而不仅仅是通过 NFTMart.io 网站。",
     "summary": "摘要",
     "listing": "上架信息",
     "listingExplainOne": "作品将以 ",
