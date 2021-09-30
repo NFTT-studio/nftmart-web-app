@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable react/no-children-prop */
 import React, {
   FC, useCallback, useState, useEffect,
@@ -125,7 +126,10 @@ const CreateCollection: FC = () => {
     name: Yup.string()
       .max(50, t('Collection.nameRule'))
       .required(t('Collection.required')),
-    stub: Yup.string().max(50, t('Collection.urlRule')),
+    stub: Yup.string().matches(
+      /^[a-z0-9\.-]*$/g,
+      t('Collection.urlRule'),
+    ).max(50, t('Collection.urlRule')),
     description: Yup.string().max(1000, t('Collection.descriptionRule')),
     royalties: Yup.number().max(20, t('Collection.royaltiesSchema')).min(0, t('Collection.royaltiesSchema')),
     cate: Yup.string().required(t('Collection.required')),
@@ -383,6 +387,7 @@ const CreateCollection: FC = () => {
                 {t('Collection.royalties')}
               </Text>
               <Box
+                display={royaltiesSl ? 'flex' : 'none'}
                 width="349px"
                 mt="8px"
                 fontSize="14px"
@@ -390,7 +395,6 @@ const CreateCollection: FC = () => {
                 fontWeight="400"
                 color="#999999"
                 lineHeight="16px"
-                display="flex"
                 flexDirection="column"
               >
                 <Text
@@ -425,6 +429,7 @@ const CreateCollection: FC = () => {
                 size="lg"
               />
               <InputGroup
+                display={royaltiesSl ? 'flex' : 'none'}
                 width="200px"
                 height="40px"
                 background="#FFFFFF"
@@ -512,18 +517,21 @@ const CreateCollection: FC = () => {
                 />
               </Flex>
             ))}
-            <SetCategory
-              categories={categories}
-              setCategories={setCategories}
-              onChange={() => {
-                const resultArr: never[] = [];
-                // eslint-disable-next-line array-callback-return
-                categories.map((item, index) => {
-                  resultArr.splice(index, 0, item.id);
-                });
-                formik.values.cate = resultArr.toString();
-              }}
-            />
+            {categories.length === 2 ? null : (
+              <SetCategory
+                categories={categories}
+                setCategories={setCategories}
+                onChange={() => {
+                  const resultArr: never[] = [];
+                  // eslint-disable-next-line array-callback-return
+                  categories.map((item, index) => {
+                    resultArr.splice(index, 0, item.id);
+                  });
+                  formik.values.cate = resultArr.toString();
+                }}
+              />
+            )}
+
           </Flex>
           {formik.errors.cate && formik.touched.cate ? (
             <div style={{ color: 'red' }}>{formik.errors.cate}</div>

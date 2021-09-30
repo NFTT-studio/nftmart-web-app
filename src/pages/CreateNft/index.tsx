@@ -199,7 +199,6 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             onChange={(v, b) => {
               formik.setFieldValue('logoUrl', v);
               formik.setFieldValue('fileType', b);
-              console.log(b);
               if (b !== 'gif' && b !== 'png' && b !== 'jpg' && b !== 'jpg' && b !== '' && b !== 'jpeg') {
                 setIsPreview(true);
               } else {

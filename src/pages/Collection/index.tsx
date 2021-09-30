@@ -15,7 +15,9 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps, useLocation, useHistory } from 'react-router-dom';
+import {
+  RouteComponentProps, useLocation, useHistory, Link as RouterLink,
+} from 'react-router-dom';
 import { parse } from 'search-params';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MainContainer from '../../layout/MainContainer';
@@ -132,7 +134,8 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               {t('Collection.Editprofile')}
             </Button> */}
             <Link
-              href={`/profile/nft/create/${classId}`}
+              as={RouterLink}
+              to={`/profile/nft/create/${classId}`}
             >
               <Button
                 width="137px"
@@ -339,7 +342,8 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               item.link === '' ? null
                 : (
                   <Link
-                    href={item.link}
+                    as={RouterLink}
+                    to={item.link}
                   >
                     <Box
                       key="index"

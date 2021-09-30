@@ -123,7 +123,7 @@
   },
   "Create": {
     "headerTitle":"Create collection -NFTMart|A Professional NFT Market",
-    "title": "General Settings",
+    "title": "Create item -NFTMart|A Professional NFT Market",
     "createCollection": "Create NFT",
     "logo": "*Image, Video or Audio",
     "logoRule": "File types supportd: JPG,PNG,GIF,SVG,MP4,WEBM,WAV,OGG, Max Size: 100 MB",
@@ -240,7 +240,7 @@
     "pledgeExplain": "When it's cancled or sold,the bonded goes back to you.",
     "atLeast": "At least ",
     "Instructions": "Instructions",
-    "InstructionsExplain": "NFTmart is a fully decentralized NFT exchange, all your operations will be on the blockchain, and anyone can buy your NFT through the blockchain, not just through the NFTmart.io website. ",
+    "InstructionsExplain": "NFTMart is a fully decentralized NFT exchange, all your operations will be on the blockchain, and anyone can buy your NFT through the blockchain, not just through the NFTMart.io website. ",
     "summary": "Summary",
     "listing": "Listing",
     "listingExplainOne": "Your item will be listed for ",
