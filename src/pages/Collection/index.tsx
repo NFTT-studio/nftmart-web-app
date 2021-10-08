@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
@@ -20,6 +21,8 @@ import {
 } from 'react-router-dom';
 import { parse } from 'search-params';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import MainContainer from '../../layout/MainContainer';
 import NftCard from '../../components/NftCard';
 import { useAppSelector } from '../../hooks/redux';
@@ -209,13 +212,13 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
           </Flex>
           <Text
             mt="10px"
-            fontSize="14px"
+            fontSize="15px"
             fontFamily="TTHoves-Light, TTHoves"
             fontWeight="300"
             color="#191A24"
-            lineHeight="16px"
+            lineHeight="175%"
           >
-            {collectionsData?.collection?.metadata.description}
+            <ReactMarkdown children={`${collectionsData?.collection?.metadata.description}`} remarkPlugins={[remarkGfm]} />
           </Text>
           <Flex
             m="40px 0"
