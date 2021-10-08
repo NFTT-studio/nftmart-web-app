@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/media-has-caption */
+/* eslint-disable react/no-children-prop */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
@@ -20,7 +22,11 @@ import { Link as RouterLink } from 'react-router-dom';
 import ReactAudioPlayer from 'react-audio-player';
 import {
   Player,
+  ControlBar,
+  PlayToggle,
 } from 'video-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import NoData from '../NoData';
 
 import {
@@ -147,14 +153,9 @@ const DetailLeft: FC<Props> = (({
                     width="520px"
                     height="auto"
                   >
-                    <Player
-                      autoPlay
-                      width="100%"
-                      height="100%"
-                      poster={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.previewUrl}`}
-                    >
+                    <video width="100%" height="auto" controls>
                       <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.logoUrl}`} />
-                    </Player>
+                    </video>
                   </Box>
                 )
                 : (
@@ -163,14 +164,19 @@ const DetailLeft: FC<Props> = (({
                     width="520px"
                     height="auto"
                   >
-                    <Player
-                      autoPlay
+                    <Image
                       width="100%"
-                      height="100%"
-                      poster={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.previewUrl}`}
-                    >
-                      <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.logoUrl}`} />
-                    </Player>
+                      height="auto"
+                      src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.previewUrl}`}
+                    />
+                    <ReactAudioPlayer
+                      style={{
+                        width: '100%',
+                      }}
+                      src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.logoUrl}`}
+                      autoPlay
+                      controls
+                    />
                   </Box>
                 )
             )}
@@ -287,7 +293,7 @@ const DetailLeft: FC<Props> = (({
                 color="#000000"
                 lineHeight="22px"
               >
-                {nftData?.nftInfo?.metadata.description}
+                <ReactMarkdown children={`${nftData?.nftInfo?.metadata.description}`} remarkPlugins={[remarkGfm]} />
               </Text>
             </AccordionPanel>
           </AccordionItem>
@@ -458,7 +464,7 @@ const DetailLeft: FC<Props> = (({
                     color="#000000"
                     lineHeight="22px"
                   >
-                    {collectionDescription}
+                    <ReactMarkdown children={`${collectionDescription}`} remarkPlugins={[remarkGfm]} />
                   </Text>
 
                   <Flex>

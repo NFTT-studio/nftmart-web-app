@@ -15,7 +15,7 @@ export type fetchPersonalNftsParams = {
   creatorId?: string
   sortBy?: string,
   categoryId?: string | null,
-  collectionId?: string,
+  collectionId?: string[],
   status?: string[],
   classId?: number,
 }

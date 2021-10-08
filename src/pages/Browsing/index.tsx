@@ -24,8 +24,8 @@ import useCategories from '../../hooks/reactQuery/useCategories';
 import StatusSelector from '../../components/StatusSelector';
 import CollectionSelector from '../../components/CollectionSelector';
 import useCollections from '../../hooks/reactQuery/useCollections';
-import useNfts from '../../hooks/reactQuery/useNfts';
-import OrderCard from '../../components/OrderCard ';
+import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
+import NftCard from '../../components/NftCard';
 import SortBy from '../../components/SortBy';
 
 import {
@@ -63,7 +63,7 @@ const Browsing = () => {
   const { data: collectionsData, isLoading: collectionsIsLoading } = useCollections({});
   const {
     data: nftsData, isLoading: nftsIsLoading, fetchNextPage,
-  } = useNfts(
+  } = useNftsPersonal(
     {
       categoryId: selectedCategoryId,
       collectionId: selectedCollection,
@@ -94,15 +94,6 @@ const Browsing = () => {
         ? without(selectedCollection, event.currentTarget.id)
         : union(selectedCollection, [event.currentTarget.id]),
     );
-    // if (collectionsData) {
-    //   collectionsData.collections?.forEach((index) => {
-    //     if (selectedCollection.indexOf(selected) > -1) {
-    //       collectionsArr.splice(index, 1);
-    //       collectionsArr.unshift(index);
-    //       console.log(collectionsArr);
-    //     }
-    //   });
-    // }
   };
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -258,8 +249,8 @@ const Browsing = () => {
                       columns={[1, 2, 3]}
                       spacing="20px"
                     >
-                      {nftsData?.pages.map((page) => page.orders.map(
-                        (nft) => <Flex mt="11px"><OrderCard nft={nft} remainingTime={remainingTime} /></Flex>,
+                      {nftsData?.pages.map((page) => page.nfts.map(
+                        (nft) => <Flex mt="11px"><NftCard nft={nft} remainingTime={remainingTime} /></Flex>,
                       ))}
                     </SimpleGrid>
                   </InfiniteScroll>
