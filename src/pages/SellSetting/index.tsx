@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable max-len */
 /* eslint-disable react/no-children-prop */
 import React, { useState, MouseEventHandler } from 'react';
 import {
@@ -89,7 +91,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const schema = Yup.object().shape({
     price: Yup.number().moreThan(0).required(t('Create.required')),
-    deposits: Yup.number().moreThan(0).required(t('Create.required')),
+    deposits: Yup.number().moreThan(1).required(t('Create.required')),
   });
   const schemaDutch = Yup.object().shape({
     startingPrice: Yup.string().required(t('Create.required')),
@@ -107,6 +109,29 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   function number2PerU16(x) {
     return (x / 65535.0) * 100;
   }
+  const actionTime = (days) => {
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const mm = `'${month}'`;
+    const dd = `'${day}'`;
+    const minutess = `'${minutes}'`;
+    if (mm.length === 3) {
+      month = `0${month}`;
+    }
+    if (dd.length === 3) {
+      day = `0${day}`;
+    }
+    if (minutess.length === 3) {
+      minutes = `0${minutes}`;
+    }
+    const time = `${year}-${month}-${day} ${hours}:${minutes}`;
+    return time;
+  };
   const ButtonArr = [
     {
       id: 0,
@@ -134,7 +159,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       startingPrice: '',
       endingPrice: '',
       expirationDate: '',
-      minimumMarkup: '',
+      minimumMarkup: 1,
       automaticDelay: false,
       turnToEnglishAuction: false,
       endingPriceSl: false,
@@ -482,7 +507,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color: '#000000',
                           border: '1px solid #000000',
                         }}
-                        placeholder={t('SellSetting.price')}
+                        // placeholder={t('SellSetting.price')}
                         _placeholder={{
                           color: '#999999',
                           fontSize: '12px',
@@ -538,46 +563,60 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         {t('SellSetting.pledgeExplain')}
                       </Text>
                     </Flex>
-                    <InputGroup
-                      width="200px"
-                      height="40px"
-                      background="#FFFFFF"
-                      borderRadius="4px"
-                      border="1px solid #E5E5E5"
-                    >
-                      <Input
-                        id="deposits"
-                        name="deposits"
-                        value={formik.values.deposits}
-                        onChange={formik.handleChange}
-                        fontSize="16px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="14px"
-                        _focus={{
-                          boxShadow: 'none',
-                        }}
-                        _placeholder={{
-                          color: '#999999',
-                          fontSize: '12px',
-                        }}
-                        placeholder={t('SellSetting.price')}
-                      />
-                      <InputRightAddon
-                        width="72px"
+                    <Flex flexDirection="column" alignItems="flex-end">
+                      <InputGroup
+                        width="200px"
                         height="40px"
-                        background="#F4F4F4"
-                        borderRadius="0px 4px 4px 0px"
+                        background="#FFFFFF"
+                        borderRadius="4px"
                         border="1px solid #E5E5E5"
-                        fontSize="14px"
+                      >
+                        <Input
+                          id="deposits"
+                          name="deposits"
+                          value={formik.values.deposits}
+                          onChange={formik.handleChange}
+                          fontSize="16px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#000000"
+                          lineHeight="14px"
+                          _focus={{
+                            boxShadow: 'none',
+                          }}
+                          _placeholder={{
+                            color: '#999999',
+                            fontSize: '12px',
+                          }}
+                        />
+                        <InputRightAddon
+                          width="72px"
+                          height="40px"
+                          background="#F4F4F4"
+                          borderRadius="0px 4px 4px 0px"
+                          border="1px solid #E5E5E5"
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#999999"
+                          lineHeight="14px"
+                          children="NMT"
+                        />
+                      </InputGroup>
+                      <Text
+                        mt="8px"
+                        fontSize="12px"
                         fontFamily="TTHoves-Regular, TTHoves"
                         fontWeight="400"
-                        color="#999999"
+                        color="#858999"
                         lineHeight="14px"
-                        children="NMT"
-                      />
-                    </InputGroup>
+                      >
+                        {t('SellSetting.atLeast')}
+                        1
+                        {' '}
+                        NMT
+                      </Text>
+                    </Flex>
                   </Flex>
                   {formik.errors.deposits && formik.touched.deposits ? (
                     <div style={{ color: 'red' }}>{formik.errors.deposits}</div>
@@ -701,7 +740,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color: '#000000',
                           border: '1px solid #000000',
                         }}
-                        placeholder={t('SellSetting.price')}
+                        // placeholder={t('SellSetting.price')}
                         _placeholder={{
                           color: '#999999',
                           fontSize: '12px',
@@ -789,7 +828,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color: '#000000',
                           border: '1px solid #000000',
                         }}
-                        placeholder={t('SellSetting.price')}
+                        // placeholder={t('SellSetting.price')}
                         _placeholder={{
                           color: '#999999',
                           fontSize: '12px',
@@ -966,90 +1005,94 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   {formik.errors.turnToEnglishAuction && formik.touched.turnToEnglishAuction ? (
                     <div style={{ color: 'red' }}>{formik.errors.turnToEnglishAuction}</div>
                   ) : null}
-                  <Flex
-                    w="100%"
-                    h="80px"
-                    mt="20px"
-                    flexDirection="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Flex
-                      flexDirection="column"
-                      justifyContent="center"
-                      alignItems="flex-start"
-                    >
-                      <Text
-                        fontSize="16px"
-                        fontFamily="TTHoves-Medium, TTHoves"
-                        fontWeight="500"
-                        color="#000000"
-                        lineHeight="18px"
+                  {turnToEnglishAuction
+                    ? (
+                      <Flex
+                        w="100%"
+                        h="80px"
+                        mt="20px"
+                        flexDirection="row"
+                        justifyContent="space-between"
+                        alignItems="center"
                       >
-                        {t('SellSetting.minimumMarkup')}
-                      </Text>
-                      <Text
-                        mt="8px"
-                        fontSize="12px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#858999"
-                        lineHeight="14px"
-                      >
-                        {t('SellSetting.minimumMarkupExplain')}
-                      </Text>
-                    </Flex>
-                    <InputGroup
-                      width="200px"
-                      height="40px"
-                      background="#FFFFFF"
-                      borderRadius="4px"
-                      border="1px solid #E5E5E5"
-                      _focus={{
-                        boxShadow: 'none',
+                        <Flex
+                          flexDirection="column"
+                          justifyContent="center"
+                          alignItems="flex-start"
+                        >
+                          <Text
+                            fontSize="16px"
+                            fontFamily="TTHoves-Medium, TTHoves"
+                            fontWeight="500"
+                            color="#000000"
+                            lineHeight="18px"
+                          >
+                            {t('SellSetting.minimumMarkup')}
+                          </Text>
+                          <Text
+                            mt="8px"
+                            fontSize="12px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#858999"
+                            lineHeight="14px"
+                          >
+                            {t('SellSetting.minimumMarkupExplain')}
+                          </Text>
+                        </Flex>
+                        <InputGroup
+                          width="200px"
+                          height="40px"
+                          background="#FFFFFF"
+                          borderRadius="4px"
+                          border="1px solid #E5E5E5"
+                          _focus={{
+                            boxShadow: 'none',
 
-                      }}
-                    >
-                      <Input
-                        id="minimumMarkup"
-                        name="minimumMarkup"
-                        value={formik.values.minimumMarkup}
-                        onChange={formik.handleChange}
-                        fontSize="16px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        lineHeight="14px"
-                        color="#000000"
-                        _focus={{
-                          boxShadow: 'none',
-                          color: '#000000',
-                          border: '1px solid #000000',
-                        }}
-                        _after={{
-                          boxShadow: 'none',
-                          color: '#000000',
-                          border: '1px solid #000000',
-                        }}
-                        placeholder={t('SellSetting.price')}
-                        _placeholder={{
-                          color: '#999999',
-                          fontSize: '12px',
-                        }}
-                      />
-                      <InputRightAddon
-                        height="40px"
-                        background="#F4F4F4"
-                        borderRadius="0px 4px 4px 0px"
-                        border="1px solid #E5E5E5"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#999999"
-                        lineHeight="14px"
-                        children="%"
-                      />
-                    </InputGroup>
-                  </Flex>
+                          }}
+                        >
+                          <Input
+                            id="minimumMarkup"
+                            name="minimumMarkup"
+                            value={formik.values.minimumMarkup}
+                            onChange={formik.handleChange}
+                            fontSize="16px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            lineHeight="14px"
+                            color="#000000"
+                            _focus={{
+                              boxShadow: 'none',
+                              color: '#000000',
+                              border: '1px solid #000000',
+                            }}
+                            _after={{
+                              boxShadow: 'none',
+                              color: '#000000',
+                              border: '1px solid #000000',
+                            }}
+                      // placeholder={t('SellSetting.price')}
+                            _placeholder={{
+                              color: '#999999',
+                              fontSize: '12px',
+                            }}
+                          />
+                          <InputRightAddon
+                            height="40px"
+                            background="#F4F4F4"
+                            borderRadius="0px 4px 4px 0px"
+                            border="1px solid #E5E5E5"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#999999"
+                            lineHeight="14px"
+                            children="%"
+                          />
+                        </InputGroup>
+                      </Flex>
+                    )
+                    : null}
                   {formik.errors.minimumMarkup && formik.touched.minimumMarkup ? (
                     <div style={{ color: 'red' }}>{formik.errors.minimumMarkup}</div>
                   ) : null}
@@ -1250,7 +1293,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color: '#000000',
                           border: '1px solid #000000',
                         }}
-                        placeholder={t('SellSetting.price')}
+                        // placeholder={t('SellSetting.price')}
                         _placeholder={{
                           color: '#999999',
                           fontSize: '12px',
@@ -1492,7 +1535,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color: '#000000',
                           border: '1px solid #000000',
                         }}
-                        placeholder={t('SellSetting.price')}
+                        // placeholder={t('SellSetting.price')}
                         _placeholder={{
                           color: '#999999',
                           fontSize: '12px',
@@ -1597,7 +1640,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             color: '#000000',
                             border: '1px solid #000000',
                           }}
-                          placeholder={t('SellSetting.price')}
+                          // placeholder={t('SellSetting.price')}
                           _placeholder={{
                             color: '#999999',
                             fontSize: '12px',
@@ -1823,11 +1866,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           >
                             {t('SellSetting.listingExplainOne')}
                             {'  '}
-                            {formik.values.price || 0}
+                            {Number(formik.values.price).toLocaleString() || 0}
+                            {'  '}
                             NMT
                             {t('SellSetting.listingExplainTwo')}
                             {'  '}
-                            {formik.values.price || 0}
+                            {Number(formik.values.price * (1 - number2PerU16(collectionsData?.collection?.royalty_rate + tax) / 100)).toLocaleString() || 0}
+
+                            {'  '}
                             NMT
                           </Text>
                         )
@@ -1841,7 +1887,19 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             color="#000000"
                             lineHeight="16px"
                           >
-                            Dutch auction
+                            {t('SellSetting.dutchExplainOne')}
+                            {'  '}
+                            {Number(formik.values.startingPrice).toLocaleString() || 0}
+                            {'  '}
+                            NMT
+                            {t('SellSetting.dutchExplainTwo')}
+                            {'  '}
+                            {Number(formik.values.endingPrice).toLocaleString() || 0}
+                            {'  '}
+                            NMT
+                            {'  '}
+                            {t('SellSetting.dutchExplainThress')}
+                            {actionTime(Number(formik.values.expirationDate) || 0)}
                           </Text>
                         )
                           : null}
@@ -1854,7 +1912,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             color="#000000"
                             lineHeight="16px"
                           >
-                            English auction
+                            {t('SellSetting.englishExplainOne')}
+                            {'  '}
+                            {Number(formik.values.startingPrice).toLocaleString() || 0}
+                            {'  '}
+                            NMT
+                            {t('SellSetting.englishExplainTwo')}
+                            {'  '}
+                            {actionTime(Number(formik.values.expirationDate) || 0)}
                           </Text>
                         )
                           : null}
@@ -1876,93 +1941,100 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         {t('SellSetting.postYourListing')}
                       </Button>
                     </Flex>
-                    <Flex
-                      p="20px 0 20px 0"
-                      flexDirection="row"
-                      justifyContent="space-between"
-                      alignItems="flex-start"
-                      borderBottom="1px solid #E5E5E5"
-                    >
+                    {0 ? (
                       <Flex
-                        flexDirection="column"
-                        justifyContent="center"
+                        p="20px 0 20px 0"
+                        flexDirection="row"
+                        justifyContent="space-between"
                         alignItems="flex-start"
+                        borderBottom="1px solid #E5E5E5"
                       >
-                        <Text
-                          fontSize="16px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#000000"
-                          lineHeight="18px"
+                        <Flex
+                          flexDirection="column"
+                          justifyContent="center"
+                          alignItems="flex-start"
                         >
-                          {t('SellSetting.bounties')}
-                        </Text>
-                        <Text
-                          width="200px"
-                          mt="8px"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="14px"
-                        >
-                          {t('SellSetting.bountiesExplain')}
-                        </Text>
-                      </Flex>
-                      <Flex
-                        flexDirection="column"
-                        justifyContent="center"
-                        alignItems="flex-end"
-                      >
-                        <Switch
-                          isChecked={commissionRateSl}
-                          onChange={() => {
-                            setcommissionRateSl(!commissionRateSl);
-                          }}
-                          height="40px"
-                          size="lg"
-                        />
-                        <InputGroup
-                          mt="10px"
-                          width="200px"
-                          height="40px"
-                          background="#FFFFFF"
-                          borderRadius="4px"
-                          border="1px solid #E5E5E5"
-                        >
-                          <Input
-                            id="commissionRate"
-                            name="commissionRate"
-                            value={commissionRateSl ? formik.values.commissionRate : 0}
-                            onChange={formik.handleChange}
-                            fontSize="12px"
+                          <Text
+                            fontSize="16px"
                             fontFamily="TTHoves-Regular, TTHoves"
                             fontWeight="400"
                             color="#000000"
-                            lineHeight="14px"
-                            _focus={{
-                              boxShadow: 'none',
-                              color: '#000000',
-                            }}
-                            placeholder="0"
-                          />
-                          <InputRightAddon
-                            width="54px"
-                            height="40px"
-                            background="#F4F4F4"
-                            borderRadius="0px 4px 4px 0px"
-                            border="1px solid #E5E5E5"
-                            fontSize="14px"
+                            lineHeight="18px"
+                          >
+                            {t('SellSetting.bounties')}
+                          </Text>
+                          <Text
+                            width="213px"
+                            mt="8px"
+                            fontSize="12px"
                             fontFamily="TTHoves-Regular, TTHoves"
                             fontWeight="400"
                             color="#999999"
                             lineHeight="14px"
-                            children="%"
+                          >
+                            {t('SellSetting.bountiesExplain')}
+                          </Text>
+                        </Flex>
+                        <Flex
+                          flexDirection="column"
+                          justifyContent="center"
+                          alignItems="flex-end"
+                        >
+                          <Switch
+                            isChecked={commissionRateSl}
+                            onChange={() => {
+                              setcommissionRateSl(!commissionRateSl);
+                            }}
+                            height="40px"
+                            size="lg"
                           />
-                        </InputGroup>
-                      </Flex>
+                          {commissionRateSl ? (
+                            <InputGroup
+                              mt="10px"
+                              width="200px"
+                              height="40px"
+                              background="#FFFFFF"
+                              borderRadius="4px"
+                              border="1px solid #E5E5E5"
+                            >
+                              <Input
+                                id="commissionRate"
+                                name="commissionRate"
+                                value={commissionRateSl ? formik.values.commissionRate : 0}
+                                onChange={formik.handleChange}
+                                fontSize="12px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#000000"
+                                lineHeight="14px"
+                                _focus={{
+                                  boxShadow: 'none',
+                                  color: '#000000',
+                                }}
+                                placeholder="0"
+                              />
+                              <InputRightAddon
+                                width="54px"
+                                height="40px"
+                                background="#F4F4F4"
+                                borderRadius="0px 4px 4px 0px"
+                                border="1px solid #E5E5E5"
+                                fontSize="14px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#999999"
+                                lineHeight="14px"
+                                children="%"
+                              />
+                            </InputGroup>
+                          )
+                            : null}
+                        </Flex>
 
-                    </Flex>
+                      </Flex>
+                    )
+                      : null}
+
                     <Flex
                       p="20px 0 20px 0"
                       flexDirection="column"
@@ -2005,7 +2077,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         alignItems="center"
                       >
                         <Text
-                          w="80px"
                           fontSize="14px"
                           fontFamily="TTHoves-Regular, TTHoves"
                           fontWeight="400"
@@ -2015,7 +2086,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           {t('SellSetting.toTheBeneficiary')}
                         </Text>
                         <Progress
-                          width="378px"
+                          width="300px"
                           height="3px"
                           borderRadius="2px"
                           value={number2PerU16(collectionsData?.collection?.royalty_rate)}
@@ -2074,7 +2145,6 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         alignItems="center"
                       >
                         <Text
-                          w="80px"
                           fontSize="14px"
                           fontFamily="TTHoves-Regular, TTHoves"
                           fontWeight="400"
@@ -2084,7 +2154,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           {t('SellSetting.toNFTMartTreasury')}
                         </Text>
                         <Progress
-                          width="378px"
+                          width="300px"
                           height="3px"
                           borderRadius="2px"
                           value={number2PerU16(tax)}

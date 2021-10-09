@@ -177,7 +177,6 @@ const Browsing = () => {
               onChange={handleSearch}
             />
           </InputGroup>
-          {}
           {collectionsIsLoading
             ? (
               <Center height="100%">

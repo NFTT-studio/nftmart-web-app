@@ -16,6 +16,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, useHistory, Link as RouterLink } from 'react-router-dom';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import Identicon from 'react-identicons';
 import NoData from '../NoData';
 import TimeBy from '../TimeBy';
 import PriceHistoryChart from '../PriceHistoryChart';
@@ -411,7 +412,14 @@ const DetailRight: FC<Props> = (({
             }}
           >
             <Flex p="20px 0 0 0" justifyContent="flex-start" alignItems="center">
-              <Image pr="4px" w="50px" h="auto" src={HeadPortrait.default} />
+              {nftData?.nftInfo?.owner?.avatar ? (
+                <Image pr="4px" w="50px" h="auto" src={nftData?.nftInfo?.owner?.avatar || HeadPortrait.default} />
+              ) : (
+                <Identicon
+                  className="ownerAvatar"
+                  string={nftData?.nftInfo?.owner?.id}
+                />
+              )}
               <Flex flexDirection="column">
                 <Text
                   color="#000000"

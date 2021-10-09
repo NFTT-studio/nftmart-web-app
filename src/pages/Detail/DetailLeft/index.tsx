@@ -27,6 +27,7 @@ import {
 } from 'video-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Identicon from 'react-identicons';
 import NoData from '../NoData';
 
 import {
@@ -246,12 +247,14 @@ const DetailLeft: FC<Props> = (({
             </AccordionButton>
             <AccordionPanel p="16px 20px">
               <Flex alignItems="center" mb="11px">
-                <Image
-                  mr="8px"
-                  w="22px"
-                  h="22px"
-                  src={HeadPortrait.default}
-                />
+                {nftData?.nftInfo?.creator?.avatar ? (
+                  <Image pr="4px" w="50px" h="auto" src={nftData?.nftInfo?.creator?.avatar || HeadPortrait.default} />
+                ) : (
+                  <Identicon
+                    className="creatorAvatar"
+                    string={nftData?.nftInfo?.creator?.id}
+                  />
+                )}
                 <Text
                   fontSize="14px"
                   fontFamily="TTHoves-Regular, TTHoves"
@@ -280,7 +283,7 @@ const DetailLeft: FC<Props> = (({
                         localStorage.setItem('ButtonSelect', '1');
                       }}
                     >
-                      {nftData ? formatAddress(nftData?.nftInfo?.creator_id) : ''}
+                      {nftData?.nftInfo?.creator?.name || formatAddress(nftData?.nftInfo?.creator_id)}
                     </Link>
                     {/* 2018-09-2 */}
                   </Text>
