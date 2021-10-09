@@ -11,6 +11,7 @@ import {
   IconDetailshaSre,
   IconPen,
 } from '../../../assets/images';
+import ShareAccount from '../../../components/ShareAccount';
 
 interface Props {
   userData?: [],
@@ -79,27 +80,7 @@ const Header: FC<Props> = (({ userData, dataPerson }) => (
           />
         </Box>
       </Link>
-      <Box
-        key="index"
-        width="40px"
-        height="40px"
-        borderRadius="0px 4px 4px 0px"
-        borderTop="1px solid #E5E5E5"
-        borderBottom="1px solid #E5E5E5"
-        borderRight="1px solid #E5E5E5"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        _hover={{
-          boxShadow: '0px 2px 8px 0px #E1E1E1',
-        }}
-      >
-        <Image
-          w="22px"
-          h="22px"
-          src={IconDetailshaSre.default}
-        />
-      </Box>
+      <ShareAccount />
     </Flex>
   </Flex>
 ));

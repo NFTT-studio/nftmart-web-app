@@ -1,5 +1,6 @@
 import { identity, pickBy } from 'lodash';
 import axiosClient from '../apiClient/axiosClient';
+import { DEFAULT_PAGE_LIMIT } from '../constants';
 
 type Nfts = {
   nfts: Nft[],
@@ -18,10 +19,12 @@ export type fetchPersonalNftsParams = {
   collectionId?: string[],
   status?: string[],
   classId?: number,
+  number?: number,
+  pageParam?: number
 }
 
 export default async ({
-  ownerId, sortBy, categoryId, collectionId, status, classId, creatorId,
+  ownerId, sortBy, categoryId, collectionId, status, classId, creatorId, number = DEFAULT_PAGE_LIMIT, pageParam,
 }: fetchPersonalNftsParams) => {
   const res = await axiosClient.get<Nfts>('/nfts', {
     params: pickBy({
@@ -32,6 +35,8 @@ export default async ({
       collectionId: collectionId || undefined,
       status,
       classId,
+      number,
+      page: pageParam,
     }, identity),
   });
   return res.data;

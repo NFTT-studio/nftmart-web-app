@@ -53,6 +53,7 @@ import DutchDialog from './DutchDialog';
 import BritishDialog from './BritishDialog';
 import FixedDialog from './FixedDialog';
 import AllowBritishDialog from './AllowBritishDialog';
+import ShareDetail from '../../components/ShareDetail';
 
 const propertiesArr = [1, 2, 3, 4, 5, 6];
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
@@ -527,25 +528,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       src={IconDetailsRefresh.default}
                     />
                   </Box>
-                  <Box
-                    ml="28px"
-                    width="32px"
-                    height="32px"
-                    borderRadius="50%"
-                    border="1px solid #E5E5E5"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    _hover={{
-                      boxShadow: '0px 2px 8px 0px #E1E1E1',
-                    }}
-                  >
-                    <Image
-                      w="22px"
-                      h="22px"
-                      src={IconDetailshaSre.default}
-                    />
-                  </Box>
+                  <ShareDetail />
                   <Box
                     ml="28px"
                     width="32px"

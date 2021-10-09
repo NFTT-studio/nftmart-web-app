@@ -5,6 +5,7 @@
 /* eslint-disable no-mixed-operators */
 import React, { FC, useState, useEffect } from 'react';
 import Countdown, { zeroPad } from 'react-countdown';
+import Identicon from 'react-identicons';
 import {
   HTMLChakraProps,
   Box,
@@ -24,7 +25,7 @@ import { IPFS_URL } from '../../constants';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { renderNmtNumberText } from '../Balance';
 import { priceStringDivUnit, currentPrice } from '../../utils/format';
-
+import useUser from '../../hooks/reactQuery/useUser';
 import {
   IconTime,
   HeadPortrait,
@@ -49,7 +50,7 @@ const OrderCard: FC<NftCardProps> = ({
       second: 0,
     },
   );
-  const [timeCountdown, setTimeCountdown] = useState();
+  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
 
   const countFun = (index:number) => {
     const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
@@ -78,7 +79,6 @@ const OrderCard: FC<NftCardProps> = ({
   const types = nft?.type || false;
   const price = renderNmtNumberText(nft.price);
   const duchPrice = currentPrice(Number(nft?.max_price), Number(nft?.min_price), Number(nft?.deadline), remainingTime, Number(nft?.block_created));
-
   const front = (time:number) => {
     const b = time.toString().split('.');
     return b[0];
@@ -387,7 +387,14 @@ const OrderCard: FC<NftCardProps> = ({
             h="100%"
           >
             <Flex justifyContent="center" alignItems="center">
-              <Image pr="4px" w="auto" h="26px" src={HeadPortrait.default} />
+              {nft?.user.avatar ? (
+                <Image pr="4px" w="auto" h="26px" src={nft?.user.avatar || HeadPortrait.default} />
+              ) : (
+                <Identicon
+                  className="userAvatar"
+                  string={nft?.user.id}
+                />
+              )}
               <Text
                 align="center"
                 overflow="hidden"
@@ -395,7 +402,7 @@ const OrderCard: FC<NftCardProps> = ({
                 whiteSpace="nowrap"
                 textAlign="start"
               >
-                {nft?.metadata.name}
+                {nft?.user.name || formatAddress(nft?.metadata.id)}
               </Text>
             </Flex>
             {nft?.type && Number(events.day) > 0 ? (

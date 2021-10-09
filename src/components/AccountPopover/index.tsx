@@ -55,7 +55,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
       status: 'success',
       position: 'top',
       duration: 3000,
-      description: t('copy.success'),
+      description: t('header.success'),
     });
     onCopy();
   };

@@ -4,7 +4,7 @@
 /* eslint-disable no-mixed-operators */
 import React, { FC, useState, useEffect } from 'react';
 import Countdown, { zeroPad } from 'react-countdown';
-
+import Identicon from 'react-identicons';
 import {
   HTMLChakraProps,
   Box,
@@ -54,6 +54,7 @@ const NftCard: FC<NftCardProps> = ({
     },
   );
 
+  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
   const countFun = (index:number) => {
     const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
     // eslint-disable-next-line no-param-reassign
@@ -391,7 +392,14 @@ const NftCard: FC<NftCardProps> = ({
             h="100%"
           >
             <Flex justifyContent="center" alignItems="center">
-              <Image pr="4px" w="auto" h="26px" src={HeadPortrait.default} />
+              {nft?.user.avatar ? (
+                <Image pr="4px" w="auto" h="26px" src={nft?.user.avatar || HeadPortrait.default} />
+              ) : (
+                <Identicon
+                  className="userAvatar"
+                  string={nft?.user.id}
+                />
+              )}
               <Text
                 align="center"
                 overflow="hidden"
@@ -399,7 +407,7 @@ const NftCard: FC<NftCardProps> = ({
                 whiteSpace="nowrap"
                 textAlign="start"
               >
-                {nft?.metadata.name}
+                {nft?.user.name || formatAddress(nft?.metadata.id)}
               </Text>
             </Flex>
             {type && Number(events.day) > 2 ? (
