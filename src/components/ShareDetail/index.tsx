@@ -58,6 +58,7 @@ const ShareWeb: FC<ShareWebProps> = () => {
     >
       <PopoverTrigger>
         <Box
+          cursor="pointer"
           ml="28px"
           width="32px"
           height="32px"

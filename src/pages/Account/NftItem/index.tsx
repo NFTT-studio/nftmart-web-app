@@ -105,7 +105,7 @@ const NftItem: FC<Props> = (({
               <SimpleGrid
                 w="100%"
                 m="20px 0 20px 0"
-                columns={[1, 2, 3]}
+                columns={[1, 2, 2, 2, 3]}
                 spacing="21px"
               >
                 {nftsData?.pages.map((page) => page.nfts.map(

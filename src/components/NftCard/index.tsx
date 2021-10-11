@@ -54,7 +54,7 @@ const NftCard: FC<NftCardProps> = ({
     },
   );
 
-  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+  const formatAddress = (addr: string) => (addr ? `${addr.slice(0, 4)}...${addr.slice(-4)}` : null);
   const countFun = (index:number) => {
     const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
     // eslint-disable-next-line no-param-reassign
@@ -392,12 +392,12 @@ const NftCard: FC<NftCardProps> = ({
             h="100%"
           >
             <Flex justifyContent="center" alignItems="center">
-              {nft?.user.avatar ? (
+              {nft?.user?.avatar ? (
                 <Image pr="4px" w="auto" h="26px" src={nft?.user.avatar || HeadPortrait.default} />
               ) : (
                 <Identicon
                   className="userAvatar"
-                  string={nft?.user.id}
+                  string={nft?.user?.id}
                 />
               )}
               <Text
@@ -407,7 +407,7 @@ const NftCard: FC<NftCardProps> = ({
                 whiteSpace="nowrap"
                 textAlign="start"
               >
-                {nft?.user.name || formatAddress(nft?.metadata.id)}
+                {nft?.user?.name || formatAddress(nft?.metadata?.id) }
               </Text>
             </Flex>
             {type && Number(events.day) > 2 ? (
