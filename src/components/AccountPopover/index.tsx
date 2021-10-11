@@ -14,6 +14,7 @@ import {
   Image,
   useClipboard,
 } from '@chakra-ui/react';
+import Identicon from 'react-identicons';
 
 import { useTranslation } from 'react-i18next';
 
@@ -31,6 +32,7 @@ import { statusArr } from '../../constants/Status';
 import { EXPLORER_URL } from '../../constants';
 import useAccount from '../../hooks/reactQuery/useAccount';
 import { renderNmtNumberText } from '../Balance';
+import useUser from '../../hooks/reactQuery/useUser';
 
 export interface LoginProps {
   avatar?: string;
@@ -43,6 +45,7 @@ const ICONS = {
 };
 const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
   const { data } = useAccount(address);
+  const { data: userData } = useUser(address);
   const history = useHistory();
   const { t } = useTranslation();
   const [opening, setOpening] = useState(false);
@@ -72,14 +75,22 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
     >
       <PopoverTrigger>
         <Stack direction="row" cursor="pointer" alignItems="center" spacing={0}>
-          <Image
-            ml="40px"
-            display="block"
-            width="32px"
-            height="32px"
-            mr="8px"
-            src={HeadPortrait.default}
-          />
+          {userData?.avatar ? (
+            <Image
+              ml="40px"
+              mr="8px"
+              display="block"
+              width="32px"
+              height="32px"
+              src={userData?.avatar || HeadPortrait.default}
+            />
+          ) : (
+            <Identicon
+              className="headerAvatar"
+              string={address}
+            />
+          )}
+
           <Text
             maxWidth="200px"
             width="100%"

@@ -240,7 +240,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
         )
         : (
           <>
-            <Flex width="1440px" flexDirection="column" position="relative">
+            <Flex maxWidth="1440px" flexDirection="column" position="relative">
               <Image
                 w="100%"
                 maxWidth="1440px"
@@ -269,9 +269,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                 />
               )}
             </Flex>
-            <Flex w="1440px" flexDirection="row" justifyContent="space-between" padding="81px 40px 20px 40px">
+            <Flex
+              maxWidth="1440px"
+              w="100%"
+              flexDirection="row"
+              justifyContent="space-between"
+              padding="81px 40px 20px 40px"
+            >
 
-              <Flex width="301px" direction="column">
+              <Flex width="21.8%" direction="column">
                 <Headers userData={userData} dataPerson={dataPerson} />
                 <Flex
                   mt="53px"
@@ -322,7 +328,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                   ))}
                 </Flex>
               </Flex>
-              <Flex width="1003px" direction="column">
+              <Flex width="1015px" direction="column">
                 {selectTabId === 0 ? (
                   <NftItem
                     nftsData={nftsData}
@@ -559,7 +565,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                 {selectTabId === 4 ? (
                   <Container>
                     <SimpleGrid
-                      columns={4}
+                      columns={[1, 2, 3, 3, 4]}
                       spacing={6}
                     >
                       {isPerson ? <CreateCard account={account} /> : ''}

@@ -20,11 +20,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import ReactAudioPlayer from 'react-audio-player';
-import {
-  Player,
-  ControlBar,
-  PlayToggle,
-} from 'video-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Identicon from 'react-identicons';
@@ -285,7 +280,6 @@ const DetailLeft: FC<Props> = (({
                     >
                       {nftData?.nftInfo?.creator?.name || formatAddress(nftData?.nftInfo?.creator_id)}
                     </Link>
-                    {/* 2018-09-2 */}
                   </Text>
                 </Text>
               </Flex>

@@ -27,6 +27,7 @@ const MainContainer = ({ children, title }: Props) => {
       <Flex
         as="main"
         height="100%"
+        maxWidth="100vw"
         minHeight="100vh"
         pt="80px"
         boxSizing="border-box"

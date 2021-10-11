@@ -149,6 +149,15 @@ const obj = {
       borderRadius: '50%',
       border: '1px solid #D3D5DC',
     },
+    '.headerAvatar': {
+      marginLeft: '40px',
+      marginRight: '8px',
+      background: '#FFFFFF',
+      width: '32px !important',
+      height: '32px !important',
+      borderRadius: '50%',
+      border: '1px solid #D3D5DC',
+    },
     '.video-react-big-play-button': {
       width: '54px !important',
       height: '54px!important',

@@ -13,6 +13,7 @@ import {
   Center,
   Box,
 } from '@chakra-ui/react';
+import { useQueryClient } from 'react-query';
 
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, useHistory, Link as RouterLink } from 'react-router-dom';
@@ -29,6 +30,7 @@ import { getBlock } from '../../polkaSDK/api/getBlock';
 import {
   CACHE_SERVER_URL,
   PINATA_SERVER,
+  QUERY_KEYS,
 } from '../../constants';
 import {
   IconDetailsCollection,
@@ -66,6 +68,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { t } = useTranslation();
   const history = useHistory();
   const [isCollect, setIsCollect] = useState(false);
+  const queryCliet = useQueryClient();
 
   const [remainingTime, setRemainingTime] = useState(0);
   const { account } = chainState;
@@ -103,6 +106,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     });
   };
 
+  const [refresh, setRefresh] = useState(false);
   const [isShowCancel, setIsShowCancel] = useState(false);
   const [isCancelAuction, setIsCancelAuction] = useState(false);
   const [isShowDeal, setIsShowDeal] = useState(false);
@@ -203,7 +207,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   return (
     <>
-      {nftDataIsLoading || collectionsDateIsLoading || !nftData ? (
+      {nftDataIsLoading || collectionsDateIsLoading || !nftData || refresh ? (
         <Center width="100%" height="100vh">
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         </Center>
@@ -510,6 +514,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
                 <Flex>
                   <Box
+                    cursor="pointer"
                     ml="28px"
                     width="32px"
                     height="32px"
@@ -518,6 +523,19 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                     display="flex"
                     justifyContent="center"
                     alignItems="center"
+                    onClick={() => {
+                      setRefresh(true);
+                      browse();
+                      collectNft('status');
+                      getBlock().then((res) => {
+                        setRemainingTime(res);
+                      });
+                      queryCliet.refetchQueries(QUERY_KEYS.CATEGORIES);
+                      queryCliet.refetchQueries(QUERY_KEYS.NFT);
+                      setTimeout(() => {
+                        setRefresh(false);
+                      }, 500);
+                    }}
                     _hover={{
                       boxShadow: '0px 2px 8px 0px #E1E1E1',
                     }}
@@ -530,6 +548,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   </Box>
                   <ShareDetail />
                   <Box
+                    cursor="pointer"
                     ml="28px"
                     width="32px"
                     height="32px"

@@ -169,7 +169,7 @@ const Home = () => {
                 </Center>
               ) : hotNftsData?.orders.length
                 ? (
-                  <SimpleGrid columns={[2, 4]} direction="row" spacing="26px">
+                  <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
                     {hotNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
@@ -284,7 +284,7 @@ const Home = () => {
                 </Center>
               ) : (expensiveNftsData?.orders.length
                 ? (
-                  <SimpleGrid columns={[2, 4]} direction="row" spacing="26px">
+                  <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
                     {expensiveNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
@@ -398,7 +398,7 @@ const Home = () => {
                 </Center>
               ) : cheapNftsData?.orders.length
                 ? (
-                  <SimpleGrid columns={[2, 4]} direction="row" spacing="26px">
+                  <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
                     {cheapNftsData.orders.map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}

@@ -163,7 +163,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
           </Flex>
         </Flex>
       ) : ''}
-      <Flex width="1440px" position="relative">
+      <Flex maxWidth="1440px" w="100%" position="relative">
         <Image
           maxWidth="1440px"
           width="100%"
@@ -457,7 +457,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 <SimpleGrid
                   w="100%"
                   m="20px 0 20px 0"
-                  columns={[1, 2, 3]}
+                  columns={[1, 2, 2, 2, 3]}
                   spacing="20px"
                 >
                   {nftsData?.pages.map((page) => page.nfts?.map(
