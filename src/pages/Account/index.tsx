@@ -16,7 +16,6 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 import { union, without } from 'lodash';
-import { parse } from 'search-params';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MainContainer from '../../layout/MainContainer';
 import useCategories from '../../hooks/reactQuery/useCategories';
@@ -24,9 +23,6 @@ import useCollections from '../../hooks/reactQuery/useCollections';
 import { useAppSelector } from '../../hooks/redux';
 import { getBlock } from '../../polkaSDK/api/getBlock';
 import {
-  IconAllState,
-  IconAllStateone,
-  IconSearch,
   AccountBanner,
   IconOffers,
   IconWallet,
@@ -80,9 +76,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { account } = chainState;
   const dataPerson = useAccount(address);
   const [isPerson, setIsPerson] = useState(false);
-
-  const location = useLocation();
-  const search = parse(location.search.replace('?', ''));
 
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
@@ -149,22 +142,12 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     },
   );
 
-  const handleSelectCategory: MouseEventHandler<HTMLButtonElement> = (event) => {
-    setSelectedCategoryId(event.currentTarget.id);
-  };
-
   const handleSelectStatus: MouseEventHandler<HTMLButtonElement> = (event) => {
     const clickedStatus = event.currentTarget.id;
     setSelectedStatusArr(
       selectedStatusArr.indexOf(clickedStatus) > -1
         ? without(selectedStatusArr, event.currentTarget.id)
         : union(selectedStatusArr, [event.currentTarget.id]),
-    );
-  };
-
-  const handleSelectCollection: MouseEventHandler<HTMLButtonElement> = (event) => {
-    setSelectedCollectionArr(
-      event.currentTarget.id,
     );
   };
 
@@ -183,13 +166,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       setIsPerson(true);
     }
   }, [account?.address, address, dataPerson]);
-
-  const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
-    function checkAdult(o: any) {
-      return o.metadata.name.indexOf(value) > -1;
-    }
-    setCollections(collectionsData.collections.filter(checkAdult));
-  };
 
   const TABS = [
     {

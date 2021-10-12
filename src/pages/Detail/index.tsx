@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
-import Countdown from 'react-countdown';
 import {
   Flex,
   Container,
@@ -36,7 +35,6 @@ import {
   IconDetailsCollection,
   IconDetailsCollectionS,
   IconDetailsRefresh,
-  IconDetailshaSre,
   IconBrowse,
   IconLiulan,
 } from '../../assets/images';
@@ -44,7 +42,6 @@ import {
 import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import useToken from '../../hooks/reactQuery/useToken';
-import useAccount from '../../hooks/reactQuery/useAccount';
 
 import { priceStringDivUnit, currentPrice } from '../../utils/format';
 import useIsLoginAddress from '../../hooks/utils/useIsLoginAddress';

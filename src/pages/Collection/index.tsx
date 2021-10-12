@@ -279,7 +279,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                {collectionsData?.collection.collect_count || 0}
+                {collectionsData?.collection?.collect_count || 0}
               </Flex>
             </Flex>
             <Flex
@@ -307,7 +307,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                {collectionsData?.collection.view_count || 0}
+                {collectionsData?.collection?.view_count || 0}
               </Flex>
             </Flex>
             <Flex
@@ -440,7 +440,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               >
                 {nftsData?.pages[0].pageInfo.totalNum || 0}
                 {' '}
-                results
+                {t('results')}
               </Text>
               <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
             </Flex>

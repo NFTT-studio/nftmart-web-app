@@ -4,6 +4,10 @@ import PolkaSDK from '..';
 import { txLog } from '../../utils/txLog';
 import { nftDeposit } from './nftDeposit';
 
+function float2PerU16(x) {
+  return Math.trunc(x * 65535.0);
+}
+
 type mintNftProps = {
   address: string | undefined,
   classId: number,
@@ -32,7 +36,7 @@ export const mintNft = async ({
     }
     const ownerOfClass = classInfo.unwrap().owner.toString();
     // eslint-disable-next-line camelcase
-    const royalty_rate = royaltyRate;
+    const royalty_rate = float2PerU16(royaltyRate);
     const txs = [
       PolkaSDK.api.tx.balances.transfer(ownerOfClass, balancesNeeded),
       PolkaSDK.api.tx.proxy.proxy(

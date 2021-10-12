@@ -85,7 +85,7 @@ const NftItem: FC<Props> = (({
         >
           {nftsData?.pages[0].pageInfo.totalNum}
           {' '}
-          results
+          {t('results')}
         </Text>
       </Flex>
       <Flex width="100%" flexFlow="row wrap">
