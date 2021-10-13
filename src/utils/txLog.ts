@@ -23,6 +23,7 @@ export const toast = ({
     isClosable,
   });
 };
+// eslint-disable-next-line max-len
 export const txLog = (result: any, onSuccess = (res: any) => res) => {
   // toast({
   //   title: '',
@@ -44,7 +45,7 @@ export const txLog = (result: any, onSuccess = (res: any) => res) => {
       title: '',
       description: t('Trx.finalize'),
       status: 'success',
-      duration: 6000,
+      duration: 8000,
     });
     onSuccess(result);
     console.log(`Transaction finalized at blockHash ${result.status.asFinalized}`);

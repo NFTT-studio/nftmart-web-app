@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import React, {
   useState, useEffect, useCallback,
 } from 'react';
@@ -18,6 +19,11 @@ import {
   Link,
   Modal,
   ModalOverlay,
+  InputRightAddon,
+  InputGroup,
+  Input,
+  Box,
+  Switch,
 } from '@chakra-ui/react';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import Upload from '../../components/Upload';
@@ -50,7 +56,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const { account, whiteList } = chainState;
   const [isShowModal, setIsShowModal] = useState(false);
   const [preview, setIsPreview] = useState(false);
-  console.log(preview);
+  const [royaltiesSl, setroyaltiesSl] = useState(false);
   const onCloseModal = () => {
     setIsShowModal(false);
     history.push('/');
@@ -64,12 +70,13 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const schema = Yup.object().shape({
-    logoUrl: Yup.string().required(t('Create.Required')),
+    logoUrl: Yup.string().required(t('Create.required')),
     name: Yup.string()
       .max(50, t('Create.nameRule'))
-      .required(t('Create.Required')),
+      .required(t('Create.required')),
     stub: Yup.string().max(50, t('Create.urlRule')),
     description: Yup.string().max(1000, t('Create.descriptionRule')),
+    royalties: Yup.number().max(20, t('Collection.royaltiesSchema')).min(0, t('Collection.royaltiesSchema')),
   });
 
   const mint = useCallback(async (formValue, cb) => {
@@ -80,8 +87,9 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       metadata: { ...others },
       classId: Number(collectionId),
       quantity: 1,
-      royaltyRate: collectionsData?.collection.royalty_rate,
+      royaltyRate: Number(formValue.royalties) / 100,
       cb,
+      setIsShow: setIsSubmitting,
     };
     mintNft(normalizedFormData);
   }, [account?.address, collectionId]);
@@ -93,6 +101,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       name: '',
       stub: '',
       description: '',
+      royalties: 0,
       fileType: '',
     },
     onSubmit: (formValue, formAction) => {
@@ -129,7 +138,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
         >
           <Flex
-            w="1364px"
+            maxW="1364px"
+            w="100vw"
             height="40px"
             flexDirection="row"
             justifyContent="felx-start"
@@ -267,6 +277,125 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             <EditFromSubTitle text={t('Create.descriptionRule')} />
           </label>
           <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} />
+          <Flex
+            w="100%"
+            h="80px"
+            mt="20px"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Flex
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="flex-start"
+            >
+              <Text
+                fontSize="16px"
+                fontFamily="TTHoves-Medium, TTHoves"
+                fontWeight="500"
+                color="#000000"
+                lineHeight="18px"
+              >
+                {t('Collection.royalties')}
+              </Text>
+              <Box
+                display={royaltiesSl ? 'flex' : 'none'}
+                width="349px"
+                mt="8px"
+                fontSize="14px"
+                fontFamily="TTHoves-Regular, TTHoves"
+                fontWeight="400"
+                color="#999999"
+                lineHeight="16px"
+                flexDirection="column"
+              >
+                <Text
+                  display="inline-block"
+                >
+                  {t('Collection.royaltiesRule')}
+                </Text>
+                <Flex>
+                  <Text
+                    display="inline-block"
+                  >
+                    {t('Collection.royaltiesRuleTwo')}
+                  </Text>
+                  <Text
+                    ml="3px"
+                    height="16px"
+                    display="inline-block"
+                    color="#000000"
+                  >
+                    20%
+                  </Text>
+                </Flex>
+              </Box>
+            </Flex>
+            <Flex flexDirection="column" justifyContent="space-between" alignItems="flex-end">
+              <Switch
+                isChecked={royaltiesSl}
+                onChange={() => {
+                  setroyaltiesSl(!royaltiesSl);
+                }}
+                height="40px"
+                size="lg"
+              />
+              <InputGroup
+                display={royaltiesSl ? 'flex' : 'none'}
+                width="200px"
+                height="40px"
+                background="#FFFFFF"
+                borderRadius="4px"
+                border="1px solid #E5E5E5"
+                _focus={{
+                  boxShadow: 'none',
+                }}
+              >
+                <Input
+                  id="royalties"
+                  name="royalties"
+                  value={royaltiesSl ? formik.values.royalties : 0}
+                  onChange={formik.handleChange}
+                  fontSize="16px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  lineHeight="14px"
+                  color="#000000"
+                  _focus={{
+                    boxShadow: 'none',
+                    color: '#000000',
+                    border: '1px solid #000000',
+                  }}
+                  _after={{
+                    boxShadow: 'none',
+                    color: '#000000',
+                    border: '1px solid #000000',
+                  }}
+                  placeholder="0"
+                  _placeholder={{
+                    color: '#999999',
+                    fontSize: '12px',
+                  }}
+                />
+                <InputRightAddon
+                  height="40px"
+                  background="#F4F4F4"
+                  borderRadius="0px 4px 4px 0px"
+                  border="1px solid #E5E5E5"
+                  fontSize="14px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#999999"
+                  lineHeight="14px"
+                  children="%"
+                />
+              </InputGroup>
+            </Flex>
+          </Flex>
+          {formik.errors.royalties && formik.touched.royalties ? (
+            <div style={{ color: 'red' }}>{formik.errors.royalties}</div>
+          ) : null}
           <Flex
             w="600px"
             justifyContent="center"

@@ -54,7 +54,7 @@ const Connect: FC = () => {
 
     const injector = await web3FromSource(injectedAccounts[index].meta.source);
     // eslint-disable-next-line no-multi-assign
-    injectedAccounts[index].address = encodeAddress(injectedAccounts[index].address, 50);
+    injectedAccounts[index].address = encodeAddress(injectedAccounts[index].address, 12191);
 
     dispatch(setAccount(injectedAccounts[index]));
     dispatch(setInjector(injector));

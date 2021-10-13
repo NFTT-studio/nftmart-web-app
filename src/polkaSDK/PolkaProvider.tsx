@@ -29,13 +29,13 @@ const PolkaProvider = ({ children }: Props) => {
       if (allInjected.length > 0) {
         const web3InjectedAccounts = await web3Accounts();
         const InjectedAddressesIndex = web3InjectedAccounts.findIndex(
-          (account) => encodeAddress(account.address, 50) === value,
+          (account) => encodeAddress(account.address, 12191) === value,
         );
         if (!isEmpty(value) && value && InjectedAddressesIndex > -1) {
           const loginAccount = web3InjectedAccounts[InjectedAddressesIndex];
           const injector = await web3FromSource(loginAccount.meta.source);
           // eslint-disable-next-line no-multi-assign
-          loginAccount.address = encodeAddress(loginAccount.address, 50);
+          loginAccount.address = encodeAddress(loginAccount.address, 12191);
 
           dispatch(setAccount(loginAccount));
           dispatch(setInjector(injector));

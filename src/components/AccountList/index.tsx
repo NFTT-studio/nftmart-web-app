@@ -36,7 +36,7 @@ const Account = ({
         >
           <Box display="inline-block">
             <Text fontWeight="medium">{InjectedAccountList[index].meta.name}</Text>
-            {data.address ? <Text color={Colors.TextGray}>{encodeAddress(data.address, 50)}</Text> : null}
+            {data.address ? <Text color={Colors.TextGray}>{encodeAddress(data.address, 12191)}</Text> : null}
           </Box>
           <Box
             display="inline-flex"
