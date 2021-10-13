@@ -73,20 +73,20 @@ const NftItem: FC<Props> = (({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Flex>
-          <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
-          <StatusSelectorRow statusArr={statusArr} selectedArr={selectedStatusArr} handleSelect={handleSelectStatus} />
-        </Flex>
         <Text
           fontSize="14px"
           fontFamily="TTHoves-Regular, TTHoves"
           fontWeight="400"
           color="#999999"
         >
-          {nftsData?.pages[0].pageInfo.totalNum}
+          {nftsData?.pages[0].pageInfo.totalNum || 0}
           {' '}
           {t('results')}
         </Text>
+        <Flex>
+          <StatusSelectorRow statusArr={statusArr} selectedArr={selectedStatusArr} handleSelect={handleSelectStatus} />
+          <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
+        </Flex>
       </Flex>
       <Flex width="100%" flexFlow="row wrap">
         {nftsIsLoading

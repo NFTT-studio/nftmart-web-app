@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -211,8 +212,9 @@ const Upload: FC<UploadProps> = ({
         setLoadingStatus(false);
         return;
       }
-      if (mediatype === 'img' && fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg') {
+      if ((mediatype === 'img' || mediatype === 'cutting') && fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg') {
         toast(<ToastBody title={t('common.imgFiletype')} message="" type="warning" />);
+        console.log(mediatype === 'img', mediatype === 'cutting', fileTypes !== 'gif');
         setLoadingStatus(false);
         return;
       }

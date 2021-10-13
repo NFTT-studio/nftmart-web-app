@@ -19,7 +19,7 @@ interface AccountProps {
 const Account = ({
   handleClick, index, length, address, InjectedAccountList,
 }: AccountProps) => {
-  const { data } = useAccount(address);
+  const { data } = useAccount(encodeAddress(address, 12191));
   return (
     <>
       {data && (

@@ -79,7 +79,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnToEnglishAuction, setTurnToEnglishAuction] = useState(false);
   const [automaticDelay, setAutomaticDelay] = useState(false);
-  const [endingPriceSl, setEndingPriceSl] = useState(false);
+  const [fixedPriceSl, setFixedPriceSl] = useState(false);
   const [commissionRateSl, setcommissionRateSl] = useState(false);
 
   const orderId = nftData?.nftInfo?.order_id;
@@ -162,7 +162,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       minimumMarkup: 1,
       automaticDelay: false,
       turnToEnglishAuction: false,
-      endingPriceSl: false,
+      fixedPriceSl: false,
       commissionRate: 0,
       fixedPrice: '',
     },
@@ -1597,69 +1597,69 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       <Switch
                         id="endingPrice"
                         name="endingPrice"
-                        isChecked={endingPriceSl}
+                        isChecked={fixedPriceSl}
                         onChange={() => {
-                          formik.values.endingPriceSl = !endingPriceSl;
-                          setEndingPriceSl(!turnToEnglishAuction);
+                          formik.values.fixedPriceSl = !fixedPriceSl;
+                          setFixedPriceSl(!fixedPriceSl);
                         }}
                         width="#40"
                         height="40px"
                         size="lg"
                       />
-                      {formik.errors.endingPriceSl && formik.touched.endingPriceSl ? (
-                        <div style={{ color: 'red' }}>{formik.errors.endingPriceSl}</div>
-                      ) : null}
-                      <InputGroup
-                        width="200px"
-                        height="40px"
-                        background="#FFFFFF"
-                        borderRadius="4px"
-                        border="1px solid #E5E5E5"
-                        _focus={{
-                          boxShadow: 'none',
 
-                        }}
-                      >
-                        <Input
-                          id="fixedPrice"
-                          name="fixedPrice"
-                          value={formik.values.fixedPrice}
-                          onChange={formik.handleChange}
-                          fontSize="16px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          lineHeight="14px"
-                          color="#000000"
+                      {fixedPriceSl ? (
+                        <InputGroup
+                          width="200px"
+                          height="40px"
+                          background="#FFFFFF"
+                          borderRadius="4px"
+                          border="1px solid #E5E5E5"
                           _focus={{
                             boxShadow: 'none',
-                            color: '#000000',
-                            border: '1px solid #000000',
+
                           }}
-                          _after={{
-                            boxShadow: 'none',
-                            color: '#000000',
-                            border: '1px solid #000000',
-                          }}
+                        >
+                          <Input
+                            id="fixedPrice"
+                            name="fixedPrice"
+                            value={formik.values.fixedPrice}
+                            onChange={formik.handleChange}
+                            fontSize="16px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            lineHeight="14px"
+                            color="#000000"
+                            _focus={{
+                              boxShadow: 'none',
+                              color: '#000000',
+                              border: '1px solid #000000',
+                            }}
+                            _after={{
+                              boxShadow: 'none',
+                              color: '#000000',
+                              border: '1px solid #000000',
+                            }}
                           // placeholder={t('SellSetting.price')}
-                          _placeholder={{
-                            color: '#999999',
-                            fontSize: '12px',
-                          }}
-                        />
-                        <InputRightAddon
-                          width="72px"
-                          height="40px"
-                          background="#F4F4F4"
-                          borderRadius="0px 4px 4px 0px"
-                          border="1px solid #E5E5E5"
-                          fontSize="14px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="14px"
-                          children="NMT"
-                        />
-                      </InputGroup>
+                            _placeholder={{
+                              color: '#999999',
+                              fontSize: '12px',
+                            }}
+                          />
+                          <InputRightAddon
+                            width="72px"
+                            height="40px"
+                            background="#F4F4F4"
+                            borderRadius="0px 4px 4px 0px"
+                            border="1px solid #E5E5E5"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#999999"
+                            lineHeight="14px"
+                            children="NMT"
+                          />
+                        </InputGroup>
+                      ) : null}
                     </Flex>
                   </Flex>
                   {formik.errors.fixedPrice && formik.touched.fixedPrice ? (

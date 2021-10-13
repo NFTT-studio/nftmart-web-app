@@ -112,7 +112,7 @@ export const TYPES = {
   DutchAuctionBidOf: 'BritishAuctionBidOf',
 };
 
-export const SS58_FORMAT = 50;
+export const SS58_FORMAT = 12191;
 
 export const TOKEN_TRANSFERABLE_BURNABLE = 0b00000011;
 
