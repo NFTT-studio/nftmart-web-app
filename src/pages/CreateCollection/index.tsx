@@ -361,9 +361,6 @@ const CreateCollection: FC = () => {
               />
 )}
           />
-          {formik.errors.stub && formik.touched.stub ? (
-            <div style={{ color: 'red' }}>{formik.errors.stub}</div>
-          ) : null}
           <Flex
             w="100%"
             h="80px"

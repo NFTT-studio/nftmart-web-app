@@ -14,7 +14,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps, useHistory, Link as RouterLink } from 'react-router-dom';
+import { useHistory, Link as RouterLink } from 'react-router-dom';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import Identicon from 'react-identicons';
 import NoData from '../NoData';
@@ -417,7 +417,7 @@ const DetailRight: FC<Props> = (({
               ) : (
                 <Identicon
                   className="ownerAvatar"
-                  string={nftData?.nftInfo?.owner?.id}
+                  string={nftData?.nftInfo.owner_id}
                 />
               )}
               <Flex flexDirection="column">
@@ -433,7 +433,7 @@ const DetailRight: FC<Props> = (({
                   fontWeight="500"
                   lineHeight="18px"
                 >
-                  {nftData?.nftInfo?.owner?.name || formatAddress(nftData?.nftInfo?.owner?.id)}
+                  {nftData?.nftInfo?.owner?.name || formatAddress(nftData?.nftInfo?.owner_id)}
                 </Text>
                 <Text
                   mt="2px"

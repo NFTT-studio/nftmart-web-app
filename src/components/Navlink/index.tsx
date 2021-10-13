@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { FC, Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import {
@@ -9,12 +9,16 @@ import { statusArr } from '../../constants/Status';
 import { useAppSelector } from '../../hooks/redux';
 import useAccount from '../../hooks/reactQuery/useAccount';
 
-const NavLink = () => {
+export interface NavLinkProps {
+  address: string;
+}
+
+const NavLink: FC<NavLinkProps> = ({ address }) => {
   const location = useLocation();
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
 
-  const { data } = useAccount(account?.address);
+  const { data } = useAccount(address);
 
   const NAV_MAP = [
     {

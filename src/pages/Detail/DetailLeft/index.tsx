@@ -110,6 +110,7 @@ const DetailLeft: FC<Props> = (({
     id: index,
     link: links ? links[item.name] : '',
   }));
+  const newLink = ICON_LIST.filter((item) => item.link === '');
   const { t } = useTranslation();
   return (
     <Flex width="560px" flexDirection="column">
@@ -205,7 +206,7 @@ const DetailLeft: FC<Props> = (({
         </Box>
       </Flex>
       <Flex width="560px">
-        <Accordion width="560px" defaultIndex={[0, 2]} allowMultiple>
+        <Accordion width="560px" defaultIndex={[0, 1]} allowMultiple>
           <AccordionItem mt="36px" width="100%" border="none">
             <AccordionButton
               height="62px"
@@ -465,37 +466,34 @@ const DetailLeft: FC<Props> = (({
                   </Text>
 
                   <Flex>
-                    {ICON_LIST.map((item, index) => (
-                      item.link === '' ? null
-                        : (
-                          <Link
-                            href={item.link}
-                          >
-                            <Box
-                              key="index"
-                              width="40px"
-                              height="40px"
-                              borderRadius={index === 0 ? '4px 0px 0px 4px' : index === ICON_LIST.length - 1 ? '0px 4px 4px 0px' : ''}
-                              borderTop="1px solid #E5E5E5"
-                              borderBottom="1px solid #E5E5E5"
-                              borderLeft="1px solid #E5E5E5"
-                              borderRight={index === ICON_LIST.length - 1 ? '1px solid #E5E5E5' : ''}
-                              display="flex"
-                              justifyContent="center"
-                              alignItems="center"
-                              _hover={{
-                                boxShadow: '0px 2px 8px 0px #E1E1E1',
-                              }}
-                            >
-                              <Image
-                                w="22px"
-                                h="22px"
-                                src={item.src}
-                              />
-                            </Box>
+                    {newLink.map((item, index) => (
+                      <Link
+                        href={item.link}
+                      >
+                        <Box
+                          key="index"
+                          width="40px"
+                          height="40px"
+                          borderRadius={index === 0 ? '4px 0px 0px 4px' : index === newLink.length - 1 ? '0px 4px 4px 0px' : ''}
+                          borderTop="1px solid #E5E5E5"
+                          borderBottom="1px solid #E5E5E5"
+                          borderLeft="1px solid #E5E5E5"
+                          borderRight={index === newLink.length - 1 ? '1px solid #E5E5E5' : ''}
+                          display="flex"
+                          justifyContent="center"
+                          alignItems="center"
+                          _hover={{
+                            boxShadow: '0px 2px 8px 0px #E1E1E1',
+                          }}
+                        >
+                          <Image
+                            w="22px"
+                            h="22px"
+                            src={item.src}
+                          />
+                        </Box>
 
-                          </Link>
-                        )
+                      </Link>
                     ))}
                   </Flex>
 

@@ -77,7 +77,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
     id: index,
     link: links ? links[item.name] : '',
   }));
-
+  const newLink = ICON_LIST.filter((item) => item.link === '');
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const { data: nftsData, isLoading, fetchNextPage } = useNftsPersonal(
     {
@@ -279,7 +279,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                {collectionsData?.collection?.collect_count || 0}
+                {collectionsData?.collection?.collect_count ? collectionsData.collection.collect_count : 0}
               </Flex>
             </Flex>
             <Flex
@@ -341,38 +341,35 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
 
           </Flex>
           <Flex>
-            {ICON_LIST.map((item, index) => (
-              item.link === '' ? null
-                : (
-                  <Link
-                    as={RouterLink}
-                    to={item.link}
-                  >
-                    <Box
-                      key="index"
-                      width="40px"
-                      height="40px"
-                      borderRadius={index === 0 ? '4px 0px 0px 4px' : index === ICON_LIST.length - 1 ? '0px 4px 4px 0px' : ''}
-                      borderTop="1px solid #E5E5E5"
-                      borderBottom="1px solid #E5E5E5"
-                      borderLeft="1px solid #E5E5E5"
-                      borderRight={index === ICON_LIST.length - 1 ? '1px solid #E5E5E5' : ''}
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      _hover={{
-                        boxShadow: '0px 2px 8px 0px #E1E1E1',
-                      }}
-                    >
-                      <Image
-                        w="22px"
-                        h="22px"
-                        src={item.src}
-                      />
-                    </Box>
+            {newLink.map((item, index) => (
+              <Link
+                as={RouterLink}
+                to={item.link}
+              >
+                <Box
+                  key="index"
+                  width="40px"
+                  height="40px"
+                  borderRadius={index === 0 ? '4px 0px 0px 4px' : index === newLink.length - 1 ? '0px 4px 4px 0px' : ''}
+                  borderTop="1px solid #E5E5E5"
+                  borderBottom="1px solid #E5E5E5"
+                  borderLeft="1px solid #E5E5E5"
+                  borderRight={index === newLink.length - 1 ? '1px solid #E5E5E5' : ''}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  _hover={{
+                    boxShadow: '0px 2px 8px 0px #E1E1E1',
+                  }}
+                >
+                  <Image
+                    w="22px"
+                    h="22px"
+                    src={item.src}
+                  />
+                </Box>
 
-                  </Link>
-                )
+              </Link>
             ))}
           </Flex>
           {/* <Flex flexDirection="column">
