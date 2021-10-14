@@ -18,7 +18,6 @@ import {
 import { union, without } from 'lodash';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MainContainer from '../../layout/MainContainer';
-import useCategories from '../../hooks/reactQuery/useCategories';
 import useCollections from '../../hooks/reactQuery/useCollections';
 import { useAppSelector } from '../../hooks/redux';
 import { getBlock } from '../../polkaSDK/api/getBlock';
@@ -100,8 +99,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     setOffersMadeButtonId(Number(event.currentTarget.id));
   };
 
-  const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
-  const { data: collectionsData } = useCollections({ address });
+  const { data: collectionsData, isLoading: collectionsIsLoading } = useCollections({ address });
 
   const { data: nftsData, isLoading: nftsIsLoading, fetchNextPage: fetchNextPageNftsData } = useNftsPersonal(
     {
@@ -207,15 +205,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   ];
 
   return (
-    <MainContainer title={t('Home.title')}>
-      {userDataLoading
+    <>
+      {userDataLoading || nftsIsLoading || collectionsIsLoading || !userData
         ? (
           <Center width="100%" height="100vh">
             <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
           </Center>
         )
         : (
-          <>
+          <MainContainer title={t('Home.title')}>
             <Flex maxWidth="1440px" flexDirection="column" position="relative">
               <Image
                 w="100%"
@@ -252,7 +250,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               justifyContent="space-between"
               padding="81px 40px 20px 40px"
             >
-
               <Flex width="21.8%" direction="column">
                 <Headers userData={userData} dataPerson={dataPerson} />
                 <Flex
@@ -311,7 +308,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                     statusArr={statusArr}
                     selectedStatusArr={selectedStatusArr}
                     handleSelectStatus={handleSelectStatus}
-                    categoriesIsLoading={categoriesIsLoading}
                     nftsIsLoading={nftsIsLoading}
                     fetchNextPageNftsData={fetchNextPageNftsData}
                     selectedSort={selectedSort}
@@ -325,7 +321,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                     statusArr={statusArr}
                     selectedStatusArr={selectedStatusArr}
                     handleSelectStatus={handleSelectStatus}
-                    categoriesIsLoading={categoriesIsLoading}
                     nftsIsLoading={nftsIsLoading}
                     fetchNextPageNftsData={fetchNextPageNftsDataCreate}
                     selectedSort={selectedSort}
@@ -339,7 +334,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                     statusArr={statusArr}
                     selectedStatusArr={selectedStatusArr}
                     handleSelectStatus={handleSelectStatus}
-                    categoriesIsLoading={categoriesIsLoading}
                     nftsIsLoading={nftsIsLoading}
                     fetchNextPageNftsData={fetchNextPageNftsDataCollecte}
                     selectedSort={selectedSort}
@@ -582,9 +576,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                 ) : ''}
               </Flex>
             </Flex>
-          </>
+          </MainContainer>
         )}
-    </MainContainer>
+    </>
   );
 };
 

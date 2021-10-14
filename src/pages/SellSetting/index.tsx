@@ -116,7 +116,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     let day = date.getDate();
     const year = date.getFullYear();
     const hours = date.getHours();
-    const minutes = date.getMinutes();
+    let minutes = date.getMinutes();
     const mm = `'${month}'`;
     const dd = `'${day}'`;
     const minutess = `'${minutes}'`;
@@ -289,7 +289,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         h="80px"
         background="#F9F9F9"
         flexDirection="row"
-        justifyContent="center"
+        justifyContent="felx-start"
         alignItems="center"
       >
         <Link
@@ -297,7 +297,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           to={`/item/${nftData?.nftInfo?.id}`}
         >
           <Flex
-            w="1364px"
+            maxW="1364px"
+            w="100%"
             height="40px"
             flexDirection="row"
             justifyContent="felx-start"
@@ -309,7 +310,13 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               h="12px"
               src={IconLeft.default}
             />
-            {nftData?.nftInfo?.metadata?.fileType === 'mp4' || nftData?.nftInfo?.metadata?.fileType === 'mp3'
+            <Image
+              m="0 20px 0 10px"
+              w="auto"
+              h="40px"
+              src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.previewUrl || nftData?.nftInfo?.metadata?.logoUrl}`}
+            />
+            {/* {nftData?.nftInfo?.metadata?.fileType === 'mp4' || nftData?.nftInfo?.metadata?.fileType === 'mp3'
               ? (
                 <AspectRatio
                   m="0 20px 0 10px"
@@ -329,9 +336,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   m="0 20px 0 10px"
                   w="auto"
                   h="40px"
-                  src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.logoUrl}`}
+                  src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.previewUrl || nftData?.nftInfo?.metadata?.logoUrl}`}
                 />
-              )}
+              )} */}
 
             <Flex
               flexDirection="column"
@@ -345,7 +352,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 color="#999999"
                 lineHeight="14px"
               >
-                {collectionsData?.collection?.metadata.name}
+                {collectionsData?.collection?.metadata?.name || ''}
               </Text>
               <Text
                 mt="5px"
@@ -355,7 +362,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 color="#191A24"
                 lineHeight="16px"
               >
-                {nftData?.nftInfo?.metadata.name}
+                {nftData?.nftInfo?.metadata?.name}
               </Text>
             </Flex>
           </Flex>
@@ -366,7 +373,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         flexDirection="column"
         width="100%"
         justifyContent="flex-start"
-        alignItems="flex-start"
+        alignItems={['center', 'center', 'center', 'center', 'flex-start']}
       >
 
         <Text
@@ -381,15 +388,17 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         >
           { }
         </Text>
-        <form onSubmit={formik.handleSubmit}>
+        <form style={{ width: '100%' }} onSubmit={formik.handleSubmit}>
           <Flex
             width="100%"
-            flexDirection="row"
+            flexDirection={['column', 'column', 'column', 'column', 'row']}
             justifyContent="space-between"
+            alignItems={['center', 'center', 'center', 'center', 'flex-start']}
           >
             <Flex
+              mr={['0', '0', '0', '0', '16px']}
               className="sellLeft"
-              w="790px"
+              w={['100%', '100%', '100%', '100%', '790px']}
               flexDirection="column"
             >
               <Flex
@@ -1796,7 +1805,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 </>
               ) : null}
             </Flex>
-            <Flex width="560px" ml="16px">
+            <Flex width={['100%', '100%', '100%', '100%', '560px']}>
               <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                 <AccordionItem width="100%" border="none">
                   <AccordionButton
@@ -1871,7 +1880,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             NMT
                             {t('SellSetting.listingExplainTwo')}
                             {'  '}
-                            {Number(formik.values.price * (1 - number2PerU16(collectionsData?.collection?.royalty_rate + tax) / 100)).toLocaleString() || 0}
+                            {Number(formik.values.price * (1 - number2PerU16((nftData?.nftInfo?.royalty_rate || collectionsData?.collection?.royalty_rate) + tax) / 100)).toLocaleString() || 0}
 
                             {'  '}
                             NMT
@@ -2089,7 +2098,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           width="300px"
                           height="3px"
                           borderRadius="2px"
-                          value={number2PerU16(collectionsData?.collection?.royalty_rate)}
+                          value={number2PerU16(nftData?.nftInfo?.royalty_rate) || number2PerU16(collectionsData?.collection?.royalty_rate)}
                         />
                         <Text
                           fontSize="14px"
@@ -2098,7 +2107,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {number2PerU16(collectionsData?.collection?.royalty_rate).toFixed(1)}
+                          {number2PerU16(nftData?.nftInfo?.royalty_rate).toFixed(1) || number2PerU16(collectionsData?.collection?.royalty_rate).toFixed(1)}
                           %
                         </Text>
                       </Flex>

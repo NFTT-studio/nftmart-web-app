@@ -1177,7 +1177,7 @@ const DetailRight: FC<Props> = (({
                   color="#000000"
                   lineHeight="18px"
                 >
-                  {renderNmtNumberText(PriceHistory?.average) || '-'}
+                  {renderNmtNumberText(PriceHistory?.average) || '0'}
                 </Text>
               </Flex>
             </Flex>
@@ -1203,7 +1203,7 @@ const DetailRight: FC<Props> = (({
                   color="#000000"
                   lineHeight="18px"
                 >
-                  {PriceHistory?.volume || '-'}
+                  {PriceHistory?.volume || '0'}
                 </Text>
               </Flex>
             </Flex>

@@ -35,12 +35,8 @@ type Nfts = {
     totalNum: number
   }
 }
-type Categories = {
-  categories: Category[],
-}
 
 interface Props {
-  categoriesIsLoading:boolean,
   nftsIsLoading:boolean,
   statusArr: string[],
   selectedStatusArr: string[],
@@ -56,7 +52,6 @@ const NftItem: FC<Props> = (({
   statusArr,
   selectedStatusArr,
   handleSelectStatus,
-  categoriesIsLoading,
   nftsIsLoading,
   fetchNextPageNftsData,
   selectedSort,

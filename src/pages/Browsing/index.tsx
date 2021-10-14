@@ -220,7 +220,7 @@ const Browsing = () => {
               fontWeight="400"
               color="#999999"
             >
-              {nftsData?.pages[0].pageInfo.totalNum}
+              {nftsData?.pages[0].pageInfo.totalNum || 0}
               {' '}
               {t('results')}
             </Text>
