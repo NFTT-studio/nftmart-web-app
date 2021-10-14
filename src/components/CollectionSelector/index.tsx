@@ -59,7 +59,7 @@ const CollectionSelector: FC<CollectionSelectorProps> = (({ selectedArr, collect
                 h="30px"
                 mr="8px"
                 borderRadius="50%"
-                src={`${PINATA_SERVER}${collection?.metadata.logoUrl}`}
+                src={`${PINATA_SERVER}${collection?.metadata?.logoUrl}`}
                 alt=""
               />
             )}
@@ -69,7 +69,7 @@ const CollectionSelector: FC<CollectionSelectorProps> = (({ selectedArr, collect
             fontWeight="400"
             color="#191A24"
           >
-            {collection.metadata.name}
+            {collection?.metadata?.name}
           </Text>
         </Button>
       );

@@ -279,7 +279,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                {collectionsData?.collection?.collect_count ? collectionsData.collection.collect_count : 0}
+                {collectionsData?.collection?.collect_count ? collectionsData.collection?.collect_count : 0}
               </Flex>
             </Flex>
             <Flex

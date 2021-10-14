@@ -29,6 +29,7 @@ const MainContainer = ({ children, title }: Props) => {
         height="100%"
         maxWidth="100vw"
         minHeight="100vh"
+        w="100%"
         pt="80px"
         boxSizing="border-box"
         flexDirection="column"
