@@ -27,7 +27,6 @@ export const mintNft = async ({
   try {
     const injector = await web3FromAddress(address);
     const metadataStr = JSON.stringify(metadata);
-    console.log(metadata);
     const balancesNeeded = await nftDeposit(metadataStr);
     if (balancesNeeded === null) return null;
     const classInfo: any = await PolkaSDK.api.query.ormlNft.classes(classId);

@@ -314,7 +314,7 @@ const NftCard: FC<NftCardProps> = ({
             lineHeight="18px"
             fontFamily="TTHoves-Medium, TTHoves"
           >
-            <Box>
+            <Box w="100%">
               {nft?.metadata && (
               <Text
                 maxWidth="100%"

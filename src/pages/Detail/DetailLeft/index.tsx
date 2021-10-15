@@ -110,7 +110,7 @@ const DetailLeft: FC<Props> = (({
     id: index,
     link: links ? links[item.name] : '',
   }));
-  const newLink = ICON_LIST.filter((item) => item.link === '');
+  const newLink = ICON_LIST.filter((item) => item.link !== '');
   const { t } = useTranslation();
   return (
     <Flex width="560px" flexDirection="column">
