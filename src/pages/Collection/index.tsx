@@ -77,7 +77,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
     id: index,
     link: links ? links[item.name] : '',
   }));
-  const newLink = ICON_LIST.filter((item) => item.link === '');
+  const newLink = ICON_LIST.filter((item) => item.link !== '');
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const { data: nftsData, isLoading, fetchNextPage } = useNftsPersonal(
     {
@@ -343,8 +343,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
           <Flex>
             {newLink.map((item, index) => (
               <Link
-                as={RouterLink}
-                to={item.link}
+                href={item.link}
               >
                 <Box
                   key="index"
