@@ -2107,7 +2107,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {number2PerU16(nftData?.nftInfo?.royalty_rate).toFixed(1) || number2PerU16(collectionsData?.collection?.royalty_rate).toFixed(1)}
+                          {nftData?.nftInfo?.royalty_rate ? number2PerU16(nftData?.nftInfo?.royalty_rate).toFixed(1) : number2PerU16(collectionsData?.collection?.royalty_rate).toFixed(1)}
                           %
                         </Text>
                       </Flex>

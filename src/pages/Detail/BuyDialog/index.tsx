@@ -136,6 +136,7 @@ const BuyDialog: FC<Props> = (({
                   src={logoUrl}
                 />
                 <Flex
+                  w="100%"
                   flexDirection="column"
                   textAlign="left"
                   fontSize="12px"
@@ -151,6 +152,12 @@ const BuyDialog: FC<Props> = (({
                     fontWeight="400"
                     color="#000000"
                     lineHeight="20px"
+                    maxWidth="100%"
+                    w="100%"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    whiteSpace="nowrap"
+                    textAlign="start"
                   >
                     {nftName}
                   </Text>
