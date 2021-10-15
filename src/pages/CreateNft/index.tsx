@@ -71,6 +71,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
 
   const schema = Yup.object().shape({
     logoUrl: Yup.string().required(t('Create.required')),
+    previewUrl: preview ? Yup.string().required(t('Create.required')) : Yup.string(),
     name: Yup.string()
       .max(50, t('Create.nameRule'))
       .required(t('Create.required')),
@@ -80,11 +81,18 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   });
 
   const mint = useCallback(async (formValue, cb) => {
-    formValue.stub = `https://${formValue.stub}`;
-    const { ...others } = formValue;
+    formValue.stub = formValue.stub ? `https://${formValue.stub}` : null;
+    console.log(formValue);
     const normalizedFormData = {
       address: account?.address,
-      metadata: { ...others },
+      metadata: {
+        logoUrl: formValue.logoUrl,
+        previewUrl: formValue.previewUrl,
+        fileType: formValue.fileType,
+        name: formValue.name,
+        stub: formValue.stub,
+        description: formValue.description,
+      },
       classId: Number(collectionId),
       quantity: 1,
       royaltyRate: Number(formValue.royalties) / 100,
@@ -113,7 +121,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           formAction.resetForm();
           setTimeout(() => {
             history.push(`/collection/${account!.address}?collectionId=${collectionId}`);
-          }, 3000);
+          }, 1500);
         },
         error: (error: string) => {
           toast(<ToastBody title="Error" message={error} type="error" />);
@@ -236,7 +244,9 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                 />
               </>
             ) : null}
-
+          {formik.errors.previewUrl && formik.touched.previewUrl ? (
+            <div style={{ color: 'red' }}>{formik.errors.previewUrl}</div>
+          ) : null}
           {/* <label htmlFor="featuredUrl">
             {' '}
             <EditFormTitle text={t('Create.featured')} />
