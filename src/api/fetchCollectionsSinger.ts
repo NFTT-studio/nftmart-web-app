@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import axiosClient from '../apiClient/axiosClient';
 
 type collections = {
@@ -13,6 +14,7 @@ type collections = {
     // eslint-disable-next-line camelcase
     royalty_rate: number,
     id: string
+    collect_count: string,
   }
 }
 
