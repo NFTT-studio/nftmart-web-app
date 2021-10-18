@@ -304,6 +304,14 @@
     "finalize": "交易确认",
     "failed": "交易失败"
   },
+  "Time": {
+    "seven": "过去 7 天",
+    "fourteen": "过去 14 天",
+    "thirty": "过去 30 天",
+    "sixty": "过去 60 天",
+    "ninety": "过去 90 天",
+    "year": "去年"
+  },
   "Footer": {
     "PrivacyPolicy": "隐私政策"
   }
