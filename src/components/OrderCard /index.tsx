@@ -428,7 +428,7 @@ const OrderCard: FC<NftCardProps> = ({
                     color="#FFFFFF"
                     lineHeight="16px"
                   >
-                    {price}
+                    {nft?.type === 'Dutch' ? renderNmtNumberText((Number(duchPrice) * 1000000000000).toString()) : price}
                   </Box>
                   <Box color="#999999">NMT</Box>
                 </Flex>
