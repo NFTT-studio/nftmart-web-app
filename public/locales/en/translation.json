@@ -304,6 +304,14 @@
     "finalize": "Transaction finalized",
     "failed": "Transaction failed"
   },
+  "Time": {
+    "seven": "Last 7 Days",
+    "fourteen": "Last 14 Days",
+    "thirty": "Last 30 Days",
+    "sixty": "Last 60 Days",
+    "ninety": "Last 90 Days",
+    "year": "Last Year"
+  },
   "Footer": {
     "PrivacyPolicy": "PrivacyPolicy"
   }

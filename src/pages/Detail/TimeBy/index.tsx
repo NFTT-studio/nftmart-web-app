@@ -11,6 +11,7 @@ import {
   Image,
   Flex,
 } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import {
   IoMdArrowDropdown,
   IoMdArrowDropup,
@@ -22,14 +23,15 @@ type TimeByProps = {
 }
 
 const TimeBy: FC<TimeByProps> = ({ selectedTime, setSelectedTime }) => {
+  const { t } = useTranslation();
   const [opening, setOpening] = useState(false);
   const Time = [
-    { key: 'seven', value: '过去 7天 ' },
-    { key: 'fourteen', value: '过去 14 天' },
-    { key: 'thirty', value: '过去 30 天' },
-    { key: 'sixty', value: '过去 60 天' },
-    { key: 'ninety', value: '过去 90 天' },
-    { key: 'year', value: '去年' },
+    { key: 'seven', value: t('Time.seven') },
+    { key: 'fourteen', value: t('Time.fourteen') },
+    { key: 'thirty', value: t('Time.thirty') },
+    { key: 'sixty', value: t('Time.sixty') },
+    { key: 'ninety', value: t('Time.ninety') },
+    { key: 'year', value: t('Time.year') },
   ];
 
   const handleSelect = (key: string) => {
