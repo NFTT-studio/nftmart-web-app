@@ -433,7 +433,7 @@ const NftCard: FC<NftCardProps> = ({
                     color="#FFFFFF"
                     lineHeight="16px"
                   >
-                    {type === 'Dutch' ? renderNmtNumberText((Number(duchPrice) * 1000000000000).toString()) : price}
+                    {type === 'Dutch' ? renderNmtNumberText((Number(duchPrice) * 1000000000000).toString()) : renderNmtNumberText(nft?.auction?.price)}
                   </Box>
                   <Box color="#999999">NMT</Box>
                 </Flex>
