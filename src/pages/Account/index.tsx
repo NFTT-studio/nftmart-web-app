@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, {
   useState, MouseEventHandler, useEffect, ChangeEventHandler,
 } from 'react';
@@ -206,7 +207,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   return (
     <>
-      {userDataLoading || nftsIsLoading || collectionsIsLoading || !userData || !collectionsData
+      {userDataLoading || nftsIsLoading || collectionsIsLoading || JSON.stringify(userData) === '{}' || JSON.stringify(collectionsData) === '{}'
         ? (
           <Center width="100%" height="100vh">
             <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />

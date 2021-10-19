@@ -584,7 +584,7 @@ const DetailRight: FC<Props> = (({
                     }
                   }}
                 >
-                  {!isLoginAddress ? t('Detail.placeBid') : '-'}
+                  {t('Detail.placeBid')}
                 </Button>
               ) : null}
               {types === 'British' && events.times > 0 ? (
@@ -600,7 +600,7 @@ const DetailRight: FC<Props> = (({
                   isDisabled={isLoginAddress || Number(events.times) === 0}
                   onClick={() => setIsShowBritish(true)}
                 >
-                  {!isLoginAddress ? t('Detail.placeBid') : '-'}
+                  {t('Detail.placeBid')}
                 </Button>
               ) : null}
               {!types ? (
