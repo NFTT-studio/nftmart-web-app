@@ -13,7 +13,6 @@ import {
   Text,
   Link,
   Image,
-  AspectRatio,
 } from '@chakra-ui/react';
 import { Shimmer } from 'react-shimmer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -21,11 +20,11 @@ import { Link as RouterLink } from 'react-router-dom';
 import {
   Player,
 } from 'video-react';
+import { useTranslation } from 'react-i18next';
 import { IPFS_URL } from '../../constants';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { renderNmtNumberText } from '../Balance';
 import { priceStringDivUnit, currentPrice } from '../../utils/format';
-import useUser from '../../hooks/reactQuery/useUser';
 import {
   IconTime,
   HeadPortrait,
@@ -41,6 +40,7 @@ const OrderCard: FC<NftCardProps> = ({
   nft,
   remainingTime,
 }) => {
+  const { t } = useTranslation();
   const [events, setEvents] = useState(
     {
       times: 0,
@@ -419,7 +419,7 @@ const OrderCard: FC<NftCardProps> = ({
                   <Box color="#FFFFFF">
                     {events.day}
                     {' '}
-                    days left
+                    {t('common.daysLeft')}
                   </Box>
                 </Flex>
               </Box>

@@ -27,6 +27,7 @@ import MainContainer from '../../layout/MainContainer';
 import NftCard from '../../components/NftCard';
 import { useAppSelector } from '../../hooks/redux';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
+import { getBlock } from '../../polkaSDK/api/getBlock';
 
 import {
   CollectionBackground,
@@ -68,6 +69,13 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const dataPerson = useAccount(address);
   const search = parse(location.search.replace('?', ''));
   const classId = search.collectionId;
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  useEffect(() => {
+    getBlock().then((res) => {
+      setRemainingTime(res);
+    });
+  }, []);
 
   const { data: collectionsData, isLoading: collectionsIsLoading } = useCollectionsSinger(classId);
   const links = collectionsData?.collection?.metadata?.links;
@@ -167,7 +175,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               <Image
                 maxWidth="1440px"
                 width="100%"
-                height="280px"
+                height="auto"
                 src={collectionsData?.collection?.metadata?.banner
                   ? `${PINATA_SERVER}${collectionsData?.collection?.metadata?.banner}`
                   : CollectionBackground.default}
@@ -457,7 +465,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                         spacing="20px"
                       >
                         {nftsData?.pages.map((page) => page.nfts?.map(
-                          (nft) => <NftCard nft={nft} />,
+                          (nft) => <NftCard nft={nft} remainingTime={remainingTime} />,
                         ))}
                       </SimpleGrid>
                     </InfiniteScroll>
@@ -484,7 +492,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                         color="#999999"
                         lineHeight="20px"
                       >
-                        No data yet
+                        {t('common.noDataYet')}
                       </Text>
                     </Flex>
                   )}

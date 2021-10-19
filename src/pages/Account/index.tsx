@@ -219,7 +219,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               <Image
                 w="100%"
                 maxWidth="1440px"
-                h="280px"
+                h="auto"
                 src={userData?.featured_image || AccountBanner.default}
                 alt=""
               />
@@ -473,7 +473,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                                   color="#999999"
                                   lineHeight="20px"
                                 >
-                                  No data yet
+                                  {t('common.noDataYet')}
                                 </Text>
                               </Flex>
                             )}
@@ -520,7 +520,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                                   color="#999999"
                                   lineHeight="20px"
                                 >
-                                  No data yet
+                                  {t('common.noDataYet')}
                                 </Text>
                               </Flex>
                             )}
