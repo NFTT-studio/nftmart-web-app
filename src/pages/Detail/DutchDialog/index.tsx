@@ -193,9 +193,10 @@ const BuyDialog: FC<Props> = (({
                   </Text>
                 </Text>
                 <Text>
-                  (≈$
-                  {Number(price) * Number(token?.price)}
-                  )
+                  {token?.price
+                    ? `(≈$
+                      ${Number(price) * Number(token?.price)}
+                      )` : null}
                 </Text>
               </Flex>
             </Flex>
@@ -251,9 +252,10 @@ const BuyDialog: FC<Props> = (({
                   </Text>
                 </Text>
                 <Text>
-                  (≈$
-                  {Number(price) * Number(token?.price)}
-                  )
+                  {token?.price
+                    ? `(≈$
+                      ${Number(price) * Number(token?.price)}
+                      )` : null}
                 </Text>
               </Flex>
             </Flex>
@@ -286,6 +288,9 @@ const BuyDialog: FC<Props> = (({
                 borderRadius="4px"
                 onClick={onSubmit}
                 isDisabled={Number(priceStringDivUnit(data?.balance?.transferrable)) < Number(price)}
+                _hover={{
+                  background: '#000000 !important',
+                }}
               >
                 {t('Detail.checkoutSub')}
               </Button>

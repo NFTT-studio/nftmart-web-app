@@ -26,7 +26,7 @@ const MyModal: FC<ModalProps> = ({
 }) => (
   <Modal isOpen={isOpen} onClose={onClose}>
     <ModalOverlay />
-    <ModalContent w="400px" h="90px" p="20px">
+    <ModalContent minW="400px" minH="90px" p="20px">
       <ModalHeader p="0px">
         <Image display="inline-block" src={IconMap[type]} w="20px" h="20px" />
         <Text ml="10px" display="inline-block" fontSize="16">{title}</Text>

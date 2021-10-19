@@ -87,7 +87,7 @@ const NftCard: FC<NftCardProps> = ({
     return b[1];
   };
   const renderer = ({
-    hours, minutes, seconds,
+    days, hours, minutes, seconds,
   }) => (
     <Flex w="136px" align="flex-start" alignItems="center" position="relative">
       <Box
@@ -101,7 +101,7 @@ const NftCard: FC<NftCardProps> = ({
         alignItems="center"
         mr="2px"
       >
-        {front(Number(zeroPad(hours)) / 10) || 0}
+        {front(Number(zeroPad(days * 24 + hours)) / 10) || 0}
       </Box>
       <Box
         width="18px"
@@ -114,7 +114,7 @@ const NftCard: FC<NftCardProps> = ({
         alignItems="center"
         mr="3px"
       >
-        {hinder(Number(zeroPad(hours)) / 10) || 0}
+        {hinder(Number(zeroPad(days * 24 + hours)) / 10) || 0}
       </Box>
       <Box
         fontSize="12px"
@@ -414,7 +414,7 @@ const NftCard: FC<NftCardProps> = ({
                 whiteSpace="nowrap"
                 textAlign="start"
               >
-                {nft?.creator?.name || formatAddress(nft?.metadata?.id) }
+                {nft?.creator?.name || formatAddress(nft?.creator?.id) }
               </Text>
             </Flex>
             {type && Number(events.day) > 2 ? (

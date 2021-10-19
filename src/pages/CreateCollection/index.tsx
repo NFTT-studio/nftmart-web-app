@@ -104,14 +104,15 @@ const CreateCollection: FC = () => {
         success: (result) => {
           if (result.dispatchError) {
             toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
+            setIsSubmitting(false);
           } else {
             toast(<ToastBody title="Success" message={t('common.Success')} type="success" />);
             setTimeout(() => {
               history.push(`/collection/${account!.address}?collectionId=${result.events[5].event.data[1].toString()}`);
               formActions.resetForm();
+              setIsSubmitting(false);
             }, 3000);
           }
-          setIsSubmitting(false);
         },
         error: (error) => {
           toast(<ToastBody title="Error" message={error} type="error" />);
@@ -547,8 +548,8 @@ const CreateCollection: FC = () => {
           isOpen={isShowModal}
           type="warning"
           isCloseable
-          title="You are not in the whitelist"
-          message="Please contact our team"
+          title={t('common.InTheWhitelist')}
+          message={t('common.Certification')}
           onClose={onCloseModal}
         />
         <MyToast isCloseable />
