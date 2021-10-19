@@ -117,11 +117,11 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       mint(formValue, {
         success: () => {
           toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
-          setIsSubmitting(false);
-          formAction.resetForm();
           setTimeout(() => {
+            setIsSubmitting(false);
+            formAction.resetForm();
             history.push(`/collection/${account!.address}?collectionId=${collectionId}`);
-          }, 1500);
+          }, 3000);
         },
         error: (error: string) => {
           toast(<ToastBody title="Error" message={error} type="error" />);
@@ -417,8 +417,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           isOpen={isShowModal}
           type="warning"
           isCloseable
-          title="You are not in the whitelist"
-          message="Please contact our team"
+          title={t('common.InTheWhitelist')}
+          message={t('common.Certification')}
           onClose={onCloseModal}
         />
         <MyToast isCloseable />

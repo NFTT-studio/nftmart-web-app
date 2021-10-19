@@ -308,6 +308,9 @@ const OfferDialog: FC<Props> = (({
                   lineHeight="20px"
                   borderRadius="4px"
                   type="submit"
+                  _hover={{
+                    background: '#000000 !important',
+                  }}
                 >
                   {t('Detail.makeOffer')}
                 </Button>

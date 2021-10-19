@@ -94,6 +94,9 @@ const CancelDialog: FC<Props> = (({
               lineHeight="20px"
               borderRadius="4px"
               onClick={() => setIsShowCancel(false)}
+              _hover={{
+                background: '#000000 !important',
+              }}
             >
               {t('common.no')}
             </Button>
@@ -108,6 +111,9 @@ const CancelDialog: FC<Props> = (({
               borderRadius="4px"
               onClick={onCancel}
               ml="20px"
+              _hover={{
+                background: '#000000 !important',
+              }}
             >
               {t('common.yes')}
             </Button>

@@ -214,6 +214,9 @@ const OfferDialog: FC<Props> = (({
                   borderRadius="4px"
                   type="submit"
                   isDisabled={Number(priceStringDivUnit(data?.balance?.transferrable)) < Number(moreThan)}
+                  _hover={{
+                    background: '#000000 !important',
+                  }}
                 >
                   {t('Detail.placeBid')}
                 </Button>

@@ -27,6 +27,8 @@
     "submit": "Submit",
     "noDataYet": "No data yet",
     "imgFiletype":"The picture format is incorrect",
+    "InTheWhitelist": "You have not completed artist certification.",
+    "Certification": "Apply for certification",
     "nav": {
       "navHome": "Home",
       "navBrowsing": "Browsing",

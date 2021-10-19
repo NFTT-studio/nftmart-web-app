@@ -142,6 +142,9 @@ const DealDialog: FC<Props> = (({
               borderRadius="4px"
               onClick={onCancel}
               ml="20px"
+              _hover={{
+                background: '#000000 !important',
+              }}
             >
               {t('common.yes')}
             </Button>

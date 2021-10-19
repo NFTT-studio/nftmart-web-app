@@ -252,7 +252,7 @@ const DetailRight: FC<Props> = (({
     return b[1];
   };
   const renderer = ({
-    hours, minutes, seconds,
+    days, hours, minutes, seconds,
   }) => (
     <Box
       fontSize="12px"
@@ -276,7 +276,7 @@ const DetailRight: FC<Props> = (({
           alignItems="center"
           mr="2px"
         >
-          {front(Number(zeroPad(hours)) / 10) || 0}
+          {front(Number(zeroPad(days * 24 + hours)) / 10) || 0}
         </Box>
         <Box
           width="18px"
@@ -288,7 +288,7 @@ const DetailRight: FC<Props> = (({
           alignItems="center"
         >
 
-          {hinder(Number(zeroPad(hours)) / 10) || 0}
+          {hinder(Number(zeroPad(days * 24 + hours)) / 10) || 0}
         </Box>
         <Text
           fontSize="12px"
@@ -513,19 +513,19 @@ const DetailRight: FC<Props> = (({
                     color="#999999"
                   >
                     {types === 'British' ? (
-                      Number(auctionPrice) ? `NMT ($${(token?.price * Number(auctionPrice)).toFixed(2)})` : null
+                      Number(auctionPrice) && token?.price ? `NMT ($${(token?.price * Number(auctionPrice)).toFixed(2)})` : 'NMT'
                     ) : null}
                     {types === 'Dutch' && !allowBritishAuction ? (
-                      Number(duchPrice) ? `NMT ($${(token?.price * Number(duchPrice)).toFixed(2)})` : null
+                      Number(duchPrice) && token?.price ? `NMT ($${(token?.price * Number(duchPrice)).toFixed(2)})` : 'NMT'
                     ) : null}
                     {types === 'Dutch' && allowBritishAuction && Number(bidCount) === 0 ? (
-                      Number(duchPrice) ? `NMT ($${(token?.price * Number(duchPrice)).toFixed(2)})` : null
+                      Number(duchPrice) && token?.price ? `NMT ($${(token?.price * Number(duchPrice)).toFixed(2)})` : 'NMT'
                     ) : null}
                     {types === 'Dutch' && allowBritishAuction && Number(bidCount) > 0 ? (
-                      Number(auctionPrice) ? `NMT ($${(token?.price * Number(auctionPrice)).toFixed(2)})` : null
+                      Number(auctionPrice) && token?.price ? `NMT ($${(token?.price * Number(auctionPrice)).toFixed(2)})` : 'NMT'
                     ) : null}
                     {!types ? (
-                      Number(price) ? `NMT ($${(token?.price * Number(price)).toFixed(2)})` : null
+                      Number(price) && token?.price ? `NMT ($${(token?.price * Number(price)).toFixed(2)})` : 'NMT'
                     ) : null}
                   </Text>
                   {types === 'Dutch' && !allowBritishAuction ? (

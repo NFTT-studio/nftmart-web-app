@@ -135,12 +135,19 @@ const DetailLeft: FC<Props> = (({
           />
           {nftData?.nftInfo?.metadata?.fileType === 'jpg' || nftData?.nftInfo?.metadata?.fileType === 'png' || nftData?.nftInfo?.metadata?.fileType === 'gif' || nftData?.nftInfo?.metadata?.fileType === 'jpeg'
             ? (
-              <Image
+              <Flex
                 m="20px"
-                maxWidth="520px"
-                height="auto"
-                src={logoUrl}
-              />
+                w="520px"
+                minH="260px"
+                maxH="1040px"
+                justifyContent="center"
+              >
+                <Image
+                  maxWidth="520px"
+                  height="auto"
+                  src={logoUrl}
+                />
+              </Flex>
             )
             : (
               nftData?.nftInfo?.metadata?.fileType === 'mp4'
@@ -225,7 +232,7 @@ const DetailLeft: FC<Props> = (({
               <Flex height="100%" alignItems="center">
                 <Image
                   mr="8px"
-                  w="22px"
+                  w="auto"
                   h="22px"
                   src={IconDetailsDetail.default}
                 />
@@ -313,7 +320,7 @@ const DetailLeft: FC<Props> = (({
               <Flex height="100%" alignItems="center">
                 <Image
                   mr="8px"
-                  w="22px"
+                  w="auto"
                   h="22px"
                   src={IconProperties.default}
                 />
@@ -433,7 +440,7 @@ const DetailLeft: FC<Props> = (({
               <Flex height="100%" alignItems="center">
                 <Image
                   mr="8px"
-                  w="22px"
+                  w="auto"
                   h="22px"
                   src={IconAbout.default}
                 />
