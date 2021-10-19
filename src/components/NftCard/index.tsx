@@ -393,7 +393,14 @@ const NftCard: FC<NftCardProps> = ({
           >
             <Flex justifyContent="center" alignItems="center">
               {nft?.creator?.avatar ? (
-                <Image pr="4px" w="auto" h="26px" src={nft?.creator.avatar || HeadPortrait.default} />
+                <Image
+                  mr="4px"
+                  w="auto"
+                  h="26px"
+                  borderRadius="50%"
+                  border="1px solid #FFFFFF"
+                  src={nft?.creator.avatar || HeadPortrait.default}
+                />
               ) : (
                 <Identicon
                   className="userAvatar"

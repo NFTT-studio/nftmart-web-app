@@ -82,6 +82,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               display="block"
               width="32px"
               height="32px"
+              borderRadius="50%"
               src={userData?.avatar || HeadPortrait.default}
             />
           ) : (
