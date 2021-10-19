@@ -21,6 +21,7 @@ import ReactAudioPlayer from 'react-audio-player';
 import {
   Player,
 } from 'video-react';
+import { useTranslation } from 'react-i18next';
 import { IPFS_URL } from '../../constants';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { renderNmtNumberText } from '../Balance';
@@ -43,6 +44,7 @@ const NftCard: FC<NftCardProps> = ({
   nft,
   remainingTime,
 }) => {
+  const { t } = useTranslation();
   const type = nft?.auction?.type;
   const [events, setEvents] = useState(
     {
@@ -77,7 +79,7 @@ const NftCard: FC<NftCardProps> = ({
     if (type && remainingTime) {
       countFun(nft?.auction?.deadline);
     }
-  }, [remainingTime]);
+  }, [remainingTime, nft?.auction?.deadline]);
   const front = (time) => {
     const b = time.toString().split('.');
     return b[0];
@@ -424,7 +426,7 @@ const NftCard: FC<NftCardProps> = ({
                   <Box color="#FFFFFF">
                     {events.day}
                     {' '}
-                    days left
+                    {t('common.daysLeft')}
                   </Box>
                 </Flex>
               </Box>

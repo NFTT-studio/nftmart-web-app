@@ -29,6 +29,7 @@
     "imgFiletype":"图片格式不对",
     "InTheWhitelist": "您尚未完成艺术家认证。",
     "Certification": "申请认证",
+    "daysLeft": "剩余日期",
     "nav": {
       "navHome": "首页",
       "navBrowsing": "浏览",

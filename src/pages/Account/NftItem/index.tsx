@@ -131,7 +131,7 @@ const NftItem: FC<Props> = (({
                 color="#999999"
                 lineHeight="20px"
               >
-                No data yet
+                {t('common.noDataYet')}
               </Text>
             </Flex>
           )}
