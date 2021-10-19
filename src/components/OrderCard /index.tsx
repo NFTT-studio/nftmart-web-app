@@ -191,7 +191,7 @@ const OrderCard: FC<NftCardProps> = ({
       width="320px"
       height="396px"
       as={RouterLink}
-      to={`/item/${nft.nft_id}`}
+      to={`/item/${nft?.nft_id}`}
     >
       <MotionBox
         width="320px"
