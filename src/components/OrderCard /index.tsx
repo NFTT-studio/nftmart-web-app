@@ -50,7 +50,7 @@ const OrderCard: FC<NftCardProps> = ({
       second: 0,
     },
   );
-  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+  const formatAddress = (addr: string) => (addr ? `${addr.slice(0, 4)}...${addr.slice(-4)}` : null);
 
   const countFun = (index:number) => {
     const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
@@ -388,7 +388,14 @@ const OrderCard: FC<NftCardProps> = ({
           >
             <Flex justifyContent="center" alignItems="center">
               {nft?.creator.avatar ? (
-                <Image pr="4px" w="auto" h="26px" src={nft?.creator.avatar || HeadPortrait.default} />
+                <Image
+                  mr="4px"
+                  w="auto"
+                  h="26px"
+                  borderRadius="50%"
+                  border="1px solid #FFFFFF"
+                  src={nft?.creator.avatar || HeadPortrait.default}
+                />
               ) : (
                 <Identicon
                   className="userAvatar"
@@ -402,7 +409,7 @@ const OrderCard: FC<NftCardProps> = ({
                 whiteSpace="nowrap"
                 textAlign="start"
               >
-                {nft?.creator.name || formatAddress(nft?.metadata.id)}
+                {nft?.creator.name || formatAddress(nft?.creator.id)}
               </Text>
             </Flex>
             {nft?.type && Number(events.day) > 0 ? (

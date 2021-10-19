@@ -78,15 +78,14 @@ export default function Footer() {
               id, src, hoverSrc, link,
             }) => (
               <Link
+                target="blank"
                 key={id}
-                as={RouterLink}
-                to={link}
+                href={link}
               >
                 <Box
                   ml={id !== 0 ? '30px' : 0}
                   role="group"
                   key={src.default}
-                  onClick={() => window.open(link, '_blank')}
                 >
                   <Box
                     as="img"
