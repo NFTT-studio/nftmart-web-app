@@ -67,7 +67,6 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const [isPerson, setIsPerson] = useState(false);
   const dataPerson = useAccount(address);
   const search = parse(location.search.replace('?', ''));
-  const ownerId = address;
   const classId = search.collectionId;
 
   const { data: collectionsData, isLoading: collectionsIsLoading } = useCollectionsSinger(classId);
@@ -97,7 +96,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   // isLoading
   return (
     <>
-      { nftsIsLoading || collectionsIsLoading || JSON.stringify(collectionsData) === '{}'
+      { nftsIsLoading || collectionsIsLoading || JSON.stringify(collectionsData) === '{}' || JSON.stringify(dataPerson) === '{}'
         ? (
           <Center width="100%" height="100vh">
             <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
@@ -280,7 +279,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                       justifyContent="center"
                       alignItems="center"
                     >
-                      {collectionsData.collection?.owner_count || 0}
+                      {collectionsData?.collection?.owner_count || 0}
                     </Flex>
                   </Flex>
                   <Flex
