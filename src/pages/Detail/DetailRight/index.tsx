@@ -622,7 +622,7 @@ const DetailRight: FC<Props> = (({
                   {t('Detail.buyNow')}
                 </Button>
               ) : null}
-              {recipientsId === account?.address && events.times === 0 && auctionStatus === 'Created' ? (
+              {recipientsId === account?.address && events.times === 0 && auctionStatus === 'Created' && bidCount ? (
                 <Button
                   width="184px"
                   height="48px"
@@ -940,7 +940,7 @@ const DetailRight: FC<Props> = (({
                 <NoData widths="732px" />
               )}
             <Flex justifyContent="flex-end">
-              {isLoginAddress ? (
+              {(isLoginAddress || nftData?.nftInfo?.auction?.type ? (
                 ''
               ) : (
                 <Button
@@ -959,7 +959,7 @@ const DetailRight: FC<Props> = (({
                 >
                   {t('Detail.makeOffer')}
                 </Button>
-              )}
+              ))}
             </Flex>
           </Flex>
         </Box>

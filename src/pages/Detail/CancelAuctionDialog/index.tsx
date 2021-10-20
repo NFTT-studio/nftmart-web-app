@@ -9,15 +9,19 @@ import {
   Button,
   Modal,
   ModalOverlay,
+  useToast,
 } from '@chakra-ui/react';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
+import { useQueryClient } from 'react-query';
 import { removeBritishAuction } from '../../../polkaSDK/api/removeBritishAuction';
 import { removeDutchAuction } from '../../../polkaSDK/api/removeDutchAuction';
 import { useAppSelector } from '../../../hooks/redux';
 import MyToast, { ToastBody } from '../../../components/MyToast';
+import {
+  QUERY_KEYS,
+} from '../../../constants';
 
 interface Props {
   isShowCancel: boolean,
@@ -33,11 +37,13 @@ const CancelAuctionDialog: FC<Props> = (({
   auctionId,
   type,
 }) => {
+  const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const cancelRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
+  const queryCliet = useQueryClient();
   const history = useHistory();
   const onCancel = () => {
     setIsSubmitting(true);
@@ -46,12 +52,25 @@ const CancelAuctionDialog: FC<Props> = (({
       auctionId: Number(auctionId),
       cb: {
         success: () => {
-          setIsShowCancel(false);
-          setIsSubmitting(false);
-          history.push('/');
+          toast({
+            position: 'top',
+            render: () => (
+              <ToastBody title="Success" message={t('common.success')} type="success" />
+            ),
+          });
+          setTimeout(() => {
+            setIsShowCancel(false);
+            setIsSubmitting(false);
+            queryCliet.refetchQueries(QUERY_KEYS.NFT);
+          }, 3000);
         },
         error: (error) => {
-          toast(<ToastBody title="Error" message={error} type="error" />);
+          toast({
+            position: 'top',
+            render: () => (
+              <ToastBody title="Error" message={error} type="error" />
+            ),
+          });
           setIsSubmitting(false);
         },
       },

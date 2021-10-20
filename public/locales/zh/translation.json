@@ -213,6 +213,7 @@
   },
   "SellSetting": {
     "title": "设置价格-NFTMart|专业的NFT交易市场",
+    "dutchRule":"截止价格不能低于起始价格",
     "formTitle": "选择售卖方式",
     "sellAtaFixedPrice": "固定价格售卖",
     "dutchAuction": "荷兰式拍卖",
