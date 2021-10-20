@@ -5,3 +5,4 @@ export * as error from './error.png';
 export * as processing from './processing.png';
 export * as warning from './warning.png';
 export * as prompt from './prompt.png';
+export * as iconClose from './icon_close.png';
