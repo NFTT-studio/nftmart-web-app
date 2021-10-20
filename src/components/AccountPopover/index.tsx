@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import {
   Popover,
   PopoverTrigger,
@@ -44,6 +44,7 @@ const ICONS = {
   quickAreaCollections: Created,
 };
 const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
+  const location = useLocation();
   const { data } = useAccount(address);
   const { data: userData } = useUser(address);
   const history = useHistory();
@@ -641,7 +642,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
             color="#5C74FF"
             cursor="pointer"
             as={RouterLink}
-            to="/connect"
+            to={`/connect?callbackUrl=${location.pathname}`}
             onClick={() => setOpening(false)}
           >
             {t('header.switchAccounts')}

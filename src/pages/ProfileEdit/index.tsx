@@ -70,10 +70,10 @@ const CreateCollection: FC = () => {
       const formData = new FormData();
       formData.append('id', account?.address || '');
       formData.append('name', values.name);
-      formData.append('avatar', values.avatar);
-      formData.append('featured_image', values.featured_image);
+      formData.append('avatar', values.avatar || '');
+      formData.append('featured_image', values.featured_image || '');
       formData.append('twitter', values.twitter);
-      formData.append('email', values.email);
+      formData.append('email', values.email || userData?.email);
       await axios.post(`${CACHE_SERVER_URL}accounts`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',

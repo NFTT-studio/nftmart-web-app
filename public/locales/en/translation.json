@@ -214,6 +214,7 @@
   },
   "SellSetting": {
     "title": "Set Price-NFTMart|A Professional NFT Market",
+    "dutchRule":"The Ending price cannot be lower than the starting price",
     "formTitle": "Select your sell method",
     "sellAtaFixedPrice": "Sell at a fixed price",
     "dutchAuction": "Dutch auction",

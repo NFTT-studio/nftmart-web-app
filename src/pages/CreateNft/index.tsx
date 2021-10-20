@@ -11,7 +11,6 @@ import * as Yup from 'yup';
 import {
   useFormik,
 } from 'formik';
-import { toast } from 'react-toastify';
 import {
   Flex,
   Image,
@@ -24,6 +23,7 @@ import {
   Input,
   Box,
   Switch,
+  useToast,
 } from '@chakra-ui/react';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import Upload from '../../components/Upload';
@@ -49,7 +49,7 @@ import MyToast, { ToastBody } from '../../components/MyToast';
 
 const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
   const { t } = useTranslation();
-
+  const toast = useToast();
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
   const { collectionId } = match.params;
@@ -82,7 +82,6 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
 
   const mint = useCallback(async (formValue, cb) => {
     formValue.stub = formValue.stub ? `https://${formValue.stub}` : null;
-    console.log(formValue);
     const normalizedFormData = {
       address: account?.address,
       metadata: {
@@ -116,7 +115,12 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       setIsSubmitting(true);
       mint(formValue, {
         success: () => {
-          toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
+          toast({
+            position: 'top',
+            render: () => (
+              <ToastBody title="Success" message={t('common.success')} type="success" />
+            ),
+          });
           setTimeout(() => {
             setIsSubmitting(false);
             formAction.resetForm();
@@ -124,7 +128,12 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           }, 3000);
         },
         error: (error: string) => {
-          toast(<ToastBody title="Error" message={error} type="error" />);
+          toast({
+            position: 'top',
+            render: () => (
+              <ToastBody title="Error" message={error} type="error" />
+            ),
+          });
           setIsSubmitting(false);
         },
       });

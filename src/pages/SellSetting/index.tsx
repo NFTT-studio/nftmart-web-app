@@ -27,7 +27,7 @@ import {
   ModalOverlay,
   Switch,
   Progress,
-  AspectRatio,
+  useToast,
 } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -62,6 +62,7 @@ import MyToast, { ToastBody } from '../../components/MyToast';
 
 const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { t } = useTranslation();
+  const toast = useToast();
   const [tax, setTax] = useState(0);
   getTax().then((res) => {
     setTax(Number(res.toString()));
@@ -94,14 +95,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     deposits: Yup.number().moreThan(1).required(t('Create.required')),
   });
   const schemaDutch = Yup.object().shape({
-    startingPrice: Yup.string().required(t('Create.required')),
-    endingPrice: Yup.string().required(t('Create.required')),
+    startingPrice: Yup.number().moreThan(0).required(t('Create.required')),
+    endingPrice: Yup.number().moreThan(0).required(t('Create.required')),
     expirationDate: Yup.string().required(t('Create.required')),
     minimumMarkup: Yup.string().required(t('Create.required')),
     automaticDelay: Yup.boolean().required(t('Create.required')),
   });
   const schemaEnglish = Yup.object().shape({
-    startingPrice: Yup.string().required(t('Create.required')),
+    startingPrice: Yup.number().moreThan(0).required(t('Create.required')),
     expirationDate: Yup.string().required(t('Create.required')),
     minimumMarkup: Yup.string().required(t('Create.required')),
     automaticDelay: Yup.boolean().required(t('Create.required')),
@@ -178,15 +179,34 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
-            toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
-            setIsSubmitting(false);
-            formAction.resetForm();
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
             setTimeout(() => {
+              setIsSubmitting(false);
+              formAction.resetForm();
               history.push(`/item/${nftData?.nftInfo?.id}`);
-            }, 1000);
+            }, 3000);
           },
           error: (error) => {
-            toast(<ToastBody title="Error" message={error} type="error" />);
+            if (error === 'Error: Cancelled') {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="warning" message={error} type="warning" />
+                ),
+              });
+            } else {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={error} type="error" />
+                ),
+              });
+            }
             setIsSubmitting(false);
           },
         },
@@ -203,15 +223,34 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
-            toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
-            setIsSubmitting(false);
-            formAction.resetForm();
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
             setTimeout(() => {
+              setIsSubmitting(false);
+              formAction.resetForm();
               history.push(`/item/${nftData?.nftInfo?.id}`);
-            }, 1000);
+            }, 3000);
           },
           error: (error) => {
-            toast(<ToastBody title="Error" message={error} type="error" />);
+            if (error === 'Error: Cancelled') {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="warning" message={error} type="warning" />
+                ),
+              });
+            } else {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={error} type="error" />
+                ),
+              });
+            }
             setIsSubmitting(false);
           },
         },
@@ -227,15 +266,34 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
-            toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
             setIsSubmitting(false);
             formAction.resetForm();
             setTimeout(() => {
               history.push(`/item/${nftData?.nftInfo?.id}`);
-            }, 1000);
+            }, 3000);
           },
           error: (error) => {
-            toast(<ToastBody title="Error" message={error} type="error" />);
+            if (error === 'Error: Cancelled') {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="warning" message={error} type="warning" />
+                ),
+              });
+            } else {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={error} type="error" />
+                ),
+              });
+            }
             setIsSubmitting(false);
           },
         },
@@ -251,15 +309,34 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         commissionRate: formValue.commissionRate / 100,
         cb: {
           success: () => {
-            toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
             setTimeout(() => {
               setIsSubmitting(false);
               formAction.resetForm();
               history.push(`/item/${nftData?.nftInfo?.id}`);
-            }, 2000);
+            }, 3000);
           },
           error: (error) => {
-            toast(<ToastBody title="Error" message={error} type="error" />);
+            if (error === 'Error: Cancelled') {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="warning" message={error} type="warning" />
+                ),
+              });
+            } else {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={error} type="error" />
+                ),
+              });
+            }
             setIsSubmitting(false);
           },
         },
@@ -272,6 +349,16 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         createOrder(orderParams as any);
       }
       if (selectId === 1) {
+        if (Number(formValue.startingPrice) < Number(formValue.endingPrice)) {
+          toast({
+            position: 'top',
+            render: () => (
+              <ToastBody title="Error" message={t('SellSetting.dutchRule')} type="error" />
+            ),
+          });
+          setIsSubmitting(false);
+          return;
+        }
         submitDutchAuction(dutchParams as any);
       }
       if (selectId === 2) {
@@ -621,7 +708,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         lineHeight="14px"
                       >
                         {t('SellSetting.atLeast')}
-                        1
+                        2
                         {' '}
                         NMT
                       </Text>

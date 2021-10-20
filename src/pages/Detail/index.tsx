@@ -148,6 +148,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const type = nftData?.nftInfo?.auction?.type || false;
   const deadline = nftData?.nftInfo?.auction?.deadline;
+  const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
   useEffect(() => {
     collectNft('status');
     browse();
@@ -178,10 +179,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const { data: token } = useToken();
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
-  const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
-  // if (nftDataIsLoading || collectionsDateIsLoading || !nftData) {
-  //   return <Spinner />;
-  // }
 
   const logoUrl = `${PINATA_SERVER}${nftData?.nftInfo.metadata.logoUrl}`;
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
