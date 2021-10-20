@@ -28,10 +28,13 @@ export const mintNft = async ({
     const injector = await web3FromAddress(address);
     const metadataStr = JSON.stringify(metadata);
     const balancesNeeded = await nftDeposit(metadataStr);
-    console.log(balancesNeeded);
-    if (balancesNeeded === null) return null;
+    if (balancesNeeded === null) {
+      cb.error('error');
+      return null;
+    }
     const classInfo: any = await PolkaSDK.api.query.ormlNft.classes(classId);
     if (!classInfo.isSome) {
+      cb.error('error');
       return null;
     }
     const ownerOfClass = classInfo.unwrap().owner.toString();

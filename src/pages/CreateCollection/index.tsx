@@ -248,7 +248,7 @@ const CreateCollection: FC = () => {
           {formik.errors.name && formik.touched.name ? (
             <div style={{ color: 'red' }}>{formik.errors.name}</div>
           ) : null}
-          <label htmlFor="stub">
+          {/* <label htmlFor="stub">
             {' '}
             <EditFormTitle text={t('Collection.url')} />
             <EditFromSubTitle
@@ -263,7 +263,7 @@ const CreateCollection: FC = () => {
           />
           {formik.errors.stub && formik.touched.stub ? (
             <div style={{ color: 'red' }}>{formik.errors.stub}</div>
-          ) : null}
+          ) : null} */}
           <label htmlFor="description">
             {' '}
             <EditFormTitle text={t('Collection.description')} />
