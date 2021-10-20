@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, RouteComponentProps, useLocation } from 'react-router-dom';
 import {
   Flex,
+  Box,
   Text,
   Image,
   Container,
@@ -216,13 +217,19 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
         : (
           <MainContainer title={t('Home.title')}>
             <Flex maxWidth="1440px" flexDirection="column" position="relative">
-              <Image
-                w="100%"
+              <Box
                 maxWidth="1440px"
-                h="auto"
-                src={userData?.featured_image || AccountBanner.default}
-                alt=""
-              />
+                w="100vw"
+                minHeight="200px"
+              >
+                <Image
+                  w="100%"
+                  maxWidth="1440px"
+                  h="auto"
+                  src={userData?.featured_image || AccountBanner.default}
+                  alt=""
+                />
+              </Box>
               {userData?.avatar ? (
                 <Image
                   position="absolute"

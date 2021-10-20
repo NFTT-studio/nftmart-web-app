@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-children-prop */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
@@ -23,6 +24,8 @@ import { parse } from 'search-params';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { any } from 'ramda';
+import { timeStamp } from 'console';
 import MainContainer from '../../layout/MainContainer';
 import NftCard from '../../components/NftCard';
 import { useAppSelector } from '../../hooks/redux';
@@ -77,7 +80,11 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
     });
   }, []);
 
-  const { data: collectionsData, isLoading: collectionsIsLoading } = useCollectionsSinger(classId);
+  const {
+    data: collectionsData,
+    isLoading: collectionsIsLoading,
+    refetch: refetchCollectionsData,
+  } = useCollectionsSinger(classId);
   const links = collectionsData?.collection?.metadata?.links;
   const ICON_LIST = ICONS.map((item, index) => ({
     src: item.icon,
@@ -101,10 +108,24 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
       setIsPerson(true);
     }
   }, [collectionsData?.collection?.creator_id, address, dataPerson]);
+
+  let begin = any;
+  useEffect(() => {
+    if (JSON.stringify(collectionsData) === '{}') {
+      begin = setInterval(() => {
+        refetchCollectionsData();
+      }, 3000);
+    } else {
+      clearInterval(begin);
+    }
+  }, [JSON.stringify(collectionsData) === '{}']);
+  useEffect(() => () => {
+    clearInterval(begin);
+  }, []);
   // isLoading
   return (
     <>
-      { nftsIsLoading || collectionsIsLoading || JSON.stringify(collectionsData) === '{}' || JSON.stringify(dataPerson) === '{}'
+      { nftsIsLoading || collectionsIsLoading || JSON.stringify(collectionsData) === '{}'
         ? (
           <Center width="100%" height="100vh">
             <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
@@ -343,7 +364,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                       justifyContent="flex-end"
                       alignItems="center"
                     >
-                      {collectionsData?.collection.collect_count || 0}
+                      {collectionsData?.collection?.collect_count || 0}
                     </Flex>
                   </Flex>
 

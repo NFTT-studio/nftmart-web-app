@@ -17,7 +17,7 @@ import SwiperCore, {
   Scrollbar,
 } from 'swiper';
 import CategorySelector from '../../components/CategorySelector';
-import OrderCard from '../../components/OrderCard ';
+import OrderCard from '../../components/NftCard';
 import useBanner from '../../hooks/reactQuery/useBanner';
 import { useCheapNfts, useExpensiveNfts, useHotNfts } from '../../hooks/reactQuery/useNfts';
 import useCategories from '../../hooks/reactQuery/useCategories';
