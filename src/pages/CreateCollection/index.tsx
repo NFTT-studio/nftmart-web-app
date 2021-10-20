@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-useless-escape */
 /* eslint-disable react/no-children-prop */
 import React, {
@@ -8,7 +9,6 @@ import * as Yup from 'yup';
 import {
   useFormik,
 } from 'formik';
-import { toast } from 'react-toastify';
 import {
   Flex,
   Modal,
@@ -20,6 +20,7 @@ import {
   Input,
   Text,
   Box,
+  useToast,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 import { F } from 'ramda';
@@ -51,6 +52,7 @@ import {
 const CreateCollection: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  const toast = useToast();
   const chainState = useAppSelector((state) => state.chain);
 
   const { account, whiteList } = chainState;
@@ -103,19 +105,34 @@ const CreateCollection: FC = () => {
       cb: {
         success: (result) => {
           if (result.dispatchError) {
-            toast(<ToastBody title="Error" message={t('create.create.error')} type="error" />);
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={t('create.create.error')} type="error" />
+              ),
+            });
             setIsSubmitting(false);
           } else {
-            toast(<ToastBody title="Success" message={t('common.Success')} type="success" />);
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
             setTimeout(() => {
               history.push(`/collection/${account!.address}?collectionId=${result.events[5].event.data[1].toString()}`);
               formActions.resetForm();
               setIsSubmitting(false);
-            }, 3000);
+            }, 1500);
           }
         },
         error: (error) => {
-          toast(<ToastBody title="Error" message={error} type="error" />);
+          toast({
+            position: 'top',
+            render: () => (
+              <ToastBody title="Error" message={error} type="error" />
+            ),
+          });
           setIsSubmitting(false);
         },
       },

@@ -77,7 +77,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const collectNft = async (type:string) => {
     const data = {
       nft_id: nftId,
-      collecter_id: account?.address || '',
+      collecter_id: account?.address,
       type,
     };
     await axios.post(`${CACHE_SERVER_URL}nfts/action/collect`, qs.stringify(data), {
@@ -154,7 +154,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     getBlock().then((res) => {
       setRemainingTime(res);
     });
-  }, []);
+  }, [account?.address]);
   useEffect(() => {
     if (type && remainingTime) {
       countFun(deadline);

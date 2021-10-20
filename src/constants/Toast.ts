@@ -1,5 +1,5 @@
 import {
-  error, processing, prompt, success, warning,
+  error, processing, prompt, success, warning, iconClose,
 } from '../assets/icons';
 
 export const IconMap = {
@@ -8,4 +8,5 @@ export const IconMap = {
   processing: processing.default,
   warning: warning.default,
   prompt: prompt.default,
+  close: iconClose.default,
 };

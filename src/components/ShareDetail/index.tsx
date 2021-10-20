@@ -46,6 +46,10 @@ const ShareWeb: FC<ShareWebProps> = () => {
     onCopy();
     setOpening(false);
   };
+  const shareSelect = () => {
+    onCopy();
+    setOpening(false);
+  };
 
   return (
     <Popover
@@ -121,7 +125,7 @@ const ShareWeb: FC<ShareWebProps> = () => {
               p="13px 20px"
               _hover={{ background: '#F9F9F9' }}
               onClick={() => {
-                handleSelect();
+                shareSelect();
               }}
             >
               <Image
@@ -150,7 +154,7 @@ const ShareWeb: FC<ShareWebProps> = () => {
               p="13px 20px"
               _hover={{ background: '#F9F9F9' }}
               onClick={() => {
-                handleSelect();
+                shareSelect();
               }}
             >
               <Image

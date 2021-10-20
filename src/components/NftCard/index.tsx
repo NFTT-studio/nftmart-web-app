@@ -338,47 +338,53 @@ const NftCard: FC<NftCardProps> = ({
             display="flex"
             justifyContent="space-between"
           >
-            {nft?.price && (
-            <Box textAlign="right" display="flex" justifyContent="center">
-              <Flex flexDirection="column" alignItems="flex-start">
-                <Box
-                  height="24px"
-                  color="#FFFFFF"
-                  fontWeight="500"
-                  fontFamily="TTHoves-Medium, TTHoves"
-                  lineHeight="24px"
-                  fontSize="20px"
-                >
-                  {type === 'Dutch' && !nft?.auction?.allow_british_auction ? (
-                    renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
-                  ) : null}
-                  {type === 'Dutch' && nft?.auction?.allow_british_auction && nft?.auction?.bid_count === 0 ? (
-                    renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
-                  ) : null}
-                  {type === 'Dutch' && nft?.auction?.allow_british_auction && nft?.auction?.bid_count > 0 ? (
-                    renderNmtNumberText((Number(nft?.auction?.price)).toString())
-                  ) : null}
-                  {!type ? (
-                    Number(nft?.price) ? price : ''
-                  ) : null}
-                  {type === 'British' ? (
-                    renderNmtNumberText((Number(nft?.auction?.price)).toString())
-                  ) : null}
-                  {Number(nft?.auction?.price) ? 'NMT' : '' }
-                  {Number(nft?.price) ? 'NMT' : '' }
-                </Box>
-                <Box
-                  mt="2px"
-                  color="#999999"
-                  fontWeight="300"
-                  fontFamily="TTHoves-Light, TTHoves"
-                  lineHeight="14px"
-                  fontSize="12px"
-                >
-                  list price
-                </Box>
-              </Flex>
-            </Box>
+            {Number(nft?.auction?.price) || Number(nft?.price) ? (
+              <Box textAlign="right" display="flex" justifyContent="center">
+                <Flex flexDirection="column" alignItems="flex-start">
+                  <Box
+                    height="24px"
+                    color="#FFFFFF"
+                    fontWeight="500"
+                    fontFamily="TTHoves-Medium, TTHoves"
+                    lineHeight="24px"
+                    fontSize="20px"
+                  >
+                    {type === 'Dutch' && !nft?.auction?.allow_british_auction ? (
+                      renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
+                    ) : null}
+                    {type === 'Dutch' && nft?.auction?.allow_british_auction && nft?.auction?.bid_count === 0 ? (
+                      renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
+                    ) : null}
+                    {type === 'Dutch' && nft?.auction?.allow_british_auction && nft?.auction?.bid_count > 0 ? (
+                      renderNmtNumberText((Number(nft?.auction?.price)).toString())
+                    ) : null}
+                    {!type ? (
+                      Number(nft?.price) ? price : ''
+                    ) : null}
+                    {type === 'British' ? (
+                      renderNmtNumberText((Number(nft?.auction?.price)).toString())
+                    ) : null}
+                    {Number(nft?.auction?.price) ? 'NMT' : '' }
+                    {Number(nft?.price) ? 'NMT' : ' ' }
+                  </Box>
+                  {Number(nft?.auction?.price) || Number(nft?.price) ? (
+                    <Box
+                      mt="2px"
+                      color="#999999"
+                      fontWeight="300"
+                      fontFamily="TTHoves-Light, TTHoves"
+                      lineHeight="14px"
+                      fontSize="12px"
+                    >
+                      list price
+                    </Box>
+                  ) : '' }
+                </Flex>
+              </Box>
+            ) : (
+              <Box
+                h="39.33px"
+              />
             )}
           </Box>
           <Box
