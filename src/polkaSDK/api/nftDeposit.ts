@@ -6,7 +6,8 @@ import PolkaSDK from '..';
 // query gas needed
 export async function nftDeposit(metadata: string) {
   try {
-    const depositAll = await PolkaSDK.ws.call('nftmart_mintTokenDeposit', [Number(metadata.length) * 1.15], 10000);
+    const metadataLength = Number(metadata.length * 1.15);
+    const depositAll = await PolkaSDK.ws.call('nftmart_mintTokenDeposit', [Math.ceil(metadataLength)], 10000);
     return bnToBn(depositAll as any);
   } catch (e) {
     return null;
