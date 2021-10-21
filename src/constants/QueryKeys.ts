@@ -13,6 +13,8 @@ export const QUERY_KEYS = {
   ACCOUNTS: 'ACCOUNTS',
   NFTSCollect: 'NFTSCollect',
   hotNFTS: 'hotNFTS',
+  USER: 'USER',
+  USERTop: 'USERTop',
 };
 
 export const DEFAULT_PAGE_LIMIT = 20;

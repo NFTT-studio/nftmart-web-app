@@ -32,7 +32,7 @@ import { statusArr } from '../../constants/Status';
 import { EXPLORER_URL } from '../../constants';
 import useAccount from '../../hooks/reactQuery/useAccount';
 import { renderNmtNumberText } from '../Balance';
-import useUser from '../../hooks/reactQuery/useUser';
+import useUserTop from '../../hooks/reactQuery/useUserTop';
 
 export interface LoginProps {
   avatar?: string;
@@ -46,7 +46,7 @@ const ICONS = {
 const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
   const location = useLocation();
   const { data } = useAccount(address);
-  const { data: userData } = useUser(address);
+  const { data: userData } = useUserTop(address);
   const history = useHistory();
   const { t } = useTranslation();
   const [opening, setOpening] = useState(false);

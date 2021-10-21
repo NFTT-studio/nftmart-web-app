@@ -3,7 +3,7 @@ import fetchAccount from '../../api/fetchAccount';
 import { QUERY_KEYS } from '../../constants';
 
 export default (address: string) => useQuery(
-  QUERY_KEYS.NFT + address, () => fetchAccount(address),
+  QUERY_KEYS.USER + address, () => fetchAccount(address),
   {
     placeholderData: {
       name: '',

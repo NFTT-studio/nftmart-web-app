@@ -60,7 +60,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
   const { address } = match.params;
 
-  const { data: userData, isLoading: userDataLoading } = useUser(address);
+  const { data: userData, isLoading: userDataLoading, refetch: fetchUserData } = useUser(address);
 
   const offersMadeButton = [
     {
@@ -101,9 +101,11 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     setOffersMadeButtonId(Number(event.currentTarget.id));
   };
 
-  const { data: collectionsData, isLoading: collectionsIsLoading } = useCollections({ address });
+  const { data: collectionsData, isLoading: collectionsIsLoading, refetch: fetchCollections } = useCollections({ address });
 
-  const { data: nftsData, isLoading: nftsIsLoading, fetchNextPage: fetchNextPageNftsData } = useNftsPersonal(
+  const {
+    data: nftsData, isLoading: nftsIsLoading, fetchNextPage: fetchNextPageNftsData, refetch: fetchNftsData,
+  } = useNftsPersonal(
     {
       ownerId: address,
       categoryId: selectedCategoryId,
@@ -112,7 +114,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       sortBy: selectedSort,
     },
   );
-  const { data: nftsDataCreate, fetchNextPage: fetchNextPageNftsDataCreate } = useNftsPersonal(
+  const { data: nftsDataCreate, fetchNextPage: fetchNextPageNftsDataCreate, refetch: fetchNftsDataCreate } = useNftsPersonal(
     {
       creatorId: address,
       categoryId: selectedCategoryId,
@@ -121,7 +123,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       sortBy: selectedSort,
     },
   );
-  const { data: nftsDataCollecte, fetchNextPage: fetchNextPageNftsDataCollecte } = useNftsCollect(
+  const { data: nftsDataCollecte, fetchNextPage: fetchNextPageNftsDataCollecte, refetch: fetchNftsDataCollecte } = useNftsCollect(
     {
       collecterId: address,
       categoryId: selectedCategoryId,
@@ -130,13 +132,13 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       sortBy: selectedSort,
     },
   );
-  const { data: offersBuyerIdArr, fetchNextPage: fetchNextPagesBuyer } = useNfts(
+  const { data: offersBuyerIdArr, fetchNextPage: fetchNextPagesBuyer, refetch: fetchBuyer } = useNfts(
     {
       buyerId: address,
     },
   );
 
-  const { data: offersSellerArr, fetchNextPage: fetchNextPagesSeller } = useNfts(
+  const { data: offersSellerArr, fetchNextPage: fetchNextPagesSeller, refetch: fetchSeller } = useNfts(
     {
       sellerId: address,
     },
@@ -165,7 +167,19 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     if (address === account?.address) {
       setIsPerson(true);
     }
-  }, [account?.address, address, dataPerson]);
+  }, [account?.address, address]);
+  useEffect(() => {
+    if (address === account?.address) {
+      setIsPerson(true);
+    }
+    fetchUserData();
+    fetchCollections();
+    fetchNftsData();
+    fetchNftsDataCreate();
+    fetchNftsDataCollecte();
+    fetchBuyer();
+    fetchSeller();
+  }, [address]);
 
   const TABS = [
     {
