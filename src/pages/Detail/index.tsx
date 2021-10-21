@@ -179,6 +179,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const { data: token } = useToken();
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
+  const isBidder = useIsLoginAddress(nftData?.nftInfo?.auction?.auctionbid[0]?.bidder_id);
 
   const logoUrl = `${PINATA_SERVER}${nftData?.nftInfo.metadata.logoUrl}`;
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
@@ -190,6 +191,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const termOfValidity = !!((nftData?.nftInfo?.auction?.deadline - remainingTime) > 0);
   const auctionId = nftData?.nftInfo?.auction?.id;
   const initPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.init_price);
+  const auctionPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.price);
   const minRaise = price * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
   const minActionRaise = priceStringDivUnit(nftData?.nftInfo?.auction?.price) * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
   const creatorId = nftData?.nftInfo?.auction?.creator_id;
@@ -464,7 +466,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               mt="0px"
               display="flex"
               flexDirection="column"
-              w="1364px"
+              maxW="1364px"
+              w="100%"
               height="100%"
               justifyContent="flex-start"
             >
@@ -570,9 +573,10 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 </Flex>
               </Flex>
               <Flex
-                w="1364px"
-                flexDirection="row"
-                justifyContent="space-between"
+                maxW="1364px"
+                w="100%"
+                flexFlow="row wrap"
+                justifyContent={['center', 'center', 'center', 'center', 'space-between']}
                 alignItems="flex-start"
               >
                 <DetailLeft
@@ -586,6 +590,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   collectionsData={collectionsData}
                   account={account}
                   isLoginAddress={isLoginAddress}
+                  isBidder={isBidder}
                   remainingTime={remainingTime}
                   setOfferId={setOfferId}
                   setOfferOwner={setOfferOwner}
@@ -644,7 +649,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               <BritishDialog
                 isShowBritish={isShowBritish}
                 setIsShowBritish={setIsShowBritish}
-                moreThan={minRaise || Number(initPrice)}
+                moreThan={Math.ceil(minRaise) || Number(auctionPrice)}
                 creatorId={creatorId}
                 auctionId={auctionId}
               />
@@ -665,7 +670,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 <AllowBritishDialog
                   isShowBritish={allowBritish}
                   setIsShowBritish={setIsAllowBritish}
-                  moreThan={minActionRaise || Number(priceStringDivUnit(nftData?.nftInfo?.auction?.price))}
+                  moreThan={Math.ceil(minActionRaise) || Number(priceStringDivUnit(nftData?.nftInfo?.auction?.price))}
                   creatorId={creatorId}
                   auctionId={auctionId}
                 />

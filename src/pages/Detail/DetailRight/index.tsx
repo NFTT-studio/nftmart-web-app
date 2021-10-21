@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
@@ -78,6 +79,7 @@ interface Props {
   } | undefined,
   account:InjectedAccountWithMeta | null,
   isLoginAddress:boolean,
+  isBidder:boolean,
   remainingTime:number,
   setOfferId: React.Dispatch<React.SetStateAction<string>>,
   setOfferOwner: React.Dispatch<React.SetStateAction<string>>,
@@ -100,6 +102,7 @@ const DetailRight: FC<Props> = (({
   collectionsData,
   account,
   isLoginAddress,
+  isBidder,
   remainingTime,
   setOfferId,
   setOfferOwner,
@@ -362,7 +365,7 @@ const DetailRight: FC<Props> = (({
 
   );
   return (
-    <Flex width="748px" flexDirection="column">
+    <Flex maxWidth="748px" minWidth="560px" width="54vw" flexDirection="column">
       <Flex
         width="100%"
         flexDirection="column"
@@ -575,7 +578,10 @@ const DetailRight: FC<Props> = (({
                   fontFamily="TTHoves-Regular, TTHoves"
                   fontWeight="500"
                   color={!isLoginAddress ? '#FFFFFF' : '#FFFFFF'}
-                  isDisabled={isLoginAddress || Number(events.times) === 0}
+                  isDisabled={isBidder || isLoginAddress || Number(events.times) === 0}
+                  _hover={{
+                    background: '#000000',
+                  }}
                   onClick={() => {
                     if (allowBritishAuction && Number(bidCount) > 0) {
                       setIsAllowBritish(true);
@@ -597,8 +603,11 @@ const DetailRight: FC<Props> = (({
                   fontFamily="TTHoves-Regular, TTHoves"
                   fontWeight="500"
                   color={!isLoginAddress ? '#FFFFFF' : '#FFFFFF'}
-                  isDisabled={isLoginAddress || Number(events.times) === 0}
+                  isDisabled={isBidder || isLoginAddress || Number(events.times) === 0}
                   onClick={() => setIsShowBritish(true)}
+                  _hover={{
+                    background: '#000000',
+                  }}
                 >
                   {t('Detail.placeBid')}
                 </Button>
@@ -616,7 +625,7 @@ const DetailRight: FC<Props> = (({
                   isDisabled={isLoginAddress || Number(price) === 0}
                   onClick={handleBuy}
                   _hover={{
-                    // background: '#000000',
+                    background: '#000000',
                   }}
                 >
                   {t('Detail.buyNow')}
@@ -883,8 +892,7 @@ const DetailRight: FC<Props> = (({
                             >
                               in
                               {' '}
-
-                              {Number(timeBlock(item?.order?.deadline)) > 0 ? timeBlock(item?.order?.deadline) : '-'}
+                              {Number(item?.order?.deadline - remainingTime) > 0 ? timeBlock(item?.order?.deadline) : '-'}
                               {' '}
                               hours
                             </Text>
@@ -901,7 +909,7 @@ const DetailRight: FC<Props> = (({
                               {item.timestamp ? format(item.timestamp) : '-'}
                             </Text>
                           )}
-                          {Number(timeBlock(item?.order?.deadline)) > 0 && isLoginAddress && item.order.status_id === 'Created' ? (
+                          {Number(item?.order?.deadline - remainingTime) > 0 && isLoginAddress && item.order.status_id === 'Created' ? (
                             <Text
                               w="136px"
                               textAlign="right"

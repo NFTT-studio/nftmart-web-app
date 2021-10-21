@@ -60,7 +60,7 @@ const NftItem: FC<Props> = (({
 }) => {
   const { t } = useTranslation();
   return (
-    <Flex width="100%" flexDirection="column" justifyContent="flex-start">
+    <Flex maxWidth="1015px" width="100%" flexDirection="column" justifyContent="flex-start">
       <Flex
         width="100%"
         h="36px"
@@ -100,8 +100,8 @@ const NftItem: FC<Props> = (({
               <SimpleGrid
                 w="100%"
                 m="20px 0 20px 0"
-                columns={[1, 2, 2, 2, 3]}
-                spacing="21px"
+                columns={[1, 2, 2, 3, 3]}
+                spacing="20px"
               >
                 {nftsData?.pages.map((page) => page.nfts.map(
                   (nft) => <NftCard nft={nft} remainingTime={remainingTime} />,

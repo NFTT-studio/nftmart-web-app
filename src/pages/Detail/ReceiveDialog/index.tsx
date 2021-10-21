@@ -9,8 +9,8 @@ import {
   Button,
   Modal,
   ModalOverlay,
+  useToast,
 } from '@chakra-ui/react';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
@@ -36,6 +36,7 @@ const DealDialog: FC<Props> = (({
   creatorId,
   type,
 }) => {
+  const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const cancelRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
@@ -52,20 +53,45 @@ const DealDialog: FC<Props> = (({
         cb: {
           success: (result) => {
             if (result.dispatchError) {
-              toast(<ToastBody title="Error" message={t('common.error')} type="error" />);
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={result.dispatchError.toString()} type="error" />
+                ),
+              });
               setIshowReceive(false);
               setIsSubmitting(false);
             } else {
-              toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Success" message={t('common.success')} type="success" />
+                ),
+              });
+              localStorage.setItem('ButtonSelect', '0');
               setTimeout(() => {
                 setIshowReceive(false);
                 setIsSubmitting(false);
-                history.push('/');
-              }, 1500);
+                history.push(`/account/${account?.address}/wallet`);
+              }, 2500);
             }
           },
-          error: (error) => {
-            toast(<ToastBody title="Error" message={error} type="error" />);
+          error: (error: string) => {
+            if (error === 'Error: Cancelled') {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="warning" message={error} type="warning" />
+                ),
+              });
+            } else {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={error} type="error" />
+                ),
+              });
+            }
             setIshowReceive(false);
             setIsSubmitting(false);
           },

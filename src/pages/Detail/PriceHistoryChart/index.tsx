@@ -1,3 +1,4 @@
+/* eslint-disable no-new-wrappers */
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 import {
@@ -11,7 +12,7 @@ import {
 } from 'recharts';
 import colors from '../../../themes/colors';
 import { renderNmtNumberText } from '../../../components/Balance';
-import { NumberToString } from '../../../utils/format';
+import { NumberToString, priceStringDivUnit } from '../../../utils/format';
 
 interface PriceHistoryProps {
   PriceDate:[]
@@ -31,17 +32,20 @@ const PriceHistoryChart = ({
     const s = times.getSeconds();
     return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
   };
-  PriceDate.forEach((item) => {
-    // console.log(item.price);
-    // const num = NumberToString(item.price);
-    // console.log(num);
+  const PriceDateone = PriceDate;
+  console.log(PriceDateone);
+  PriceDateone.map((item) => {
+    // const num = Number(NumberToString(item.price));
     // item.price = Number(num);
+
     item.date = format(item.date);
+    item.price = (Number(item.price) / 1000000).toFixed(1);
+    return item;
   });
   return (
     <ResponsiveContainer height={246} width="100%">
       <AreaChart
-        data={PriceDate}
+        data={PriceDateone}
       >
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">

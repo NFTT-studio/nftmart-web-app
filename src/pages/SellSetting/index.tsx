@@ -29,7 +29,6 @@ import {
   Progress,
   useToast,
 } from '@chakra-ui/react';
-import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import {
   useHistory, RouteComponentProps, Link as RouterLink,

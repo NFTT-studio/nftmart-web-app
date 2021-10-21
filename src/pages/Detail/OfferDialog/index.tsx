@@ -14,12 +14,11 @@ import {
   Input,
   InputRightAddon,
   InputLeftAddon,
-  InputRightElement,
+  useToast,
 } from '@chakra-ui/react';
 import {
   useFormik,
 } from 'formik';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-date-picker';
 
@@ -48,6 +47,7 @@ interface Props {
 const OfferDialog: FC<Props> = (({
   categoryId, classId, tokenId, isShowOffer, setIsShowOffer,
 }) => {
+  const toast = useToast();
   const queryCliet = useQueryClient();
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
@@ -89,9 +89,21 @@ const OfferDialog: FC<Props> = (({
         cb: {
           success: (result) => {
             if (result.dispatchError) {
-              toast(<ToastBody title="Error" message={t('common.error')} type="error" />);
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={result.dispatchError.toString()} type="error" />
+                ),
+              });
+              setIsSubmitting(false);
+              setIsShowOffer(false);
             } else {
-              toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Success" message={t('Detail.buySuccess')} type="success" />
+                ),
+              });
               setTimeout(() => {
                 setIsSubmitting(false);
                 setIsShowOffer(false);
@@ -100,7 +112,21 @@ const OfferDialog: FC<Props> = (({
             }
           },
           error: (error: string) => {
-            toast(<ToastBody title="Error" message={error} type="error" />);
+            if (error === 'Error: Cancelled') {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="warning" message={error} type="warning" />
+                ),
+              });
+            } else {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={error} type="error" />
+                ),
+              });
+            }
             setIsSubmitting(false);
             setIsShowOffer(false);
           },
@@ -211,16 +237,19 @@ const OfferDialog: FC<Props> = (({
               {formik.errors.price && formik.touched.price ? (
                 <div style={{ color: 'red' }}>{formik.errors.price}</div>
               ) : null}
-              <Text
-                mb="23px"
-                fontSize="12px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                color="#999999"
-              >
-                ≈$
-                {formik.values.price * token.price}
-              </Text>
+              { token?.price
+                ? (
+                  <Text
+                    mb="23px"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#999999"
+                  >
+                    ≈$
+                    {formik.values.price * token?.price}
+                  </Text>
+                ) : null}
               <Text
                 mb="13px"
                 fontSize="12px"
