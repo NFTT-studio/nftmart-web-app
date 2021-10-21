@@ -187,16 +187,20 @@ const OfferDialog: FC<Props> = (({
                   children="NMT"
                 />
               </InputGroup>
-              <Text
-                mb="23px"
-                fontSize="12px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                color="#999999"
-              >
-                ≈$
-                {formik.values.price * token.price}
-              </Text>
+              {token?.price ? (
+                <Text
+                  mb="23px"
+                  fontSize="12px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#999999"
+                >
+                  ≈$
+                  {formik.values.price * token?.price}
+                </Text>
+              )
+                : null}
+
               {formik.errors.price && formik.touched.price ? (
                 <div style={{ color: 'red' }}>{formik.errors.price}</div>
               ) : null}

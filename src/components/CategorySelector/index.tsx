@@ -11,7 +11,7 @@ type CategorySelectorProps = {
 
 const CategorySelector: FC<CategorySelectorProps> = (({ list, selectId, handleSelect }) => (
   <>
-    <Flex direction="row" width="100%" justifyContent="flex-start">
+    <Flex flexFlow="row wrap" width="100%" justifyContent="flex-start">
       <Button
         height="36px"
         padding="0 16px"
@@ -43,7 +43,7 @@ const CategorySelector: FC<CategorySelectorProps> = (({ list, selectId, handleSe
           fontWeight="500"
           color={selectId === category.id ? '#FFFFFF' : '#999999'}
           id={category.id}
-          m="0 40px 0 0"
+          m="0 2vw 0 0"
           onClick={handleSelect}
           _hover={{ background: '#000000', color: '#FFFFFF' }}
           _focus={{

@@ -362,7 +362,7 @@ const DetailRight: FC<Props> = (({
 
   );
   return (
-    <Flex width="748px" flexDirection="column">
+    <Flex maxWidth="748px" minWidth="560px" width="54vw" flexDirection="column">
       <Flex
         width="100%"
         flexDirection="column"

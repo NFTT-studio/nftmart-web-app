@@ -258,7 +258,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               justifyContent="space-between"
               padding="81px 40px 20px 40px"
             >
-              <Flex width="21.8%" direction="column">
+              <Flex width="21.8%" mr="20px" direction="column">
                 <Headers userData={userData} dataPerson={dataPerson} />
                 <Flex
                   mt="53px"
@@ -309,7 +309,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                   ))}
                 </Flex>
               </Flex>
-              <Flex width="1015px" direction="column">
+              <Flex maxWidth="1015px" w="100%" direction="column">
                 {selectTabId === 0 ? (
                   <NftItem
                     nftsData={nftsData}

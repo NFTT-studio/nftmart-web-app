@@ -121,7 +121,7 @@ const Browsing = () => {
 
   return (
     <MainContainer title={t('Browsing.title')}>
-      <Container width="1280px" mt="40px" display="flex" justifyContent="space-between">
+      <Container maxWidth="1364px" w="100%" mt="40px" display="flex" justifyContent="space-between">
         <Flex
           w="260px"
           h="492px"
@@ -193,9 +193,9 @@ const Browsing = () => {
 
         </Flex>
 
-        <Flex width="1003px" flexDirection="column" justifyContent="flex-start">
+        <Flex maxWidth="1088px" w="100%" flexDirection="column" justifyContent="flex-start">
 
-          <Flex h="36px">
+          <Flex minH="36px" w="100%">
             {categoriesData
               ? (
                 <CategorySelector
@@ -226,7 +226,7 @@ const Browsing = () => {
             </Text>
             <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
           </Flex>
-          <Flex width="1088px">
+          <Flex maxWidth="1088px" w="100%">
             {nftsIsLoading
               ? (
                 <Center width="100%" height="353px">
@@ -245,7 +245,7 @@ const Browsing = () => {
                       width="100%"
                       p="0 5px"
                       m="0px 0px 20px 0px"
-                      columns={[1, 2, 3]}
+                      columns={[1, 1, 2, 2, 3]}
                       spacing="20px"
                     >
                       {nftsData?.pages.map((page) => page.nfts.map(

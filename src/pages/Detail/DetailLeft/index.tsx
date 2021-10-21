@@ -113,7 +113,7 @@ const DetailLeft: FC<Props> = (({
   const newLink = ICON_LIST.filter((item) => item.link !== '');
   const { t } = useTranslation();
   return (
-    <Flex width="560px" flexDirection="column">
+    <Flex maxWidth="560px" w="100%" flexDirection="column">
       <Flex
         width="560px"
         display="flex"

@@ -464,7 +464,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               mt="0px"
               display="flex"
               flexDirection="column"
-              w="1364px"
+              maxW="1364px"
+              w="100%"
               height="100%"
               justifyContent="flex-start"
             >
@@ -570,9 +571,10 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 </Flex>
               </Flex>
               <Flex
-                w="1364px"
-                flexDirection="row"
-                justifyContent="space-between"
+                maxW="1364px"
+                w="100%"
+                flexFlow="row wrap"
+                justifyContent={['center', 'center', 'center', 'center', 'space-between']}
                 alignItems="flex-start"
               >
                 <DetailLeft
@@ -644,7 +646,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               <BritishDialog
                 isShowBritish={isShowBritish}
                 setIsShowBritish={setIsShowBritish}
-                moreThan={minRaise || Number(initPrice)}
+                moreThan={Math.ceil(minRaise) || Number(initPrice)}
                 creatorId={creatorId}
                 auctionId={auctionId}
               />
@@ -665,7 +667,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 <AllowBritishDialog
                   isShowBritish={allowBritish}
                   setIsShowBritish={setIsAllowBritish}
-                  moreThan={minActionRaise || Number(priceStringDivUnit(nftData?.nftInfo?.auction?.price))}
+                  moreThan={Math.ceil(minActionRaise) || Number(priceStringDivUnit(nftData?.nftInfo?.auction?.price))}
                   creatorId={creatorId}
                   auctionId={auctionId}
                 />

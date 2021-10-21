@@ -191,13 +191,17 @@ const NftCard: FC<NftCardProps> = ({
   return (
     <Link
       key={nft?.metadata.name}
-      width="320px"
+      width="22vw"
+      maxWidth="320px"
+      minWidth="250px"
       height="396px"
       as={RouterLink}
       to={`/item/${nft.id}`}
     >
       <MotionBox
-        width="320px"
+        width="22vw"
+        maxWidth="320px"
+        minWidth="250px"
         height="100%"
         backgroundColor="#fff"
         borderRadius="4px"
@@ -216,7 +220,9 @@ const NftCard: FC<NftCardProps> = ({
             <LazyLoadImage
               wrapperProps={{
                 style: {
-                  width: '320px',
+                  width: '22vw',
+                  maxWidth: '320px',
+                  minWidth: '250px',
                   height: '219px',
                   display: 'flex',
                   justifyContent: 'center',
@@ -238,7 +244,7 @@ const NftCard: FC<NftCardProps> = ({
               ? nft?.metadata?.fileType === 'mp4'
                 ? (
                   <Box
-                    width="320px"
+                    width="22vw"
                     height="219px"
                     maxWidth="420px"
                   >
@@ -253,7 +259,7 @@ const NftCard: FC<NftCardProps> = ({
                 )
                 : (
                   <Box
-                    width="320px"
+                    width="22vw"
                     height="219px"
                     maxWidth="420px"
                   >
@@ -269,7 +275,7 @@ const NftCard: FC<NftCardProps> = ({
                   <LazyLoadImage
                     wrapperProps={{
                       style: {
-                        width: '320px',
+                        width: '22vw',
                         height: '219px',
                         display: 'flex',
                         justifyContent: 'center',
