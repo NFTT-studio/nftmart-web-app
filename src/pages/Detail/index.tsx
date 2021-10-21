@@ -178,7 +178,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   }, [isShowDutch]);
 
   const { data: token } = useToken();
-  const isLoginAddress = useIsLoginAddress(nftData?.nftInfo.owner_id);
+  const isLoginAddress = useIsLoginAddress(nftData?.nftInfo?.owner_id);
   const isBidder = useIsLoginAddress(nftData?.nftInfo?.auction?.auctionbid[0]?.bidder_id);
 
   const logoUrl = `${PINATA_SERVER}${nftData?.nftInfo.metadata.logoUrl}`;

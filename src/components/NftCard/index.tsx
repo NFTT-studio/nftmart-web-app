@@ -199,7 +199,7 @@ const NftCard: FC<NftCardProps> = ({
       to={`/item/${nft.id}`}
     >
       <MotionBox
-        width="22vw"
+        width="100%"
         maxWidth="320px"
         minWidth="250px"
         height="100%"
@@ -220,7 +220,7 @@ const NftCard: FC<NftCardProps> = ({
             <LazyLoadImage
               wrapperProps={{
                 style: {
-                  width: '22vw',
+                  width: '100%',
                   maxWidth: '320px',
                   minWidth: '250px',
                   height: '219px',
@@ -231,12 +231,13 @@ const NftCard: FC<NftCardProps> = ({
               style={{
                 objectFit: 'cover',
                 width: '100%',
+                maxWidth: '320px',
+                minWidth: '250px',
                 height: '100%',
                 borderRadius: '4px 4px 0 0 ',
               }}
               src={IPFS_URL + nft?.metadata.logoUrl}
               effect="blur"
-              fallback={<Shimmer height={219} width={320} />}
             />
           )
           : (
@@ -259,7 +260,7 @@ const NftCard: FC<NftCardProps> = ({
                 )
                 : (
                   <Box
-                    width="22vw"
+                    width="100%"
                     height="219px"
                     maxWidth="420px"
                   >
@@ -275,7 +276,7 @@ const NftCard: FC<NftCardProps> = ({
                   <LazyLoadImage
                     wrapperProps={{
                       style: {
-                        width: '22vw',
+                        width: '100%',
                         height: '219px',
                         display: 'flex',
                         justifyContent: 'center',

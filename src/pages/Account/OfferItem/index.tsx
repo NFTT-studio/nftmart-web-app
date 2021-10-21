@@ -56,7 +56,7 @@ const OfferItem: FC<Props> = (({ offer }) => {
   return (
     <Link
       as={RouterLink}
-      to={`/item/${offer?.nft?.nft_id}`}
+      to={`/item/${offer?.id}`}
 
     >
       <Flex
@@ -88,7 +88,7 @@ const OfferItem: FC<Props> = (({ offer }) => {
             width="auto"
             height="40px"
             borderRadius="4px"
-            src={`${PINATA_SERVER}${offer?.metadata?.logoUrl}`}
+            src={`${PINATA_SERVER}${offer?.metadata?.previewUrl || offer?.metadata?.logoUrl}`}
             alt=""
           />
           <Flex
@@ -127,7 +127,7 @@ const OfferItem: FC<Props> = (({ offer }) => {
           color="#000000"
           lineHeight="20px"
         >
-          {renderNmtNumberText(offer?.price)}
+          {Number(offer?.price) ? renderNmtNumberText(offer?.price) : renderNmtNumberText(offer?.auction?.price)}
           <Text
             ml="3px"
             fontSize="14px"
@@ -157,24 +157,41 @@ const OfferItem: FC<Props> = (({ offer }) => {
           color="#000000"
           lineHeight="20px"
         >
-          {offer?.buyer_id ? formatAddress(offer?.buyer_id) : null}
+          {offer?.owner?.name ? offer?.owner?.name : formatAddress(offer?.owner?.id) }
         </Text>
-        <Text
-          width="120px"
-          textAlign="right"
-          fontSize="14px"
-          fontFamily="TTHoves-Regular, TTHoves"
-          fontWeight="400"
-          color="#000000"
-          lineHeight="20px"
-          textstroke="1px #979797"
-        >
-          in
-          {' '}
-          {timeBlock(offer?.deadline)}
-          {' '}
-          hours
-        </Text>
+        {offer?.deadline - remainingTime > 0 || offer?.auction?.deadline - remainingTime > 0
+          ? (
+            <Text
+              width="120px"
+              textAlign="right"
+              fontSize="14px"
+              fontFamily="TTHoves-Regular, TTHoves"
+              fontWeight="400"
+              color="#000000"
+              lineHeight="20px"
+              textstroke="1px #979797"
+            >
+              in
+              {' '}
+              {offer?.deadline - remainingTime > 0 ? timeBlock(offer?.deadline) : null}
+              {offer?.auction?.deadline - remainingTime > 0 ? timeBlock(offer?.auction?.deadline) : null}
+              {' '}
+              hours
+            </Text>
+          ) : (
+            <Text
+              width="120px"
+              textAlign="right"
+              fontSize="14px"
+              fontFamily="TTHoves-Regular, TTHoves"
+              fontWeight="400"
+              color="#000000"
+              lineHeight="20px"
+              textstroke="1px #979797"
+            >
+              -
+            </Text>
+          )}
       </Flex>
     </Link>
   );

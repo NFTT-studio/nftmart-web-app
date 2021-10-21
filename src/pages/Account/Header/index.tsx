@@ -12,6 +12,7 @@ import {
   IconPen,
 } from '../../../assets/images';
 import ShareAccount from '../../../components/ShareAccount';
+import useIsLoginAddress from '../../../hooks/utils/useIsLoginAddress';
 
 interface Props {
   userData?: [],
@@ -19,6 +20,8 @@ interface Props {
 }
 const Header: FC<Props> = (({ userData, dataPerson }) => {
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+  const isPerson = useIsLoginAddress(userData?.address);
+
   return (
     <Flex
       w="100%"
@@ -58,30 +61,39 @@ const Header: FC<Props> = (({ userData, dataPerson }) => {
         </Text>
       </Flex>
       <Flex position="absolute" right="0px" top="0px">
-        <Link
-          as={RouterLink}
-          to="/profile"
-        >
+        {isPerson ? (
+          <Link
+            as={RouterLink}
+            to="/profile"
+          >
+            <Box
+              key="index"
+              width="40px"
+              height="40px"
+              borderRadius="4px 0px 0px 4px"
+              border={isPerson ? '1px solid #E5E5E5' : ''}
+              borderRight={!isPerson ? '1px solid #E5E5E5' : ''}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              _hover={{
+                boxShadow: '0px 2px 8px 0px #E1E1E1',
+              }}
+            >
+              <Image
+                w="22px"
+                h="22px"
+                src={IconPen.default}
+              />
+            </Box>
+          </Link>
+        ) : (
           <Box
-            key="index"
-            width="40px"
             height="40px"
             borderRadius="4px 0px 0px 4px"
-            border="1px solid #E5E5E5"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            _hover={{
-              boxShadow: '0px 2px 8px 0px #E1E1E1',
-            }}
-          >
-            <Image
-              w="22px"
-              h="22px"
-              src={IconPen.default}
-            />
-          </Box>
-        </Link>
+            borderRight={!isPerson ? '1px solid #E5E5E5' : ''}
+          />
+        )}
         <ShareAccount />
       </Flex>
     </Flex>
