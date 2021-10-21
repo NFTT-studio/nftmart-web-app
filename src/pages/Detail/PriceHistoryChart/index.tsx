@@ -32,8 +32,9 @@ const PriceHistoryChart = ({
     const s = times.getSeconds();
     return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
   };
-  console.log(PriceDate);
-  const PriceDateone = PriceDate.map((item) => {
+  const PriceDateone = PriceDate;
+  console.log(PriceDateone);
+  PriceDateone.map((item) => {
     // const num = Number(NumberToString(item.price));
     // item.price = Number(num);
 

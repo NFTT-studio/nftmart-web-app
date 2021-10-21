@@ -10,12 +10,11 @@ import {
   AlertDialogCloseButton,
   Modal,
   ModalOverlay,
+  useToast,
 } from '@chakra-ui/react';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 import { useHistory } from 'react-router-dom';
-import { number } from 'yup';
 import { takeOrder } from '../../../polkaSDK/api/takeOrder';
 import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
@@ -36,6 +35,7 @@ interface Props {
 const BuyDialog: FC<Props> = (({
   price, nftName, collectionName, logoUrl, orderId, ownerId, isShowBuy, setIsShowBuy,
 }) => {
+  const toast = useToast();
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
   const { data: token } = useToken();
@@ -55,17 +55,42 @@ const BuyDialog: FC<Props> = (({
       cb: {
         success: (result) => {
           if (result.dispatchError) {
-            toast(<ToastBody title="Error" message={t('Detail.buyError')} type="error" />);
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={result.dispatchError.toString()} type="error" />
+              ),
+            });
           } else {
-            toast(<ToastBody title="Success" message={t('Detail.buySuccess')} type="success" />);
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
+            localStorage.setItem('ButtonSelect', '0');
             setTimeout(() => {
+              setIsSubmitting(false);
               history.push(`/account/${account?.address}/wallet`);
             }, 3000);
           }
-          setIsSubmitting(false);
         },
         error: (error: string) => {
-          toast(<ToastBody title="Error" message={error} type="error" />);
+          if (error === 'Error: Cancelled') {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="warning" message={error} type="warning" />
+              ),
+            });
+          } else {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={error} type="error" />
+              ),
+            });
+          }
           setIsSubmitting(false);
           setIsSubmitting(false);
         },
@@ -74,7 +99,6 @@ const BuyDialog: FC<Props> = (({
   };
 
   return (
-
     <>
       <AlertDialog
         motionPreset="slideInBottom"

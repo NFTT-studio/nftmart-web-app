@@ -9,16 +9,20 @@ import {
   Button,
   Modal,
   ModalOverlay,
+  useToast,
 } from '@chakra-ui/react';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
+import { useQueryClient } from 'react-query';
 import { takeOffer } from '../../../polkaSDK/api/takeOffer';
 import { takeOrderOffer } from '../../../polkaSDK/api/takeOrderOffer';
 
 import { useAppSelector } from '../../../hooks/redux';
 import MyToast, { ToastBody } from '../../../components/MyToast';
+import {
+  QUERY_KEYS,
+} from '../../../constants';
 
 interface Props {
   isShowDeal: boolean,
@@ -35,6 +39,8 @@ const DealDialog: FC<Props> = (({
   offerOwner,
   orderId,
 }) => {
+  const toast = useToast();
+  const queryCliet = useQueryClient();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const cancelRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
@@ -52,20 +58,45 @@ const DealDialog: FC<Props> = (({
         cb: {
           success: (result) => {
             if (result.dispatchError) {
-              toast(<ToastBody title="Error" message={t('common.error')} type="error" />);
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={result.dispatchError.toString()} type="error" />
+                ),
+              });
               setIsShowDeal(false);
               setIsSubmitting(false);
             } else {
-              toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Success" message={t('common.success')} type="success" />
+                ),
+              });
+              queryCliet.refetchQueries(QUERY_KEYS.NFT);
               setTimeout(() => {
+                queryCliet.refetchQueries(QUERY_KEYS.NFT);
                 setIsShowDeal(false);
                 setIsSubmitting(false);
-                history.push('/');
-              }, 1500);
+              }, 2500);
             }
           },
-          error: (error) => {
-            toast(<ToastBody title="Error" message={error} type="error" />);
+          error: (error:string) => {
+            if (error === 'Error: Cancelled') {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="warning" message={error} type="warning" />
+                ),
+              });
+            } else {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={error} type="error" />
+                ),
+              });
+            }
             setIsShowDeal(false);
             setIsSubmitting(false);
           },
@@ -79,20 +110,45 @@ const DealDialog: FC<Props> = (({
         cb: {
           success: (result) => {
             if (result.dispatchError) {
-              toast(<ToastBody title="Error" message={t('common.error')} type="error" />);
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={result.dispatchError.toString()} type="error" />
+                ),
+              });
               setIsShowDeal(false);
               setIsSubmitting(false);
             } else {
-              toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Success" message={t('common.success')} type="success" />
+                ),
+              });
+              queryCliet.refetchQueries(QUERY_KEYS.NFT);
               setTimeout(() => {
+                queryCliet.refetchQueries(QUERY_KEYS.NFT);
                 setIsShowDeal(false);
                 setIsSubmitting(false);
-                history.push('/');
-              }, 1500);
+              }, 2500);
             }
           },
-          error: (error) => {
-            toast(<ToastBody title="Error" message={error} type="error" />);
+          error: (error:string) => {
+            if (error === 'Error: Cancelled') {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="warning" message={error} type="warning" />
+                ),
+              });
+            } else {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={error} type="error" />
+                ),
+              });
+            }
             setIsShowDeal(false);
             setIsSubmitting(false);
           },
