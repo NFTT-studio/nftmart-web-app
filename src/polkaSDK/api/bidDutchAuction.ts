@@ -51,10 +51,10 @@ export const bidDutchAuction = async ({
       if (bid.lastBidAccount.isNone) {
         // This is the first bidding.
         if (currentBlock > auction.deadline) {
-          console.log('auction closed', 1);
+          cb.error('auction closed');
           return;
         }
-        const uselessPrice = 0; // The real price used will be calculated by Dutch auction logic.
+        const uselessPrice = price * unit; // The real price used will be calculated by Dutch auction logic.
         call = PolkaSDK.api.tx.nftmartAuction.bidDutchAuction(uselessPrice, auctionCreatorAddress, auctionId, null, 'hello bidDutchAuction');
       } else {
         // This if branch is at least the second bidding.

@@ -15,6 +15,7 @@ type submitBritishAuctionProps = {
   expirationDate: number,
   range: number,
   commissionRate: number,
+  englishDeposits: number,
   tokens: [],
   cb: Callback
 }
@@ -33,6 +34,7 @@ export const submitBritishAuction = async ({
   hammerPrice,
   tokens,
   commissionRate,
+  englishDeposits,
   cb,
 }: submitBritishAuctionProps) => {
   try {
@@ -45,7 +47,7 @@ export const submitBritishAuction = async ({
     deadlineBlock += Number(block.block.header.number);
 
     // eslint-disable-next-line camelcase
-    const min_deposit = (await PolkaSDK.api.query.nftmartConf.minOrderDeposit()).toString();
+    const min_deposit = unit.mul(bnToBn(englishDeposits));
     // eslint-disable-next-line camelcase
     const init_price = InitPrice * unit;
     // eslint-disable-next-line camelcase

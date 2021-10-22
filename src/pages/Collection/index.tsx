@@ -359,7 +359,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                       justifyContent="flex-end"
                       alignItems="center"
                     >
-                      {t('class.stars')}
+                      {t('class.Stars')}
                     </Flex>
                     <Flex
                       fontSize="14px"

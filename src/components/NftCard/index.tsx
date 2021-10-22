@@ -191,7 +191,7 @@ const NftCard: FC<NftCardProps> = ({
   return (
     <Link
       key={nft?.metadata.name}
-      width="22vw"
+      width="24vw"
       maxWidth="320px"
       minWidth="250px"
       height="396px"
@@ -290,7 +290,6 @@ const NftCard: FC<NftCardProps> = ({
                     }}
                     src={IPFS_URL + nft?.metadata.logoUrl}
                     effect="blur"
-                    fallback={<Shimmer height={219} width={320} />}
                   />
               )
           )}

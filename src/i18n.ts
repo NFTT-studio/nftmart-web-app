@@ -8,7 +8,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    lng: 'en',
+    lng: `${localStorage.getItem('i18nextLng')}`,
     debug: true,
     interpolation: {
       escapeValue: false,

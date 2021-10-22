@@ -4,7 +4,7 @@ import { ClassMetadata } from '../types/ClassMetadata';
 
 export const mapClassToCollection = async (clazz: any) => {
   // FIXME: there some error in the backend, which miss { at the start of the string
-  const originalString = clazz.metadata.trim().starsWith('{')
+  const originalString = clazz.metadata.trim().StarsWith('{')
     ? clazz.metadata
     : `{ ${clazz.metadata}`;
   const metadata: ClassMetadata = JSON.parse(originalString);
