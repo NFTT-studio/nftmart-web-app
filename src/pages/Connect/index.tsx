@@ -55,13 +55,18 @@ const Connect: FC = () => {
     const injector = await web3FromSource(injectedAccounts[index].meta.source);
     // eslint-disable-next-line no-multi-assign
     injectedAccounts[index].address = encodeAddress(injectedAccounts[index].address, 12191);
-
+    const address = encodeAddress(injectedAccounts[index].address, 12191);
+    console.log(address);
     dispatch(setAccount(injectedAccounts[index]));
     dispatch(setInjector(injector));
     dispatch(setAccounts(injectedAccounts));
     setValue(injectedAccounts[index].address);
     if (callbackUrl && callbackUrl.length > 0) {
-      history.push(callbackUrl);
+      if (callbackUrl.indexOf('/account/') > -1) {
+        history.push(`/account/${address}/wallet`);
+      } else {
+        history.push(callbackUrl);
+      }
     } else {
       history.push('/');
     }

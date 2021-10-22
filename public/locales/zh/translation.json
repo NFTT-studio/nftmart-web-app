@@ -300,7 +300,7 @@
     "Items": "作品",
     "Owners": "持有",
     "Viewers": "浏览",
-    "Starts": "收藏"
+    "stars": "收藏"
   },
   "Trx": {
     "inblock": "交易区块正在确认中",

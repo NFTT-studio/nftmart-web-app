@@ -1,4 +1,5 @@
-import React, { FC, useState } from 'react';
+/* eslint-disable max-len */
+import React, { FC, useState, useEffect } from 'react';
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import {
   Popover,
@@ -46,7 +47,7 @@ const ICONS = {
 const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
   const location = useLocation();
   const { data } = useAccount(address);
-  const { data: userData } = useUserTop(address);
+  const { data: userData, refetch: fetchUserData } = useUserTop(address);
   const history = useHistory();
   const { t } = useTranslation();
   const [opening, setOpening] = useState(false);
@@ -63,6 +64,9 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
     });
     onCopy();
   };
+  useEffect(() => {
+    fetchUserData();
+  }, [address]);
 
   return (
     <Popover
