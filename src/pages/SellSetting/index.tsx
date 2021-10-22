@@ -43,6 +43,7 @@ import useNft from '../../hooks/reactQuery/useNft';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import LoginDetector from '../../components/LoginDetector';
 import { getTax } from '../../polkaSDK/api/getTax';
+import { NumberToString } from '../../utils/format';
 
 import {
   IconSummary,
@@ -91,7 +92,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const schema = Yup.object().shape({
     price: Yup.number().moreThan(0).required(t('Create.required')),
-    deposits: Yup.number().min(1).required(t('Create.required')),
+    deposits: Yup.number().min(1, `${t('common.pledgeRule')}1`).required(t('Create.required')),
   });
   const schemaDutch = Yup.object().shape({
     startingPrice: Yup.number().moreThan(0).required(t('Create.required')),
@@ -99,12 +100,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     expirationDate: Yup.string().required(t('Create.required')),
     minimumMarkup: Yup.string().required(t('Create.required')),
     automaticDelay: Yup.boolean().required(t('Create.required')),
+    dutchDeposits: Yup.number().min(1, `${t('common.pledgeRule')}1`).required(t('Create.required')),
   });
   const schemaEnglish = Yup.object().shape({
     startingPrice: Yup.number().moreThan(0).required(t('Create.required')),
     expirationDate: Yup.string().required(t('Create.required')),
     minimumMarkup: Yup.string().required(t('Create.required')),
     automaticDelay: Yup.boolean().required(t('Create.required')),
+    englishDeposits: Yup.number().min(1, `${t('common.pledgeRule')}1`).required(t('Create.required')),
   });
   function number2PerU16(x) {
     return (x / 65535.0) * 100;
@@ -154,8 +157,10 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   ];
   const formik = useFormik({
     initialValues: {
-      price: '',
-      deposits: '',
+      price: Number(NumberToString(nftData?.nftInfo?.price) || 0) || '',
+      deposits: Number(NumberToString(nftData?.nftInfo?.deposit) || 0) || '',
+      dutchDeposits: '',
+      englishDeposits: '',
       startingPrice: '',
       endingPrice: '',
       expirationDate: '',
@@ -263,6 +268,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         range: Number(formValue.minimumMarkup) / 100,
         tokens: [[nftData?.nftInfo.class_id, nftData?.nftInfo.token_id, 1]],
         commissionRate: formValue.commissionRate / 100,
+        dutchDeposits: formValue.dutchDeposits,
         cb: {
           success: () => {
             toast({
@@ -306,6 +312,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         range: Number(formValue.minimumMarkup) / 100,
         tokens: [[nftData?.nftInfo.class_id, nftData?.nftInfo.token_id, 1]],
         commissionRate: formValue.commissionRate / 100,
+        englishDeposits: formValue.englishDeposits,
         cb: {
           success: () => {
             toast({
@@ -1191,7 +1198,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   {formik.errors.minimumMarkup && formik.touched.minimumMarkup ? (
                     <div style={{ color: 'red' }}>{formik.errors.minimumMarkup}</div>
                   ) : null}
-                  {/* <Flex
+                  <Flex
                     w="100%"
                     h="80px"
                     flexDirection="row"
@@ -1223,18 +1230,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         {t('SellSetting.pledgeExplain')}
                       </Text>
                     </Flex>
-                    <Flex alignItems="center">
-                      <Text
-                        mt="8px"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="14px"
-                        mr="9px"
-                      >
-                        * At least 20000 NMT
-                      </Text>
+                    <Flex flexDirection="column" alignItems="flex-end">
                       <InputGroup
                         width="200px"
                         height="40px"
@@ -1243,15 +1239,22 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         border="1px solid #E5E5E5"
                       >
                         <Input
-                          fontSize="12px"
+                          id="dutchDeposits"
+                          name="dutchDeposits"
+                          value={formik.values.dutchDeposits}
+                          onChange={formik.handleChange}
+                          fontSize="16px"
                           fontFamily="TTHoves-Regular, TTHoves"
                           fontWeight="400"
-                          color="#999999"
+                          color="#000000"
                           lineHeight="14px"
                           _focus={{
                             boxShadow: 'none',
                           }}
-                          placeholder={t('SellSetting.price')}
+                          _placeholder={{
+                            color: '#999999',
+                            fontSize: '12px',
+                          }}
                         />
                         <InputRightAddon
                           width="72px"
@@ -1267,8 +1270,24 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           children="NMT"
                         />
                       </InputGroup>
+                      <Text
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.atLeast')}
+                        1
+                        {' '}
+                        NMT
+                      </Text>
                     </Flex>
-                  </Flex> */}
+                  </Flex>
+                  {formik.errors.dutchDeposits && formik.touched.dutchDeposits ? (
+                    <div style={{ color: 'red' }}>{formik.errors.dutchDeposits}</div>
+                  ) : null}
                   <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                     <AccordionItem width="100%" border="none">
                       <AccordionButton
@@ -1760,7 +1779,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   {formik.errors.fixedPrice && formik.touched.fixedPrice ? (
                     <div style={{ color: 'red' }}>{formik.errors.fixedPrice}</div>
                   ) : null}
-                  {/* <Flex
+                  <Flex
                     w="100%"
                     h="80px"
                     flexDirection="row"
@@ -1792,18 +1811,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         {t('SellSetting.pledgeExplain')}
                       </Text>
                     </Flex>
-                    <Flex alignItems="center">
-                      <Text
-                        mt="8px"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="14px"
-                        mr="9px"
-                      >
-                        * At least 20000 NMT
-                      </Text>
+                    <Flex flexDirection="column" alignItems="flex-end">
                       <InputGroup
                         width="200px"
                         height="40px"
@@ -1812,15 +1820,22 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         border="1px solid #E5E5E5"
                       >
                         <Input
-                          fontSize="12px"
+                          id="englishDeposits"
+                          name="englishDeposits"
+                          value={formik.values.englishDeposits}
+                          onChange={formik.handleChange}
+                          fontSize="16px"
                           fontFamily="TTHoves-Regular, TTHoves"
                           fontWeight="400"
-                          color="#999999"
+                          color="#000000"
                           lineHeight="14px"
                           _focus={{
                             boxShadow: 'none',
                           }}
-                          placeholder={t('SellSetting.price')}
+                          _placeholder={{
+                            color: '#999999',
+                            fontSize: '12px',
+                          }}
                         />
                         <InputRightAddon
                           width="72px"
@@ -1836,8 +1851,24 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           children="NMT"
                         />
                       </InputGroup>
+                      <Text
+                        mt="8px"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#858999"
+                        lineHeight="14px"
+                      >
+                        {t('SellSetting.atLeast')}
+                        1
+                        {' '}
+                        NMT
+                      </Text>
                     </Flex>
-                  </Flex> */}
+                  </Flex>
+                  {formik.errors.englishDeposits && formik.touched.englishDeposits ? (
+                    <div style={{ color: 'red' }}>{formik.errors.englishDeposits}</div>
+                  ) : null}
                   <Accordion width="100%" defaultIndex={[0, 1, 2]} allowMultiple>
                     <AccordionItem width="100%" border="none">
                       <AccordionButton

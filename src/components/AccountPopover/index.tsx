@@ -34,6 +34,7 @@ import { EXPLORER_URL } from '../../constants';
 import useAccount from '../../hooks/reactQuery/useAccount';
 import { renderNmtNumberText } from '../Balance';
 import useUserTop from '../../hooks/reactQuery/useUserTop';
+import { useAppSelector } from '../../hooks/redux';
 
 export interface LoginProps {
   avatar?: string;
@@ -45,12 +46,15 @@ const ICONS = {
   quickAreaCollections: Created,
 };
 const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
+  const chainState = useAppSelector((state) => state.chain);
+  const { whiteList } = chainState;
   const location = useLocation();
   const { data } = useAccount(address);
   const { data: userData, refetch: fetchUserData } = useUserTop(address);
   const history = useHistory();
   const { t } = useTranslation();
   const [opening, setOpening] = useState(false);
+  const [iswhiteList, setISWhiteList] = useState(false);
   const { onCopy } = useClipboard(address);
   // const [hideMenu, setHideMenu] = useState(false);
   const toast = useToast();
@@ -66,7 +70,20 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
   };
   useEffect(() => {
     fetchUserData();
+    if (address && whiteList.indexOf(address) > -1) {
+      setISWhiteList(true);
+    } else {
+      setISWhiteList(false);
+    }
   }, [address]);
+  useEffect(() => {
+    if (address && whiteList.indexOf(address) > -1) {
+      setISWhiteList(true);
+    } else {
+      setISWhiteList(false);
+    }
+    fetchUserData();
+  }, [opening]);
 
   return (
     <Popover
@@ -138,7 +155,6 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
       >
         <PopoverArrow left="121px !important" />
         <PopoverBody display="flex" flexFlow="wrap" justifyContent="center" p="20px 0">
-
           <Flex
             width="100%"
             height="48px"
@@ -429,141 +445,145 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               {t('common.buy')}
             </Link>
           </Flex>
-
-          <Flex
-            cursor="pointer"
-            width="100%"
-            height="48px"
-            justifyContent="space-between"
-            alignItems="center"
-            p="0 20px"
-            _hover={{
-              background: '#F9F9F9',
-            }}
-          >
+          {iswhiteList ? (
             <Flex
+              cursor="pointer"
               width="100%"
+              height="48px"
               justifyContent="space-between"
-              onClick={() => {
-                history.push(`/account/${address}/wallet?id=1`);
-                setOpening(false);
-                localStorage.setItem('ButtonSelect', '1');
+              alignItems="center"
+              p="0 20px"
+              _hover={{
+                background: '#F9F9F9',
               }}
             >
-              <Flex width="100%" justifyContent="flex-start" alignItems="center">
-                <Image
-                  width="14px"
-                  height="14px"
-                  mr="9px"
-                  src={ICONS.quickAreaCreated.default}
-                />
+              <Flex
+                width="100%"
+                justifyContent="space-between"
+                onClick={() => {
+                  history.push(`/account/${address}/wallet?id=1`);
+                  setOpening(false);
+                  localStorage.setItem('ButtonSelect', '1');
+                }}
+              >
+                <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                  <Image
+                    width="14px"
+                    height="14px"
+                    mr="9px"
+                    src={ICONS.quickAreaCreated.default}
+                  />
+                  <Text
+                    fontSize="14px"
+                    fontFamily="PingFangSC-Regular, PingFang SC"
+                    fontWeight="blod"
+                    color="#191A24"
+                  >
+                    {t('header.quickArea.created')}
+                  </Text>
+                </Flex>
                 <Text
                   fontSize="14px"
                   fontFamily="PingFangSC-Regular, PingFang SC"
-                  fontWeight="blod"
-                  color="#191A24"
+                  fontWeight="400"
+                  color="#858999"
                 >
-                  {t('header.quickArea.created')}
+                  {data?.createdNftCount}
                 </Text>
               </Flex>
-              <Text
-                fontSize="14px"
-                fontFamily="PingFangSC-Regular, PingFang SC"
-                fontWeight="400"
-                color="#858999"
+              <Link
+                as={RouterLink}
+                to={`/account/${address}/wallet?id=1`}
+                width="47px"
+                textAlign="right"
+                ml="12px"
+                fontSize="16px"
+                fontFamily="PingFangSC-Medium, PingFang SC"
+                fontWeight="500"
+                color="#5C74FF"
+                _hover={{
+                  textDecoration: 'none',
+                }}
+                _focus={{
+                  border: 'none',
+                  textDecoration: 'none',
+                }}
+                onClick={() => { setOpening(false); localStorage.setItem('ButtonSelect', '1'); }}
               >
-                {data?.createdNftCount}
-              </Text>
+                {t('common.add')}
+              </Link>
             </Flex>
-            <Link
-              as={RouterLink}
-              to={`/account/${address}/wallet?id=1`}
-              width="47px"
-              textAlign="right"
-              ml="12px"
-              fontSize="16px"
-              fontFamily="PingFangSC-Medium, PingFang SC"
-              fontWeight="500"
-              color="#5C74FF"
-              _hover={{
-                textDecoration: 'none',
-              }}
-              _focus={{
-                border: 'none',
-                textDecoration: 'none',
-              }}
-              onClick={() => { setOpening(false); localStorage.setItem('ButtonSelect', '1'); }}
-            >
-              {t('common.add')}
-            </Link>
-          </Flex>
-
-          <Flex
-            cursor="pointer"
-            width="100%"
-            height="48px"
-            justifyContent="space-between"
-            alignItems="center"
-            p="0 20px"
-            _hover={{
-              background: '#F9F9F9',
-            }}
-          >
+          )
+            : null}
+          {iswhiteList ? (
             <Flex
+              cursor="pointer"
               width="100%"
+              height="48px"
               justifyContent="space-between"
-              onClick={() => {
-                history.push(`/account/${address}/wallet?id=4`); setOpening(false);
-                localStorage.setItem('ButtonSelect', '4');
+              alignItems="center"
+              p="0 20px"
+              _hover={{
+                background: '#F9F9F9',
               }}
             >
-              <Flex width="100%" justifyContent="flex-start" alignItems="center">
-                <Image
-                  width="14px"
-                  height="14px"
-                  mr="9px"
-                  src={ICONS.quickAreaCollections.default}
-                />
+              <Flex
+                width="100%"
+                justifyContent="space-between"
+                onClick={() => {
+                  history.push(`/account/${address}/wallet?id=4`); setOpening(false);
+                  localStorage.setItem('ButtonSelect', '4');
+                }}
+              >
+                <Flex width="100%" justifyContent="flex-start" alignItems="center">
+                  <Image
+                    width="14px"
+                    height="14px"
+                    mr="9px"
+                    src={ICONS.quickAreaCollections.default}
+                  />
+                  <Text
+                    fontSize="14px"
+                    fontFamily="PingFangSC-Regular, PingFang SC"
+                    fontWeight="blod"
+                    color="#191A24"
+                  >
+                    {t('header.quickArea.collections')}
+                  </Text>
+                </Flex>
                 <Text
                   fontSize="14px"
                   fontFamily="PingFangSC-Regular, PingFang SC"
-                  fontWeight="blod"
-                  color="#191A24"
+                  fontWeight="400"
+                  color="#858999"
                 >
-                  {t('header.quickArea.collections')}
+                  {data?.createdClassCount}
                 </Text>
               </Flex>
-              <Text
-                fontSize="14px"
-                fontFamily="PingFangSC-Regular, PingFang SC"
-                fontWeight="400"
-                color="#858999"
+              <Link
+                as={RouterLink}
+                to={`/account/${data?.address}/wallet?id=4`}
+                width="47px"
+                textAlign="right"
+                ml="12px"
+                fontSize="16px"
+                fontFamily="PingFangSC-Medium, PingFang SC"
+                fontWeight="500"
+                color="#5C74FF"
+                _hover={{
+                  textDecoration: 'none',
+                }}
+                _focus={{
+                  border: 'none',
+                  textDecoration: 'none',
+                }}
+                onClick={() => { setOpening(false); localStorage.setItem('ButtonSelect', '4'); }}
               >
-                {data?.createdClassCount}
-              </Text>
+                {t('common.add')}
+              </Link>
             </Flex>
-            <Link
-              as={RouterLink}
-              to={`/account/${data?.address}/wallet?id=4`}
-              width="47px"
-              textAlign="right"
-              ml="12px"
-              fontSize="16px"
-              fontFamily="PingFangSC-Medium, PingFang SC"
-              fontWeight="500"
-              color="#5C74FF"
-              _hover={{
-                textDecoration: 'none',
-              }}
-              _focus={{
-                border: 'none',
-                textDecoration: 'none',
-              }}
-              onClick={() => { setOpening(false); localStorage.setItem('ButtonSelect', '4'); }}
-            >
-              {t('common.add')}
-            </Link>
-          </Flex>
+          )
+            : null}
 
           <Flex width="100%" height="48px" justifyContent="space-between" alignItems="center" p="0 20px">
             <Flex width="100%" justifyContent="space-between">
@@ -606,6 +626,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Link>
             </Flex>
           </Flex>
+
           <Flex
             width="332px"
             flexFlow="wrap"

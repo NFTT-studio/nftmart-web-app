@@ -193,7 +193,7 @@ const Browsing = () => {
 
         </Flex>
 
-        <Flex maxWidth="1088px" w="100%" flexDirection="column" justifyContent="flex-start">
+        <Flex maxWidth="1015px" w="100%" flexDirection="column" justifyContent="flex-start">
 
           <Flex minH="36px" w="100%">
             {categoriesData
@@ -207,7 +207,6 @@ const Browsing = () => {
           </Flex>
           <Flex
             m="29px 0 20px 0"
-            width="100%"
             h="36px"
             flexFlow="row"
             justifyContent="space-between"
@@ -226,7 +225,7 @@ const Browsing = () => {
             </Text>
             <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
           </Flex>
-          <Flex maxWidth="1088px" w="100%">
+          <Flex maxWidth="1015px" w="100%">
             {nftsIsLoading
               ? (
                 <Center width="100%" height="353px">
@@ -246,10 +245,10 @@ const Browsing = () => {
                       p="0 5px"
                       m="0px 0px 20px 0px"
                       columns={[1, 1, 2, 2, 3]}
-                      spacing="20px"
+                      spacing="35px"
                     >
                       {nftsData?.pages.map((page) => page.nfts.map(
-                        (nft) => <Flex mt="11px"><NftCard nft={nft} remainingTime={remainingTime} /></Flex>,
+                        (nft) => <Flex mt="1px"><NftCard nft={nft} remainingTime={remainingTime} /></Flex>,
                       ))}
                     </SimpleGrid>
                   </InfiniteScroll>

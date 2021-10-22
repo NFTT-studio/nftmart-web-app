@@ -159,6 +159,7 @@ const OfferDialog: FC<Props> = (({
                   {t('Detail.balance')}
                   :
                   {' '}
+                  {priceStringDivUnit(data?.balance?.transferrable) || 0}
                   {' '}
                   NMT
                 </Text>

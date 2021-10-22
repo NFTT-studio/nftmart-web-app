@@ -30,6 +30,7 @@
     "InTheWhitelist": "您尚未完成艺术家认证。",
     "Certification": "申请认证",
     "daysLeft": "剩余日期",
+    "pledgeRule": "质押金最少为",
     "nav": {
       "navHome": "首页",
       "navBrowsing": "浏览",
@@ -159,6 +160,7 @@
     "from": "来自",
     "price": "价格",
     "expiration": "有效期",
+    "CreationTime": "创建时间",
     "to": "目标",
     "date": "时间",
     "buyNow": "购买",
@@ -269,7 +271,7 @@
     "title": "Account",
     "myWallet": "我的钱包",
     "offers": "报价",
-    "stars": "星星",
+    "Stars": "星星",
     "collections": "作品集",
     "offersMade": "发出的报价",
     "offersReceived": "收到的报价",
@@ -300,7 +302,7 @@
     "Items": "作品",
     "Owners": "持有",
     "Viewers": "浏览",
-    "stars": "收藏"
+    "Stars": "收藏"
   },
   "Trx": {
     "inblock": "交易区块正在确认中",

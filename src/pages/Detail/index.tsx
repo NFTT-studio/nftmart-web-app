@@ -192,16 +192,24 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const logoUrl = `${PINATA_SERVER}${nftData?.nftInfo.metadata.logoUrl}`;
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
+  const auctionPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.price);
   const collectionName = collectionsData?.collection?.metadata?.name;
   const nftName = nftData?.nftInfo?.metadata.name;
+
+  useEffect(() => {
+    getBlock().then((res) => {
+      setRemainingTime(res);
+      queryCliet.refetchQueries(QUERY_KEYS.NFT);
+    });
+    queryCliet.refetchQueries(QUERY_KEYS.NFT);
+  }, [auctionPrice]);
 
   const ownerId = nftData?.nftInfo?.owner_id;
   const orderId = nftData?.nftInfo?.order_id;
   const termOfValidity = !!((nftData?.nftInfo?.auction?.deadline - remainingTime) > 0);
   const auctionId = nftData?.nftInfo?.auction?.id;
   const initPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.init_price);
-  const auctionPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.price);
-  const minRaise = price * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
+  const minRaise = auctionPrice * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
   const minActionRaise = priceStringDivUnit(nftData?.nftInfo?.auction?.price) * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
   const creatorId = nftData?.nftInfo?.auction?.creator_id;
   const offersLength = nftData?.nftInfo?.offers.length;

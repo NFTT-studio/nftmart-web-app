@@ -37,7 +37,7 @@ interface Props {
   isShowDutch: boolean,
   setIsShowDutch: React.Dispatch<React.SetStateAction<boolean>>,
 }
-const BuyDialog: FC<Props> = (({
+const DutchDialog: FC<Props> = (({
   price, nftName, collectionName, logoUrl, isShowDutch, setIsShowDutch, creatorId, auctionId,
 }) => {
   const toast = useToast();
@@ -45,6 +45,7 @@ const BuyDialog: FC<Props> = (({
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
   const { data: token } = useToken();
+  console.log(price);
 
   const { account } = chainState;
   const { data } = useAccount(account!.address);
@@ -332,4 +333,4 @@ const BuyDialog: FC<Props> = (({
     </>
   );
 });
-export default BuyDialog;
+export default DutchDialog;

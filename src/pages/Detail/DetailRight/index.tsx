@@ -823,7 +823,7 @@ const DetailRight: FC<Props> = (({
                       color="#999999"
                       lineHeight="20px"
                     >
-                      {t('Detail.expiration')}
+                      {types ? t('Detail.CreationTime') : t('Detail.expiration')}
                     </Text>
                     <Text
                       w="136px"

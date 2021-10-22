@@ -74,7 +74,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   ];
 
   const chainState = useAppSelector((state) => state.chain);
-  const { account } = chainState;
+  const { account, whiteList } = chainState;
   const dataPerson = useAccount(address);
   const [isPerson, setIsPerson] = useState(false);
 
@@ -92,6 +92,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   const [selectTabId, setSelectTabId] = useState(Number(localStorage.getItem('ButtonSelect')) || 0);
   const handletabSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
+    console.log(event.currentTarget.id);
     setSelectTabId(Number(event.currentTarget.id));
     localStorage.setItem('ButtonSelect', event.currentTarget.id);
   };
@@ -188,6 +189,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       iconS: IconWalletS.default,
       title: t('Account.myWallet'),
       num: userData?.ownerNftscount,
+      requiredWhitelist: false,
     },
     {
       id: '1',
@@ -195,13 +197,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       iconS: IconCreateS.default,
       title: t('Account.Created'),
       num: userData?.createdNftCount,
+      requiredWhitelist: true,
     },
     {
       id: '2',
       icon: IconDetailsCollection.default,
       iconS: IconDetailsCollectionN.default,
-      title: t('Account.stars'),
+      title: t('Account.Stars'),
       num: nftsDataCollecte?.pages[0]?.pageInfo?.totalNum,
+      requiredWhitelist: false,
     },
     {
       id: '3',
@@ -209,7 +213,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       iconS: IconOffersS.default,
       title: t('Account.offers'),
       num: offersBuyerIdArr?.pages[0]?.pageInfo?.totalNum,
-
+      requiredWhitelist: false,
     },
     {
       id: '4',
@@ -217,8 +221,14 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       iconS: IconDetailsocllectionsS.default,
       title: t('Account.collections'),
       num: userData?.createdClassCount,
+      requiredWhitelist: true,
     },
   ];
+
+  let filteredTABS = TABS;
+  if (account && whiteList.indexOf(account?.address) < 0) {
+    filteredTABS = TABS.filter((nav) => nav.requiredWhitelist === false);
+  }
 
   return (
     <>
@@ -282,7 +292,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                   justifyContent="flex-start"
                   alignItems="flex-start"
                 >
-                  {TABS.map((item, index) => (
+                  {filteredTABS.map((item) => (
                     <Button
                       w="75%"
                       key={item.id}
@@ -296,15 +306,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       justifyContent="space-between"
                       alignItems="center"
                       onClick={handletabSelect}
-                      backgroundColor={selectTabId === index ? '#000000' : '#FFFFFF'}
+                      backgroundColor={selectTabId === Number(item.id) ? '#000000' : '#FFFFFF'}
                     >
                       <Flex h="100%" alignItems="center">
-                        <Image w="22px" h="22px" mr="5px" src={selectTabId === index ? item.iconS : item.icon} alt="" />
+                        <Image w="22px" h="22px" mr="5px" src={selectTabId === Number(item.id) ? item.iconS : item.icon} alt="" />
                         <Text
                           fontSize="16px"
                           fontFamily="TTHoves-Medium, TTHoves"
                           fontWeight="500"
-                          color={selectTabId === index ? '#FFFFFF' : '#999999'}
+                          color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
                           lineHeight="18px"
                         >
                           {item.title}
@@ -314,7 +324,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                         fontSize="16px"
                         fontFamily="TTHoves-Medium, TTHoves"
                         fontWeight="500"
-                        color={selectTabId === index ? '#FFFFFF' : '#999999'}
+                        color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
                         lineHeight="18px"
                       >
                         {item.num}

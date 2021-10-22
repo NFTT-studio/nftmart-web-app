@@ -14491,8 +14491,8 @@
             "deprecationReason": null
           },
           {
-            "name": "starsWith",
-            "description": "stars with the specified string (case-sensitive).",
+            "name": "StarsWith",
+            "description": "Stars with the specified string (case-sensitive).",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -14503,7 +14503,7 @@
             "deprecationReason": null
           },
           {
-            "name": "notstarsWith",
+            "name": "notStarsWith",
             "description": "Does not start with the specified string (case-sensitive).",
             "type": {
               "kind": "SCALAR",
@@ -14515,8 +14515,8 @@
             "deprecationReason": null
           },
           {
-            "name": "starsWithInsensitive",
-            "description": "stars with the specified string (case-insensitive).",
+            "name": "StarsWithInsensitive",
+            "description": "Stars with the specified string (case-insensitive).",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -14527,7 +14527,7 @@
             "deprecationReason": null
           },
           {
-            "name": "notstarsWithInsensitive",
+            "name": "notStarsWithInsensitive",
             "description": "Does not start with the specified string (case-insensitive).",
             "type": {
               "kind": "SCALAR",

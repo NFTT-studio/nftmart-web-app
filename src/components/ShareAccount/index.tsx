@@ -2,7 +2,6 @@
 /* eslint-disable max-len */
 import React, { FC, useState } from 'react';
 import {
-  Stack,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -30,8 +29,8 @@ type ShareWebProps = {
 }
 
 const ShareWeb: FC<ShareWebProps> = () => {
+  const url = window.location.origin + window.location.pathname;
   const [opening, setOpening] = useState(false);
-  const url = window.location.href;
   const { onCopy } = useClipboard(url);
   const { t } = useTranslation();
   const toast = useToast();

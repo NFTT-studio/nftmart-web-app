@@ -8,6 +8,7 @@ import NLink from '../Link';
 import { statusArr } from '../../constants/Status';
 import { useAppSelector } from '../../hooks/redux';
 import useAccount from '../../hooks/reactQuery/useAccount';
+import useWhiteList from '../../hooks/reactQuery/useWhiteList';
 
 export interface NavLinkProps {
   address: string;
@@ -16,7 +17,7 @@ export interface NavLinkProps {
 const NavLink: FC<NavLinkProps> = ({ address }) => {
   const location = useLocation();
   const chainState = useAppSelector((state) => state.chain);
-  const { account } = chainState;
+  const { account, whiteList } = chainState;
 
   const { data } = useAccount(address);
 
@@ -61,7 +62,7 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
   ];
   let filteredNav = NAV_MAP;
 
-  if (!account) {
+  if (account && whiteList.indexOf(account?.address) < 0) {
     filteredNav = NAV_MAP.filter((nav) => nav.requiredLogin === false);
   }
 

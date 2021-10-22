@@ -1,5 +1,6 @@
 import { web3FromAddress } from '@polkadot/extension-dapp';
 
+import { bnToBn } from '@polkadot/util';
 import PolkaSDK from '..';
 import { txLog } from '../../utils/txLog';
 import { unit } from '../utils/unit';
@@ -14,6 +15,7 @@ type submitDutchAuctionProps = {
   expirationDate: number,
   range: number,
   commissionRate: number,
+  dutchDeposits: number,
   tokens: [],
   cb: Callback
 }
@@ -31,6 +33,7 @@ export const submitDutchAuction = async ({
   range,
   tokens,
   commissionRate = 0,
+  dutchDeposits,
   cb,
 }: submitDutchAuctionProps) => {
   try {
@@ -43,7 +46,7 @@ export const submitDutchAuction = async ({
     deadlineBlock += Number(block.block.header.number);
 
     // eslint-disable-next-line camelcase
-    const min_deposit = (await PolkaSDK.api.query.nftmartConf.minOrderDeposit()).toString();
+    const min_deposit = unit.mul(bnToBn(dutchDeposits));
     // eslint-disable-next-line camelcase
     const min_price = minPrice * unit;
     // eslint-disable-next-line camelcase

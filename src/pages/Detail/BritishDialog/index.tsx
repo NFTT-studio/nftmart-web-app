@@ -86,6 +86,7 @@ const OfferDialog: FC<Props> = (({
                   <ToastBody title="Success" message={t('common.success')} type="success" />
                 ),
               });
+              queryCliet.refetchQueries(QUERY_KEYS.NFT);
               setTimeout(() => {
                 setIsSubmitting(false);
                 setIsShowBritish(false);
@@ -159,9 +160,11 @@ const OfferDialog: FC<Props> = (({
                   {t('Detail.balance')}
                   :
                   {' '}
+                  {priceStringDivUnit(data?.balance?.transferrable) || 0}
                   {' '}
                   NMT
                 </Text>
+
               </Flex>
               <InputGroup
                 width="360px"

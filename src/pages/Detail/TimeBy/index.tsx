@@ -12,10 +12,15 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import { useQueryClient } from 'react-query';
 import {
   IoMdArrowDropdown,
   IoMdArrowDropup,
 } from '../../../assets/images';
+
+import {
+  QUERY_KEYS,
+} from '../../../constants';
 
 type TimeByProps = {
   selectedTime: string,
@@ -24,6 +29,7 @@ type TimeByProps = {
 
 const TimeBy: FC<TimeByProps> = ({ selectedTime, setSelectedTime }) => {
   const { t } = useTranslation();
+  const queryCliet = useQueryClient();
   const [opening, setOpening] = useState(false);
   const Time = [
     { key: 'seven', value: t('Time.seven') },
@@ -35,6 +41,7 @@ const TimeBy: FC<TimeByProps> = ({ selectedTime, setSelectedTime }) => {
   ];
 
   const handleSelect = (key: string) => {
+    queryCliet.refetchQueries(QUERY_KEYS.NFT);
     setSelectedTime(key);
     setOpening(false);
   };

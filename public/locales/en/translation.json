@@ -30,6 +30,7 @@
     "InTheWhitelist": "You have not completed artist certification.",
     "Certification": "Apply for certification",
     "daysLeft": "days left",
+    "pledgeRule": "The minimum amount of pledge is",
     "nav": {
       "navHome": "Home",
       "navBrowsing": "Browsing",
@@ -160,6 +161,7 @@
     "from": "From",
     "price": "Price",
     "expiration": "Expiration",
+    "CreationTime": "Create",
     "to": "To",
     "date": "Date",
     "buyNow": "Buy Now",
@@ -269,7 +271,7 @@
     "title": "Account",
     "myWallet": "Owned",
     "offers": "Offers",
-    "stars": "Stars",
+    "Stars": "Stars",
     "collections": "Collections",
     "offersMade": "Offers Made",
     "offersReceived": "Offers Received",
@@ -300,7 +302,7 @@
     "Items": "Items",
     "Owners": "Owners",
     "Viewers": "Viewers",
-    "stars": "stars"
+    "Stars": "Stars"
   },
   "Trx": {
     "inblock": "Transaction in block",
