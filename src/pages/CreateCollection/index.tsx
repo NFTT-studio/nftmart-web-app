@@ -314,7 +314,7 @@ const CreateCollection: FC = () => {
             value={formik.values.discord}
             onChange={formik.handleChange}
             position=""
-            placeholder="https://discard.gg/"
+            placeholder="https://discord.gg/"
             url={(
               <Image
                 w="22px"

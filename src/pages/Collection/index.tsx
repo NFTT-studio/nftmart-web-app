@@ -93,7 +93,9 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   }));
   const newLink = ICON_LIST.filter((item) => item.link !== '');
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
-  const { data: nftsData, isLoading: nftsIsLoading, fetchNextPage } = useNftsPersonal(
+  const {
+    data: nftsData, isLoading: nftsIsLoading, fetchNextPage, refetch: refetchNftsData,
+  } = useNftsPersonal(
     {
       classId,
       sortBy: selectedSort,
@@ -108,17 +110,21 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
       setIsPerson(true);
     }
   }, [collectionsData?.collection?.creator_id, address, dataPerson]);
-
+  useEffect(() => {
+    refetchCollectionsData();
+    refetchNftsData();
+  }, [classId]);
   let begin = any;
   useEffect(() => {
     if (JSON.stringify(collectionsData) === '{}') {
       begin = setInterval(() => {
         refetchCollectionsData();
+        refetchNftsData();
       }, 3000);
     } else {
       clearInterval(begin);
     }
-  }, [JSON.stringify(collectionsData) === '{}']);
+  }, [JSON.stringify(collectionsData) === '{}', classId]);
   useEffect(() => () => {
     clearInterval(begin);
   }, []);
@@ -353,7 +359,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                       justifyContent="flex-end"
                       alignItems="center"
                     >
-                      {t('class.Starts')}
+                      {t('class.stars')}
                     </Flex>
                     <Flex
                       fontSize="14px"

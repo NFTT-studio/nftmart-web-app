@@ -91,7 +91,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const schema = Yup.object().shape({
     price: Yup.number().moreThan(0).required(t('Create.required')),
-    deposits: Yup.number().moreThan(1).required(t('Create.required')),
+    deposits: Yup.number().min(1).required(t('Create.required')),
   });
   const schemaDutch = Yup.object().shape({
     startingPrice: Yup.number().moreThan(0).required(t('Create.required')),
@@ -707,7 +707,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         lineHeight="14px"
                       >
                         {t('SellSetting.atLeast')}
-                        2
+                        1
                         {' '}
                         NMT
                       </Text>
@@ -2261,7 +2261,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           color="#000000"
                           lineHeight="16px"
                         >
-                          {Math.floor(number2PerU16(tax) * 1000) / 1000}
+                          {Math.ceil(number2PerU16(tax))}
                           %
                         </Text>
                       </Flex>

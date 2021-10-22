@@ -10,8 +10,8 @@ import {
   AlertDialogCloseButton,
   Modal,
   ModalOverlay,
+  useToast,
 } from '@chakra-ui/react';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 import { useQueryClient } from 'react-query';
@@ -40,6 +40,7 @@ interface Props {
 const BuyDialog: FC<Props> = (({
   price, nftName, collectionName, logoUrl, isShowDutch, setIsShowDutch, creatorId, auctionId,
 }) => {
+  const toast = useToast();
   const queryCliet = useQueryClient();
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
@@ -61,10 +62,21 @@ const BuyDialog: FC<Props> = (({
       cb: {
         success: (result) => {
           if (result.dispatchError) {
-            toast(<ToastBody title="Error" message={t('Detail.buyError')} type="error" />);
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={result.dispatchError.toString()} type="error" />
+              ),
+            });
             setIsSubmitting(false);
+            setIsShowDutch(false);
           } else {
-            toast(<ToastBody title="Success" message={t('Detail.buySuccess')} type="success" />);
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
             setTimeout(() => {
               queryCliet.refetchQueries(QUERY_KEYS.NFT);
               setIsSubmitting(false);
@@ -73,8 +85,23 @@ const BuyDialog: FC<Props> = (({
           }
         },
         error: (error: string) => {
-          toast(<ToastBody title="Error" message={error} type="error" />);
+          if (error === 'Error: Cancelled') {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="warning" message={error} type="warning" />
+              ),
+            });
+          } else {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={error} type="error" />
+              ),
+            });
+          }
           setIsSubmitting(false);
+          setIsShowDutch(false);
         },
       },
     });

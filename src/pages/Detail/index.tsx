@@ -176,6 +176,15 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       setRemainingTime(res);
     });
   }, [isShowDutch]);
+  useEffect(() => {
+    browse();
+    collectNft('status');
+    getBlock().then((res) => {
+      setRemainingTime(res);
+    });
+    queryCliet.refetchQueries(QUERY_KEYS.CATEGORIES);
+    queryCliet.refetchQueries(QUERY_KEYS.NFT);
+  }, [nftId]);
 
   const { data: token } = useToken();
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo?.owner_id);
