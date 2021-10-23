@@ -61,6 +61,7 @@ const BuyDialog: FC<Props> = (({
                 <ToastBody title="Error" message={result.dispatchError.toString()} type="error" />
               ),
             });
+            setIsSubmitting(false);
           } else {
             toast({
               position: 'top',
@@ -91,7 +92,6 @@ const BuyDialog: FC<Props> = (({
               ),
             });
           }
-          setIsSubmitting(false);
           setIsSubmitting(false);
         },
       },

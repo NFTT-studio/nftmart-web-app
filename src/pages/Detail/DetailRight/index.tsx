@@ -18,11 +18,13 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import Identicon from 'react-identicons';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import NoData from '../NoData';
 import TimeBy from '../TimeBy';
 import PriceHistoryChart from '../PriceHistoryChart';
 import { priceStringDivUnit, currentPrice } from '../../../utils/format';
 import { renderNmtNumberText } from '../../../components/Balance';
+import useEvent from '../../../hooks/reactQuery/useEvent';
 
 import {
   // IconDetailsRefresh,
@@ -36,8 +38,12 @@ import {
   IconRankDown,
   IconRankUp,
 } from '../../../assets/images';
+import {
+  DEFAULT_PAGE_LIMIT,
+} from '../../../constants';
 
 interface Props {
+  nftId:string,
   nftData: {
     nftInfo: {
       burned: string | null
@@ -98,6 +104,7 @@ interface Props {
   setIsAllowBritish:React.Dispatch<React.SetStateAction<boolean>>,
 }
 const DetailRight: FC<Props> = (({
+  nftId,
   nftData,
   collectionsData,
   account,
@@ -120,6 +127,13 @@ const DetailRight: FC<Props> = (({
   setIshowReceive,
   setIsAllowBritish,
 }) => {
+  const {
+    data: eventDate, fetchNextPage: fetchNextPageEventDate, refetch: fetchOEventDate,
+  } = useEvent(
+    {
+      nftId,
+    },
+  );
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
 
@@ -974,80 +988,87 @@ const DetailRight: FC<Props> = (({
       ) : null}
       {selectTabId === 1 ? (
         <Box p="20px">
-          {0 / 1
-            ? (
-              <Box p="0 20px">
-                <Flex w="100%" flexDirection="column" justifyContent="flex-start">
-                  <Flex h="40px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
-                    <Text
-                      w="136px"
-                      textAlign="left"
-                      fontSize="12px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#999999"
-                      lineHeight="20px"
-                    >
-                      {t('Detail.Event')}
-                    </Text>
-                    <Text
-                      w="136px"
-                      textAlign="center"
-                      fontSize="12px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#999999"
-                      lineHeight="20px"
-                    >
-                      {t('Detail.UnitPrice')}
-                    </Text>
-                    <Text
-                      w="136px"
-                      textAlign="center"
-                      fontSize="12px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#999999"
-                      lineHeight="20px"
-                    >
-                      {t('Detail.Quantity')}
-                    </Text>
-                    <Text
-                      w="136px"
-                      textAlign="center"
-                      fontSize="12px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#999999"
-                      lineHeight="20px"
-                    >
-                      {t('Detail.from')}
-                    </Text>
-                    <Text
-                      w="136px"
-                      textAlign="center"
-                      fontSize="12px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#999999"
-                      lineHeight="20px"
-                    >
-                      {t('Detail.To')}
-                    </Text>
-                    <Text
-                      w="136px"
-                      textAlign="right"
-                      fontSize="12px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#999999"
-                      lineHeight="20px"
-                    >
-                      {t('Detail.Date')}
-                    </Text>
+          {eventDate?.pages.length ? (
+            <Box p="0 20px">
+              <Flex w="100%" flexDirection="column" justifyContent="flex-start">
+                <Flex h="40px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
+                  <Text
+                    w="136px"
+                    textAlign="left"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#999999"
+                    lineHeight="20px"
+                  >
+                    {t('Detail.Event')}
+                  </Text>
+                  <Text
+                    w="136px"
+                    textAlign="center"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#999999"
+                    lineHeight="20px"
+                  >
+                    {t('Detail.UnitPrice')}
+                  </Text>
+                  <Text
+                    w="136px"
+                    textAlign="center"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#999999"
+                    lineHeight="20px"
+                  >
+                    {t('Detail.Quantity')}
+                  </Text>
+                  <Text
+                    w="136px"
+                    textAlign="center"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#999999"
+                    lineHeight="20px"
+                  >
+                    {t('Detail.from')}
+                  </Text>
+                  <Text
+                    w="136px"
+                    textAlign="center"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#999999"
+                    lineHeight="20px"
+                  >
+                    {t('Detail.To')}
+                  </Text>
+                  <Text
+                    w="136px"
+                    textAlign="right"
+                    fontSize="12px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#999999"
+                    lineHeight="20px"
+                  >
+                    {t('Detail.Date')}
+                  </Text>
 
-                  </Flex>
-                  {OfferssUnitArr.map((item) => (
+                </Flex>
+                <InfiniteScroll
+                  dataLength={eventDate?.pages.length * DEFAULT_PAGE_LIMIT}
+                  next={fetchNextPageEventDate}
+                  hasMore={eventDate?.pages.length
+                                * DEFAULT_PAGE_LIMIT < eventDate?.pages[0].pageInfo.totalNum}
+                  loader={<h4>Loading...</h4>}
+                  initialScrollY={1}
+                >
+                  {eventDate?.pages.map((page) => page?.orders?.map((item) => (
                     <Flex
                       key={item}
                       h="54px"
@@ -1129,11 +1150,12 @@ const DetailRight: FC<Props> = (({
                         i minutes
                       </Text>
                     </Flex>
-                  ))}
 
-                </Flex>
-              </Box>
-            )
+                  )))}
+                </InfiniteScroll>
+              </Flex>
+            </Box>
+          )
             : (
               <Box p="0px">
                 <Flex

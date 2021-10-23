@@ -603,6 +603,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   propertiesArr={propertiesArr}
                 />
                 <DetailRight
+                  nftId={nftId}
                   nftData={nftData}
                   collectionsData={collectionsData}
                   account={account}

@@ -17,6 +17,7 @@ export const QUERY_KEYS = {
   USERTop: 'USERTop',
   Offer: 'Offer',
   OfferSend: 'OfferSend',
+  Event: 'Event',
 };
 
 export const DEFAULT_PAGE_LIMIT = 20;

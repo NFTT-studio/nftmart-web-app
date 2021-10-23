@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 import React, { useState, MouseEventHandler, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -40,7 +41,7 @@ const Home = () => {
   const { t } = useTranslation();
   const [selectId, setSelectId] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const [number, setNumber] = useState(4);
+  const [number, setNumber] = useState(20);
   const [pageParam, setPageParamr] = useState(0);
   const [pageParamE, setPageParamE] = useState(0);
   const [pageParamC, setPageParamC] = useState(0);
@@ -48,15 +49,15 @@ const Home = () => {
   const {
     data: hotNftsData, isLoading: hotNftsIsLoading,
     refetch: refetchHot,
-  } = useHotNfts(number, pageParam, selectId);
+  } = useHotNfts(number, selectId);
   const {
     data: expensiveNftsData, isLoading: expensiveNftsIsLoading,
     refetch: refetchExpensive,
-  } = useExpensiveNfts(number, pageParamE, selectId);
+  } = useExpensiveNfts(number, selectId);
   const {
     data: cheapNftsData, isLoading: cheapNftsIsLoading,
     refetch: refetchCheap,
-  } = useCheapNfts(number, pageParamC, selectId);
+  } = useCheapNfts(number, selectId);
 
   const { data: bannerData, isLoading: bannerIsLoading } = useBanner();
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
@@ -123,10 +124,10 @@ const Home = () => {
                   onClick={() => {
                     if (pageParam > 0) {
                       setPageParamr(pageParam - 1);
-                      setTimeout(() => {
-                        refetchHot();
-                      }, 1);
                     }
+                  }}
+                  _hover={{
+                    background: '#000000',
                   }}
                 >
                   <Image
@@ -145,14 +146,14 @@ const Home = () => {
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
-                  isDisabled={!(pageParam + 1 < Number(hotNftsData?.pageInfo.pageSize))}
+                  isDisabled={!(pageParam < 3) || !hotNftsData?.orders.slice(0 + (pageParam + 1) * 4, 4 + (pageParam + 1) * 4).length}
                   onClick={() => {
-                    if (pageParam + 1 < Number(hotNftsData?.pageInfo.pageSize)) {
+                    if (pageParam < 4) {
                       setPageParamr(pageParam + 1);
-                      setTimeout(() => {
-                        refetchHot();
-                      }, 1);
                     }
+                  }}
+                  _hover={{
+                    background: '#000000',
                   }}
                 >
                   <Image
@@ -167,10 +168,10 @@ const Home = () => {
                 <Center height="396px">
                   <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                 </Center>
-              ) : hotNftsData?.orders.length
+              ) : hotNftsData?.orders.slice(0 + pageParam * 4, 4 + pageParam * 4).length
                 ? (
                   <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
-                    {hotNftsData.orders.map((order) => (
+                    {hotNftsData.orders.slice(0 + pageParam * 4, 4 + pageParam * 4).map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
                   </SimpleGrid>
@@ -238,10 +239,10 @@ const Home = () => {
                   onClick={() => {
                     if (pageParamE > 0) {
                       setPageParamE(pageParamE - 1);
-                      setTimeout(() => {
-                        refetchExpensive();
-                      }, 1);
                     }
+                  }}
+                  _hover={{
+                    background: '#000000',
                   }}
                 >
                   <Image
@@ -260,14 +261,14 @@ const Home = () => {
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
-                  isDisabled={!(pageParamE + 1 < Number(expensiveNftsData?.pageInfo.pageSize))}
+                  isDisabled={!(pageParamE < 3) || !expensiveNftsData?.orders.slice(0 + (pageParamE + 1) * 4, 4 + (pageParamE + 1) * 4).length}
                   onClick={() => {
-                    if (expensiveNftsData && pageParamE + 1 < expensiveNftsData?.pageInfo.pageSize) {
+                    if (pageParamE < 4) {
                       setPageParamE(pageParamE + 1);
-                      setTimeout(() => {
-                        refetchExpensive();
-                      }, 1);
                     }
+                  }}
+                  _hover={{
+                    background: '#000000',
                   }}
                 >
                   <Image
@@ -282,10 +283,10 @@ const Home = () => {
                 <Center height="396px">
                   <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                 </Center>
-              ) : (expensiveNftsData?.orders.length
+              ) : (expensiveNftsData && expensiveNftsData.orders.slice(0 + pageParamE * 4, 4 + pageParamE * 4).length
                 ? (
                   <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
-                    {expensiveNftsData.orders.map((order) => (
+                    {expensiveNftsData.orders.slice(0 + pageParamE * 4, 4 + pageParamE * 4).map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
                   </SimpleGrid>
@@ -352,9 +353,6 @@ const Home = () => {
                   onClick={() => {
                     if (pageParamC > 0) {
                       setPageParamC(pageParamC - 1);
-                      setTimeout(() => {
-                        refetchCheap();
-                      }, 1);
                     }
                   }}
                 >
@@ -374,13 +372,10 @@ const Home = () => {
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
-                  isDisabled={!(pageParamC + 1 < Number(cheapNftsData?.pageInfo.pageSize))}
+                  isDisabled={!(pageParamC + 1 < 3) || !cheapNftsData?.orders.slice(0 + (pageParamC + 1) * 4, 4 + (pageParamC + 1) * 4).length}
                   onClick={() => {
-                    if (cheapNftsData && pageParamC + 1 < cheapNftsData?.pageInfo.pageSize) {
+                    if (pageParamC < 3) {
                       setPageParamC(pageParamC + 1);
-                      setTimeout(() => {
-                        refetchCheap();
-                      }, 1);
                     }
                   }}
                 >
@@ -396,10 +391,10 @@ const Home = () => {
                 <Center height="396px">
                   <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                 </Center>
-              ) : cheapNftsData?.orders.length
+              ) : cheapNftsData?.orders.slice(0 + pageParamC * 4, 4 + pageParamC * 4).length
                 ? (
                   <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
-                    {cheapNftsData.orders.map((order) => (
+                    {cheapNftsData.orders.slice(0 + pageParamC * 4, 4 + pageParamC * 4).map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
                   </SimpleGrid>
