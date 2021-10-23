@@ -160,8 +160,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
         : union(selectedStatusArr, [event.currentTarget.id]),
     );
   };
-  console.log(Offerreceive);
-  console.log(nftsDataCreate);
   useEffect(() => {
     setSelectTabId(Number(localStorage.getItem('ButtonSelect')) || 0);
   }, [Number(localStorage.getItem('ButtonSelect'))]);
@@ -234,7 +232,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   ];
 
   let filteredTABS = TABS;
-  if (account && whiteList.indexOf(account?.address) < 0) {
+  if (account && whiteList.indexOf(address) < 0) {
     filteredTABS = TABS.filter((nav) => nav.requiredWhitelist === false);
   }
 
