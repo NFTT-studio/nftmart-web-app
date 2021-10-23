@@ -11,6 +11,6 @@ export default ({
     ownerId, sortBy, categoryId, collectionId, status, classId, creatorId, number, pageParam,
   }),
   {
-    getNextPageParam: (lastPage, pages) => ((pages.length - 1) + 1),
+    getNextPageParam: (lastPage, pages) => (pages.length + 1),
   },
 );

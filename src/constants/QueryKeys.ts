@@ -15,6 +15,8 @@ export const QUERY_KEYS = {
   hotNFTS: 'hotNFTS',
   USER: 'USER',
   USERTop: 'USERTop',
+  Offer: 'Offer',
+  OfferSend: 'OfferSend',
 };
 
 export const DEFAULT_PAGE_LIMIT = 20;

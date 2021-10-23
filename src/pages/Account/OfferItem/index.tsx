@@ -15,10 +15,10 @@ import {
 } from '../../../constants';
 
 interface Props {
-  offer?: []
+  offers?: []
 }
-const OfferItem: FC<Props> = (({ offer }) => {
-  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+const OfferItem: FC<Props> = (({ offers }) => {
+  const formatAddress = (addr: string) => (addr ? `${addr.slice(0, 4)}...${addr.slice(-4)}` : null);
   const { t } = useTranslation();
 
   const [remainingTime, setRemainingTime] = useState(0);
@@ -56,11 +56,11 @@ const OfferItem: FC<Props> = (({ offer }) => {
   return (
     <Link
       as={RouterLink}
-      to={`/item/${offer?.id}`}
+      to={`/item/${offers?.nft_id}`}
 
     >
       <Flex
-        key={offer?.id}
+        key={offers?.nft_id}
         p="0 20px"
         width="100%"
         height="81px"
@@ -88,7 +88,7 @@ const OfferItem: FC<Props> = (({ offer }) => {
             width="auto"
             height="40px"
             borderRadius="4px"
-            src={`${PINATA_SERVER}${offer?.metadata?.previewUrl || offer?.metadata?.logoUrl}`}
+            src={`${PINATA_SERVER}${offers?.nft?.previewUrl || offers?.nft?.logoUrl}`}
             alt=""
           />
           <Flex
@@ -109,10 +109,10 @@ const OfferItem: FC<Props> = (({ offer }) => {
               color="#000000"
               lineHeight="20px"
             >
-              {offer?.class?.name}
+              {offers?.nft?.name}
             </Text>
             <Text>
-              {offer?.metadata?.name}
+              {offers?.nft?.name}
             </Text>
           </Flex>
         </Flex>
@@ -127,7 +127,7 @@ const OfferItem: FC<Props> = (({ offer }) => {
           color="#000000"
           lineHeight="20px"
         >
-          {Number(offer?.price) ? renderNmtNumberText(offer?.price) : renderNmtNumberText(offer?.auction?.price)}
+          {Number(offers?.price) ? renderNmtNumberText(offers?.price) : renderNmtNumberText(offers?.auction?.price)}
           <Text
             ml="3px"
             fontSize="14px"
@@ -157,9 +157,9 @@ const OfferItem: FC<Props> = (({ offer }) => {
           color="#000000"
           lineHeight="20px"
         >
-          {offer?.owner?.name ? offer?.owner?.name : formatAddress(offer?.owner?.id) }
+          {offers?.user?.name ? offers?.user?.name : formatAddress(offers?.user?.id) }
         </Text>
-        {offer?.deadline - remainingTime > 0 || offer?.auction?.deadline - remainingTime > 0
+        {offers?.deadline - remainingTime > 0 || offers?.deadline - remainingTime > 0
           ? (
             <Text
               width="120px"
@@ -173,8 +173,8 @@ const OfferItem: FC<Props> = (({ offer }) => {
             >
               in
               {' '}
-              {offer?.deadline - remainingTime > 0 ? timeBlock(offer?.deadline) : null}
-              {offer?.auction?.deadline - remainingTime > 0 ? timeBlock(offer?.auction?.deadline) : null}
+              {offers?.deadline - remainingTime > 0 ? timeBlock(offers?.deadline) : null}
+              {offers?.auction?.deadline - remainingTime > 0 ? timeBlock(offers?.auction?.deadline) : null}
               {' '}
               hours
             </Text>
