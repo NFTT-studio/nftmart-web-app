@@ -104,7 +104,7 @@
     "nft": "Create a new nft",
     "required": "Required",
     "confirmClipping": "Confirm clipping",
-    "category": "Category",
+    "category": "*Category",
     "categoryRule": "Adding a category will help make your item discoverable on mart.You can set up to 2 categories.",
     "royalties": "Royalties",
     "royaltiesRule": "When users sell your work on the market, you receive ",

@@ -17,6 +17,7 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import { without } from 'lodash';
 import {
   RouteComponentProps, useLocation, useHistory, Link as RouterLink,
 } from 'react-router-dom';
@@ -73,6 +74,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const search = parse(location.search.replace('?', ''));
   const classId = search.collectionId;
   const [remainingTime, setRemainingTime] = useState(0);
+  const [selectedCollection] = useState<string[]>([classId]);
 
   useEffect(() => {
     getBlock().then((res) => {
@@ -97,7 +99,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
     data: nftsData, isLoading: nftsIsLoading, fetchNextPage, refetch: refetchNftsData,
   } = useNftsPersonal(
     {
-      classId,
+      collectionId: selectedCollection,
       sortBy: selectedSort,
     },
   );

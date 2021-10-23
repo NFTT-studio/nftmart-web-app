@@ -30,6 +30,7 @@ import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 import useToken from '../../../hooks/reactQuery/useToken';
+import { priceStringDivUnit } from '../../../utils/format';
 import {
   IconCalendar,
 } from '../../../assets/images';
@@ -52,15 +53,12 @@ const OfferDialog: FC<Props> = (({
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
   const { data: token } = useToken();
-  const [value, onChange] = useState(new Date());
-  const [expiration, onExpiration] = useState(0);
 
   const { account } = chainState;
   const { data } = useAccount(account!.address);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation();
   const cancelRef = useRef<HTMLDivElement>(null);
-  const oneMonth = (60 * 60 * 24 * 30) / 6;
 
   const schema = Yup.object().shape({
     price: Yup.number().moreThan(0).required(t('Create.required')),
@@ -310,17 +308,6 @@ const OfferDialog: FC<Props> = (({
                     color: '#999999',
                     fontSize: '12px',
                   }}
-                />
-                <InputRightAddon
-                  // eslint-disable-next-line react/no-children-prop
-                  children={(
-                    <Image
-                      w="22px"
-                      h="22px"
-                      borderStyle="dashed"
-                      src={IconCalendar.default}
-                    />
-)}
                 />
 
               </InputGroup>

@@ -1,6 +1,6 @@
 /* eslint-disable no-new-wrappers */
 import { Flex } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   XAxis,
   YAxis,
@@ -30,18 +30,20 @@ const PriceHistoryChart = ({
     const h = times.getHours();
     const mm = times.getMinutes();
     const s = times.getSeconds();
-    return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
+    // return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
+    return `${add0(m)}/${add0(d)}`;
   };
-  const PriceDateone = PriceDate;
-  console.log(PriceDateone);
-  PriceDateone.map((item) => {
-    // const num = Number(NumberToString(item.price));
+  const PriceDateone = JSON.parse(JSON.stringify(PriceDate));
+  PriceDateone.forEach((item) => {
+    const num = Number(NumberToString(item.price));
     // item.price = Number(num);
-
+    // item.date = format(item.date);
     item.date = format(item.date);
-    item.price = (Number(item.price) / 1000000).toFixed(1);
-    return item;
+    item.price = num;
   });
+  // useEffect(() => {
+
+  // }, []);
   return (
     <ResponsiveContainer height={246} width="100%">
       <AreaChart

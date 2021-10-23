@@ -41,7 +41,7 @@ const TimeBy: FC<TimeByProps> = ({ selectedTime, setSelectedTime }) => {
   ];
 
   const handleSelect = (key: string) => {
-    queryCliet.refetchQueries(QUERY_KEYS.NFT);
+    // queryCliet.refetchQueries(QUERY_KEYS.NFT);
     setSelectedTime(key);
     setOpening(false);
   };
