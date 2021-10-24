@@ -7,8 +7,11 @@ import { useLocalStorage } from 'react-use';
 import { isEmpty } from 'lodash';
 import PolkaSDK from '.';
 import { LOGIN_LOCAL_STORAGE_KEY, SS58_FORMAT } from '../constants';
-import { setAccount, setAccounts, setInjector } from '../redux/chainSlice';
+import {
+  setAccount, setAccounts, setInjector, setWhiteList,
+} from '../redux/chainSlice';
 import { useAppDispatch } from '../hooks/redux';
+import useWhiteList from '../hooks/reactQuery/useWhiteList';
 
 interface Props {
   children: React.ReactNode;
@@ -18,6 +21,7 @@ const PolkaProvider = ({ children }: Props) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [value, setValue] = useLocalStorage<string>(LOGIN_LOCAL_STORAGE_KEY);
   const dispatch = useAppDispatch();
+  const { data } = useWhiteList();
 
   useEffect(() => {
     const init = async () => {
@@ -46,6 +50,12 @@ const PolkaProvider = ({ children }: Props) => {
     };
     init();
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setWhiteList(data));
+    }
+  }, [data, dispatch]);
 
   return (
     <>

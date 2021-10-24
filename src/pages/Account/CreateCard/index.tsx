@@ -20,9 +20,9 @@ const CreateCard: FC<Props> = (({ account, collectionId }) => {
   return (
     <Link
       as={RouterLink}
-      to={`/account/${account?.address}/wallet?id=5`}
+      to="/profile/collection/create"
       onClick={() => {
-        localStorage.setItem('ButtonSelect', '5');
+        localStorage.setItem('createButtonSelect', '5');
       }}
     >
       <Flex

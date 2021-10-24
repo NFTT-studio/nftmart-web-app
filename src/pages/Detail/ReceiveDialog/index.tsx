@@ -78,12 +78,8 @@ const DealDialog: FC<Props> = (({
           },
           error: (error: string) => {
             if (error === 'Error: Cancelled') {
-              toast({
-                position: 'top',
-                render: () => (
-                  <ToastBody title="warning" message={error} type="warning" />
-                ),
-              });
+              setIshowReceive(false);
+              setIsSubmitting(false);
             } else {
               toast({
                 position: 'top',

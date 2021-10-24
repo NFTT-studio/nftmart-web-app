@@ -18,6 +18,8 @@ export const QUERY_KEYS = {
   Offer: 'Offer',
   OfferSend: 'OfferSend',
   Event: 'Event',
+  ExpensiveNFTS: 'ExpensiveNFTS',
+  CheapNFTS: 'CheapNFTS',
 };
 
 export const DEFAULT_PAGE_LIMIT = 20;
