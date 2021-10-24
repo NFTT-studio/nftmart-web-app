@@ -2,8 +2,10 @@ import React, { FC } from 'react';
 import {
   Flex,
   Text,
+  Link,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface Props {
   events: [],
@@ -84,7 +86,16 @@ const Events: FC<Props> = (({
         color="#3D00FF"
         lineHeight="20px"
       >
-        {formatAddress(date[0])}
+        <Link
+          display="inline-block"
+          as={RouterLink}
+          to={`/account/${date[0]}/wallet`}
+          onClick={() => {
+            localStorage.setItem('ButtonSelect', '0');
+          }}
+        >
+          {date[0] ? formatAddress(date[0]) : ''}
+        </Link>
       </Text>
       <Text
         w="136px"
@@ -95,7 +106,16 @@ const Events: FC<Props> = (({
         color="#3D00FF"
         lineHeight="20px"
       >
-        {formatAddress(date[1])}
+        <Link
+          display="inline-block"
+          as={RouterLink}
+          to={`/account/${date[1]}/wallet`}
+          onClick={() => {
+            localStorage.setItem('ButtonSelect', '0');
+          }}
+        >
+          {date[1] ? formatAddress(date[0]) : ''}
+        </Link>
       </Text>
       <Text
         w="136px"
