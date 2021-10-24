@@ -56,7 +56,6 @@ import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
 import useNfts from '../../hooks/reactQuery/useNfts';
 import useUser from '../../hooks/reactQuery/useUser';
-import CreateCollection from '../CreateCollection/index';
 
 const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
@@ -233,6 +232,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   let filteredTABS = TABS;
   if (account && whiteList.indexOf(address) < 0) {
+    localStorage.setItem('ButtonSelect', '0');
     filteredTABS = TABS.filter((nav) => nav.requiredWhitelist === false);
   }
 
@@ -617,20 +617,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             </>
 
           ) : ''}
-
-          {selectTabId === 5
-            ? (
-              <>
-                {collectionsIsLoading
-                  ? (
-                    <Center width="100%" height="500px">
-                      <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
-                    </Center>
-                  )
-                  : <CreateCollection />}
-              </>
-            )
-            : ''}
         </Flex>
       </Flex>
     </MainContainer>

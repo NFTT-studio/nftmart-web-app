@@ -197,12 +197,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           },
           error: (error) => {
             if (error === 'Error: Cancelled') {
-              toast({
-                position: 'top',
-                render: () => (
-                  <ToastBody title="warning" message={error} type="warning" />
-                ),
-              });
+              setIsSubmitting(false);
             } else {
               toast({
                 position: 'top',
@@ -241,12 +236,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           },
           error: (error) => {
             if (error === 'Error: Cancelled') {
-              toast({
-                position: 'top',
-                render: () => (
-                  <ToastBody title="warning" message={error} type="warning" />
-                ),
-              });
+              setIsSubmitting(false);
             } else {
               toast({
                 position: 'top',
@@ -285,12 +275,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           },
           error: (error) => {
             if (error === 'Error: Cancelled') {
-              toast({
-                position: 'top',
-                render: () => (
-                  <ToastBody title="warning" message={error} type="warning" />
-                ),
-              });
+              setIsSubmitting(false);
             } else {
               toast({
                 position: 'top',
@@ -329,12 +314,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
           },
           error: (error) => {
             if (error === 'Error: Cancelled') {
-              toast({
-                position: 'top',
-                render: () => (
-                  <ToastBody title="warning" message={error} type="warning" />
-                ),
-              });
+              setIsSubmitting(false);
             } else {
               toast({
                 position: 'top',

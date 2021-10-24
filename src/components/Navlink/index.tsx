@@ -55,7 +55,7 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
     {
       title: 'common.nav.navCreate',
       path: data?.createdClassCount ? `/account/${account?.address}/wallet?id=4`
-        : `/account/${account?.address}/wallet?id=5`,
+        : '/profile/collection/create',
       requiredLogin: true,
       requiredWhitelist: true,
     },
@@ -98,7 +98,7 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
               h="17px"
               borderTop="1px solid #999"
               transform="rotate(114deg)"
-              display={index === NAV_MAP.length - 1 ? 'none' : ''}
+              display={index === filteredNav.length - 1 ? 'none' : ''}
             />
           </Fragment>
         );

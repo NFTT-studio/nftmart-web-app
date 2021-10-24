@@ -697,6 +697,36 @@ const DetailRight: FC<Props> = (({
                 ) : null}
             </Flex>
           ) : null}
+          {types && Number(events.day) > 4 && Number(events.times) > 0 ? (
+            <Flex mr="20px" flexDirection="column" h="100%" justifyContent="flex-start">
+              <Text
+                color="#000000"
+                align="center"
+                fontSize="16px"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
+                textAlign="right"
+                mb="12px"
+              >
+                0d
+                {' '}
+                {Number(events.day)}
+                {' '}
+                days left
+              </Text>
+              <Text
+                color="#999999"
+                align="center"
+                fontSize="12px"
+                fontWeight="100"
+                fontFamily="TTHoves-Thin, TTHoves"
+                mb="12px"
+              >
+                Auction ends in
+              </Text>
+            </Flex>
+          ) : null}
         </Flex>
         {Number(nftData.nftInfo.auction?.hammer_price) && Number(events.times) > 0
           ? (

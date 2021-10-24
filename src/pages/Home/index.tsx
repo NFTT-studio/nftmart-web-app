@@ -19,7 +19,6 @@ import SwiperCore, {
 } from 'swiper';
 import CategorySelector from '../../components/CategorySelector';
 import OrderCard from '../../components/NftCard';
-import useBanner from '../../hooks/reactQuery/useBanner';
 import { useCheapNfts, useExpensiveNfts, useHotNfts } from '../../hooks/reactQuery/useNfts';
 import useCategories from '../../hooks/reactQuery/useCategories';
 import MainContainer from '../../layout/MainContainer';
@@ -41,7 +40,6 @@ const Home = () => {
   const { t } = useTranslation();
   const [selectId, setSelectId] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const [number, setNumber] = useState(20);
   const [pageParam, setPageParamr] = useState(0);
   const [pageParamE, setPageParamE] = useState(0);
   const [pageParamC, setPageParamC] = useState(0);
@@ -49,17 +47,16 @@ const Home = () => {
   const {
     data: hotNftsData, isLoading: hotNftsIsLoading,
     refetch: refetchHot,
-  } = useHotNfts(number, selectId);
+  } = useHotNfts(selectId);
   const {
     data: expensiveNftsData, isLoading: expensiveNftsIsLoading,
     refetch: refetchExpensive,
-  } = useExpensiveNfts(number, selectId);
+  } = useExpensiveNfts(selectId);
   const {
     data: cheapNftsData, isLoading: cheapNftsIsLoading,
     refetch: refetchCheap,
-  } = useCheapNfts(number, selectId);
+  } = useCheapNfts(selectId);
 
-  const { data: bannerData, isLoading: bannerIsLoading } = useBanner();
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
   const [remainingTime, setRemainingTime] = useState(0);
 
@@ -71,10 +68,10 @@ const Home = () => {
   // console.log(remainingTime, 1);
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
+    setSelectId(event.currentTarget.id);
     setPageParamr(0);
     setPageParamE(0);
     setPageParamC(0);
-    setSelectId(event.currentTarget.id);
   };
 
   return (

@@ -95,12 +95,8 @@ const OfferDialog: FC<Props> = (({
           },
           error: (error: string) => {
             if (error === 'Error: Cancelled') {
-              toast({
-                position: 'top',
-                render: () => (
-                  <ToastBody title="warning" message={error} type="warning" />
-                ),
-              });
+              setIsSubmitting(false);
+              setIsShowBritish(false);
             } else {
               toast({
                 position: 'top',
