@@ -21,6 +21,7 @@ import Identicon from 'react-identicons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import NoData from '../NoData';
 import TimeBy from '../TimeBy';
+import Activity from '../Activity';
 import PriceHistoryChart from '../PriceHistoryChart';
 import { priceStringDivUnit, currentPrice } from '../../../utils/format';
 import { renderNmtNumberText } from '../../../components/Balance';
@@ -989,7 +990,7 @@ const DetailRight: FC<Props> = (({
       {selectTabId === 1 ? (
         <Box p="20px">
           {eventDate?.pages.length ? (
-            <Box p="0 20px">
+            <Box>
               <Flex w="100%" flexDirection="column" justifyContent="flex-start">
                 <Flex h="40px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
                   <Text
@@ -1001,7 +1002,7 @@ const DetailRight: FC<Props> = (({
                     color="#999999"
                     lineHeight="20px"
                   >
-                    {t('Detail.Event')}
+                    {t('Detail.event')}
                   </Text>
                   <Text
                     w="136px"
@@ -1012,7 +1013,7 @@ const DetailRight: FC<Props> = (({
                     color="#999999"
                     lineHeight="20px"
                   >
-                    {t('Detail.UnitPrice')}
+                    {t('Detail.unitPrice')}
                   </Text>
                   <Text
                     w="136px"
@@ -1023,7 +1024,7 @@ const DetailRight: FC<Props> = (({
                     color="#999999"
                     lineHeight="20px"
                   >
-                    {t('Detail.Quantity')}
+                    {t('Detail.quantity')}
                   </Text>
                   <Text
                     w="136px"
@@ -1045,7 +1046,7 @@ const DetailRight: FC<Props> = (({
                     color="#999999"
                     lineHeight="20px"
                   >
-                    {t('Detail.To')}
+                    {t('Detail.to')}
                   </Text>
                   <Text
                     w="136px"
@@ -1056,7 +1057,7 @@ const DetailRight: FC<Props> = (({
                     color="#999999"
                     lineHeight="20px"
                   >
-                    {t('Detail.Date')}
+                    {t('Detail.date')}
                   </Text>
 
                 </Flex>
@@ -1064,93 +1065,18 @@ const DetailRight: FC<Props> = (({
                   dataLength={eventDate?.pages.length * DEFAULT_PAGE_LIMIT}
                   next={fetchNextPageEventDate}
                   hasMore={eventDate?.pages.length
-                                * DEFAULT_PAGE_LIMIT < eventDate?.pages[0].pageInfo.totalNum}
+                                * DEFAULT_PAGE_LIMIT < eventDate?.pages[0].pageInfo?.totalNum}
                   loader={<h4>Loading...</h4>}
                   initialScrollY={1}
+                  height="260px"
                 >
-                  {eventDate?.pages.map((page) => page?.orders?.map((item) => (
-                    <Flex
-                      key={item}
-                      h="54px"
-                      w="100%"
-                      flexDirection="row"
-                      justifyContent="space-between"
-                      align="center"
-                    >
-                      <Text
-                        w="136px"
-                        textAlign="left"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="20px"
-                      >
-                        Listing
-                      </Text>
-                      <Text
-                        w="136px"
-                        display="flex"
-                        flexDirection="row"
-                        justifyContent="center"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="20px"
-                      >
-                        29084
-                        <Text
-                          ml="3px"
-                          color="#999999"
-                        >
-                          NMT
-                        </Text>
-                      </Text>
-                      <Text
-                        w="136px"
-                        textAlign="center"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="20px"
-                      >
-                        6
-                      </Text>
-                      <Text
-                        w="136px"
-                        textAlign="center"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#3D00FF"
-                        lineHeight="20px"
-                      >
-                        4tf...fp
-                      </Text>
-                      <Text
-                        w="136px"
-                        textAlign="center"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="20px"
-                      />
-                      <Text
-                        w="136px"
-                        textAlign="right"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="20px"
-                      >
-                        i minutes
-                      </Text>
-                    </Flex>
-
+                  {eventDate?.pages.map((page) => page?.events?.map((item) => (
+                    item.method === 'BurnnedToken'
+                    || item.method === 'BurnRemovedBritishAuctionnedToken'
+                    || item.method === 'RemovedDutchAuction'
+                    || item.method === 'RemovedOrder'
+                    || item.method === 'RemovedOffer'
+                      ? null : (<Activity events={item} />)
                   )))}
                 </InfiniteScroll>
               </Flex>
