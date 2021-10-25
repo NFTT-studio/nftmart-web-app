@@ -62,9 +62,12 @@ const PriceHistoryChart = ({
           tickLine={false}
           stroke="#999999"
           interval={0}
+          padding={{
+            left: 15,
+            right: 15,
+          }}
           style={
             {
-              width: '100%',
               height: '40px',
               display: 'flex',
               flexFlow: 'row',

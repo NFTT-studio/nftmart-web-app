@@ -81,7 +81,6 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   });
 
   const mint = useCallback(async (formValue, cb) => {
-    formValue.stub = formValue.stub ? `https://${formValue.stub}` : null;
     const normalizedFormData = {
       address: account?.address,
       metadata: {
@@ -89,10 +88,10 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
         previewUrl: formValue.previewUrl,
         fileType: formValue.fileType,
         name: formValue.name,
-        stub: formValue.stub,
+        stub: formValue.stub ? `https://${formValue.stub}` : null,
         description: formValue.description,
       },
-      classId: Number(collectionId),
+      classId: collectionId,
       quantity: 1,
       royaltyRate: Number(formValue.royalties) / 100,
       cb,

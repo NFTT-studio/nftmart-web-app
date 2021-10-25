@@ -158,7 +158,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const formik = useFormik({
     initialValues: {
       price: Number(NumberToString(nftData?.nftInfo?.price) || 0) || '',
-      deposits: Number(NumberToString(nftData?.nftInfo?.deposit) || 0) || '',
+      deposits: '',
       dutchDeposits: '',
       englishDeposits: '',
       startingPrice: '',

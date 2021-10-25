@@ -4,9 +4,9 @@ import fetchPersonalNfts, { fetchPersonalNftsParams } from '../../api/fetchPerso
 import { QUERY_KEYS } from '../../constants';
 
 export default ({
-  ownerId, sortBy, categoryId, collectionId, status, classId, creatorId, number,
+  ownerId,collecterId, sortBy, categoryId, collectionId, status, classId, creatorId, number,
 }: fetchPersonalNftsParams) => useInfiniteQuery(
-  [QUERY_KEYS.NFTS, ownerId, creatorId, sortBy, categoryId, collectionId, status, classId, number],
+  [QUERY_KEYS.NFTS, ownerId,collecterId, creatorId, sortBy, categoryId, collectionId, status, classId, number],
   ({ pageParam = 0 }) => fetchPersonalNfts({
     ownerId, sortBy, categoryId, collectionId, status, classId, creatorId, number, pageParam,
   }),

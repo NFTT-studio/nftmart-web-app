@@ -93,8 +93,8 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   const [selectTabId, setSelectTabId] = useState(Number(localStorage.getItem('ButtonSelect')) || 0);
   const handletabSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
-    setSelectTabId(Number(event.currentTarget.id));
     localStorage.setItem('ButtonSelect', event.currentTarget.id);
+    setSelectTabId(Number(event.currentTarget.id));
   };
 
   const [offersMadeButtonId, setOffersMadeButtonId] = useState(1);
@@ -124,7 +124,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       sortBy: selectedSort,
     },
   );
-  const { data: nftsDataCollecte, fetchNextPage: fetchNextPageNftsDataCollecte, refetch: fetchNftsDataCollecte } = useNftsCollect(
+  const { data: nftsDataCollecte, fetchNextPage: fetchNextPageNftsDataCollecte, refetch: fetchNftsDataCollecte } = useNftsPersonal(
     {
       collecterId: address,
       categoryId: selectedCategoryId,
@@ -162,6 +162,11 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   useEffect(() => {
     setSelectTabId(Number(localStorage.getItem('ButtonSelect')) || 0);
   }, [Number(localStorage.getItem('ButtonSelect'))]);
+  useEffect(() => {
+    if (account && whiteList.indexOf(address) < 0) {
+      localStorage.setItem('ButtonSelect', '0');
+    }
+  }, [account?.address, whiteList]);
 
   const [collections, setCollections] = useState([]);
 
@@ -232,7 +237,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   let filteredTABS = TABS;
   if (account && whiteList.indexOf(address) < 0) {
-    localStorage.setItem('ButtonSelect', '0');
     filteredTABS = TABS.filter((nav) => nav.requiredWhitelist === false);
   }
 

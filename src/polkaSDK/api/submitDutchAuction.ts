@@ -48,9 +48,9 @@ export const submitDutchAuction = async ({
     // eslint-disable-next-line camelcase
     const min_deposit = unit.mul(bnToBn(dutchDeposits));
     // eslint-disable-next-line camelcase
-    const min_price = minPrice * unit;
+    const min_price = unit.mul(bnToBn(minPrice));
     // eslint-disable-next-line camelcase
-    const max_price = maxPrice * unit;
+    const max_price = unit.mul(bnToBn(maxPrice));
     const NativeCurrencyID = 0;
 
     const minRaise = float2PerU16(range); // 50%

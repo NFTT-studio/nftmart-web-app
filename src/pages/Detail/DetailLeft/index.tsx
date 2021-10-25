@@ -93,6 +93,9 @@ const DetailLeft: FC<Props> = (({
   logoUrl,
   propertiesArr,
 }) => {
+  const pictureType = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+  const videoType = ['mp4', 'webm'];
+  const audioType = ['mp3', 'wav', 'ogg'];
   const ICONS = [
     { icon: WEBSITE.default, name: 'website' },
     { icon: DISCORD.default, name: 'discord' },
@@ -111,6 +114,7 @@ const DetailLeft: FC<Props> = (({
     link: links ? links[item.name] : '',
   }));
   const newLink = ICON_LIST.filter((item) => item.link !== '');
+  const fileType = nftData?.nftInfo?.metadata?.fileType;
   const { t } = useTranslation();
   return (
     <Flex maxWidth="560px" w="100%" flexDirection="column">
@@ -133,7 +137,7 @@ const DetailLeft: FC<Props> = (({
             position="absolute"
             right="0px"
           />
-          {nftData?.nftInfo?.metadata?.fileType === 'jpg' || nftData?.nftInfo?.metadata?.fileType === 'png' || nftData?.nftInfo?.metadata?.fileType === 'gif' || nftData?.nftInfo?.metadata?.fileType === 'jpeg'
+          {pictureType.indexOf(fileType) > -1
             ? (
               <Flex
                 m="20px"
@@ -150,7 +154,7 @@ const DetailLeft: FC<Props> = (({
               </Flex>
             )
             : (
-              nftData?.nftInfo?.metadata?.fileType === 'mp4'
+              videoType.indexOf(fileType) > -1
                 ? (
                   <Box
                     m="20px"
@@ -250,14 +254,29 @@ const DetailLeft: FC<Props> = (({
             </AccordionButton>
             <AccordionPanel p="16px 20px">
               <Flex alignItems="center" mb="11px">
-                {nftData?.nftInfo?.creator?.avatar ? (
-                  <Image pr="4px" w="50px" h="auto" src={nftData?.nftInfo?.creator?.avatar || HeadPortrait.default} />
-                ) : (
-                  <Identicon
-                    className="creatorAvatar"
-                    string={nftData?.nftInfo?.creator?.id}
-                  />
-                )}
+                <Link
+                  as={RouterLink}
+                  to={`/account/${nftData?.nftInfo?.creator_id}/wallet`}
+                  onClick={() => {
+                    localStorage.setItem('ButtonSelect', '1');
+                  }}
+                >
+                  {nftData?.nftInfo?.creator?.avatar ? (
+                    <Image
+                      mr="4px"
+                      w="50px"
+                      h="auto"
+                      borderRadius="50%"
+                      border="1px solid #D3D5DC"
+                      src={nftData?.nftInfo?.creator?.avatar || HeadPortrait.default}
+                    />
+                  ) : (
+                    <Identicon
+                      className="creatorAvatar"
+                      string={nftData?.nftInfo?.creator?.id}
+                    />
+                  )}
+                </Link>
                 <Text
                   fontSize="14px"
                   fontFamily="TTHoves-Regular, TTHoves"
