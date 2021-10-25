@@ -436,7 +436,14 @@ const DetailRight: FC<Props> = (({
           >
             <Flex p="20px 0 0 0" justifyContent="flex-start" alignItems="center">
               {nftData?.nftInfo?.owner?.avatar ? (
-                <Image pr="4px" w="50px" h="auto" src={nftData?.nftInfo?.owner?.avatar || HeadPortrait.default} />
+                <Image
+                  mr="4px"
+                  w="50px"
+                  h="auto"
+                  borderRadius="50%"
+                  border="1px solid #D3D5DC"
+                  src={nftData?.nftInfo?.owner?.avatar || HeadPortrait.default}
+                />
               ) : (
                 <Identicon
                   className="ownerAvatar"
@@ -684,7 +691,7 @@ const DetailRight: FC<Props> = (({
                 textAlign="right"
                 mb="12px"
               >
-                Auction onds in
+                {t('Detail.AuctionEndsIn')}
               </Text>
               {Number(events.times)
                 ? (
@@ -723,7 +730,7 @@ const DetailRight: FC<Props> = (({
                 fontFamily="TTHoves-Thin, TTHoves"
                 mb="12px"
               >
-                Auction ends in
+                {t('Detail.AuctionEndsIn')}
               </Text>
             </Flex>
           ) : null}
@@ -1143,7 +1150,7 @@ const DetailRight: FC<Props> = (({
         </Box>
       ) : null}
       {selectTabId === 2 ? (
-        <Box p="20px">
+        <Box p="20px 0">
           <Flex flexDirection="row" justifyContent="flex-start" mb="20px">
             <TimeBy selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
             <Flex m="0 20px" textAlign="center" flexDirection="column" justifyContent="center">

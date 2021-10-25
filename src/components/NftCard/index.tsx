@@ -44,6 +44,9 @@ const NftCard: FC<NftCardProps> = ({
   nft,
   remainingTime,
 }) => {
+  const pictureType = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+  const videoType = ['mp4', 'webm'];
+  const audioType = ['mp3', 'wav', 'ogg'];
   const { t } = useTranslation();
   const type = nft?.auction?.type;
   const [events, setEvents] = useState(
@@ -188,6 +191,7 @@ const NftCard: FC<NftCardProps> = ({
   );
   const price = renderNmtNumberText(nft.price);
   const duchPrice = currentPrice(Number(nft?.auction?.max_price), Number(nft?.auction?.min_price), Number(nft?.auction?.deadline), remainingTime, Number(nft?.auction?.block_created));
+  const fileType = nft?.metadata?.fileType;
   return (
     <Link
       key={nft?.metadata.name}
@@ -215,7 +219,7 @@ const NftCard: FC<NftCardProps> = ({
       >
 
         {nft?.metadata
-          && nft?.metadata?.fileType === 'jpg' || nft?.metadata?.fileType === 'jpge' || nft?.metadata?.fileType === 'png' || nft?.metadata?.fileType === 'gif'
+          && pictureType.indexOf(fileType) > -1
           ? (
             <LazyLoadImage
               wrapperProps={{
@@ -242,10 +246,10 @@ const NftCard: FC<NftCardProps> = ({
           )
           : (
             nft?.metadata?.previewUrl
-              ? nft?.metadata?.fileType === 'mp4'
+              ? videoType.indexOf(fileType) > -1
                 ? (
                   <Box
-                    width="22vw"
+                    width="100%"
                     height="219px"
                     maxWidth="420px"
                   >
@@ -258,7 +262,7 @@ const NftCard: FC<NftCardProps> = ({
                     </Player>
                   </Box>
                 )
-                : (
+                : audioType.indexOf(fileType) > -1 ? (
                   <Box
                     width="100%"
                     height="219px"
@@ -272,6 +276,25 @@ const NftCard: FC<NftCardProps> = ({
                       <source style={{ height: 'auto' }} src={`${IPFS_URL}${nft?.metadata.previewUrl}`} />
                     </Player>
                   </Box>
+                ) : (
+                  <LazyLoadImage
+                    wrapperProps={{
+                      style: {
+                        width: '100%',
+                        height: '219px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                      },
+                    }}
+                    style={{
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: '4px 4px 0 0 ',
+                    }}
+                    src={IPFS_URL + nft?.metadata.logoUrl}
+                    effect="blur"
+                  />
                 ) : (
                   <LazyLoadImage
                     wrapperProps={{

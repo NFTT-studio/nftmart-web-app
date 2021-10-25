@@ -17,4 +17,4 @@ export const EXPLORER_URL = 'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fstagi
 
 // online
 
-export const MAX_FILE_SIZE = 1024 * 1024 * 10;
+export const MAX_FILE_SIZE = 1024 * 1024 * 100;

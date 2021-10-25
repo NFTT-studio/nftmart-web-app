@@ -1,6 +1,7 @@
 {
   "TestNet": "TestNet",
   "results": "个结果",
+  "createUploadOverflow":"文件太大，无法上载。请将文件大小减小到100MB以下。",
   "sortBy": {
     "recentlyListed": "最近上架",
     "recentlyCreated": "最近创建",
@@ -149,6 +150,7 @@
   },
   "Detail": {
     "Sell": "上架出售",
+    "AuctionEndsIn":"拍卖将结束于",
     "title": "-NFTMart|专业NFT交易市场",
     "detail": "作品信息",
     "properties": "特性",

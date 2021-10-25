@@ -14,9 +14,8 @@ import {
   CircularProgress,
   CircularProgressLabel,
   Flex,
-  AspectRatio,
+  useToast,
 } from '@chakra-ui/react';
-import { toast } from 'react-toastify';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import axios from 'axios';
@@ -131,6 +130,7 @@ const Upload: FC<UploadProps> = ({
   proportion,
   ...rest
 }) => {
+  const toast = useToast();
   const [fileType, setFileType] = useState('');
   const [value, setValue] = useState(valueFromProp?.url || '');
   const [isLoading, setLoadingStatus] = useState(false);
@@ -139,6 +139,10 @@ const Upload: FC<UploadProps> = ({
   const [showCrop, setShowCrop] = useState(false);
   const [fileUrl, setFileUrl] = useState('');
   const [progresses, setProgresses] = useState(0);
+
+  const pictureType = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+  const videoType = ['mp4', 'webm'];
+  const audioType = ['mp3', 'wav', 'ogg'];
 
   const saveToIpfs = useCallback(async (files: any[]) => {
     if (REACT_APP_PINATA_ENABLE === 'true') {
@@ -207,14 +211,23 @@ const Upload: FC<UploadProps> = ({
       const fileTypes = currentFile.name
         .substring(currentFile.name.lastIndexOf('.') + 1)
         .toLowerCase();
-      if (fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg' && fileTypes !== 'mp4' && fileTypes !== 'mp3' && fileTypes !== 'svg' && fileTypes !== 'ogg' && fileTypes !== 'wav' && fileTypes !== 'webm') {
-        toast(<ToastBody title={t('common.imgFiletype')} message="" type="warning" />);
+      if (pictureType.indexOf(fileTypes) === -1 && videoType.indexOf(fileTypes) === -1 && audioType.indexOf(fileTypes) === -1) {
+        toast({
+          position: 'top',
+          render: () => (
+            <ToastBody title={t('common.imgFiletype')} message="" type="warning" />
+          ),
+        });
         setLoadingStatus(false);
         return;
       }
-      if ((mediatype === 'img' || mediatype === 'cutting') && fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg') {
-        toast(<ToastBody title={t('common.imgFiletype')} message="" type="warning" />);
-        console.log(mediatype === 'img', mediatype === 'cutting', fileTypes !== 'gif');
+      if ((mediatype === 'img' || mediatype === 'cutting') && pictureType.indexOf(fileTypes) === -1) {
+        toast({
+          position: 'top',
+          render: () => (
+            <ToastBody title={t('common.imgFiletype')} message="" type="warning" />
+          ),
+        });
         setLoadingStatus(false);
         return;
       }
@@ -224,7 +237,12 @@ const Upload: FC<UploadProps> = ({
       //   return;
       // }
       if (currentFile.size >= MAX_FILE_SIZE) {
-        toast(<ToastBody title={t('createUploadOverflow')} message="" type="warning" />);
+        toast({
+          position: 'top',
+          render: () => (
+            <ToastBody title={t('createUploadOverflow')} message="" type="warning" />
+          ),
+        });
         setLoadingStatus(false);
         return;
       }
@@ -328,12 +346,12 @@ const Upload: FC<UploadProps> = ({
         <Box>
           {value ? (
             <>
-              {fileType === 'jpg' || fileType === 'png' || fileType === 'gif' || fileType === 'jpeg'
+              {pictureType.indexOf(fileType) > -1
                 ? (
                   <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />
                 )
                 : (
-                  fileType === 'mp4'
+                  videoType.indexOf(fileType) > -1
                     ? (
                       <Box maxWidth="420px">
                         <Player width="100%">
@@ -341,12 +359,16 @@ const Upload: FC<UploadProps> = ({
                         </Player>
                       </Box>
                     )
-                    : (
-                      <ReactAudioPlayer
-                        src={`${PINATA_SERVER}${value}`}
-                        controls
-                      />
+                    : audioType.indexOf(fileType) > -1 ? (
+                      <Box maxWidth="420px">
+                        <Player width="100%">
+                          <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${value}`} />
+                        </Player>
+                      </Box>
                     )
+                      : (
+                        <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />
+                      )
                 )}
 
               <FormLabel htmlFor={id}>

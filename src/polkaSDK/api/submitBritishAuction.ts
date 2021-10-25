@@ -49,7 +49,7 @@ export const submitBritishAuction = async ({
     // eslint-disable-next-line camelcase
     const min_deposit = unit.mul(bnToBn(englishDeposits));
     // eslint-disable-next-line camelcase
-    const init_price = InitPrice * unit;
+    const init_price = unit.mul(bnToBn(InitPrice));
     // eslint-disable-next-line camelcase
     const hammer_price = bnToBn(hammerPrice).mul(unit);
     const NativeCurrencyID = 0;
