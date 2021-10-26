@@ -12,6 +12,7 @@
     "oldest": "Oldest"
   },
   "common": {
+    "currentPrice":"Current price",
     "save": "Save",
     "yes": "YES",
     "no": "NO",
@@ -59,8 +60,8 @@
   },
   "banner": {
     "titleOne": "Professional",
-    "titleTwo": "NFT Market Place",
-    "content": "The first NFT decentralized trading platform established using an independent public",
+    "titleTwo": "Everything can be reimagined within",
+    "content": "Professional NFT Marketplace",
     "button": "EXPLORE"
   },
   "extension": {
@@ -175,6 +176,7 @@
     "Transferrable": "Transferrable",
     "checkoutSub": "Check out",
     "cancel": "Cancel",
+    "cancelOfferDesc": "Do you want to cancel this offer?",
     "setting": "Setting",
     "backToEdit": "Back to edit",
     "save": "Save",
