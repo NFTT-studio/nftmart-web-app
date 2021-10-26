@@ -8,7 +8,7 @@ export default ({
 }: fetchPersonalNftsParams) => useInfiniteQuery(
   [QUERY_KEYS.NFTS, ownerId,collecterId, creatorId, sortBy, categoryId, collectionId, status, classId, number],
   ({ pageParam = 0 }) => fetchPersonalNfts({
-    ownerId, sortBy, categoryId, collectionId, status, classId, creatorId, number, pageParam,
+    ownerId,collecterId, sortBy, categoryId, collectionId, status, classId, creatorId, number, pageParam,
   }),
   {
     getNextPageParam: (lastPage, pages) => (pages.length + 1),

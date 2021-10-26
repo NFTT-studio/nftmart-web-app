@@ -81,8 +81,7 @@ const Header: FC<HeaderProps> = () => {
         </Flex>
         <Network />
         <Flex ml="32px" flex="1 1 auto">
-          {account
-            ? <NavLink address={account.address} /> : null}
+          <NavLink address={account?.address} />
         </Flex>
         <ChangeLanguage />
         <Flex>
