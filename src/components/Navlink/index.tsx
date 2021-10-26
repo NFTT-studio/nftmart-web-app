@@ -36,7 +36,7 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
     },
     {
       title: 'common.nav.navListSale',
-      path: `/browsing?status=${statusArr[2]}`,
+      path: `/browsing?status=${statusArr[0]}`,
       requiredLogin: false,
       requiredWhitelist: false,
     },
