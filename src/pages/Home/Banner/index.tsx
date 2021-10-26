@@ -229,7 +229,7 @@ const Banner = ((
         <Flex
           color="white"
           flexDirection="column"
-          w="579px"
+          w="583px"
           alignItems="flex-start"
           justifyContent="flex-start"
           position="absolute"
@@ -237,7 +237,7 @@ const Banner = ((
           left="100px"
           p={4}
         >
-          <Text
+          {/* <Text
             fontSize="64px"
             fontFamily="TTHoves-Thin, TTHoves"
             fontWeight="100"
@@ -245,9 +245,9 @@ const Banner = ((
             lineHeight="75px"
           >
             {t('banner.titleOne')}
-          </Text>
+          </Text> */}
           <Text
-            w="579px"
+            w="583px"
             fontFamily="TTHoves-Bold, TTHoves"
             fontWeight="bold"
             color="#FFFFFF"
