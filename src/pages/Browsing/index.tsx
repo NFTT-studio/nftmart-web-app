@@ -124,7 +124,7 @@ const Browsing = () => {
       <Container maxWidth="1364px" w="100%" mt="40px" display="flex" justifyContent="space-between">
         <Flex
           w="260px"
-          h="492px"
+          h="790px"
           flexDirection="column"
           justifyContent="flex-start"
           alignItems="center"

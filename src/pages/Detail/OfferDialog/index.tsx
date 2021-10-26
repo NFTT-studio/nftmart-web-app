@@ -99,7 +99,7 @@ const OfferDialog: FC<Props> = (({
               toast({
                 position: 'top',
                 render: () => (
-                  <ToastBody title="Success" message={t('Detail.buySuccess')} type="success" />
+                  <ToastBody title="Success" message={t('common.success')} type="success" />
                 ),
               });
               setTimeout(() => {
@@ -242,7 +242,7 @@ const OfferDialog: FC<Props> = (({
                     color="#999999"
                   >
                     ≈$
-                    {formik.values.price * token?.price}
+                    {(formik.values.price * token?.price).toFixed(2)}
                   </Text>
                 ) : null}
               <Text

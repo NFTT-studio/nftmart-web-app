@@ -12,6 +12,7 @@
     "oldest": "最旧的"
   },
   "common": {
+    "currentPrice":"当前价格",
     "save": "保存",
     "yes": "是",
     "no": "否",
@@ -59,8 +60,8 @@
   },
   "banner": {
     "titleOne": "专业的",
-    "titleTwo": "NFT 交易市场",
-    "content": "首个使用独立主链开发的NFT交易平台",
+    "titleTwo": "重构想象",
+    "content": "专业去中心化NFT交易市场",
     "button": "浏览"
   },
   "extension": {
@@ -175,6 +176,7 @@
     "Transferrable": "可用余额",
     "checkoutSub": "结账",
     "cancel": "取消",
+    "cancelOfferDesc": "你想要取消这个报价?",
     "setting": "售卖设置",
     "backToEdit": "返回修改",
     "save": "保存",
@@ -272,9 +274,9 @@
   },
   "Account": {
     "title": "Account",
-    "myWallet": "我的钱包",
+    "myWallet": "拥有的",
     "offers": "报价",
-    "Stars": "星星",
+    "Stars": "加星的",
     "collections": "作品集",
     "offersMade": "发出的报价",
     "offersReceived": "收到的报价",
@@ -286,7 +288,7 @@
     "loched": "锁定的",
     "bonded": "抵押的",
     "reserved": "保留的",
-    "Created": "我的创作",
+    "Created": "创作的",
     "expiration": "有效期"
   },
   "ProfileEdit": {

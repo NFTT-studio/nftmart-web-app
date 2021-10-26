@@ -8,7 +8,7 @@ type takeOfferProps = {
   offerId: number,
   cb: Callback
 }
-export const takeOffer = async ({
+export const removeOffer = async ({
   address, // address of current user
   offerId,
   cb,

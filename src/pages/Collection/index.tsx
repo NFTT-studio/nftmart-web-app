@@ -27,11 +27,13 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { any } from 'ramda';
 import { timeStamp } from 'console';
+import Identicon from 'react-identicons';
 import MainContainer from '../../layout/MainContainer';
 import NftCard from '../../components/NftCard';
 import { useAppSelector } from '../../hooks/redux';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import { getBlock } from '../../polkaSDK/api/getBlock';
+import useUser from '../../hooks/reactQuery/useUser';
 
 import {
   CollectionBackground,
@@ -43,6 +45,7 @@ import {
   telegram,
   IconDetailsocllections,
   Emptyimg,
+  HeadPortrait,
 } from '../../assets/images';
 import {
   PINATA_SERVER,
@@ -64,6 +67,7 @@ const ICONS = [
 
 const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { t } = useTranslation();
+  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
 
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
@@ -75,7 +79,6 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const classId = search.collectionId;
   const [remainingTime, setRemainingTime] = useState(0);
   const [selectedCollection] = useState<string[]>([classId]);
-
   useEffect(() => {
     getBlock().then((res) => {
       setRemainingTime(res);
@@ -93,6 +96,11 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
     id: index,
     link: links ? links[item.name] : '',
   }));
+  const {
+    data: dataCreator,
+    refetch: refetchCreatorData,
+  } = useUser(collectionsData?.collection?.creator_id);
+  console.log(dataCreator);
   const newLink = ICON_LIST.filter((item) => item.link !== '');
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const {
@@ -112,6 +120,10 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
       setIsPerson(true);
     }
   }, [collectionsData?.collection?.creator_id, address, dataPerson]);
+  useEffect(() => {
+    refetchCreatorData();
+  }, [collectionsData?.collection?.creator_id]);
+
   useEffect(() => {
     refetchCollectionsData();
     refetchNftsData();
@@ -221,7 +233,6 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 boxShadow="0px 6px 20px 0px #D3D5DC"
               />
             </Flex>
-            <Flex />
             <Flex
               w="100%"
               maxWidth="1440px"
@@ -246,6 +257,63 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                     h="18px"
                     src={IconDetailsocllections.default}
                   />
+                </Flex>
+                <Flex alignItems="center" m="20px 0">
+                  <Link
+                    as={RouterLink}
+                    to={`/account/${collectionsData?.collection?.creator_id}/wallet`}
+                    onClick={() => {
+                      localStorage.setItem('ButtonSelect', '1');
+                    }}
+                  >
+                    {dataCreator?.avatar ? (
+                      <Image
+                        mr="4px"
+                        w="50px"
+                        h="auto"
+                        borderRadius="50%"
+                        border="1px solid #D3D5DC"
+                        src={dataCreator?.avatar || HeadPortrait.default}
+                      />
+                    ) : (
+                      <Identicon
+                        className="creatorAvatar"
+                        string={collectionsData?.collection?.creator_id}
+                      />
+                    )}
+                  </Link>
+                  <Text
+                    fontSize="14px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#000000"
+                    lineHeight="16px"
+                  >
+                    <Text
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#000000"
+                      display="flex"
+                      flexDirection="row"
+                    >
+                      {t('Detail.createdBy')}
+                      <Link
+                        as={RouterLink}
+                        to={`/account/${collectionsData?.collection?.creator_id}/wallet`}
+                        m="0 3px"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#3D00FF"
+                        onClick={() => {
+                          localStorage.setItem('ButtonSelect', '1');
+                        }}
+                      >
+                        {dataCreator?.name || formatAddress(collectionsData?.collection?.creator_id)}
+                      </Link>
+                    </Text>
+                  </Text>
                 </Flex>
                 <Text
                   mt="10px"

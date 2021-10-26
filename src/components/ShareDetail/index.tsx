@@ -33,7 +33,7 @@ const ShareWeb: FC<ShareWebProps> = () => {
   const [opening, setOpening] = useState(false);
   const url = window.location.href;
   const { onCopy } = useClipboard(url);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const toast = useToast();
   const handleSelect = () => {
     toast({
@@ -93,7 +93,6 @@ const ShareWeb: FC<ShareWebProps> = () => {
             fontWeight="400"
             color="#858999"
             lineHeight="20px"
-            textShadow="0px 0px 6px rgba(0, 0, 0, 0.16)"
             p="13px 20px"
             _hover={{ background: '#F9F9F9' }}
             onClick={() => {
@@ -109,8 +108,9 @@ const ShareWeb: FC<ShareWebProps> = () => {
             Copy Link
           </Flex>
           <TwitterShareButton
-            url={url}
-            title="NFTMart"
+            url={i18n.language === 'zh' ? `@NFTMartio 查看 ${url}`
+              : `Check out this NFT on NFTMart ${url} via @NFTMartio`}
+            title=""
             className="shareBtn col-md-1 col-sm-1 col-xs-1"
           >
             <Flex
@@ -121,7 +121,6 @@ const ShareWeb: FC<ShareWebProps> = () => {
               fontWeight="400"
               color="#858999"
               lineHeight="20px"
-              textShadow="0px 0px 6px rgba(0, 0, 0, 0.16)"
               p="13px 20px"
               _hover={{ background: '#F9F9F9' }}
               onClick={() => {
@@ -150,7 +149,6 @@ const ShareWeb: FC<ShareWebProps> = () => {
               fontWeight="400"
               color="#858999"
               lineHeight="20px"
-              textShadow="0px 0px 6px rgba(0, 0, 0, 0.16)"
               p="13px 20px"
               _hover={{ background: '#F9F9F9' }}
               onClick={() => {

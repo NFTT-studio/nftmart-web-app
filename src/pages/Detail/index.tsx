@@ -22,6 +22,7 @@ import MainContainer from '../../layout/MainContainer';
 import CancelDialog from './CancelDialog';
 import CancelAuctionDialog from './CancelAuctionDialog';
 import DealDialog from './DealDialog';
+import RemoveDialog from './RemoveDialog';
 import ReceiveDialog from './ReceiveDialog';
 import DetailLeft from './DetailLeft';
 import DetailRight from './DetailRight';
@@ -103,6 +104,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [isShowCancel, setIsShowCancel] = useState(false);
   const [isCancelAuction, setIsCancelAuction] = useState(false);
   const [isShowDeal, setIsShowDeal] = useState(false);
+  const [isShowRemove, setIsShowRemove] = useState(false);
   const [isShowReceive, setIshowReceive] = useState(false);
   const [isShowBuy, setIsShowBuy] = useState(false);
   const [isShowOffer, setIsShowOffer] = useState(false);
@@ -609,6 +611,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   setOfferId={setOfferId}
                   setOfferOwner={setOfferOwner}
                   setIsShowDeal={setIsShowDeal}
+                  setIsShowRemove={setIsShowRemove}
                   setIsShowBuy={setIsShowBuy}
                   token={token}
                   OfferssUnitArr={OfferssUnitArr}
@@ -713,6 +716,13 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 offerId={offerId}
                 offerOwner={offerOwner}
                 orderId={nftData?.nftInfo.status === 'Selling' ? orderId : ''}
+              />
+              )}
+              {isShowRemove && (
+              <RemoveDialog
+                isShowRemove={isShowRemove}
+                setIsShowRemove={setIsShowRemove}
+                offerId={offerId}
               />
               )}
               {isShowReceive && (

@@ -24,7 +24,7 @@ const CollectionSelector: FC<CollectionSelectorProps> = (({ selectedArr, collect
     boxSizing="border-box"
     w="100%"
     direction="column"
-    h="234px"
+    h="485px"
     overflowY="scroll"
   >
     {collectionArr?.map((collection, index) => {

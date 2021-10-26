@@ -91,6 +91,7 @@ interface Props {
   setOfferId: React.Dispatch<React.SetStateAction<string>>,
   setOfferOwner: React.Dispatch<React.SetStateAction<string>>,
   setIsShowDeal: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsShowRemove: React.Dispatch<React.SetStateAction<boolean>>,
   setIsShowBuy: React.Dispatch<React.SetStateAction<boolean>>,
   setIsShowOffer: React.Dispatch<React.SetStateAction<boolean>>,
   token:{ token: string; } | undefined,
@@ -127,6 +128,7 @@ const DetailRight: FC<Props> = (({
   recipientsId,
   setIshowReceive,
   setIsAllowBritish,
+  setIsShowRemove,
 }) => {
   const {
     data: eventDate, fetchNextPage: fetchNextPageEventDate, refetch: fetchOEventDate,
@@ -193,6 +195,13 @@ const DetailRight: FC<Props> = (({
     setOfferOwner(offerOwnerItem);
     setIsShowDeal(true);
   };
+  const handleCancel = (offerIdItem:string) => {
+    if (!account) {
+      history.push(`/connect?callbackUrl=item/${nftId}`);
+    }
+    setOfferId(offerIdItem);
+    setIsShowRemove(true);
+  };
   const handleBuy = () => {
     if (!account) {
       history.push(`/connect?callbackUrl=item/${nftId}`);
@@ -206,6 +215,10 @@ const DetailRight: FC<Props> = (({
     setIsShowOffer(true);
   };
 
+  const timeSurplus = (index:numer) => {
+    const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
+    return times;
+  };
   const timeBlock = (index:numer) => {
     const times = (index - remainingTime) * 6;
 
@@ -589,7 +602,7 @@ const DetailRight: FC<Props> = (({
                 </Flex>
               </Flex>
             </Flex>
-            <Flex h="100%" m="16px 0 35px 0" flexDirection="column" justifyContent="center">
+            <Flex h="100%" m="16px 0 35px 0" flexDirection="row" justifyContent="center">
               {types === 'Dutch' && events.times > 0 ? (
                 <Button
                   width="184px"
@@ -669,14 +682,26 @@ const DetailRight: FC<Props> = (({
                 </Button>
               ) : null}
 
-              {/* <Text
-                  fontSize="14px"
+              {(isLoginAddress || nftData?.nftInfo?.auction?.type ? (
+                ''
+              ) : (
+                <Button
+                  ml="20px"
+                  width="184px"
+                  height="48px"
+                  background="#FFFFFF"
+                  borderRadius="4px"
+                  border="1px solid #000000"
+                  fontSize="16px"
                   fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  color="#999999"
+                  fontWeight="500"
+                  color="#000000"
+                  onClick={handleOffer}
+                  isDisabled={!!(types)}
                 >
-                  * Extend 30 minutes after bidding
-                </Text> */}
+                  {t('Detail.makeOffer')}
+                </Button>
+              ))}
             </Flex>
           </Flex>
           {types && Number(events.day) < 4 && Number(events.times) > 0 ? (
@@ -942,11 +967,17 @@ const DetailRight: FC<Props> = (({
                               color="#000000"
                               lineHeight="20px"
                             >
-                              in
                               {' '}
-                              {Number(item?.order?.deadline - remainingTime) > 0 ? timeBlock(item?.order?.deadline) : '-'}
+                              {Number(item?.order?.deadline - remainingTime) > 0
+                                ? (
+                                  <Countdown
+                                    autoStart
+                                    daysInHours
+                                    date={Date.now() + Number(timeSurplus(item?.order?.deadline))}
+                                  />
+                                )
+                                : '-'}
                               {' '}
-                              hours
                             </Text>
                           ) : (
                             <Text
@@ -977,6 +1008,22 @@ const DetailRight: FC<Props> = (({
                               {' '}
                               {t('Detail.deal')}
                             </Text>
+                          ) : account?.address === item?.order?.buyer_id && item.order.status_id === 'Created' ? (
+                            <Text
+                              w="136px"
+                              textAlign="right"
+                              fontSize="14px"
+                              fontFamily="TTHoves-Regular, TTHoves"
+                              fontWeight="400"
+                              color="#3D00FF"
+                              lineHeight="20px"
+                              onClick={() => {
+                                handleCancel(item.order_id);
+                              }}
+                            >
+                              {' '}
+                              {t('Detail.cancel')}
+                            </Text>
                           ) : (
                             <Text
                               w="136px"
@@ -999,28 +1046,6 @@ const DetailRight: FC<Props> = (({
               : (
                 <NoData widths="732px" />
               )}
-            <Flex justifyContent="flex-end">
-              {(isLoginAddress || nftData?.nftInfo?.auction?.type ? (
-                ''
-              ) : (
-                <Button
-                  mt="16px"
-                  width="132px"
-                  height="40px"
-                  background="#FFFFFF"
-                  borderRadius="4px"
-                  border="1px solid #000000"
-                  fontSize="16px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="500"
-                  color="#000000"
-                  onClick={handleOffer}
-                  isDisabled={!!(types)}
-                >
-                  {t('Detail.makeOffer')}
-                </Button>
-              ))}
-            </Flex>
           </Flex>
         </Box>
       ) : null}

@@ -161,7 +161,12 @@ const DetailLeft: FC<Props> = (({
                     width="520px"
                     height="auto"
                   >
-                    <video width="100%" height="auto" controls>
+                    <video
+                      width="100%"
+                      height="auto"
+                      controls
+                      poster={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.previewUrl}`}
+                    >
                       <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.logoUrl}`} />
                     </video>
                   </Box>

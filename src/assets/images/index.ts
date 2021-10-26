@@ -100,6 +100,7 @@ export * as IconRankUp from './icon_rank_up.png';
 export * as SharelLnk from './sharelLnk.png';
 export * as ShareTwitter from './shareTwitter.png';
 export * as ShareFacebook from './shareFacebook.png';
+export * as play from './play.png';
 // empty
 export * as Emptyimg from './empty.png';
 export * as Historyempty from './historyempty.png';

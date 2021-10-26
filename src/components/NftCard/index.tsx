@@ -32,6 +32,7 @@ import '../../../node_modules/video-react/dist/video-react.css';
 import {
   IconTime,
   HeadPortrait,
+  play,
 } from '../../assets/images';
 import MotionBox from '../MotionBox';
 
@@ -252,14 +253,37 @@ const NftCard: FC<NftCardProps> = ({
                     width="100%"
                     height="219px"
                     maxWidth="420px"
+                    position="relative"
                   >
-                    <Player
-                      width="100%"
-                      height="219px"
-                      poster={`${IPFS_URL}${nft?.metadata?.previewUrl}`}
-                    >
-                      <source style={{ height: 'auto' }} src={`${IPFS_URL}${nft?.metadata.previewUrl}`} />
-                    </Player>
+                    <Image
+                      position="absolute"
+                      zIndex="3"
+                      w="54px"
+                      h="auto"
+                      left="calc(50% - 27px)"
+                      top="calc(50% - 27px)"
+                      src={play.default}
+                      borderRadius="50%"
+                      background="rgba(43,51,63,.7)"
+                    />
+                    <LazyLoadImage
+                      wrapperProps={{
+                        style: {
+                          width: '100%',
+                          height: '219px',
+                          display: 'flex',
+                          justifyContent: 'center',
+                        },
+                      }}
+                      style={{
+                        objectFit: 'cover',
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '4px 4px 0 0 ',
+                      }}
+                      src={IPFS_URL + nft?.metadata?.previewUrl}
+                      effect="blur"
+                    />
                   </Box>
                 )
                 : audioType.indexOf(fileType) > -1 ? (
@@ -267,14 +291,37 @@ const NftCard: FC<NftCardProps> = ({
                     width="100%"
                     height="219px"
                     maxWidth="420px"
+                    position="relative"
                   >
-                    <Player
-                      width="100%"
-                      height="100%"
-                      poster={`${IPFS_URL}${nft?.metadata?.previewUrl}`}
-                    >
-                      <source style={{ height: 'auto' }} src={`${IPFS_URL}${nft?.metadata.previewUrl}`} />
-                    </Player>
+                    <Image
+                      position="absolute"
+                      zIndex="3"
+                      w="54px"
+                      h="auto"
+                      left="calc(50% - 27px)"
+                      top="calc(50% - 27px)"
+                      src={play.default}
+                      borderRadius="50%"
+                      background="rgba(43,51,63,.7)"
+                    />
+                    <LazyLoadImage
+                      wrapperProps={{
+                        style: {
+                          width: '100%',
+                          height: '219px',
+                          display: 'flex',
+                          justifyContent: 'center',
+                        },
+                      }}
+                      style={{
+                        objectFit: 'cover',
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '4px 4px 0 0 ',
+                      }}
+                      src={IPFS_URL + nft?.metadata?.previewUrl}
+                      effect="blur"
+                    />
                   </Box>
                 ) : (
                   <LazyLoadImage
@@ -394,7 +441,7 @@ const NftCard: FC<NftCardProps> = ({
                       renderNmtNumberText((Number(nft?.auction?.price)).toString())
                     ) : null}
                     {Number(nft?.auction?.price) ? 'NMT' : '' }
-                    {Number(nft?.price) ? 'NMT' : ' ' }
+                    {Number(nft?.price) ? 'NMT' : '' }
                   </Box>
                   {Number(nft?.auction?.price) || Number(nft?.price) ? (
                     <Box
@@ -405,15 +452,36 @@ const NftCard: FC<NftCardProps> = ({
                       lineHeight="14px"
                       fontSize="12px"
                     >
-                      list price
+                      {t('common.currentPrice')}
                     </Box>
                   ) : '' }
                 </Flex>
               </Box>
             ) : (
-              <Box
-                h="39.33px"
-              />
+              <Box textAlign="right" display="flex" justifyContent="center">
+                <Flex flexDirection="column" alignItems="flex-start">
+                  <Box
+                    height="24px"
+                    color="#FFFFFF"
+                    fontWeight="500"
+                    fontFamily="TTHoves-Medium, TTHoves"
+                    lineHeight="24px"
+                    fontSize="20px"
+                  >
+                    - NMT
+                  </Box>
+                  <Box
+                    mt="2px"
+                    color="#999999"
+                    fontWeight="300"
+                    fontFamily="TTHoves-Light, TTHoves"
+                    lineHeight="14px"
+                    fontSize="12px"
+                  >
+                    {t('common.currentPrice')}
+                  </Box>
+                </Flex>
+              </Box>
             )}
           </Box>
           <Box
