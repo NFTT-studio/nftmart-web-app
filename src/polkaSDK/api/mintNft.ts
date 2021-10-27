@@ -13,7 +13,7 @@ type mintNftProps = {
   classId: number,
   metadata: Metadata,
   quantity: number,
-  royaltyRate: number | undefined,
+  royaltyRate: string | undefined,
   cb: Callback
 }
 export const mintNft = async ({

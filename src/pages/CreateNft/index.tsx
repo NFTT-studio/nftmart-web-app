@@ -48,6 +48,9 @@ import MyModal from '../../components/MyModal';
 import MyToast, { ToastBody } from '../../components/MyToast';
 
 const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
+  function number2PerU16(x) {
+    return Math.round((x / 65535.0) * 100);
+  }
   const { t } = useTranslation();
   const toast = useToast();
   const history = useHistory();
@@ -93,7 +96,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       },
       classId: collectionId,
       quantity: 1,
-      royaltyRate: Number(formValue.royalties) / 100,
+      royaltyRate: formValue.royalties ? (Number(formValue.royalties) / 100) : '',
       cb,
       setIsShow: setIsSubmitting,
     };
@@ -107,7 +110,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       name: '',
       stub: '',
       description: '',
-      royalties: 0,
+      royalties: number2PerU16(collectionsData?.collection?.royalty_rate) || '',
       fileType: '',
     },
     onSubmit: (formValue, formAction) => {

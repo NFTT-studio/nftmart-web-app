@@ -100,7 +100,6 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
     data: dataCreator,
     refetch: refetchCreatorData,
   } = useUser(collectionsData?.collection?.creator_id);
-  console.log(dataCreator);
   const newLink = ICON_LIST.filter((item) => item.link !== '');
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const {

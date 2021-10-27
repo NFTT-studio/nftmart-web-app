@@ -19,8 +19,6 @@ export const queryClassByAddress = async ({ address = '' }) => {
 
     const res = clazz.adminList[0].map((admin: any) => {
       const adminAddress = admin.delegate.toString();
-      // console.log('cl', clazz);
-      // console.log('check admin list', adminAddress, address);
 
       if (adminAddress === address) {
         return clazz;

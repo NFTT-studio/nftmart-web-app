@@ -45,7 +45,6 @@ const DutchDialog: FC<Props> = (({
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
   const { data: token } = useToken();
-  console.log(price);
 
   const { account } = chainState;
   const { data } = useAccount(account!.address);

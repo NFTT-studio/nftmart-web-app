@@ -1,10 +1,13 @@
-// export const NODE_URL = 'wss://staging-ws.nftmart.io';
-export const NODE_URL = 'wss://staging.nftmart.io/rpc/ws';
+/* eslint-disable max-len */
+const NODE_URLPROD = 'wss://mainnet.nftmart.io/rpc/ws';
+const NODE_URLTEST = 'wss://staging.nftmart.io/rpc/ws';
+export const NODE_URL = `${window.location.origin === 'https://app.nftmart.io' ? NODE_URLPROD : NODE_URLTEST}`;
 export const PINATA_POST_SERVER = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
 export const POLKADOT_EXTENSION = 'https://polkadot.js.org/extension/';
 export const GRAPHQL_ENDPOINT = 'https://api.subquery.network/sq/subqns/nftmart-beta-4';
-export const CACHE_SERVER_URL = 'https://cache.nftmart.io/api/';
-// export const CACHE_SERVER_URL = 'http://test-cache.bcdata.top/api/';
+const CACHE_SERVER_URLPROD = 'https://cache.nftmart.io/api/';
+const CACHE_SERVER_URLTEST = 'https://test-cache.nftmart.io/api/';
+export const CACHE_SERVER_URL = `${window.location.origin === 'https://app.nftmart.io' ? CACHE_SERVER_URLPROD : CACHE_SERVER_URLTEST}`;
 export const IPFS_URL = 'https://ipfs-web.bcdata.top/ipfs/';
 export const DBURL = 'http://localhost:8888/graphql';
 export const IPFS_POST_SERVER = 'https://ipfs-api.bcdata.top';// ipfs node

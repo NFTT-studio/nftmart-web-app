@@ -21,7 +21,6 @@ export const bidBritishAuction = async ({
   cb,
 }: bidBritishAuctionProps) => {
   try {
-    console.log(address, auctionCreatorAddress, auctionId, prices);
     const injector = await web3FromAddress(address);
     const price = bnToBn(prices);
     const call = PolkaSDK.api.tx.nftmartAuction.bidBritishAuction(price.mul(unit), auctionCreatorAddress, auctionId, null, null);

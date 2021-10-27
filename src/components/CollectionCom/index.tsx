@@ -72,7 +72,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
     if (!account || whiteList.indexOf(account?.address) < 0) {
       setIsShowModal(true);
     }
-  }, [account?.address, whiteList]);
+  }, [account?.address, whiteList !== 0]);
   const remove = (l) => {
     const index = categories.indexOf(l);
     if (index > -1) {
