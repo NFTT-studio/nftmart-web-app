@@ -1,6 +1,14 @@
 {
   "TestNet": "TestNet",
   "results": "个结果",
+  "ALL":"全部",
+  "Art":"艺术",
+  "Music":"音乐",
+  "ACG":"ACG",
+  "Sports":"体育",
+  "Trendy":"新潮",
+  "Game":"游戏",
+  "Collectibles":"收藏品",
   "createUploadOverflow":"文件太大，无法上载。请将文件大小减小到100MB以下。",
   "sortBy": {
     "recentlyListed": "最近上架",
@@ -12,6 +20,7 @@
     "oldest": "最旧的"
   },
   "common": {
+    "category":"类别",
     "currentPrice":"当前价格",
     "save": "保存",
     "yes": "是",
