@@ -18,7 +18,6 @@ async function getAuctionDeadline(allowDelay, deadline, lastBidBlock) {
     const d = await PolkaSDK.api.ws.call('nftmart_getAuctionDeadline', [allowDelay, deadline, lastBidBlock], 10000);
     return bnToBn(d);
   } catch (e) {
-    console.log(e);
     return null;
   }
 }
@@ -34,7 +33,6 @@ export const bidDutchAuction = async ({
   cb,
 }: bidBritishAuctionProps) => {
   try {
-    console.log(price);
     const injector = await web3FromAddress(address);
     // eslint-disable-next-line prefer-const
     let [auction, bid, block] = await Promise.all([
@@ -44,7 +42,6 @@ export const bidDutchAuction = async ({
     ]);
     const currentBlock = Number(block.block.header.number);
     if (auction.isSome && bid.isSome) {
-      console.log(2);
       auction = auction.unwrap();
       bid = bid.unwrap();
       let call;

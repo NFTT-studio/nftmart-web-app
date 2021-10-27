@@ -11,7 +11,6 @@ import {
   setAccount, setAccounts, setInjector, setWhiteList,
 } from '../redux/chainSlice';
 import { useAppDispatch } from '../hooks/redux';
-import useWhiteList from '../hooks/reactQuery/useWhiteList';
 
 interface Props {
   children: React.ReactNode;
@@ -21,7 +20,6 @@ const PolkaProvider = ({ children }: Props) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [value, setValue] = useLocalStorage<string>(LOGIN_LOCAL_STORAGE_KEY);
   const dispatch = useAppDispatch();
-  const { data } = useWhiteList();
 
   useEffect(() => {
     const init = async () => {
@@ -50,12 +48,6 @@ const PolkaProvider = ({ children }: Props) => {
     };
     init();
   }, []);
-
-  useEffect(() => {
-    if (data) {
-      dispatch(setWhiteList(data));
-    }
-  }, [data, dispatch]);
 
   return (
     <>

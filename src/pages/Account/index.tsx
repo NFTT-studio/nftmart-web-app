@@ -166,7 +166,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     if (account && whiteList.indexOf(address) < 0) {
       localStorage.setItem('ButtonSelect', '0');
     }
-  }, [account?.address, whiteList]);
+  }, [account?.address, whiteList.length !== 0]);
 
   const [collections, setCollections] = useState([]);
 

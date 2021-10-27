@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState } from 'react';
 import {
   Stack,
@@ -24,7 +25,7 @@ const TRANSLATIONS: Record<string, string> = {
 const ChangeLanguage = (): JSX.Element => {
   const { i18n, t } = useTranslation();
 
-  const [lang, setLang] = useState(i18n.language || localStorage.getItem('i18nextLng'));
+  const [lang, setLang] = useState(i18n.language || (localStorage.getItem('i18nextLng') === null ? 'en' : localStorage.getItem('i18nextLng')));
   const [opening, setOpening] = useState(false);
 
   const handleSelectLang = (l: string) => {

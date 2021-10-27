@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
-import React from 'react';
+import React, {
+  useEffect,
+} from 'react';
 import Identicon from 'react-identicons';
 import { useTranslation } from 'react-i18next';
 import {
@@ -30,11 +32,10 @@ import {
   IconDetailsCollection,
   IconDetailsCollectionN,
 } from '../../assets/images';
+import useUser from '../../hooks/reactQuery/useUser';
 import useNftsCollect from '../../hooks/reactQuery/useNftsCollect';
 import useOffer from '../../hooks/reactQuery/useOffer';
 import Headers from './Header';
-
-import useUser from '../../hooks/reactQuery/useUser';
 import CollectionCom from '../../components/CollectionCom/index';
 
 const Account = () => {
@@ -42,22 +43,26 @@ const Account = () => {
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
   const history = useHistory();
-  console.log(account?.address);
-
-  const { data: userData, isLoading: userDataLoading, refetch: fetchUserData } = useUser(account?.address);
-  const { data: nftsDataCollecte } = useNftsCollect(
-    {
-      collecterId: account?.address,
-    },
-  );
   const {
-    data: Offerreceive, refetch: fetchOfferreceive,
+    data: Offerreceive, refetch: fetchOfferReceive,
   } = useOffer(
     {
       addressId: account?.address,
       type: 'receive',
     },
   );
+  const { data: userData, isLoading: userDataLoading, refetch: fetchUserData } = useUser(account?.address);
+  const { data: nftsDataCollecte, refetch: fetchCollecte } = useNftsCollect(
+    {
+      collecterId: account?.address,
+    },
+  );
+
+  useEffect(() => {
+    fetchUserData();
+    fetchCollecte();
+    fetchOfferReceive();
+  }, [account, whiteList.length]);
   const TABS = [
     {
       id: '0',
@@ -110,7 +115,7 @@ const Account = () => {
 
   return (
     <>
-      { (!account?.address && !whiteList) || userDataLoading ? (
+      { !account?.address || whiteList.length === 0 || userDataLoading ? (
         <Center width="100%" height="100vh">
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         </Center>

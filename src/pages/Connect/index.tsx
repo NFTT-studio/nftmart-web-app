@@ -56,7 +56,6 @@ const Connect: FC = () => {
     // eslint-disable-next-line no-multi-assign
     injectedAccounts[index].address = encodeAddress(injectedAccounts[index].address, 12191);
     const address = encodeAddress(injectedAccounts[index].address, 12191);
-    console.log(address);
     dispatch(setAccount(injectedAccounts[index]));
     dispatch(setInjector(injector));
     dispatch(setAccounts(injectedAccounts));

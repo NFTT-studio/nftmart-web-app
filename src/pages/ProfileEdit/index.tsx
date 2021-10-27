@@ -35,7 +35,6 @@ const CreateCollection: FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data: userData } = useUser(account?.address);
-  console.log(userData);
 
   const onCloseModal = () => {
     setIsShowModal(false);
