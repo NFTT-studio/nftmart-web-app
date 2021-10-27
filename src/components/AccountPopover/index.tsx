@@ -308,7 +308,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                       fontWeight="blod"
                       color="#999999"
                     >
-                      {t('Account.loched')}
+                      {t('Account.locked')}
                     </Text>
                   </Flex>
                   <Text
@@ -606,7 +606,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Flex>
 
               <Link
-                href={`${EXPLORER_URL}`}
+                href={`https://scan.nftmart.io/mainnet/account/${address}`}
                 isExternal
                 ml="40px"
                 fontSize="16px"

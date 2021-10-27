@@ -294,7 +294,7 @@
     "quantity": "数量",
     "from": "出价人",
     "transferrable": "可转账",
-    "loched": "锁定的",
+    "locked": "锁定的",
     "bonded": "抵押的",
     "reserved": "保留的",
     "Created": "创作的",
