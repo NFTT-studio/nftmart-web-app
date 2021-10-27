@@ -71,7 +71,7 @@ const ChangeLanguage: FC<Props> = (({
             h="14px"
             src={IconAdd.default}
           />
-          Category
+          {t('common.category')}
         </Flex>
       </PopoverTrigger>
       {/* TODO: Move focus property else where to have common use */}
@@ -95,7 +95,7 @@ const ChangeLanguage: FC<Props> = (({
               alignItems="center"
               onClick={() => handleSelectLang(item)}
             >
-              {item.name}
+              {t(item.name)}
             </Button>
           )) : null}
         </PopoverBody>

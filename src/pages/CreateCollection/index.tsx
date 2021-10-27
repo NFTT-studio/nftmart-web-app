@@ -63,6 +63,11 @@ const Account = () => {
     fetchCollecte();
     fetchOfferReceive();
   }, [account, whiteList.length]);
+  useEffect(() => {
+    if (!account) {
+      history.push(`/connect?callbackUrl=${window.location.pathname}`);
+    }
+  }, [!account]);
   const TABS = [
     {
       id: '0',

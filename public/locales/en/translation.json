@@ -1,6 +1,14 @@
 {
   "TestNet":"TestNet",
   "results":"results",
+  "ALL":"ALL",
+  "Art":"Art",
+  "Music":"Music",
+  "ACG":"ACG",
+  "Sports":"Sports",
+  "Trendy":"Trendy",
+  "Game":"Game",
+  "Collectibles":"Collectibles",
   "createUploadOverflow":"The file is too large and cannot be upload. Please reduce the size of the file below 100MB.",
   "sortBy": {
     "recentlyListed": "Recently Listed",
@@ -12,6 +20,7 @@
     "oldest": "Oldest"
   },
   "common": {
+    "category":"Category",
     "currentPrice":"Current price",
     "save": "Save",
     "yes": "YES",
