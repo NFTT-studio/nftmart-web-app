@@ -12,22 +12,16 @@ import {
   Text,
   Link,
   Image,
-  AspectRatio,
 } from '@chakra-ui/react';
 import { Shimmer } from 'react-shimmer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link as RouterLink } from 'react-router-dom';
-import ReactAudioPlayer from 'react-audio-player';
-import {
-  Player,
-} from 'video-react';
 import { useTranslation } from 'react-i18next';
 import { IPFS_URL } from '../../constants';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { renderNmtNumberText } from '../Balance';
 import { priceStringDivUnit, currentPrice } from '../../utils/format';
 // eslint-disable-next-line import/no-unresolved
-import '../../../node_modules/video-react/dist/video-react.css';
 
 import {
   IconTime,
