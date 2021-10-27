@@ -12,4 +12,4 @@ COPY --from=builder /src/build/ /srv/build
 
 COPY ./Caddyfile /Caddyfile
 
-RUN ["caddy", "run", "-config", "/Caddyfile"]
+CMD ["caddy", "run", "-config", "/Caddyfile"]
