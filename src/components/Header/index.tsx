@@ -79,7 +79,7 @@ const Header: FC<HeaderProps> = () => {
             src={location.pathname === '/' ? y > 820 ? LogoSrc.default : LogoWhite.default : LogoSrc.default}
           />
         </Flex>
-        <Network />
+        {/* <Network /> */}
         <Flex ml="32px" flex="1 1 auto">
           <NavLink address={account?.address} />
         </Flex>
