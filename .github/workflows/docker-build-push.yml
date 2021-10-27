@@ -24,9 +24,23 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - run: docker push nftmart/web-app:${{ github.sha }}
         name: docker push
+
       - run: |
           docker tag nftmart/web-app:${{ github.sha }} nftmart/web-app
           docker push nftmart/web-app
-        name: docker tag latest
+        name: docker push latest
+
+      - name: docker push main
+        if: github.ref == 'refs/heads/main'
+        run: |
+          docker tag nftmart/web-app:${{ github.sha }} nftmart/web-app:main
+          docker push nftmart/web-app
+
+      - name: docker push test
+        if: github.ref == 'refs/heads/test'
+        run: |
+          docker tag nftmart/web-app:${{ github.sha }} nftmart/subql:test
+          docker push nftmart/web-app
