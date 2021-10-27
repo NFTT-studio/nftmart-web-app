@@ -42,5 +42,5 @@ jobs:
       - name: docker push test
         if: github.ref == 'refs/heads/test'
         run: |
-          docker tag nftmart/web-app:${{ github.sha }} nftmart/subql:test
+          docker tag nftmart/web-app:${{ github.sha }} nftmart/web-app:test
           docker push nftmart/web-app:test
