@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  caddy:
+    image: nftmart/web-app
+    build: .
+    command:
+    - caddy
+    - run
+    - -config
+    - /Caddyfile
+    volumes:
+    - ./Caddyfile:/Caddyfile
+  # - ./tls:/tls
+    ports:
+    - 8000:80
+  # - 443:443
+  # network_mode: host
