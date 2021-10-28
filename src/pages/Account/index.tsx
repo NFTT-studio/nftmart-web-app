@@ -323,7 +323,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                     fontFamily="TTHoves-Medium, TTHoves"
                     fontWeight="500"
                     color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
-                    lineHeight="18px"
                   >
                     {item.title}
                   </Text>
@@ -333,7 +332,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                   fontFamily="TTHoves-Medium, TTHoves"
                   fontWeight="500"
                   color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
-                  lineHeight="18px"
                 >
                   {item.num}
                 </Text>

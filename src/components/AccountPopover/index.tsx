@@ -185,7 +185,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 fontWeight="400"
                 color="#191A24"
               >
-                {data && renderNmtNumberText(data?.balance?.balance)}
+                {data ? renderNmtNumberText(data?.balance?.total) : 0}
               </Text>
             </Flex>
             <Text
@@ -292,7 +292,6 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
           {Number(data?.balance?.locked)
             ? (
               <Flex
-                m="10px 0"
                 width="100%"
                 height="16px"
                 justifyContent="space-between"

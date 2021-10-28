@@ -62,6 +62,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState([]);
   const [royaltiesSl, setroyaltiesSl] = useState(false);
+  const [stateCrop, setStateCrop] = useState(false);
 
   const onCloseModal = () => {
     setIsShowModal(false);
@@ -173,6 +174,15 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
       banner: '',
     },
     onSubmit: (values, formActions) => {
+      if (stateCrop) {
+        toast({
+          position: 'top',
+          render: () => (
+            <ToastBody title="warning" message={t('common.cuttingConfirmed')} type="warning" />
+          ),
+        });
+        return;
+      }
       setIsSubmitting(true);
       create(values, formActions);
     },
@@ -218,6 +228,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             rectangle=""
             proportion={16 / 16}
             value={formik.values.logoUrl}
+            setStateCrop={setStateCrop}
             onChange={(v) => {
               formik.values.logoUrl = v;
             }}
@@ -234,6 +245,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             rectangle="600px"
             proportion={1440 / 280}
             value={formik.values.logoUrl}
+            setStateCrop={setStateCrop}
             onChange={(v) => {
               formik.values.banner = v;
             }}

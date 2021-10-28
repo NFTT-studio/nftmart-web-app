@@ -54,7 +54,7 @@ const OfferDialog: FC<Props> = (({
   const cancelRef = useRef<HTMLDivElement>(null);
 
   const schema = Yup.object().shape({
-    price: Yup.number().moreThan(moreThan).required(t('Create.required')),
+    price: Yup.number().min(moreThan).required(t('Create.required')),
   });
 
   const formik = useFormik({
@@ -222,7 +222,7 @@ const OfferDialog: FC<Props> = (({
                   color="#999999"
                 >
                   ≈$
-                  {formik.values.price * token?.price}
+                  {(formik.values.price * token?.price).toFixed(2)}
                 </Text>
               )
                 : null}

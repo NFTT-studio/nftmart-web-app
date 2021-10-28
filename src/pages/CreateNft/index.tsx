@@ -71,6 +71,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   }, [account, whiteList]);
   const { data: collectionsData } = useCollectionsSinger(collectionId);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [stateCrop, setStateCrop] = useState(false);
 
   const schema = Yup.object().shape({
     logoUrl: Yup.string().required(t('Create.required')),
@@ -114,6 +115,15 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       fileType: '',
     },
     onSubmit: (formValue, formAction) => {
+      if (stateCrop) {
+        toast({
+          position: 'top',
+          render: () => (
+            <ToastBody title="warning" message={t('common.cuttingConfirmed')} type="warning" />
+          ),
+        });
+        return;
+      }
       setIsSubmitting(true);
       mint(formValue, {
         success: () => {
@@ -225,6 +235,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             rectangle=""
             proportion={16 / 16}
             value={formik.values.logoUrl}
+            setStateCrop={setStateCrop}
             onChange={(v, b) => {
               formik.setFieldValue('logoUrl', v);
               formik.setFieldValue('fileType', b);
@@ -249,6 +260,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                   rectangle=""
                   proportion={16 / 16}
                   value={formik.values.previewUrl}
+                  setStateCrop={setStateCrop}
                   onChange={(v, b) => {
                     formik.setFieldValue('previewUrl', v);
                   }}

@@ -602,7 +602,7 @@ const DetailRight: FC<Props> = (({
                 </Flex>
               </Flex>
             </Flex>
-            <Flex h="100%" m="16px 0 35px 0" flexDirection="row" justifyContent="center">
+            <Flex h="100%" m="16px 0 35px 0" flexDirection="row" justifyContent="flex-start">
               {types === 'Dutch' && events.times > 0 ? (
                 <Button
                   width="184px"
@@ -913,7 +913,7 @@ const DetailRight: FC<Props> = (({
                     />
 
                   </Flex>
-                  <Box height="162px" overflowY="scroll" boxSizing="border-box">
+                  <Box height="400px" overflowY="scroll" boxSizing="border-box">
                     {OffersArr.map((item) => (
                       <Box
                         key={item.id}
@@ -925,19 +925,54 @@ const DetailRight: FC<Props> = (({
                           justifyContent="space-between"
                           align="center"
                         >
-                          <Text
-                            w="136px"
-                            textAlign="left"
-                            fontSize="14px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#000000"
-                            lineHeight="20px"
-                          >
-                            {item.bidder_id ? formatAddress(item.bidder_id) : (item?.order?.seller_id
-                              ? formatAddress(item?.order?.seller_id)
-                              : formatAddress(item?.order?.buyer_id))}
-                          </Text>
+                          {!item.bidder_id
+                            ? (
+                              <Text
+                                w="136px"
+                                textAlign="left"
+                                fontSize="14px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#3D00FF"
+                                lineHeight="20px"
+                              >
+                                <Link
+                                  as={RouterLink}
+                                  to={`/account/${item?.order?.seller_id ? item?.order?.seller_id : item?.order?.buyer_id}/wallet`}
+                                  onClick={() => {
+                                    localStorage.setItem('ButtonSelect', '1');
+                                  }}
+                                >
+                                  {item.user_info?.name ? item.user_info?.name
+                                    : (item?.order?.seller_id
+                                      ? formatAddress(item?.order?.seller_id)
+                                      : formatAddress(item?.order?.buyer_id))}
+                                </Link>
+                              </Text>
+                            ) : null}
+                          {item.bidder_id
+                            ? (
+                              <Text
+                                w="136px"
+                                textAlign="left"
+                                fontSize="14px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#3D00FF"
+                                lineHeight="20px"
+                              >
+                                <Link
+                                  as={RouterLink}
+                                  to={`/account/${item?.order?.seller_id ? item?.order?.seller_id : item?.order?.buyer_id}/wallet`}
+                                  onClick={() => {
+                                    localStorage.setItem('ButtonSelect', '1');
+                                  }}
+                                >
+                                  {item.user_info?.name ? item.user_info?.name
+                                    : formatAddress(item.bidder_id)}
+                                </Link>
+                              </Text>
+                            ) : null}
                           <Text
                             w="136px"
                             display="flex"

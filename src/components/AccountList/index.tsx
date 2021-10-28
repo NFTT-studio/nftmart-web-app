@@ -47,7 +47,7 @@ const Account = ({
             fontWeight="500"
             color="#000000"
           >
-            {data && renderNmtNumberText(`${data?.balance?.balance}`)}
+            {data && renderNmtNumberText(`${data?.balance?.total}`)}
             <Text ml="3px" color="#999999">NMT</Text>
             <Box ml="20px" display="inline-block" as="img" src={SelectIcon.default} w="32px" h="32px" />
           </Box>
