@@ -317,11 +317,12 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                 backgroundColor={selectTabId === Number(item.id) ? '#000000' : '#FFFFFF'}
               >
                 <Flex h="100%" alignItems="center">
-                  <Image w="22px" h="22px" mr="5px" src={selectTabId === Number(item.id) ? item.iconS : item.icon} alt="" />
+                  <Image w="22px" h="auto" mr="5px" src={selectTabId === Number(item.id) ? item.iconS : item.icon} alt="" />
                   <Text
                     fontSize="16px"
                     fontFamily="TTHoves-Medium, TTHoves"
                     fontWeight="500"
+                    lineHeight="0px"
                     color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
                   >
                     {item.title}
@@ -331,6 +332,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                   fontSize="16px"
                   fontFamily="TTHoves-Medium, TTHoves"
                   fontWeight="500"
+                  lineHeight="0px"
                   color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
                 >
                   {item.num}
