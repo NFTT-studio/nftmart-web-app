@@ -160,7 +160,7 @@ const CreateCollection: FC = () => {
           id="featured_image"
           mediatype="cutting"
           rectangle="600px"
-          proportion={1440 / 280}
+          proportion={1400 / 400}
           value={formik.values.featured_image}
           edit={userData?.featured_image}
           setStateCrop={setStateCrop}
