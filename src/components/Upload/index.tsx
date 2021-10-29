@@ -46,6 +46,7 @@ interface INavProps {
   name: string;
   uploadHandle: any;
   proportion: any;
+  setStateCrop:React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 const CropperCop: React.FC<INavProps> = (props) => {
@@ -68,6 +69,7 @@ const CropperCop: React.FC<INavProps> = (props) => {
 
   const getCropData = () => {
     if (typeof cropper !== 'undefined' && cropper.getCroppedCanvas()) {
+      setStateCrop(true);
       const imgData = cropper.getCroppedCanvas().toDataURL('image/jpeg');
       const cropBlob = dataURLtoBlob(imgData);
       const cropFile = new File([cropBlob], props.name);
@@ -147,6 +149,7 @@ const Upload: FC<UploadProps> = ({
   const audioType = ['mp3', 'wav', 'ogg'];
 
   const saveToIpfs = useCallback(async (files: any[]) => {
+    setStateCrop(false);
     if (REACT_APP_PINATA_ENABLE === 'true') {
       setLoadingStatus(true);
       const formData = new FormData();
@@ -203,7 +206,6 @@ const Upload: FC<UploadProps> = ({
     } catch (err) {
       setLoadingStatus(false);
     }
-    setStateCrop(false);
   }, []);
 
   const captureFile = useCallback((event: any) => {
@@ -397,7 +399,7 @@ const Upload: FC<UploadProps> = ({
           ) : (
             <Box>
               {file ? (
-                <CropperCop imgUrl={fileUrl} uploadHandle={saveToIpfs} name={imgName} proportion={proportion} />
+                <CropperCop imgUrl={fileUrl} uploadHandle={saveToIpfs} name={imgName} proportion={proportion} setStateCrop={setStateCrop} />
               ) : (
                 txtUpload
               )}
