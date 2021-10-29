@@ -311,7 +311,7 @@
     "twitter": "Twitter",
     "twitterRule": "80 characters or less.",
     "featuredImage": "Banner image",
-    "featuredImageRule": "This picture will be displayed on your personal homepage, 1440 x 280 recommended"
+    "featuredImageRule": "This picture will be displayed on your personal homepage, 1440 x 400 recommended"
   },
   "class": {
     "Items": "Items",
