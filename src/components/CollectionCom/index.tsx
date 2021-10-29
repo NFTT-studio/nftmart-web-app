@@ -188,7 +188,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
     },
     validationSchema: schema,
   });
-
+  console.log(stateCrop);
   return (
     <Flex w="100%" flexDirection="column" alignItems="center">
       <Flex
