@@ -52,7 +52,7 @@ interface INavProps {
 const CropperCop: React.FC<INavProps> = (props) => {
   const cropperRef = useRef<HTMLImageElement>(null);
   const [cropper, setCropper] = useState<any>();
-  const { imgUrl, proportion } = props;
+  const { imgUrl, proportion, setStateCrop } = props;
 
   // 将base64转换为blob
   const dataURLtoBlob = (dataurl: any) => {
