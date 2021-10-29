@@ -24,7 +24,6 @@ const TRANSLATIONS: Record<string, string> = {
 
 const ChangeLanguage = (): JSX.Element => {
   const { i18n, t } = useTranslation();
-  console.log(i18n.language);
   const [lang, setLang] = useState(i18n.language || localStorage.getItem('i18nextLng'));
   const [opening, setOpening] = useState(false);
 
