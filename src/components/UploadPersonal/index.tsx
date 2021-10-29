@@ -97,6 +97,7 @@ export interface UploadProps {
   mediatype: string;
   rectangle: string;
   proportion: number;
+  setStateCrop:React.Dispatch<React.SetStateAction<boolean>>,
   edit?: any;
 }
 
@@ -108,6 +109,7 @@ const Upload: FC<UploadProps> = ({
   mediatype,
   rectangle,
   proportion,
+  setStateCrop,
   edit,
   ...rest
 }) => {
@@ -129,6 +131,7 @@ const Upload: FC<UploadProps> = ({
       setLoadingStatus(false);
       setShowCrop(false);
     };
+    setStateCrop(false);
   }, []);
 
   const captureFile = useCallback((event: any) => {
@@ -151,6 +154,7 @@ const Upload: FC<UploadProps> = ({
         return;
       }
       if (mediatype === 'cutting') {
+        setStateCrop(true);
         setValue('');
         setFile(currentFile);
         setShowCrop(true);

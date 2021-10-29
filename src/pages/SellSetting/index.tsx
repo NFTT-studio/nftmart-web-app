@@ -98,14 +98,14 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     startingPrice: Yup.number().moreThan(0).required(t('Create.required')),
     endingPrice: Yup.number().moreThan(0).required(t('Create.required')),
     expirationDate: Yup.string().required(t('Create.required')),
-    minimumMarkup: Yup.string().required(t('Create.required')),
+    minimumMarkup: Yup.number().moreThan(0, t('SellSetting.minimumMarkupRule')).required(t('Create.required')),
     automaticDelay: Yup.boolean().required(t('Create.required')),
     dutchDeposits: Yup.number().min(1, `${t('common.pledgeRule')}1`).required(t('Create.required')),
   });
   const schemaEnglish = Yup.object().shape({
     startingPrice: Yup.number().moreThan(0).required(t('Create.required')),
     expirationDate: Yup.string().required(t('Create.required')),
-    minimumMarkup: Yup.string().required(t('Create.required')),
+    minimumMarkup: Yup.number().moreThan(0, t('SellSetting.minimumMarkupRule')).required(t('Create.required')),
     automaticDelay: Yup.boolean().required(t('Create.required')),
     englishDeposits: Yup.number().min(1, `${t('common.pledgeRule')}1`).required(t('Create.required')),
   });

@@ -118,6 +118,7 @@ export interface UploadProps {
   mediatype: string;
   rectangle: string;
   proportion: number;
+  setStateCrop:React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 const Upload: FC<UploadProps> = ({
@@ -128,6 +129,7 @@ const Upload: FC<UploadProps> = ({
   mediatype,
   rectangle,
   proportion,
+  setStateCrop,
   ...rest
 }) => {
   const toast = useToast();
@@ -201,6 +203,7 @@ const Upload: FC<UploadProps> = ({
     } catch (err) {
       setLoadingStatus(false);
     }
+    setStateCrop(false);
   }, []);
 
   const captureFile = useCallback((event: any) => {
@@ -252,6 +255,7 @@ const Upload: FC<UploadProps> = ({
         setValue('');
         setFile(currentFile);
         setShowCrop(true);
+        setStateCrop(true);
       } else {
         setFileType(fileTypes);
         setFile(currentFile);

@@ -222,7 +222,7 @@ const DutchDialog: FC<Props> = (({
                 <Text>
                   {token?.price
                     ? `(≈$
-                      ${Number(price) * Number(token?.price)}
+                      ${(Number(price) * Number(token?.price)).toFixed(2)}
                       )` : null}
                 </Text>
               </Flex>
@@ -281,7 +281,7 @@ const DutchDialog: FC<Props> = (({
                 <Text>
                   {token?.price
                     ? `(≈$
-                      ${Number(price) * Number(token?.price)}
+                      ${(Number(price) * Number(token?.price)).toFixed(2)}
                       )` : null}
                 </Text>
               </Flex>

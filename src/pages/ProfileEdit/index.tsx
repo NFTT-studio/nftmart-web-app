@@ -11,6 +11,7 @@ import {
   Flex,
   Modal,
   ModalOverlay,
+  useToast,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -20,16 +21,18 @@ import EditFromSubTitle from '../../components/EditFromSubTitle';
 import FormInput from '../../components/FormInput';
 import SubmitButton from '../../components/SubmitButton';
 import MyModal from '../../components/MyModal';
-import MyToast from '../../components/MyToast';
+import MyToast, { ToastBody } from '../../components/MyToast';
 import { useAppSelector } from '../../hooks/redux';
 import useUser from '../../hooks/reactQuery/useUser';
 import { CACHE_SERVER_URL } from '../../constants';
 
 const CreateCollection: FC = () => {
   const { t } = useTranslation();
+  const toast = useToast();
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
+  const [stateCrop, setStateCrop] = useState(false);
 
   const [isShowModal, setIsShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,6 +68,15 @@ const CreateCollection: FC = () => {
       email: userData?.email,
     },
     onSubmit: async (values, formActions) => {
+      if (stateCrop) {
+        toast({
+          position: 'top',
+          render: () => (
+            <ToastBody title="warning" message={t('common.cuttingConfirmed')} type="warning" />
+          ),
+        });
+        return;
+      }
       setIsSubmitting(true);
       const formData = new FormData();
       formData.append('id', account?.address || '');
@@ -104,6 +116,7 @@ const CreateCollection: FC = () => {
           proportion={16 / 16}
           value={formik.values.avatar}
           edit={userData?.avatar}
+          setStateCrop={setStateCrop}
           onChange={(v) => {
             formik.setFieldValue('avatar', v);
           }}
@@ -150,6 +163,7 @@ const CreateCollection: FC = () => {
           proportion={1440 / 280}
           value={formik.values.featured_image}
           edit={userData?.featured_image}
+          setStateCrop={setStateCrop}
           onChange={(v) => {
             formik.setFieldValue('featured_image', v);
           }}

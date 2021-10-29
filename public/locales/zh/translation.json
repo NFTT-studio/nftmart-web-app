@@ -21,6 +21,7 @@
   },
   "common": {
     "category":"类别",
+    "cuttingConfirmed":"裁剪需要确认",
     "currentPrice":"当前价格",
     "save": "保存",
     "yes": "是",
@@ -223,7 +224,7 @@
     "placeABid": "出价竞拍",
     "placeABidExplain": "* 如果没有人在",
     "placeABidExplainTwo": "前出更高价格，您将获得这个作品。",
-    "placeABidMust": "必须大于等于",
+    "placeABidMust": "出价价格最小为 ",
     "receive": "领取",
     "buySuccess": "购买成功"
   },
@@ -252,6 +253,7 @@
     "turnToEnglishAuction": "转为英式拍卖",
     "turnToEnglishAuctionExplain": "当有人竞拍后，自动转换为英式加价拍卖的模式。",
     "minimumMarkup": "最少加价幅度",
+    "minimumMarkupRule": "最少加价幅度必须大于0",
     "minimumMarkupExplain": "每次竞拍都需要在当前价格基础上加价的比例。",
     "automaticDelay": "自动延期",
     "automaticDelayExplain": "如果开启，每次自动延期，以满足每次竞拍后都留30分钟等待其他人出价的要求。",

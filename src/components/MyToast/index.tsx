@@ -37,7 +37,7 @@ export const ToastBody: FC<ToastBody> = ({ message, title, type }) => {
     >
       <Image display="inline-block" src={IconMap[type]} w="20px" h="20px" />
       <Flex
-        display="column"
+        flexDirection="column"
         ml="10px"
 
       >
@@ -52,6 +52,8 @@ export const ToastBody: FC<ToastBody> = ({ message, title, type }) => {
           {title}
         </Text>
         <Text
+          display="inline-block"
+          maxW="320px"
           mt="12px"
           fontSize="14px"
           fontFamily="TTHoves-Regular, TTHoves"

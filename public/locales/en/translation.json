@@ -21,6 +21,7 @@
   },
   "common": {
     "category":"Category",
+    "cuttingConfirmed":"Cutting needs to be confirmed",
     "currentPrice":"Current price",
     "save": "Save",
     "yes": "YES",
@@ -223,7 +224,7 @@
     "placeABid": "Place a bid",
     "placeABidExplain": "* If no one has offered a higher price before ",
     "placeABidExplainTwo": ", you will get this item",
-    "placeABidMust": "Must be greater than ",
+    "placeABidMust": "The minimum bid price is ",
     "receive": "Receive",
     "buySuccess": "Buy Success"
   },
@@ -252,6 +253,7 @@
     "turnToEnglishAuction": "Turn to British Auction",
     "turnToEnglishAuctionExplain": "When someone bids, it is automatically converted to a British auction, with markup allowed.",
     "minimumMarkup": "Minimum markup",
+    "minimumMarkupRule": "Minimum markup must be greater than 0",
     "minimumMarkupExplain": "Each auction needs to increase the proportion of the previous auction price",
     "automaticDelay": "Automatic delay",
     "automaticDelayExplain": "If less than 30 minutes have passed since the last auction, the deadline will be automatically delayed.",
