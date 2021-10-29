@@ -18,10 +18,11 @@ export type fetchNftCollectParams = {
   collectionId?: string,
   status?: string[],
   classId?: number,
+  pageParam?: number
 }
 
 export default async ({
-  ownerId, sortBy, categoryId, collectionId, status, classId, collecterId,
+  ownerId, sortBy, categoryId, collectionId, status, classId, collecterId, pageParam,
 }: fetchNftCollectParams) => {
   const res = await axiosClient.get<Nfts>('/nfts/collect/list', {
     params: pickBy({
@@ -32,6 +33,7 @@ export default async ({
       collectionId: collectionId || undefined,
       status,
       classId,
+      page: pageParam,
     }, identity),
   });
   return res.data;

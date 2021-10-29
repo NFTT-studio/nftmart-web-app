@@ -6,10 +6,10 @@ export default ({
   ownerId, sortBy, categoryId, collectionId, status, classId, collecterId,
 }: fetchNftCollectParams) => useInfiniteQuery(
   [QUERY_KEYS.NFTSCollect, ownerId, collecterId, sortBy, categoryId, collectionId, status, classId],
-  () => fetchNftCollect({
-    ownerId, sortBy, categoryId, collectionId, status, classId, collecterId,
+  ({ pageParam = 0 }) => fetchNftCollect({
+    ownerId, sortBy, categoryId, collectionId, status, classId, collecterId, pageParam,
   }),
   {
-    getNextPageParam: (lastPage, pages) => (pages.length + 1),
+    getNextPageParam: (lastPage, pages) => (pages.length),
   },
 );

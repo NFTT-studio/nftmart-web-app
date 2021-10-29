@@ -362,84 +362,69 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         h="80px"
         background="#F9F9F9"
         flexDirection="row"
-        justifyContent="felx-start"
+        justifyContent="center"
         alignItems="center"
       >
-        <Link
-          as={RouterLink}
-          to={`/item/${nftData?.nftInfo?.id}`}
-        >
-          <Flex
-            maxW="1364px"
-            w="100%"
-            height="40px"
-            flexDirection="row"
-            justifyContent="felx-start"
-            alignItems="center"
-          >
-            <Image
-              mr="20px"
-              w="12px"
-              h="12px"
-              src={IconLeft.default}
-            />
-            <Image
-              m="0 20px 0 10px"
-              w="auto"
-              h="40px"
-              src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.previewUrl || nftData?.nftInfo?.metadata?.logoUrl}`}
-            />
-            {/* {nftData?.nftInfo?.metadata?.fileType === 'mp4' || nftData?.nftInfo?.metadata?.fileType === 'mp3'
-              ? (
-                <AspectRatio
-                  m="0 20px 0 10px"
-                  minW="80px"
-                  h="40px"
-                >
-                  <iframe
-                    title="naruto"
-                    src={PINATA_SERVER + nftData?.nftInfo?.metadata.logoUrl}
-                    allowFullScreen
-                    frameBorder="0"
-                  />
-                </AspectRatio>
-              )
-              : (
-                <Image
-                  m="0 20px 0 10px"
-                  w="auto"
-                  h="40px"
-                  src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.previewUrl || nftData?.nftInfo?.metadata?.logoUrl}`}
-                />
-              )} */}
 
+        <Flex
+          maxW="1364px"
+          w="100VW"
+          height="40px"
+          flexDirection="row"
+          justifyContent="felx-start"
+          alignItems="center"
+        >
+          <Link
+            as={RouterLink}
+            to={`/item/${nftData?.nftInfo?.id}`}
+          >
             <Flex
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="flex-start"
+              height="40px"
+              flexDirection="row"
+              justifyContent="felx-start"
+              alignItems="center"
             >
-              <Text
-                fontSize="12px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                color="#999999"
-                lineHeight="14px"
+              <Image
+                mr="20px"
+                w="12px"
+                h="12px"
+                src={IconLeft.default}
+              />
+
+              <Image
+                m="0 20px 0 10px"
+                w="auto"
+                h="40px"
+                src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.previewUrl || nftData?.nftInfo?.metadata?.logoUrl}`}
+              />
+              <Flex
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="flex-start"
               >
-                {collectionsData?.collection?.metadata?.name || ''}
-              </Text>
-              <Text
-                mt="5px"
-                fontSize="14px"
-                fontFamily="TTHoves-Medium, TTHoves"
-                fontWeight="500"
-                color="#191A24"
-                lineHeight="16px"
-              >
-                {nftData?.nftInfo?.metadata?.name}
-              </Text>
+                <Text
+                  fontSize="12px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#999999"
+                  lineHeight="14px"
+                >
+                  {collectionsData?.collection?.metadata?.name || ''}
+                </Text>
+                <Text
+                  mt="5px"
+                  fontSize="14px"
+                  fontFamily="TTHoves-Medium, TTHoves"
+                  fontWeight="500"
+                  color="#191A24"
+                  lineHeight="16px"
+                >
+                  {nftData?.nftInfo?.metadata?.name}
+                </Text>
+              </Flex>
             </Flex>
-          </Flex>
-        </Link>
+          </Link>
+        </Flex>
       </Flex>
       <Container
         display="flex"

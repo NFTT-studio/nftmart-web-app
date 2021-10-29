@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+import { renderNmtNumberText } from '../../../components/Balance';
 
 interface Props {
   events: [],
@@ -13,6 +14,17 @@ interface Props {
 const Events: FC<Props> = (({
   events,
 }) => {
+  const add0 = (m) => (m < 10 ? `0${m}` : m);
+  const format = (time:string) => {
+    const times = new Date(time);
+    const y = times.getFullYear();
+    const m = times.getMonth() + 1;
+    const d = times.getDate();
+    const h = times.getHours();
+    const mm = times.getMinutes();
+    const s = times.getSeconds();
+    return `${y}/${add0(m)}/${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
+  };
   const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : '');
   const date = JSON.parse(events?.event?.data);
   const { t } = useTranslation();
@@ -58,12 +70,12 @@ const Events: FC<Props> = (({
         color="#000000"
         lineHeight="20px"
       >
-        0
+        {events?.price ? renderNmtNumberText(events?.price) : null}
         <Text
           ml="3px"
           color="#999999"
         >
-          NMT
+          {events?.price ? 'NMT' : null}
         </Text>
       </Text>
       <Text
@@ -126,7 +138,7 @@ const Events: FC<Props> = (({
         color="#000000"
         lineHeight="20px"
       >
-        i minutes
+        {format(events?.timestamp)}
       </Text>
     </Flex>
   );
