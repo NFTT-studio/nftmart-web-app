@@ -242,7 +242,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             id="banner"
             mediatype="cutting"
             rectangle="600px"
-            proportion={1440 / 280}
+            proportion={1400 / 400}
             value={formik.values.logoUrl}
             setStateCrop={setStateCrop}
             onChange={(v) => {
