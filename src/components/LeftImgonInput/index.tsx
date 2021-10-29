@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import React, { FC, ReactElement } from 'react';
 import {
   InputGroup,
@@ -20,20 +21,24 @@ const LeftAddonInput: FC<Props> = ({
 }) => (
   <InputGroup
     width="600px"
-    height="40px"
+    height="42px"
     background="#FFFFFF"
     // eslint-disable-next-line no-nested-ternary
     borderRadius={position === 'top' ? '4px 4px 0px 4px'
       : position === 'bottom' ? '0px 0px 4px 4px' : 0}
-    border="1px solid #E5E5E5"
+    borderBottom="1px solid #E5E5E5"
+    borderTop={position === 'top' ? '1px solid #E5E5E5' : ''}
+    borderLeft="1px solid #E5E5E5"
+    borderRight="1px solid #E5E5E5"
     fontSize="12px"
     fontFamily="TTHoves-Regular, TTHoves"
     fontWeight="400"
     color="#999999"
   >
     <InputLeftAddon
+      border="none"
       borderRadius="0"
-      height="40px"
+      h="100%"
       background="#F4F4F4"
       fontSize="12px"
       fontFamily="TTHoves-Regular, TTHoves"
@@ -41,11 +46,26 @@ const LeftAddonInput: FC<Props> = ({
     >
       {url}
     </InputLeftAddon>
-    <Input
+    <InputLeftAddon
+      h="100%"
+      m="0"
+      p="0 0 0 10px"
       fontSize="12px"
       fontFamily="TTHoves-Regular, TTHoves"
       fontWeight="400"
-      placeholder={placeholder}
+      color="#000000"
+      background="none"
+      border="0"
+      children={position === 'top' ? null : placeholder}
+    />
+
+    <Input
+      p="0"
+      border="none"
+      fontSize="12px"
+      fontFamily="TTHoves-Regular, TTHoves"
+      fontWeight="400"
+      placeholder={position === 'top' ? placeholder : ''}
       color="#000000"
       onChange={onChange}
       borderRadius="0px"
@@ -55,6 +75,9 @@ const LeftAddonInput: FC<Props> = ({
       }}
       id={id}
       name={id}
+      _focus={{
+        border: 'none',
+      }}
     />
   </InputGroup>
 );

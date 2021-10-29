@@ -57,12 +57,12 @@ import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
 
 const ICONS = [
-  { icon: WEBSITE.default, name: 'website' },
-  { icon: DISCORD.default, name: 'discord' },
-  { icon: TWITTER.default, name: 'twitter' },
-  { icon: IconIns.default, name: 'ins' },
-  { icon: medium.default, name: 'medium' },
-  { icon: telegram.default, name: 'telegram' },
+  { icon: WEBSITE.default, name: 'website', linkPrefix: '' },
+  { icon: DISCORD.default, name: 'discord', linkPrefix: 'https://twitter.com/' },
+  { icon: TWITTER.default, name: 'twitter', linkPrefix: 'https://twitter.com/' },
+  { icon: IconIns.default, name: 'ins', linkPrefix: 'https://twitter.com/' },
+  { icon: medium.default, name: 'medium', linkPrefix: 'https://twitter.com/' },
+  { icon: telegram.default, name: 'telegram', linkPrefix: 'https://twitter.com/' },
 ];
 
 const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
@@ -74,7 +74,6 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const { address } = match.params;
   const location = useLocation();
   const [isPerson, setIsPerson] = useState(false);
-  const dataPerson = useAccount(address);
   const search = parse(location.search.replace('?', ''));
   const classId = search.collectionId;
   const [remainingTime, setRemainingTime] = useState(0);
@@ -92,6 +91,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   } = useCollectionsSinger(classId);
   const links = collectionsData?.collection?.metadata?.links;
   const ICON_LIST = ICONS.map((item, index) => ({
+    linkPrefix: item.linkPrefix,
     src: item.icon,
     id: index,
     link: links ? links[item.name] : '',
@@ -110,23 +110,24 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
       sortBy: selectedSort,
     },
   );
+
   const history = useHistory();
   function handleCreate() {
     history.push(`/profile/nft/create/${classId}`);
   }
+
   useEffect(() => {
     if (collectionsData?.collection?.creator_id === account?.address) {
       setIsPerson(true);
     }
-  }, [collectionsData?.collection?.creator_id, address, dataPerson]);
-  useEffect(() => {
-    refetchCreatorData();
-  }, [collectionsData?.collection?.creator_id]);
-
+  }, [collectionsData?.collection?.creator_id, address]);
   useEffect(() => {
     refetchCollectionsData();
     refetchNftsData();
   }, [classId]);
+  useEffect(() => {
+    refetchCreatorData();
+  }, [dataCreator?.address === 'undefined']);
   let begin = any;
   useEffect(() => {
     if (JSON.stringify(collectionsData) === '{}') {
@@ -257,63 +258,66 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                     src={IconDetailsocllections.default}
                   />
                 </Flex>
-                <Flex alignItems="center" m="20px 0">
-                  <Link
-                    as={RouterLink}
-                    to={`/account/${collectionsData?.collection?.creator_id}/wallet`}
-                    onClick={() => {
-                      localStorage.setItem('ButtonSelect', '1');
-                    }}
-                  >
-                    {dataCreator?.avatar ? (
-                      <Image
-                        mr="4px"
-                        w="50px"
-                        h="auto"
-                        borderRadius="50%"
-                        border="1px solid #D3D5DC"
-                        src={dataCreator?.avatar || HeadPortrait.default}
-                      />
-                    ) : (
-                      <Identicon
-                        className="creatorAvatar"
-                        string={collectionsData?.collection?.creator_id}
-                      />
-                    )}
-                  </Link>
-                  <Text
-                    fontSize="14px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#000000"
-                    lineHeight="16px"
-                  >
+                {dataCreator ? (
+                  <Flex alignItems="center" m="20px 0">
+                    <Link
+                      as={RouterLink}
+                      to={`/account/${collectionsData?.collection?.creator_id}/wallet`}
+                      onClick={() => {
+                        localStorage.setItem('ButtonSelect', '1');
+                      }}
+                    >
+                      {dataCreator?.avatar ? (
+                        <Image
+                          mr="4px"
+                          w="50px"
+                          h="auto"
+                          borderRadius="50%"
+                          border="1px solid #D3D5DC"
+                          src={dataCreator?.avatar}
+                        />
+                      ) : (
+                        <Identicon
+                          className="creatorAvatar"
+                          string={collectionsData?.collection?.creator_id}
+                        />
+                      )}
+                    </Link>
                     <Text
                       fontSize="14px"
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
                       color="#000000"
-                      display="flex"
-                      flexDirection="row"
+                      lineHeight="16px"
                     >
-                      {t('Detail.createdBy')}
-                      <Link
-                        as={RouterLink}
-                        to={`/account/${collectionsData?.collection?.creator_id}/wallet`}
-                        m="0 3px"
+                      <Text
                         fontSize="14px"
                         fontFamily="TTHoves-Regular, TTHoves"
                         fontWeight="400"
-                        color="#3D00FF"
-                        onClick={() => {
-                          localStorage.setItem('ButtonSelect', '1');
-                        }}
+                        color="#000000"
+                        display="flex"
+                        flexDirection="row"
                       >
-                        {dataCreator?.name || formatAddress(collectionsData?.collection?.creator_id)}
-                      </Link>
+                        {t('Detail.createdBy')}
+                        <Link
+                          as={RouterLink}
+                          to={`/account/${collectionsData?.collection?.creator_id}/wallet`}
+                          m="0 3px"
+                          fontSize="14px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#3D00FF"
+                          onClick={() => {
+                            localStorage.setItem('ButtonSelect', '1');
+                          }}
+                        >
+                          {dataCreator?.name || formatAddress(collectionsData?.collection?.creator_id)}
+                        </Link>
+                      </Text>
                     </Text>
-                  </Text>
-                </Flex>
+                  </Flex>
+                ) : null}
+
                 <Text
                   mt="10px"
                   fontSize="15px"
@@ -447,7 +451,8 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 <Flex>
                   {newLink.map((item, index) => (
                     <Link
-                      href={item.link}
+                      target="_blank"
+                      href={item.linkPrefix + item.link}
                     >
                       <Box
                         key="index"

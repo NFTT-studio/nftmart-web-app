@@ -11,6 +11,6 @@ export default ({
     addressId, number, pageParam,type,
   }),
   {
-    getNextPageParam: (lastPage, pages) => (pages.length + 1),
+    getNextPageParam: (lastPage, pages) => (pages.length),
   },
 );

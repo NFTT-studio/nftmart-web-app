@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable react/no-children-prop */
 import React, {
   useState, useEffect, useCallback,
@@ -68,7 +69,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     if (!account || whiteList.indexOf(account?.address) < 0) {
       setIsShowModal(true);
     }
-  }, [account, whiteList]);
+  }, [account, whiteList.length !== 0]);
   const { data: collectionsData } = useCollectionsSinger(collectionId);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateCrop, setStateCrop] = useState(false);
@@ -83,6 +84,11 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     description: Yup.string().max(1000, t('Create.descriptionRule')),
     royalties: Yup.number().max(20, t('Collection.royaltiesSchema')).min(0, t('Collection.royaltiesSchema')),
   });
+  useEffect(() => {
+    if (collectionsData?.collection?.royalty_rate) {
+      setroyaltiesSl(true);
+    }
+  }, [collectionsData]);
 
   const mint = useCallback(async (formValue, cb) => {
     const normalizedFormData = {
@@ -97,9 +103,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       },
       classId: collectionId,
       quantity: 1,
-      royaltyRate: formValue.royalties ? (Number(formValue.royalties) / 100) : '',
+      royaltyRate: formValue.isRoyalties ? (Number(formValue.royalties) / 100) : 0,
       cb,
-      setIsShow: setIsSubmitting,
     };
     mintNft(normalizedFormData);
   }, [account?.address, collectionId]);
@@ -111,8 +116,9 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       name: '',
       stub: '',
       description: '',
-      royalties: number2PerU16(collectionsData?.collection?.royalty_rate) || '',
+      royalties: number2PerU16(collectionsData?.collection?.royalty_rate || 0),
       fileType: '',
+      isRoyalties: !!collectionsData?.collection?.royalty_rate,
     },
     onSubmit: (formValue, formAction) => {
       if (stateCrop) {
@@ -369,6 +375,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
               <Switch
                 isChecked={royaltiesSl}
                 onChange={() => {
+                  formik.values.isRoyalties = !royaltiesSl;
                   setroyaltiesSl(!royaltiesSl);
                 }}
                 height="40px"
@@ -385,32 +392,35 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                   boxShadow: 'none',
                 }}
               >
-                <Input
-                  id="royalties"
-                  name="royalties"
-                  value={royaltiesSl ? formik.values.royalties : 0}
-                  onChange={formik.handleChange}
-                  fontSize="16px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  lineHeight="14px"
-                  color="#000000"
-                  _focus={{
-                    boxShadow: 'none',
-                    color: '#000000',
-                    border: '1px solid #000000',
-                  }}
-                  _after={{
-                    boxShadow: 'none',
-                    color: '#000000',
-                    border: '1px solid #000000',
-                  }}
-                  placeholder="0"
-                  _placeholder={{
-                    color: '#999999',
-                    fontSize: '12px',
-                  }}
-                />
+                {collectionsData?.collection
+                  ? (
+                    <Input
+                      id="royalties"
+                      name="royalties"
+                      value={formik.values.royalties}
+                      onChange={formik.handleChange}
+                      fontSize="16px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      lineHeight="14px"
+                      color="#000000"
+                      _focus={{
+                        boxShadow: 'none',
+                        color: '#000000',
+                        border: '1px solid #000000',
+                      }}
+                      _after={{
+                        boxShadow: 'none',
+                        color: '#000000',
+                        border: '1px solid #000000',
+                      }}
+                      placeholder="0"
+                      _placeholder={{
+                        color: '#999999',
+                        fontSize: '12px',
+                      }}
+                    />
+                  ) : ''}
                 <InputRightAddon
                   height="40px"
                   background="#F4F4F4"

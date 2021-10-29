@@ -11,6 +11,6 @@ export default ({
     nftId, number, pageParam,
   }),
   {
-    getNextPageParam: (lastPage, pages) => (pages.length + 1),
+    getNextPageParam: (lastPage, pages) => (pages.length),
   },
 );

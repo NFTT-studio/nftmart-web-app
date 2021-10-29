@@ -21,6 +21,7 @@ import {
   Text,
   Box,
   useToast,
+  InputLeftAddon,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 import { F } from 'ramda';

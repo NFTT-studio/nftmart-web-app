@@ -35,7 +35,7 @@ const TimeBy: FC<TimeByProps> = ({ selectedTime, setSelectedTime }) => {
     { key: 'seven', value: t('Time.seven') },
     { key: 'fourteen', value: t('Time.fourteen') },
     { key: 'thirty', value: t('Time.thirty') },
-    { key: 'sixty', value: t('Time.sixty') },
+    // { key: 'sixty', value: t('Time.sixty') },
     { key: 'ninety', value: t('Time.ninety') },
     { key: 'year', value: t('Time.year') },
   ];
