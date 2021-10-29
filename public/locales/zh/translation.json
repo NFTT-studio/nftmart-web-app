@@ -312,7 +312,7 @@
     "twitter": "推特",
     "twitterRule": "80个字符以内。",
     "featuredImage": "题图",
-    "featuredImageRule": "此图片将显示在您的个人主页上，建议 1440 x 280"
+    "featuredImageRule": "此图片将显示在您的个人主页上，建议 1440 x 400"
   },
   "class": {
     "Items": "作品",

@@ -148,6 +148,7 @@ const DetailLeft: FC<Props> = (({
               >
                 <Image
                   maxWidth="520px"
+                  objectFit="cover"
                   height="auto"
                   src={logoUrl}
                 />
