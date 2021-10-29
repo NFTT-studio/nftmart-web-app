@@ -147,8 +147,9 @@ const DetailLeft: FC<Props> = (({
                 justifyContent="center"
               >
                 <Image
+                  // cursor="pointer"
                   maxWidth="520px"
-                  objectFit="cover"
+                  objectFit="contain"
                   height="auto"
                   src={logoUrl}
                 />
