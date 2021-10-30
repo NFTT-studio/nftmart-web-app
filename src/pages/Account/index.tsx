@@ -253,7 +253,11 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             maxWidth="1400px"
             h="auto"
             src={userData?.featured_image || AccountBanner.default}
-            alt=""
+            fallback={(
+              <Center width="100%" height="300px">
+                <Spinner />
+              </Center>
+            )}
           />
         </Box>
         {userData?.avatar ? (
@@ -269,6 +273,11 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             height="108px"
             objectFit="cover"
             src={userData?.avatar || HeadPortrait.default}
+            fallback={(
+              <Center width="108px" height="108px">
+                <Spinner />
+              </Center>
+            )}
           />
         ) : (
           <Identicon

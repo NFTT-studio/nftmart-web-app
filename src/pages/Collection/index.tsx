@@ -227,6 +227,11 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                     ? `${PINATA_SERVER}${collectionsData?.collection?.metadata?.banner}`
                     : CollectionBackground.default}
                   alt="banner"
+                  fallback={(
+                    <Center width="100%" height="300px">
+                      <Spinner />
+                    </Center>
+                  )}
                 />
 
               </Box>
@@ -239,6 +244,11 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 w="100px"
                 h="100px"
                 boxShadow="0px 6px 20px 0px #D3D5DC"
+                fallback={(
+                  <Center width="108px" height="108px">
+                    <Spinner />
+                  </Center>
+                )}
               />
             </Flex>
             <Flex
