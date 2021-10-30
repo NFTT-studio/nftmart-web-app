@@ -80,7 +80,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     name: Yup.string()
       .max(50, t('Create.nameRule'))
       .required(t('Create.required')),
-    stub: Yup.string().max(50, t('Create.urlRule')),
+    stub: Yup.string().max(200, t('Create.urlRule')),
     description: Yup.string().max(1000, t('Create.descriptionRule')),
     royalties: Yup.number().max(20, t('Collection.royaltiesSchema')).min(0, t('Collection.royaltiesSchema')),
   });
@@ -310,12 +310,18 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             onChange={formik.handleChange}
             url="https://"
           />
+          {formik.errors.stub && formik.touched.stub ? (
+            <div style={{ color: 'red' }}>{formik.errors.stub}</div>
+          ) : null}
           <label htmlFor="description">
             {' '}
             <EditFormTitle text={t('Create.description')} />
             <EditFromSubTitle text={t('Create.descriptionRule')} />
           </label>
           <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} />
+          {formik.errors.description && formik.touched.description ? (
+            <div style={{ color: 'red' }}>{formik.errors.description}</div>
+          ) : null}
           <Flex
             w="100%"
             h="80px"
