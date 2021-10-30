@@ -71,7 +71,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [remainingTime, setRemainingTime] = useState(0);
   const { account } = chainState;
   const { nftId } = match.params;
-  const { data: nftData, isLoading: nftDataIsLoading } = useNft(nftId);
+  const { data: nftData, isLoading: nftDataIsLoading, refetch: refetchNftData } = useNft(nftId);
   const collectionsId = nftId.split('-')[0];
   const tokenId = nftId.split('-')[1];
 
@@ -576,6 +576,9 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       setIsCollect(!isCollect);
                       const types = isCollect ? 'cancle' : 'collect';
                       collectNft(types);
+                      setTimeout(() => {
+                        refetchNftData();
+                      }, 10);
                     }}
                   >
                     <Image

@@ -434,7 +434,7 @@ const DetailRight: FC<Props> = (({
               <Image
                 ml="4px"
                 w="18px"
-                h="18px"
+                h="auto"
                 src={IconAuthentication.default}
               />
             </Flex>

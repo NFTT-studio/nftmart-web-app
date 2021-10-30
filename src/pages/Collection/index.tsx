@@ -43,7 +43,7 @@ import {
   IconIns,
   medium,
   telegram,
-  IconDetailsocllections,
+  IconAuthentication,
   Emptyimg,
   HeadPortrait,
 } from '../../assets/images';
@@ -58,11 +58,11 @@ import Sort from '../../constants/Sort';
 
 const ICONS = [
   { icon: WEBSITE.default, name: 'website', linkPrefix: '' },
-  { icon: DISCORD.default, name: 'discord', linkPrefix: 'https://twitter.com/' },
+  { icon: DISCORD.default, name: 'discord', linkPrefix: 'https://discord.gg/' },
   { icon: TWITTER.default, name: 'twitter', linkPrefix: 'https://twitter.com/' },
-  { icon: IconIns.default, name: 'ins', linkPrefix: 'https://twitter.com/' },
-  { icon: medium.default, name: 'medium', linkPrefix: 'https://twitter.com/' },
-  { icon: telegram.default, name: 'telegram', linkPrefix: 'https://twitter.com/' },
+  { icon: IconIns.default, name: 'ins', linkPrefix: 'https://www.instagram.com/' },
+  { icon: medium.default, name: 'medium', linkPrefix: 'https://www.medium.com/@' },
+  { icon: telegram.default, name: 'telegram', linkPrefix: 'https://t.me/' },
 ];
 
 const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
@@ -91,10 +91,9 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   } = useCollectionsSinger(classId);
   const links = collectionsData?.collection?.metadata?.links;
   const ICON_LIST = ICONS.map((item, index) => ({
-    linkPrefix: item.linkPrefix,
     src: item.icon,
     id: index,
-    link: links ? links[item.name] : '',
+    link: links ? item.linkPrefix + links[item.name] : '',
   }));
   const {
     data: dataCreator,
@@ -254,8 +253,8 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                   <Image
                     ml="4px"
                     w="18px"
-                    h="18px"
-                    src={IconDetailsocllections.default}
+                    h="auto"
+                    src={IconAuthentication.default}
                   />
                 </Flex>
                 {dataCreator ? (
@@ -452,7 +451,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                   {newLink.map((item, index) => (
                     <Link
                       target="_blank"
-                      href={item.linkPrefix + item.link}
+                      href={item.link}
                     >
                       <Box
                         key="index"

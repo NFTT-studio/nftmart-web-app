@@ -166,7 +166,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               <Flex width="100%" justifyContent="flex-start" alignItems="center">
                 <Image
                   width="14px"
-                  height="14px"
+                  height="auto"
                   mr="9px"
                   src={Balance.default}
                 />
@@ -400,7 +400,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               <Flex width="100%" justifyContent="flex-start" alignItems="center">
                 <Image
                   width="14px"
-                  height="14px"
+                  height="auto"
                   mr="9px"
                   src={ICONS.quickAreaOwned.default}
                 />
@@ -468,7 +468,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
-                    height="14px"
+                    height="auto"
                     mr="9px"
                     src={ICONS.quickAreaCreated.default}
                   />
@@ -537,7 +537,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
                   <Image
                     width="14px"
-                    height="14px"
+                    height="auto"
                     mr="9px"
                     src={ICONS.quickAreaCollections.default}
                   />
