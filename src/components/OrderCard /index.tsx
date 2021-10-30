@@ -13,6 +13,7 @@ import {
   Text,
   Link,
   Image,
+  Spinner,
 } from '@chakra-ui/react';
 import { Shimmer } from 'react-shimmer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -226,7 +227,15 @@ const OrderCard: FC<NftCardProps> = ({
               }}
               src={IPFS_URL + nft?.metadata.logoUrl}
               effect="blur"
-              fallback={<Shimmer height={219} width={320} />}
+              placeholder={(
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="xl"
+                />
+              )}
             />
           )
           : (

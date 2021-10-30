@@ -242,18 +242,22 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   return (
     <MainContainer title={t('Home.title')}>
-      <Flex maxWidth="1440px" flexDirection="column" position="relative">
+      <Flex maxWidth="1400px" flexDirection="column" position="relative">
         <Box
-          maxWidth="1440px"
+          maxWidth="1400px"
           w="100vw"
           minHeight="200px"
         >
           <Image
             w="100%"
-            maxWidth="1440px"
+            maxWidth="1400px"
             h="auto"
             src={userData?.featured_image || AccountBanner.default}
-            alt=""
+            fallback={(
+              <Center width="100%" height="300px">
+                <Spinner />
+              </Center>
+            )}
           />
         </Box>
         {userData?.avatar ? (
@@ -269,6 +273,11 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             height="108px"
             objectFit="cover"
             src={userData?.avatar || HeadPortrait.default}
+            fallback={(
+              <Center width="108px" height="108px">
+                <Spinner />
+              </Center>
+            )}
           />
         ) : (
           <Identicon
@@ -278,7 +287,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
         )}
       </Flex>
       <Flex
-        maxWidth="1440px"
+        maxWidth="1400px"
         w="100%"
         flexDirection="row"
         justifyContent="space-between"

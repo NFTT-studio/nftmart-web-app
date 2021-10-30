@@ -237,6 +237,7 @@ const NftCard: FC<NftCardProps> = ({
               }}
               src={IPFS_URL + nft?.metadata.logoUrl}
               effect="blur"
+              // fallback={<Shimmer height={219} width="100%" />}
             />
           )
           : (
