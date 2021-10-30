@@ -253,7 +253,7 @@ const Banner = ((
             color="#FFFFFF"
             lineHeight="75px"
             letterSpacing="2px"
-            fontSize="64px"
+            fontSize="55px"
           >
             {t('banner.titleTwo')}
           </Text>

@@ -126,15 +126,15 @@ const Account = () => {
         </Center>
       ) : (
         <MainContainer title={t('Home.title')}>
-          <Flex maxWidth="1440px" flexDirection="column" position="relative">
+          <Flex maxWidth="1400px" flexDirection="column" position="relative">
             <Box
-              maxWidth="1440px"
+              maxWidth="1400px"
               w="100vw"
               minHeight="200px"
             >
               <Image
                 w="100%"
-                maxWidth="1440px"
+                maxWidth="1400px"
                 h="auto"
                 src={userData?.featured_image || AccountBanner.default}
                 alt=""
@@ -162,7 +162,7 @@ const Account = () => {
             )}
           </Flex>
           <Flex
-            maxWidth="1440px"
+            maxWidth="1400px"
             w="100%"
             flexDirection="row"
             justifyContent="space-between"

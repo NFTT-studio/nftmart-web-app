@@ -127,17 +127,19 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   useEffect(() => {
     refetchCreatorData();
   }, [dataCreator?.address === 'undefined']);
-  let begin = any;
+  const begin = any;
   useEffect(() => {
-    if (JSON.stringify(collectionsData) === '{}') {
-      begin = setInterval(() => {
-        refetchCollectionsData();
-        refetchNftsData();
-      }, 3000);
-    } else {
-      clearInterval(begin);
-    }
-  }, [JSON.stringify(collectionsData) === '{}', classId]);
+    refetchCollectionsData();
+    refetchNftsData();
+    refetchCreatorData();
+    // if (JSON.stringify(collectionsData) === '{}') {
+    //   begin = setInterval(() => {
+
+    //   }, 3000);
+    // } else {
+    //   clearInterval(begin);
+    // }
+  }, [JSON.stringify(collectionsData) === '{}']);
   useEffect(() => () => {
     clearInterval(begin);
   }, []);
@@ -211,16 +213,23 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 </Flex>
               </Flex>
             ) : ''}
-            <Flex maxWidth="1440px" w="100%" position="relative">
-              <Image
-                maxWidth="1440px"
-                width="100%"
-                height="auto"
-                src={collectionsData?.collection?.metadata?.banner
-                  ? `${PINATA_SERVER}${collectionsData?.collection?.metadata?.banner}`
-                  : CollectionBackground.default}
-                alt="banner"
-              />
+            <Flex maxWidth="1400px" w="100%" position="relative">
+              <Box
+                maxWidth="1400px"
+                w="100vw"
+                minHeight="200px"
+              >
+                <Image
+                  maxWidth="1400px"
+                  width="100%"
+                  height="auto"
+                  src={collectionsData?.collection?.metadata?.banner
+                    ? `${PINATA_SERVER}${collectionsData?.collection?.metadata?.banner}`
+                    : CollectionBackground.default}
+                  alt="banner"
+                />
+
+              </Box>
               <Avatar
                 position="absolute"
                 bottom="-50px"
@@ -234,7 +243,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             </Flex>
             <Flex
               w="100%"
-              maxWidth="1440px"
+              maxWidth="1400px"
               direction="row"
               justifyContent="space-between"
               padding="81px 40px 20px 40px"
