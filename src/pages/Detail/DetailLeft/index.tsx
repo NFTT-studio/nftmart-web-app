@@ -97,12 +97,12 @@ const DetailLeft: FC<Props> = (({
   const videoType = ['mp4', 'webm'];
   const audioType = ['mp3', 'wav', 'ogg'];
   const ICONS = [
-    { icon: WEBSITE.default, name: 'website' },
-    { icon: DISCORD.default, name: 'discord' },
-    { icon: TWITTER.default, name: 'twitter' },
-    { icon: IconIns.default, name: 'ins' },
-    { icon: medium.default, name: 'medium' },
-    { icon: telegram.default, name: 'telegram' },
+    { icon: WEBSITE.default, name: 'website', linkPrefix: '' },
+    { icon: DISCORD.default, name: 'discord', linkPrefix: 'https://discord.gg/' },
+    { icon: TWITTER.default, name: 'twitter', linkPrefix: 'https://twitter.com/' },
+    { icon: IconIns.default, name: 'ins', linkPrefix: 'https://www.instagram.com/' },
+    { icon: medium.default, name: 'medium', linkPrefix: 'https://www.medium.com/@' },
+    { icon: telegram.default, name: 'telegram', linkPrefix: 'https://t.me/' },
   ];
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
   const collectionName = collectionsData?.collection?.metadata?.name;
@@ -111,7 +111,7 @@ const DetailLeft: FC<Props> = (({
   const ICON_LIST = ICONS.map((item, index) => ({
     src: item.icon,
     id: index,
-    link: links ? links[item.name] : '',
+    link: links ? item.linkPrefix + links[item.name] : '',
   }));
   const newLink = ICON_LIST.filter((item) => item.link !== '');
   const fileType = nftData?.nftInfo?.metadata?.fileType;

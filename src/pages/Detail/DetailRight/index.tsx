@@ -434,7 +434,7 @@ const DetailRight: FC<Props> = (({
               <Image
                 ml="4px"
                 w="18px"
-                h="18px"
+                h="auto"
                 src={IconAuthentication.default}
               />
             </Flex>
@@ -1170,9 +1170,6 @@ const DetailRight: FC<Props> = (({
                   {eventDate?.pages.map((page) => page?.events?.map((item) => (
                     item.method === 'BurnnedToken'
                     || item.method === 'BurnRemovedBritishAuctionnedToken'
-                    || item.method === 'RemovedDutchAuction'
-                    || item.method === 'RemovedOrder'
-                    || item.method === 'RemovedOffer'
                       ? null : (<Activity events={item} />)
                   )))}
                 </InfiniteScroll>

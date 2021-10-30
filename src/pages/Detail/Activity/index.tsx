@@ -58,6 +58,10 @@ const Events: FC<Props> = (({
         {events?.method === 'CreatedOffer' ? 'Bids' : ''}
         {events?.method === 'TakenOffer' ? 'Sales' : ''}
         {events?.method === 'TakenOrder' ? 'Sales' : ''}
+        {events?.method === 'RemovedDutchAuction' ? 'Cancel' : ''}
+        {events?.method === 'RemovedOrder' ? 'Cancel' : ''}
+        {events?.method === 'RemovedOffer' ? 'Cancel' : ''}
+        {events?.method === 'RemovedBritishAuction' ? 'Cancel' : ''}
       </Text>
       <Text
         w="136px"

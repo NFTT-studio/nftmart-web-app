@@ -342,7 +342,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             position=""
             value={formik.values.twitter}
             onChange={formik.handleChange}
-            placeholder="@"
+            placeholder="https://twitter.com/"
             url={(
               <Image
                 w="22px"
@@ -356,7 +356,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             position=""
             value={formik.values.ins}
             onChange={formik.handleChange}
-            placeholder="@"
+            placeholder="https://www.instagram.com/"
             url={(
               <Image
                 w="22px"
@@ -370,7 +370,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             position=""
             value={formik.values.medium}
             onChange={formik.handleChange}
-            placeholder="@"
+            placeholder="https://www.medium.com/@"
             url={(
               <Image
                 w="22px"
