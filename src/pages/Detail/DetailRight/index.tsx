@@ -408,9 +408,6 @@ const DetailRight: FC<Props> = (({
             color="#000000"
             lineHeight="64px"
             maxWidth="100%"
-            overflow="hidden"
-            textOverflow="ellipsis"
-            whiteSpace="nowrap"
             textAlign="start"
           >
             {nftName}
