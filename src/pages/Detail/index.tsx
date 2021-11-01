@@ -188,7 +188,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo?.owner_id);
   const isBidder = useIsLoginAddress(nftData?.nftInfo?.auction?.auctionbid[0]?.bidder_id);
 
-  const logoUrl = `${PINATA_SERVER}${nftData?.nftInfo.metadata.logoUrl}`;
+  const logoUrl = `${PINATA_SERVER}/nft/${nftData?.nftInfo.metadata.logoUrl}`;
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
   const auctionPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.price);
   const collectionName = collectionsData?.collection?.metadata?.name;

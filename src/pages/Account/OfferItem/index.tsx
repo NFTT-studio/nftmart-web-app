@@ -88,7 +88,7 @@ const OfferItem: FC<Props> = (({ offers }) => {
             width="auto"
             height="40px"
             borderRadius="4px"
-            src={`${PINATA_SERVER}${offers?.nft?.previewUrl || offers?.nft?.logoUrl}`}
+            src={`${PINATA_SERVER}/nft/${offers?.nft?.previewUrl || offers?.nft?.logoUrl}`}
             alt=""
           />
           <Flex

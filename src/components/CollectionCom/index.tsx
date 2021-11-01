@@ -229,6 +229,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             proportion={16 / 16}
             value={formik.values.logoUrl}
             setStateCrop={setStateCrop}
+            fileClass="logo"
             onChange={(v) => {
               formik.values.logoUrl = v;
             }}
@@ -246,6 +247,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             proportion={1400 / 400}
             value={formik.values.logoUrl}
             setStateCrop={setStateCrop}
+            fileClass="banner"
             onChange={(v) => {
               formik.values.banner = v;
             }}

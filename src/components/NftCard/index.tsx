@@ -17,7 +17,7 @@ import { Shimmer } from 'react-shimmer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { IPFS_URL } from '../../constants';
+import { PINATA_SERVER } from '../../constants';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { renderNmtNumberText } from '../Balance';
 import { priceStringDivUnit, currentPrice } from '../../utils/format';
@@ -235,7 +235,7 @@ const NftCard: FC<NftCardProps> = ({
                 height: '100%',
                 borderRadius: '4px 4px 0 0 ',
               }}
-              src={IPFS_URL + nft?.metadata.logoUrl}
+              src={`${PINATA_SERVER}/nft/${nft?.metadata?.logoUrl}`}
               effect="blur"
               // fallback={<Shimmer height={219} width="100%" />}
             />
@@ -276,7 +276,7 @@ const NftCard: FC<NftCardProps> = ({
                         height: '100%',
                         borderRadius: '4px 4px 0 0 ',
                       }}
-                      src={IPFS_URL + nft?.metadata?.previewUrl}
+                      src={`${PINATA_SERVER}/nft/${nft?.metadata?.previewUrl}`}
                       effect="blur"
                     />
                   </Box>
@@ -314,7 +314,7 @@ const NftCard: FC<NftCardProps> = ({
                         height: '100%',
                         borderRadius: '4px 4px 0 0 ',
                       }}
-                      src={IPFS_URL + nft?.metadata?.previewUrl}
+                      src={`${PINATA_SERVER}/nft/${nft?.metadata?.previewUrl}`}
                       effect="blur"
                     />
                   </Box>
@@ -334,7 +334,7 @@ const NftCard: FC<NftCardProps> = ({
                       height: '100%',
                       borderRadius: '4px 4px 0 0 ',
                     }}
-                    src={IPFS_URL + nft?.metadata.logoUrl}
+                    src={`${PINATA_SERVER}/nft/${nft?.metadata?.logoUrl}`}
                     effect="blur"
                   />
                 ) : (
@@ -353,7 +353,7 @@ const NftCard: FC<NftCardProps> = ({
                       height: '100%',
                       borderRadius: '4px 4px 0 0 ',
                     }}
-                    src={IPFS_URL + nft?.metadata.logoUrl}
+                    src={`${PINATA_SERVER}/nft/${nft?.metadata?.logoUrl}`}
                     effect="blur"
                   />
               )

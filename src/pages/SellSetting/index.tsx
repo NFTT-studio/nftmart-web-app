@@ -395,7 +395,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 m="0 20px 0 10px"
                 w="auto"
                 h="40px"
-                src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.previewUrl || nftData?.nftInfo?.metadata?.logoUrl}`}
+                src={`${PINATA_SERVER}/nft/${nftData?.nftInfo?.metadata?.previewUrl || nftData?.nftInfo?.metadata?.logoUrl}`}
               />
               <Flex
                 flexDirection="column"

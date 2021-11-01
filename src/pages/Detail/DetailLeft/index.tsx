@@ -167,7 +167,7 @@ const DetailLeft: FC<Props> = (({
                       width="100%"
                       height="auto"
                       controls
-                      poster={`${PINATA_SERVER}${nftData?.nftInfo?.metadata?.previewUrl}`}
+                      poster={`${PINATA_SERVER}/nft/${nftData?.nftInfo?.metadata?.previewUrl}`}
                     >
                       <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.logoUrl}`} />
                     </video>
@@ -182,13 +182,13 @@ const DetailLeft: FC<Props> = (({
                     <Image
                       width="100%"
                       height="auto"
-                      src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.previewUrl}`}
+                      src={`${PINATA_SERVER}/nft/${nftData?.nftInfo?.metadata.previewUrl}`}
                     />
                     <ReactAudioPlayer
                       style={{
                         width: '100%',
                       }}
-                      src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.logoUrl}`}
+                      src={`${PINATA_SERVER}/nft/${nftData?.nftInfo?.metadata.logoUrl}`}
                       autoPlay
                       controls
                     />

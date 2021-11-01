@@ -59,7 +59,7 @@ const CollectionSelector: FC<CollectionSelectorProps> = (({ selectedArr, collect
                 h="30px"
                 mr="8px"
                 borderRadius="50%"
-                src={`${PINATA_SERVER}${collection?.metadata?.logoUrl}`}
+                src={`${PINATA_SERVER}/logo/${collection?.metadata?.logoUrl}`}
                 alt=""
               />
             )}
