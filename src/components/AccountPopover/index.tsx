@@ -30,7 +30,10 @@ import {
   IoMdArrowDropup,
 } from '../../assets/images';
 import { statusArr } from '../../constants/Status';
-import { EXPLORER_URL } from '../../constants';
+import {
+  EXPLORER_URL,
+  PINATA_SERVER,
+} from '../../constants';
 import useAccount from '../../hooks/reactQuery/useAccount';
 import { renderNmtNumberText } from '../Balance';
 import useUserTop from '../../hooks/reactQuery/useUserTop';
@@ -105,7 +108,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               width="32px"
               height="32px"
               borderRadius="50%"
-              src={userData?.avatar || HeadPortrait.default}
+              src={`${PINATA_SERVER}user/${userData?.avatar}` || HeadPortrait.default}
             />
           ) : (
             <Identicon
