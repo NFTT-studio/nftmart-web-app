@@ -7,7 +7,7 @@
     "@chakra-ui/react": "^1.0.0",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
-    "@polkadot/api": "6.4.2",
+    "@polkadot/api": "^6.4.2",
     "@polkadot/extension-dapp": "^0.40.3",
     "@polkadot/extension-inject": "^0.40.3",
     "@polkadot/util": "^7.6.1",

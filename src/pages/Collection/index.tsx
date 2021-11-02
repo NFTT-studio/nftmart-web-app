@@ -292,7 +292,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                           h="auto"
                           borderRadius="50%"
                           border="1px solid #D3D5DC"
-                          src={dataCreator?.avatar}
+                          src={`${PINATA_SERVER}user/${dataCreator?.avatar}`}
                         />
                       ) : (
                         <Identicon
