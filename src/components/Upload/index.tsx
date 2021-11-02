@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable consistent-return */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-nested-ternary */
@@ -47,7 +48,7 @@ const COS = require('cos-js-sdk-v5');
 const cos = new COS({
   getAuthorization: (options, callback) => {
     axios({
-      url: 'http://test-cache.nftmart.io/api/accounts/cos/sts',
+      url: 'https://test-cache.nftmart.io/api/accounts/cos/sts',
       method: 'get',
     }).then((data) => {
       const credentials = data.data && data.data.credentials;
@@ -222,8 +223,13 @@ const Upload: FC<UploadProps> = ({
         progress: (arg: any) => arg,
       };
       setLoadingStatus(true);
+      let count = 0;
+      setInterval(() => {
+        count += 1;
+        console.log(count);
+      }, 1000);
       const added = await ipfs.add(files[0], addOptions);
-      console.log(added.cid.toString(), '=============');
+      console.log(added.cid.toString());
       await cos.putObject(
         {
           Bucket: 'nft-1257035533',
@@ -297,16 +303,16 @@ const Upload: FC<UploadProps> = ({
       //   setLoadingStatus(false);
       //   return;
       // }
-      if (currentFile.size >= MAX_FILE_SIZE) {
-        toast({
-          position: 'top',
-          render: () => (
-            <ToastBody title={t('createUploadOverflow')} message="" type="warning" />
-          ),
-        });
-        setLoadingStatus(false);
-        return;
-      }
+      // if (currentFile.size >= MAX_FILE_SIZE) {
+      //   toast({
+      //     position: 'top',
+      //     render: () => (
+      //       <ToastBody title={t('createUploadOverflow')} message="" type="warning" />
+      //     ),
+      //   });
+      //   setLoadingStatus(false);
+      //   return;
+      // }
       setImgName(currentFile.name);
       if (mediatype === 'cutting') {
         setFileType(fileTypes);
