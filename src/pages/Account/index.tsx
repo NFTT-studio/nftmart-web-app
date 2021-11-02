@@ -612,12 +612,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                             <Text
                               w="100%"
                               background="#000000"
-                              pl="16px"
+                              p="0 16px"
                               lineHeight="54px"
                               fontSize="16px"
                               fontFamily="TTHoves-Regular, TTHoves"
                               fontWeight="400"
                               color="#FFFFFF"
+                              overflow="hidden"
+                              textOverflow="ellipsis"
+                              whiteSpace="nowrap"
                             >
                               {item.metadata?.name}
                             </Text>
