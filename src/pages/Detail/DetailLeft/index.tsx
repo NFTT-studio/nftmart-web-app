@@ -146,13 +146,22 @@ const DetailLeft: FC<Props> = (({
                 maxH="1040px"
                 justifyContent="center"
               >
-                <Image
+                <Link
+                  target="_blank"
+                  href={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata.logoUrl}`}
+                  fontSize="14px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#3D00FF"
+                >
+                  <Image
                   // cursor="pointer"
-                  maxWidth="520px"
-                  objectFit="contain"
-                  height="auto"
-                  src={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata.logoUrl}?imageMogr2/thumbnail/520x1040/interlace/0`}
-                />
+                    maxWidth="520px"
+                    objectFit="contain"
+                    height="auto"
+                    src={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata.logoUrl}!detail`}
+                  />
+                </Link>
               </Flex>
             )
             : (
@@ -167,7 +176,7 @@ const DetailLeft: FC<Props> = (({
                       width="100%"
                       height="auto"
                       controls
-                      poster={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata?.previewUrl}?imageMogr2/thumbnail/520x1040/interlace/0`}
+                      poster={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata?.previewUrl}!detail`}
                     >
                       <source style={{ height: 'auto' }} src={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata.logoUrl}`} />
                     </video>
@@ -179,11 +188,20 @@ const DetailLeft: FC<Props> = (({
                     width="520px"
                     height="auto"
                   >
-                    <Image
-                      width="100%"
-                      height="auto"
-                      src={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata.previewUrl}?imageMogr2/thumbnail/520x1040/interlace/0`}
-                    />
+                    <Link
+                      target="_blank"
+                      href={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata.previewUrl}`}
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#3D00FF"
+                    >
+                      <Image
+                        width="100%"
+                        height="auto"
+                        src={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata.previewUrl}!detail`}
+                      />
+                    </Link>
                     <ReactAudioPlayer
                       style={{
                         width: '100%',

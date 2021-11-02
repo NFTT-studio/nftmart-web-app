@@ -409,7 +409,7 @@ const Upload: FC<UploadProps> = ({
             <>
               {pictureType.indexOf(fileType) > -1
                 ? (
-                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${fileClass}/${value}?imageMogr2/thumbnail/520x1040/interlace/0`} />
+                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${fileClass}/${value}!preview`} />
                 )
                 : (
                   videoType.indexOf(fileType) > -1
@@ -432,7 +432,7 @@ const Upload: FC<UploadProps> = ({
                           w="350px"
                           h="auto"
                           m="16px 0"
-                          src={`${PINATA_SERVER}${fileClass}/${value}?imageMogr2/thumbnail/520x1040/interlace/0`}
+                          src={`${PINATA_SERVER}${fileClass}/${value}!preview`}
                         />
                       )
                 )}
