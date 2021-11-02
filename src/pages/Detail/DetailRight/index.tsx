@@ -26,6 +26,10 @@ import PriceHistoryChart from '../PriceHistoryChart';
 import { priceStringDivUnit, currentPrice } from '../../../utils/format';
 import { renderNmtNumberText } from '../../../components/Balance';
 import useEvent from '../../../hooks/reactQuery/useEvent';
+import {
+  PINATA_SERVER,
+  DEFAULT_PAGE_LIMIT,
+} from '../../../constants';
 
 import {
   // IconDetailsRefresh,
@@ -39,9 +43,6 @@ import {
   IconRankDown,
   IconRankUp,
 } from '../../../assets/images';
-import {
-  DEFAULT_PAGE_LIMIT,
-} from '../../../constants';
 
 interface Props {
   nftId:string,
@@ -452,7 +453,7 @@ const DetailRight: FC<Props> = (({
                   h="auto"
                   borderRadius="50%"
                   border="1px solid #D3D5DC"
-                  src={nftData?.nftInfo?.owner?.avatar || HeadPortrait.default}
+                  src={`${PINATA_SERVER}user/${nftData?.nftInfo?.owner?.avatar}` || HeadPortrait.default}
                 />
               ) : (
                 <Identicon
