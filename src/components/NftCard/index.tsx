@@ -499,7 +499,7 @@ const NftCard: FC<NftCardProps> = ({
                   h="26px"
                   borderRadius="50%"
                   border="1px solid #FFFFFF"
-                  src={nft?.creator.avatar || HeadPortrait.default}
+                  src={`${PINATA_SERVER}user/${nft?.creator.avatar}` || HeadPortrait.default}
                 />
               ) : (
                 <Identicon
