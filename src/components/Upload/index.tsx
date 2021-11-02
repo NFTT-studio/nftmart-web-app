@@ -247,12 +247,13 @@ const Upload: FC<UploadProps> = ({
                 <ToastBody title="error" message="error" type="error" />
               ),
             });
+            return;
           }
+          setValue(added.cid.toString());
+          setLoadingStatus(false);
+          setShowCrop(false);
         },
       );
-      setValue(added.cid.toString());
-      setLoadingStatus(false);
-      setShowCrop(false);
     } catch (e) {
       toast({
         position: 'top',
