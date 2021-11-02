@@ -252,7 +252,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
             w="100%"
             maxWidth="1400px"
             h="auto"
-            src={`${PINATA_SERVER}user/${userData?.featured_image}` || AccountBanner.default}
+            src={userData?.featured_image ? `${PINATA_SERVER}user/${userData?.featured_image}` : AccountBanner.default}
             fallback={(
               <Center width="100%" height="300px">
                 <Spinner />
@@ -612,12 +612,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                             <Text
                               w="100%"
                               background="#000000"
-                              pl="16px"
+                              p="0 16px"
                               lineHeight="54px"
                               fontSize="16px"
                               fontFamily="TTHoves-Regular, TTHoves"
                               fontWeight="400"
                               color="#FFFFFF"
+                              overflow="hidden"
+                              textOverflow="ellipsis"
+                              whiteSpace="nowrap"
                             >
                               {item.metadata?.name}
                             </Text>
