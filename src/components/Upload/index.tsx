@@ -290,7 +290,17 @@ const Upload: FC<UploadProps> = ({
         toast({
           position: 'top',
           render: () => (
-            <ToastBody title={t('common.imgFiletype')} message="" type="warning" />
+            <ToastBody title="warning" message={t('common.imgFiletype')} type="warning" />
+          ),
+        });
+        setLoadingStatus(false);
+        return;
+      }
+      if (pictureType.indexOf(fileTypes) !== -1 && currentFile.size >= 1024 * 1024 * 32) {
+        toast({
+          position: 'top',
+          render: () => (
+            <ToastBody title="warning" message={t('common.imgFilesize')} type="warning" />
           ),
         });
         setLoadingStatus(false);
