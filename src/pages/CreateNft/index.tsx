@@ -190,7 +190,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
               m="0 20px 0 10px"
               w="auto"
               h="40px"
-              src={`${PINATA_SERVER}/logo/${collectionsData?.collection?.metadata.logoUrl}`}
+              src={`${PINATA_SERVER}logo/${collectionsData?.collection?.metadata.logoUrl}`}
             />
             <Flex
               flexDirection="column"

@@ -220,7 +220,9 @@ const Upload: FC<UploadProps> = ({
       }
       const addOptions = {
         // onlyHash: true,
-        progress: (arg: any) => arg,
+        progress: (arg: any) => {
+          setProgresses(1);
+        },
       };
       setLoadingStatus(true);
       const added = await ipfs.add(files[0], addOptions);
@@ -406,26 +408,31 @@ const Upload: FC<UploadProps> = ({
             <>
               {pictureType.indexOf(fileType) > -1
                 ? (
-                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}/${fileClass}/${value}`} />
+                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${fileClass}/${value}?imageMogr2/thumbnail/520x1040/interlace/0`} />
                 )
                 : (
                   videoType.indexOf(fileType) > -1
                     ? (
                       <Box maxWidth="420px">
                         <Player width="100%">
-                          <source style={{ height: 'auto' }} src={`${PINATA_SERVER}/${fileClass}/${value}`} />
+                          <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${fileClass}/${value}`} />
                         </Player>
                       </Box>
                     )
                     : audioType.indexOf(fileType) > -1 ? (
                       <Box maxWidth="420px">
                         <Player width="100%">
-                          <source style={{ height: 'auto' }} src={`${PINATA_SERVER}/${fileClass}/${value}`} />
+                          <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${fileClass}/${value}`} />
                         </Player>
                       </Box>
                     )
                       : (
-                        <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}/${fileClass}/${value}`} />
+                        <Image
+                          w="350px"
+                          h="auto"
+                          m="16px 0"
+                          src={`${PINATA_SERVER}${fileClass}/${value}?imageMogr2/thumbnail/520x1040/interlace/0`}
+                        />
                       )
                 )}
 

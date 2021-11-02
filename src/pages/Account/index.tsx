@@ -608,7 +608,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                             border="1px solid #000000"
                             flexDirection="column"
                           >
-                            <Image w="100%" h="230px" src={`${PINATA_SERVER}/logo/${item.metadata?.logoUrl}`} alt="" />
+                            <Image w="100%" h="230px" src={`${PINATA_SERVER}logo/${item.metadata?.logoUrl}`} alt="" />
                             <Text
                               w="100%"
                               background="#000000"

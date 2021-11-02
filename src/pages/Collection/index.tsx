@@ -224,7 +224,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                   width="100%"
                   height="auto"
                   src={collectionsData?.collection?.metadata?.banner
-                    ? `${PINATA_SERVER}/banner/${collectionsData?.collection?.metadata?.banner}`
+                    ? `${PINATA_SERVER}banner/${collectionsData?.collection?.metadata?.banner}`
                     : CollectionBackground.default}
                   alt="banner"
                   fallback={(
@@ -240,7 +240,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 bottom="-50px"
                 border="3px solid #FFFFFF"
                 m="0 40px"
-                src={`${PINATA_SERVER}/logo/${collectionsData?.collection?.metadata.logoUrl}`}
+                src={`${PINATA_SERVER}logo/${collectionsData?.collection?.metadata.logoUrl}`}
                 w="100px"
                 h="100px"
                 boxShadow="0px 6px 20px 0px #D3D5DC"
