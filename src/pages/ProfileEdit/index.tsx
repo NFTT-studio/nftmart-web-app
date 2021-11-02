@@ -77,17 +77,28 @@ const CreateCollection: FC = () => {
         });
         return;
       }
+      setIsSubmitting(false);
+      console.log(values);
+
       setIsSubmitting(true);
-      const formData = new FormData();
-      formData.append('id', account?.address || '');
-      formData.append('name', values.name);
-      formData.append('avatar', values.avatar || '');
-      formData.append('featured_image', values.featured_image || '');
-      formData.append('twitter', values.twitter);
-      formData.append('email', values.email || userData?.email);
-      await axios.post(`${CACHE_SERVER_URL}accounts`, formData, {
+      const params = new URLSearchParams();
+      params.append('id', account?.address || '');
+      params.append('name', values.name);
+      params.append('avatar', values.avatar || '');
+      params.append('featured_image', values.featured_image || '');
+      params.append('twitter', values.twitter);
+      params.append('email', values.email || userData?.email);
+
+      // const formData = new FormData();
+      // formData.append('id', account?.address || '');
+      // formData.append('name', values.name);
+      // formData.append('avatar', values.avatar || '');
+      // formData.append('featured_image', values.featured_image || '');
+      // formData.append('twitter', values.twitter);
+      // formData.append('email', values.email || userData?.email);
+      await axios.post(`${CACHE_SERVER_URL}accounts`, params, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
       }).then((res) => {
         setIsSubmitting(false);

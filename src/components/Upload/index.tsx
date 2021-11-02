@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable consistent-return */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
@@ -40,6 +42,26 @@ import {
   IconUpload,
 } from '../../assets/images';
 import MyToast, { ToastBody } from '../MyToast';
+
+const COS = require('cos-js-sdk-v5');
+
+const cos = new COS({
+  getAuthorization: (options, callback) => {
+    axios({
+      url: 'https://test-cache.nftmart.io/api/accounts/cos/sts',
+      method: 'get',
+    }).then((data) => {
+      const credentials = data.data && data.data.credentials;
+      if (!data || !credentials) return console.error(data);
+      callback({
+        TmpSecretId: credentials.tmpSecretId,
+        TmpSecretKey: credentials.tmpSecretKey,
+        SecurityToken: credentials.sessionToken,
+        ExpiredTime: data.data.expiredTime,
+      });
+    });
+  },
+});
 
 interface INavProps {
   imgUrl: string;
@@ -121,6 +143,7 @@ export interface UploadProps {
   rectangle: string;
   proportion: number;
   setStateCrop:React.Dispatch<React.SetStateAction<boolean>>,
+  fileClass: string;
 }
 
 const Upload: FC<UploadProps> = ({
@@ -132,6 +155,7 @@ const Upload: FC<UploadProps> = ({
   rectangle,
   proportion,
   setStateCrop,
+  fileClass,
   ...rest
 }) => {
   const toast = useToast();
@@ -150,61 +174,97 @@ const Upload: FC<UploadProps> = ({
 
   const saveToIpfs = useCallback(async (files: any[]) => {
     setStateCrop(false);
-    if (REACT_APP_PINATA_ENABLE === 'true') {
-      setLoadingStatus(true);
-      const formData = new FormData();
-      formData.append('file', files[0]);
+    // if (REACT_APP_PINATA_ENABLE === 'true') {
+    //   setLoadingStatus(true);
+    //   const formData = new FormData();
+    //   formData.append('file', files[0]);
 
-      const owFormData = new FormData();
-      owFormData.append('file-0', files[0]);
+    //   const owFormData = new FormData();
+    //   owFormData.append('file-0', files[0]);
 
-      // const result = await fetch(PINATA_POST_SERVER, {
-      //   method: 'POST',
+    //   // const result = await fetch(PINATA_POST_SERVER, {
+    //   //   method: 'POST',
 
-      //   headers: {
-      //     pinata_api_key: REACT_APP_PINATA_API_KEY!,
-      //     pinata_secret_api_key: REACT_APP_PINATA_API_SECRET_KEY!,
-      //   },
+    //   //   headers: {
+    //   //     pinata_api_key: REACT_APP_PINATA_API_KEY!,
+    //   //     pinata_secret_api_key: REACT_APP_PINATA_API_SECRET_KEY!,
+    //   //   },
 
-      //   body: formData,
+    //   //   body: formData,
 
-      // });
+    //   // });
 
-      const result = await axios.post(PINATA_POST_SERVER, formData, {
-        headers: {
-          pinata_api_key: REACT_APP_PINATA_API_KEY!,
-          pinata_secret_api_key: REACT_APP_PINATA_API_SECRET_KEY!,
-        },
-        onUploadProgress: (progress) => {
-          // 格式化成百分数
-          setProgresses(Math.floor((progress.loaded / progress.total) * 100));
-        },
-      });
-      axios.post(UPLOAD_OWN_SERVER, owFormData);
+    //   const result = await axios.post(PINATA_POST_SERVER, formData, {
+    //     headers: {
+    //       pinata_api_key: REACT_APP_PINATA_API_KEY!,
+    //       pinata_secret_api_key: REACT_APP_PINATA_API_SECRET_KEY!,
+    //     },
+    //     onUploadProgress: (progress) => {
+    //       // 格式化成百分数
+    //       setProgresses(Math.floor((progress.loaded / progress.total) * 100));
+    //     },
+    //   });
+    //   axios.post(UPLOAD_OWN_SERVER, owFormData);
 
-      const responseData = await result;
-      setValue(responseData.data.IpfsHash);
-      setShowCrop(false);
-      setLoadingStatus(false);
-      setProgresses(0);
-      return;
-    }
-
-    const ipfs = create({ url: IPFS_POST_SERVER });
-    if (files.length === 0) {
-      return;
-    }
+    //   const responseData = await result;
+    //   setValue(responseData.data.IpfsHash);
+    //   setShowCrop(false);
+    //   setLoadingStatus(false);
+    //   setProgresses(0);
+    //   return;
+    // }
     try {
+      const ipfs = create({ url: IPFS_POST_SERVER });
+      if (files.length === 0) {
+        return;
+      }
+      const addOptions = {
+        // onlyHash: true,
+        progress: (arg: any) => {
+          setProgresses(1);
+        },
+      };
       setLoadingStatus(true);
-      const added = await ipfs.add(files[0], {
-        progress: (arg: any) => arg,
+      const added = await ipfs.add(files[0], addOptions);
+      console.log(added.cid.toString());
+      await cos.putObject(
+        {
+          Bucket: 'nft-1257035533',
+          Region: 'ap-hongkong',
+          Key: `/${fileClass}/${added.cid.toString()}`,
+          StorageClass: 'STANDARD',
+          Body: files[0],
+          onProgress(progressData) {
+            setProgresses(Math.floor((progressData.percent) * 100));
+          },
+
+        },
+        (err: any, data: any) => {
+          if (err) {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="error" message="error" type="error" />
+              ),
+            });
+            return;
+          }
+          setValue(added.cid.toString());
+          setLoadingStatus(false);
+          setShowCrop(false);
+        },
+      );
+    } catch (e) {
+      toast({
+        position: 'top',
+        render: () => (
+          <ToastBody title="error" message="error" type="error" />
+        ),
       });
-      // console.log(added.cid.toString(), '=============');
-      setValue(added.cid.toString());
+      setFile(null);
+      setValue('');
       setLoadingStatus(false);
       setShowCrop(false);
-    } catch (err) {
-      setLoadingStatus(false);
     }
   }, []);
 
@@ -236,11 +296,6 @@ const Upload: FC<UploadProps> = ({
         setLoadingStatus(false);
         return;
       }
-      // if (fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg') {
-      //   toast(<ToastBody title={t('createUploadFiletype')} message="" type="warning" />);
-      //   setLoadingStatus(false);
-      //   return;
-      // }
       if (currentFile.size >= MAX_FILE_SIZE) {
         toast({
           position: 'top',
@@ -354,26 +409,31 @@ const Upload: FC<UploadProps> = ({
             <>
               {pictureType.indexOf(fileType) > -1
                 ? (
-                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />
+                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${fileClass}/${value}!preview`} />
                 )
                 : (
                   videoType.indexOf(fileType) > -1
                     ? (
                       <Box maxWidth="420px">
                         <Player width="100%">
-                          <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${value}`} />
+                          <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${fileClass}/${value}`} />
                         </Player>
                       </Box>
                     )
                     : audioType.indexOf(fileType) > -1 ? (
                       <Box maxWidth="420px">
                         <Player width="100%">
-                          <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${value}`} />
+                          <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${fileClass}/${value}`} />
                         </Player>
                       </Box>
                     )
                       : (
-                        <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${value}`} />
+                        <Image
+                          w="350px"
+                          h="auto"
+                          m="16px 0"
+                          src={`${PINATA_SERVER}${fileClass}/${value}!preview`}
+                        />
                       )
                 )}
 

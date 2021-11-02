@@ -26,6 +26,7 @@
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
     "bn.js": "^5.2.0",
+    "cos-js-sdk-v5": "^1.2.20",
     "cropperjs": "^1.5.12",
     "date": "^1.0.2",
     "date-and-time": "^2.0.0",
@@ -68,6 +69,7 @@
     "search-params": "^4.0.1",
     "swiper": "^6.7.1",
     "typescript": "^3.9.5",
+    "uuid": "^8.3.2",
     "video-react": "^0.14.1",
     "web-vitals": "^0.2.2",
     "yup": "^0.32.9"

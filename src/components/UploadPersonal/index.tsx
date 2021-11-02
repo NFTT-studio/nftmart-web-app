@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable consistent-return */
+/* eslint-disable no-mixed-operators */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   FC, useState, useCallback, useEffect, useRef,
@@ -15,7 +20,9 @@ import {
 import { toast } from 'react-toastify';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
+import axios from 'axios';
 
+import { v4 as uuidv4 } from 'uuid';
 import {
   MAX_FILE_SIZE,
   Colors,
@@ -26,6 +33,26 @@ import {
   IconUpload,
 } from '../../assets/images';
 import MyToast, { ToastBody } from '../MyToast';
+
+const COS = require('cos-js-sdk-v5');
+
+const cos = new COS({
+  getAuthorization: (options, callback) => {
+    axios({
+      url: 'https://test-cache.nftmart.io/api/accounts/cos/sts',
+      method: 'get',
+    }).then((data) => {
+      const credentials = data.data && data.data.credentials;
+      if (!data || !credentials) return console.error(data);
+      callback({
+        TmpSecretId: credentials.tmpSecretId,
+        TmpSecretKey: credentials.tmpSecretKey,
+        SecurityToken: credentials.sessionToken,
+        ExpiredTime: data.data.expiredTime,
+      });
+    });
+  },
+});
 
 interface INavProps {
   imgUrl: string;
@@ -123,15 +150,52 @@ const Upload: FC<UploadProps> = ({
   const [fileValue, setFileValue] = useState(null);
 
   const saveToIpfs = useCallback(async (files: any[]) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-    reader.onload = (e: any) => {
-      setValue(e.target.result);
-      setFileValue(files[0]);
+    setStateCrop(false);
+    try {
+      if (files.length === 0) {
+        return;
+      }
+      const getUploadID = uuidv4();
+      setLoadingStatus(true);
+      await cos.putObject(
+        {
+          Bucket: 'nft-1257035533',
+          Region: 'ap-hongkong',
+          Key: `/user/${getUploadID}`,
+          StorageClass: 'STANDARD',
+          Body: files[0],
+          onProgress(progressData) {
+            setProgresses(Math.floor((progressData.percent) * 100));
+          },
+
+        },
+        (err: any, data: any) => {
+          if (err) {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="error" message="error" type="error" />
+              ),
+            });
+            return;
+          }
+          setValue(getUploadID);
+          setLoadingStatus(false);
+          setShowCrop(false);
+        },
+      );
+    } catch (e) {
+      toast({
+        position: 'top',
+        render: () => (
+          <ToastBody title="error" message="error" type="error" />
+        ),
+      });
+      setFile(null);
+      setValue('');
       setLoadingStatus(false);
       setShowCrop(false);
-    };
-    setStateCrop(false);
+    }
   }, []);
 
   const captureFile = useCallback((event: any) => {
@@ -169,8 +233,8 @@ const Upload: FC<UploadProps> = ({
   }, [mediatype, saveToIpfs]);
 
   useEffect(() => {
-    if (onChange) onChange(fileValue);
-  }, [fileValue]);
+    if (onChange) onChange(value);
+  }, [value]);
 
   useEffect(() => {
     if (!file) {
@@ -235,7 +299,7 @@ const Upload: FC<UploadProps> = ({
         <Box>
           {value ? (
             <>
-              <Image w="350px" h="auto" m="16px 0" src={`${value}`} />
+              <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}user/${value}!preview`} />
 
               <FormLabel htmlFor={id}>
                 <Text

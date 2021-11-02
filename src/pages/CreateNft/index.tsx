@@ -190,7 +190,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
               m="0 20px 0 10px"
               w="auto"
               h="40px"
-              src={`${PINATA_SERVER}${collectionsData?.collection?.metadata.logoUrl}`}
+              src={`${PINATA_SERVER}logo/${collectionsData?.collection?.metadata.logoUrl}`}
             />
             <Flex
               flexDirection="column"
@@ -242,6 +242,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             proportion={16 / 16}
             value={formik.values.logoUrl}
             setStateCrop={setStateCrop}
+            fileClass="nft"
             onChange={(v, b) => {
               formik.setFieldValue('logoUrl', v);
               formik.setFieldValue('fileType', b);
@@ -267,6 +268,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                   proportion={16 / 16}
                   value={formik.values.previewUrl}
                   setStateCrop={setStateCrop}
+                  fileClass="nft"
                   onChange={(v, b) => {
                     formik.setFieldValue('previewUrl', v);
                   }}
