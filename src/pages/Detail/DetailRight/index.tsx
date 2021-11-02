@@ -739,8 +739,6 @@ const DetailRight: FC<Props> = (({
                 textAlign="right"
                 mb="12px"
               >
-                0d
-                {' '}
                 {Number(events.day)}
                 {' '}
                 days left
