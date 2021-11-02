@@ -151,7 +151,7 @@ const DetailLeft: FC<Props> = (({
                   maxWidth="520px"
                   objectFit="contain"
                   height="auto"
-                  src={logoUrl}
+                  src={`${PINATA_SERVER}/nft/${nftData?.nftInfo?.metadata.logoUrl}?imageMogr2/thumbnail/520x1040/interlace/0`}
                 />
               </Flex>
             )
@@ -167,9 +167,9 @@ const DetailLeft: FC<Props> = (({
                       width="100%"
                       height="auto"
                       controls
-                      poster={`${PINATA_SERVER}/nft/${nftData?.nftInfo?.metadata?.previewUrl}`}
+                      poster={`${PINATA_SERVER}/nft/${nftData?.nftInfo?.metadata?.previewUrl}?imageMogr2/thumbnail/520x1040/interlace/0`}
                     >
-                      <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${nftData?.nftInfo?.metadata.logoUrl}`} />
+                      <source style={{ height: 'auto' }} src={`${PINATA_SERVER}/nft/${nftData?.nftInfo?.metadata.logoUrl}`} />
                     </video>
                   </Box>
                 )
@@ -182,7 +182,7 @@ const DetailLeft: FC<Props> = (({
                     <Image
                       width="100%"
                       height="auto"
-                      src={`${PINATA_SERVER}/nft/${nftData?.nftInfo?.metadata.previewUrl}`}
+                      src={`${PINATA_SERVER}/nft/${nftData?.nftInfo?.metadata.previewUrl}?imageMogr2/thumbnail/520x1040/interlace/0`}
                     />
                     <ReactAudioPlayer
                       style={{

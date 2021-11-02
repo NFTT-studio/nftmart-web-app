@@ -235,7 +235,7 @@ const NftCard: FC<NftCardProps> = ({
                 height: '100%',
                 borderRadius: '4px 4px 0 0 ',
               }}
-              src={`${PINATA_SERVER}/nft/${nft?.metadata?.logoUrl}`}
+              src={`${PINATA_SERVER}/nft/${nft?.metadata?.logoUrl}?imageMogr2/thumbnail/320x|imageMogr2/gravity/center/crop/320x225/format/png/interlace/0`}
               effect="blur"
               // fallback={<Shimmer height={219} width="100%" />}
             />
@@ -276,7 +276,7 @@ const NftCard: FC<NftCardProps> = ({
                         height: '100%',
                         borderRadius: '4px 4px 0 0 ',
                       }}
-                      src={`${PINATA_SERVER}/nft/${nft?.metadata?.previewUrl}`}
+                      src={`${PINATA_SERVER}/nft/${nft?.metadata?.previewUrl}?imageMogr2/thumbnail/320x|imageMogr2/gravity/center/crop/320x225/format/png/interlace/0`}
                       effect="blur"
                     />
                   </Box>
@@ -314,7 +314,7 @@ const NftCard: FC<NftCardProps> = ({
                         height: '100%',
                         borderRadius: '4px 4px 0 0 ',
                       }}
-                      src={`${PINATA_SERVER}/nft/${nft?.metadata?.previewUrl}`}
+                      src={`${PINATA_SERVER}/nft/${nft?.metadata?.previewUrl}?imageMogr2/thumbnail/320x|imageMogr2/gravity/center/crop/320x225/format/png/interlace/0`}
                       effect="blur"
                     />
                   </Box>
@@ -334,7 +334,7 @@ const NftCard: FC<NftCardProps> = ({
                       height: '100%',
                       borderRadius: '4px 4px 0 0 ',
                     }}
-                    src={`${PINATA_SERVER}/nft/${nft?.metadata?.logoUrl}`}
+                    src={`${PINATA_SERVER}/nft/${nft?.metadata?.logoUrl}?imageMogr2/thumbnail/320x|imageMogr2/gravity/center/crop/320x225/format/png/interlace/0`}
                     effect="blur"
                   />
                 ) : (
@@ -353,7 +353,7 @@ const NftCard: FC<NftCardProps> = ({
                       height: '100%',
                       borderRadius: '4px 4px 0 0 ',
                     }}
-                    src={`${PINATA_SERVER}/nft/${nft?.metadata?.logoUrl}`}
+                    src={`${PINATA_SERVER}/nft/${nft?.metadata?.logoUrl}?imageMogr2/thumbnail/320x|imageMogr2/gravity/center/crop/320x225/format/png/interlace/0`}
                     effect="blur"
                   />
               )
