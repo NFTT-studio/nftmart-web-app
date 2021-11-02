@@ -293,7 +293,7 @@ const DetailLeft: FC<Props> = (({
                       h="auto"
                       borderRadius="50%"
                       border="1px solid #D3D5DC"
-                      src={nftData?.nftInfo?.creator?.avatar || HeadPortrait.default}
+                      src={`${PINATA_SERVER}user/${nftData?.nftInfo?.creator?.avatar}` || HeadPortrait.default}
                     />
                   ) : (
                     <Identicon
