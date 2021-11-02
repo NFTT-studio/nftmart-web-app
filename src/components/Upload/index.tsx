@@ -219,15 +219,10 @@ const Upload: FC<UploadProps> = ({
         return;
       }
       const addOptions = {
-        onlyHash: true,
+        // onlyHash: true,
         progress: (arg: any) => arg,
       };
       setLoadingStatus(true);
-      let count = 0;
-      setInterval(() => {
-        count += 1;
-        console.log(count);
-      }, 1000);
       const added = await ipfs.add(files[0], addOptions);
       console.log(added.cid.toString());
       await cos.putObject(
@@ -298,21 +293,16 @@ const Upload: FC<UploadProps> = ({
         setLoadingStatus(false);
         return;
       }
-      // if (fileTypes !== 'png' && fileTypes !== 'jpg' && fileTypes !== 'gif' && fileTypes !== 'jpeg') {
-      //   toast(<ToastBody title={t('createUploadFiletype')} message="" type="warning" />);
-      //   setLoadingStatus(false);
-      //   return;
-      // }
-      // if (currentFile.size >= MAX_FILE_SIZE) {
-      //   toast({
-      //     position: 'top',
-      //     render: () => (
-      //       <ToastBody title={t('createUploadOverflow')} message="" type="warning" />
-      //     ),
-      //   });
-      //   setLoadingStatus(false);
-      //   return;
-      // }
+      if (currentFile.size >= MAX_FILE_SIZE) {
+        toast({
+          position: 'top',
+          render: () => (
+            <ToastBody title={t('createUploadOverflow')} message="" type="warning" />
+          ),
+        });
+        setLoadingStatus(false);
+        return;
+      }
       setImgName(currentFile.name);
       if (mediatype === 'cutting') {
         setFileType(fileTypes);
