@@ -235,7 +235,7 @@ const NftCard: FC<NftCardProps> = ({
                 height: '100%',
                 borderRadius: '4px 4px 0 0 ',
               }}
-              src={`${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
+              src={nft?.metadata?.fileType === 'gif' ? `${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}` : `${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
               effect="blur"
               // fallback={<Shimmer height={219} width="100%" />}
             />
