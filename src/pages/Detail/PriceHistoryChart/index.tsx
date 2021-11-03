@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 import colors from '../../../themes/colors';
 import { renderNmtNumberText } from '../../../components/Balance';
-import { NumberToString, priceStringDivUnit } from '../../../utils/format';
+import { NumberToString, formatNum } from '../../../utils/format';
 
 interface PriceHistoryProps {
   PriceDate:[]
@@ -35,7 +35,7 @@ const PriceHistoryChart = ({
   };
   const PriceDateone = JSON.parse(JSON.stringify(PriceDate));
   PriceDateone.forEach((item) => {
-    const num = Number(NumberToString(item.price));
+    const num = Number(formatNum(NumberToString(item.price)));
     // item.price = Number(num);
     // item.date = format(item.date);
     item.date = format(item.date);

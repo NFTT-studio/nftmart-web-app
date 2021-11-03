@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 
 import * as Yup from 'yup';
 import { useQueryClient } from 'react-query';
-import { priceStringDivUnit } from '../../../utils/format';
+import { priceStringDivUnit, formatNum } from '../../../utils/format';
 import { bidDutchAuction } from '../../../polkaSDK/api/bidDutchAuction';
 import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
@@ -155,7 +155,7 @@ const OfferDialog: FC<Props> = (({
                   {t('Detail.balance')}
                   :
                   {' '}
-                  {priceStringDivUnit(data?.balance?.transferrable) || 0}
+                  {formatNum(priceStringDivUnit(data?.balance?.transferrable)) || 0}
                   {' '}
                   NMT
                 </Text>
@@ -192,7 +192,7 @@ const OfferDialog: FC<Props> = (({
                     color: '#000000',
                     border: '1px solid #000000',
                   }}
-                  placeholder={`${t('Detail.placeABidMust')}${moreThan}`}
+                  placeholder={`${t('Detail.placeABidMust')}${formatNum(moreThan)}`}
                   _placeholder={{
                     color: '#999999',
                     fontSize: '12px',
@@ -222,7 +222,7 @@ const OfferDialog: FC<Props> = (({
                   color="#999999"
                 >
                   ≈$
-                  {(formik.values.price * token?.price).toFixed(2)}
+                  {formatNum((formik.values.price * token?.price))}
                 </Text>
               )
                 : null}

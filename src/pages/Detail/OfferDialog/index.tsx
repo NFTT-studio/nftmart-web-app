@@ -30,7 +30,7 @@ import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 import useToken from '../../../hooks/reactQuery/useToken';
-import { priceStringDivUnit } from '../../../utils/format';
+import { priceStringDivUnit, formatNum } from '../../../utils/format';
 import {
   IconCalendar,
 } from '../../../assets/images';
@@ -171,7 +171,7 @@ const OfferDialog: FC<Props> = (({
                   {t('Detail.balance')}
                   :
                   {' '}
-                  {priceStringDivUnit(data?.balance?.transferrable) || 0}
+                  {formatNum(priceStringDivUnit(data?.balance?.transferrable)) || 0}
                   {' '}
                   NMT
                 </Text>
@@ -242,7 +242,7 @@ const OfferDialog: FC<Props> = (({
                     color="#999999"
                   >
                     ≈$
-                    {(formik.values.price * token?.price).toFixed(2)}
+                    {formatNum((Number(formik.values.price || 0) * token?.price))}
                   </Text>
                 ) : null}
               <Text

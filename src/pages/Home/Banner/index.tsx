@@ -16,9 +16,6 @@ import {
   banner03,
   banner04,
   banner05,
-  banner06,
-  banner07,
-  banner08,
   banner09,
   banner10,
   bannerLeft,
@@ -31,7 +28,7 @@ const Banner = ((
     {
       id: '0',
       icon: banner10.default,
-      url: '51-1',
+      url: '/collection/nmvgfQjN1RTEeQgMzKg462E67rggfroyxVyvvdzqpqYHba7r7?collectionId=40',
       w: '205px',
       h: '205px',
     },
@@ -40,7 +37,7 @@ const Banner = ((
     {
       id: '0',
       icon: banner09.default,
-      url: '51-1',
+      url: '/collection/nmvgfQjN1RTEeQgMzKg462E67rggfroyxVyvvdzqpqYHba7r7?collectionId=18',
       w: '410px',
       h: '615px',
     },
@@ -48,59 +45,38 @@ const Banner = ((
   const bannerImgRight = [
     {
       id: '0',
-      icon: banner08.default,
-      url: '51-1',
+      icon: banner05.default,
+      url: '/collection/nmvgfQjN1RTEeQgMzKg462E67rggfroyxVyvvdzqpqYHba7r7?collectionId=2',
       w: '205px',
-      h: '205px',
-    },
-    {
-      id: '1',
-      icon: banner07.default,
-      url: '51-1',
-      w: '205px',
-      h: '205px',
-    },
-    {
-      id: '2',
-      icon: banner06.default,
-      url: '51-1',
-      w: '205px',
-      h: '205px',
+      h: '615px',
     },
   ];
   const bannerBottom = [
     {
       id: '0',
       icon: banner01.default,
-      url: '51-1',
+      url: '/collection/nmvgfQjN1RTEeQgMzKg462E67rggfroyxVyvvdzqpqYHba7r7?collectionId=7',
       w: '205px',
       h: '205px',
     },
     {
       id: '1',
       icon: banner02.default,
-      url: '51-1',
+      url: '/account/nmvYZdiCZAysATpVifyzdPSksUbvzU4AeSSgzjXhnocCfrN7b/wallet',
       w: '410px',
       h: '205px',
     },
     {
       id: '2',
       icon: banner03.default,
-      url: '51-1',
-      w: '205px',
+      url: '/item/36-2',
+      w: '410px',
       h: '205px',
     },
     {
       id: '3',
       icon: banner04.default,
-      url: '51-1',
-      w: '205px',
-      h: '205px',
-    },
-    {
-      id: '4',
-      icon: banner05.default,
-      url: '51-1',
+      url: '/collection/nmvgfQjN1RTEeQgMzKg462E67rggfroyxVyvvdzqpqYHba7r7?collectionId=41',
       w: '205px',
       h: '205px',
     },
@@ -148,11 +124,16 @@ const Banner = ((
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Image
-                      width={item.w}
-                      height={item.h}
-                      src={item.icon}
-                    />
+                    <Link
+                      as={RouterLink}
+                      to={item.url}
+                    >
+                      <Image
+                        width={item.w}
+                        height={item.h}
+                        src={item.icon}
+                      />
+                    </Link>
                   </MotionBox>
                 ))}
               </Flex>
@@ -170,11 +151,16 @@ const Banner = ((
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Image
-                      width={item.w}
-                      height={item.h}
-                      src={item.icon}
-                    />
+                    <Link
+                      as={RouterLink}
+                      to={item.url}
+                    >
+                      <Image
+                        width={item.w}
+                        height={item.h}
+                        src={item.icon}
+                      />
+                    </Link>
                   </MotionBox>
                 ))}
               </Flex>
@@ -193,11 +179,16 @@ const Banner = ((
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Image
-                      width={item.w}
-                      height={item.h}
-                      src={item.icon}
-                    />
+                    <Link
+                      as={RouterLink}
+                      to={item.url}
+                    >
+                      <Image
+                        width={item.w}
+                        height={item.h}
+                        src={item.icon}
+                      />
+                    </Link>
                   </MotionBox>
                 ))}
               </Flex>
@@ -217,11 +208,16 @@ const Banner = ((
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Image
-                  width={item.w}
-                  height={item.h}
-                  src={item.icon}
-                />
+                <Link
+                  as={RouterLink}
+                  to={item.url}
+                >
+                  <Image
+                    width={item.w}
+                    height={item.h}
+                    src={item.icon}
+                  />
+                </Link>
               </MotionBox>
             ))}
           </Flex>

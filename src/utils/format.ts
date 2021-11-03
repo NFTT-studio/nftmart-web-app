@@ -1,3 +1,6 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable max-len */
 import { bnToBn } from '@polkadot/util';
 import { unit as UnitBn } from '../polkaSDK/utils/unit';
@@ -34,7 +37,7 @@ export const extractBalanceText = (balanceText: string) => {
   };
 };
 
-export const priceStringDivUnit = (priceString: string) => bnToBn(priceString).div(UnitBn).toString();
+export const priceStringDivUnit = (priceString: string) => toBigNumber(priceString).div(UnitBn.toNumber());
 
 export const nmtNumberToString = (nmtNumber: string) => {
   const nmtBn = toBigNumber(nmtNumber).div(UnitBn.toNumber());
@@ -61,4 +64,19 @@ export const currentPrice = (maxPrice: number, minPrice: number, deadline: numbe
   const downPrice = maxPrice - Math.ceil((maxPrice - minPrice) * Math.floor((currentBlock - createdBlock) / 300) / Math.floor((deadline - createdBlock) / 300));
 
   return nmtNumberToString(downPrice.toString());
+};
+export const formatNum = (num) => {
+  num = Number(num).toFixed(1).toString();
+  const numArr = num.split('.');
+  num = numArr[0];
+  let result = '';
+  while (num.length > 3) {
+    result = `,${num.slice(-3)}${result}`;
+    num = num.slice(0, num.length - 3);
+  }
+  if (num) {
+    result = num + result;
+  }
+  result = `${result}.${numArr[1] || 0}`;
+  return result;
 };

@@ -20,7 +20,7 @@ import { useAppSelector } from '../../../hooks/redux';
 import useAccount from '../../../hooks/reactQuery/useAccount';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 import useToken from '../../../hooks/reactQuery/useToken';
-import { priceStringDivUnit } from '../../../utils/format';
+import { priceStringDivUnit, formatNum } from '../../../utils/format';
 
 interface Props {
   price: string,
@@ -210,7 +210,7 @@ const BuyDialog: FC<Props> = (({
                   color="#000000"
                   lineHeight="20px"
                 >
-                  {price}
+                  {formatNum(price)}
                   {' '}
                   <Text color="#999999">
                     NMT
@@ -218,7 +218,7 @@ const BuyDialog: FC<Props> = (({
                 </Text>
                 <Text>
                   {token?.price
-                    ? `(≈$${(Number(price) * Number(token?.price)).toFixed(2)})` : null}
+                    ? `(≈$${formatNum((Number(price) * Number(token?.price)))})` : null}
                 </Text>
               </Flex>
             </Flex>
@@ -267,7 +267,7 @@ const BuyDialog: FC<Props> = (({
                   color="#000000"
                   lineHeight="20px"
                 >
-                  {price}
+                  {formatNum(price)}
                   {' '}
                   <Text color="#999999">
                     NMT
@@ -276,7 +276,7 @@ const BuyDialog: FC<Props> = (({
                 <Text>
                   {token?.price
                     ? `(≈$
-                      ${(Number(price) * Number(token?.price)).toFixed(2)}
+                      ${formatNum((Number(price) * Number(token?.price)))}
                       )` : null}
                 </Text>
               </Flex>
@@ -294,7 +294,7 @@ const BuyDialog: FC<Props> = (({
               {t('Detail.Transferrable')}
               :
               {' '}
-              {priceStringDivUnit(data?.balance?.transferrable)}
+              {formatNum(priceStringDivUnit(data?.balance?.transferrable))}
               {' '}
               NMT
             </Text>

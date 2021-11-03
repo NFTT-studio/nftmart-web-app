@@ -23,7 +23,7 @@ import NoData from '../NoData';
 import TimeBy from '../TimeBy';
 import Activity from '../Activity';
 import PriceHistoryChart from '../PriceHistoryChart';
-import { priceStringDivUnit, currentPrice } from '../../../utils/format';
+import { priceStringDivUnit, currentPrice, formatNum } from '../../../utils/format';
 import { renderNmtNumberText } from '../../../components/Balance';
 import useEvent from '../../../hooks/reactQuery/useEvent';
 import {
@@ -526,19 +526,19 @@ const DetailRight: FC<Props> = (({
                     lineHeight="43px"
                   >
                     {types === 'British' ? (
-                      auctionPrice
+                      formatNum(auctionPrice)
                     ) : null}
                     {types === 'Dutch' && !allowBritishAuction ? (
-                      duchPrice
+                      formatNum(duchPrice)
                     ) : null}
                     {types === 'Dutch' && allowBritishAuction && Number(bidCount) === 0 ? (
-                      duchPrice
+                      formatNum(duchPrice)
                     ) : null}
                     {types === 'Dutch' && allowBritishAuction && Number(bidCount) > 0 ? (
-                      auctionPrice
+                      formatNum(auctionPrice)
                     ) : null}
                     {!types ? (
-                      Number(price) ? price : '-'
+                      Number(price) ? formatNum(price) : '-'
                     ) : null}
                   </Text>
                   <Text
@@ -549,19 +549,19 @@ const DetailRight: FC<Props> = (({
                     color="#999999"
                   >
                     {types === 'British' ? (
-                      Number(auctionPrice) && token?.price ? `NMT ($${(token?.price * Number(auctionPrice)).toFixed(2)})` : 'NMT'
+                      Number(auctionPrice) && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(auctionPrice))})` : 'NMT'
                     ) : null}
                     {types === 'Dutch' && !allowBritishAuction ? (
-                      Number(duchPrice) && token?.price ? `NMT ($${(token?.price * Number(duchPrice)).toFixed(2)})` : 'NMT'
+                      Number(duchPrice) && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(duchPrice))})` : 'NMT'
                     ) : null}
                     {types === 'Dutch' && allowBritishAuction && Number(bidCount) === 0 ? (
-                      Number(duchPrice) && token?.price ? `NMT ($${(token?.price * Number(duchPrice)).toFixed(2)})` : 'NMT'
+                      Number(duchPrice) && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(duchPrice))})` : 'NMT'
                     ) : null}
                     {types === 'Dutch' && allowBritishAuction && Number(bidCount) > 0 ? (
-                      Number(auctionPrice) && token?.price ? `NMT ($${(token?.price * Number(auctionPrice)).toFixed(2)})` : 'NMT'
+                      Number(auctionPrice) && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(auctionPrice))})` : 'NMT'
                     ) : null}
                     {!types ? (
-                      Number(price) && token?.price ? `NMT ($${(token?.price * Number(price)).toFixed(2)})` : 'NMT'
+                      Number(price) && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(price))})` : 'NMT'
                     ) : null}
                   </Text>
                   {types === 'Dutch' && !allowBritishAuction ? (
