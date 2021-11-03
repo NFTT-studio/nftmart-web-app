@@ -1962,7 +1962,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             NMT
                             {t('SellSetting.listingExplainTwo')}
                             {'  '}
-                            {Number(formik.values.price * (1 - number2PerU16((nftData?.nftInfo?.royalty_rate || collectionsData?.collection?.royalty_rate) + tax) / 100)).toLocaleString() || 0}
+                            {Number(Number(formik.values.price) * Number(1 - Math.ceil(number2PerU16((nftData?.nftInfo?.royalty_rate) + tax)) / 100)).toLocaleString() || 0}
 
                             {'  '}
                             NMT
@@ -2180,7 +2180,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           width="300px"
                           height="3px"
                           borderRadius="2px"
-                          value={number2PerU16(nftData?.nftInfo?.royalty_rate) || number2PerU16(collectionsData?.collection?.royalty_rate)}
+                          value={Math.ceil(number2PerU16(nftData?.nftInfo?.royalty_rate))}
                         />
                         <Text
                           fontSize="14px"

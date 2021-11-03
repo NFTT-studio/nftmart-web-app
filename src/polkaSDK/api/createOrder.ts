@@ -28,6 +28,7 @@ export const createOrder = async ({
 
     // convert on chain precision
     const priceAmount = unit.mul(bnToBn(price));
+    console.log(bnToBn(price).toString());
     const deposit = unit.mul(bnToBn(deposits));
     const commissionRates = float2PerU16(commissionRate);
 

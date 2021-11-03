@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { renderNmtNumberText } from '../../../components/Balance';
+import { priceStringDivUnit, formatNum } from '../../../utils/format';
 
 interface Props {
   events: [],
@@ -74,7 +74,7 @@ const Events: FC<Props> = (({
         color="#000000"
         lineHeight="20px"
       >
-        {events?.price ? renderNmtNumberText(events?.price) : null}
+        {events?.price ? formatNum(priceStringDivUnit(events?.price)) : null}
         <Text
           ml="3px"
           color="#999999"

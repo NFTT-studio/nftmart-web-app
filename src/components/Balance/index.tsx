@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { FC } from 'react';
 import {
   Popover,
@@ -23,6 +24,11 @@ export interface BalanceType {
   miscFrozen: string;
   reserved: string;
 }
+
+const formatNumber = (num: string | number) => {
+  num += '';
+  return num.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+};
 
 export const renderBalanceText = (balanceText: string) => {
   if (!balanceText || typeof balanceText !== 'string') return null;
@@ -61,7 +67,7 @@ export const renderNmtNumberText = (balanceText: string) => {
     <>
       <Flex display="inline-flex">
         <Text>
-          {integer}
+          {formatNumber(integer)}
           {decimal ? '.' : ''}
         </Text>
         <Text marginRight={1}>
