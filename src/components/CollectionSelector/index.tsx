@@ -68,6 +68,9 @@ const CollectionSelector: FC<CollectionSelectorProps> = (({ selectedArr, collect
             fontFamily="TTHoves-Regular, TTHoves"
             fontWeight="400"
             color="#191A24"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
           >
             {collection?.metadata?.name}
           </Text>
