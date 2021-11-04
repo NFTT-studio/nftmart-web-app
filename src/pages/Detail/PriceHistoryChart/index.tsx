@@ -35,7 +35,7 @@ const PriceHistoryChart = ({
   };
   const PriceDateone = JSON.parse(JSON.stringify(PriceDate));
   PriceDateone.forEach((item) => {
-    const num = Number(formatNum(NumberToString(item.price)));
+    const num = Number(NumberToString(item.price));
     // item.price = Number(num);
     // item.date = format(item.date);
     item.date = format(item.date);
