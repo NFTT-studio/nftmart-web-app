@@ -93,7 +93,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   const ICON_LIST = ICONS.map((item, index) => ({
     src: item.icon,
     id: index,
-    link: links ? item.linkPrefix + links[item.name] : '',
+    link: links[item.name] ? item.linkPrefix + links[item.name] : '',
   }));
   const {
     data: dataCreator,
