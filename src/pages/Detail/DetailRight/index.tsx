@@ -794,7 +794,7 @@ const DetailRight: FC<Props> = (({
                     fontWeight="400"
                     color="#000000"
                   >
-                    {priceStringDivUnit(nftData.nftInfo.auction?.hammer_price)}
+                    {formatNum(priceStringDivUnit(nftData.nftInfo.auction?.hammer_price))}
                   </Text>
                   NMT
                 </Text>
