@@ -548,20 +548,18 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
                 />
               </Flex>
             ))}
-            {categories.length === 2 ? null : (
-              <SetCategory
-                categories={categories}
-                setCategories={setCategories}
-                onChange={() => {
-                  const resultArr: never[] = [];
-                  // eslint-disable-next-line array-callback-return
-                  categories.map((item, index) => {
-                    resultArr.splice(index, 0, item.id);
-                  });
-                  formik.values.cate = resultArr.toString();
-                }}
-              />
-            )}
+            <SetCategory
+              categories={categories}
+              setCategories={setCategories}
+              onChange={() => {
+                const resultArr: never[] = [];
+                // eslint-disable-next-line array-callback-return
+                categories.map((item, index) => {
+                  resultArr.splice(index, 0, item.id);
+                });
+                formik.values.cate = resultArr.toString();
+              }}
+            />
 
           </Flex>
           {formik.errors.cate && formik.touched.cate ? (

@@ -4,7 +4,7 @@ import { bnToBn } from '@polkadot/util';
 
 import { txLog } from '../../utils/txLog';
 import PolkaSDK from '..';
-import { unit } from '../utils/unit';
+import { unitNum } from '../utils/unit';
 import { NATIVE_CURRENCY_ID } from '../../constants';
 
 const oneMonth = (60 * 60 * 24 * 30) / 6;
@@ -30,8 +30,8 @@ export const settingOrder = async ({
     const commissionRates = float2PerU16(commissionRate);
 
     // convert on chain precision
-    const priceAmount = unit.mul(bnToBn(price));
-    const deposit = unit.mul(bnToBn(deposits));
+    const priceAmount = (Number(price) * unitNum).toString();
+    const deposit = (Number(deposits) * unitNum).toString();
     const txs = [
       PolkaSDK.api.tx.nftmartOrder.removeOrder(orderId),
       PolkaSDK.api.tx.nftmartOrder.submitOrder(

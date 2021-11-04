@@ -4,7 +4,7 @@ import { bnToBn } from '@polkadot/util';
 import PolkaSDK from '..';
 import { NATIVE_CURRENCY_ID } from '../../constants';
 import { txLog } from '../../utils/txLog';
-import { unit } from '../utils/unit';
+import { unitNum } from '../utils/unit';
 
 const oneMonth = (60 * 60 * 24 * 30) / 6;
 
@@ -34,7 +34,7 @@ export const submitOffer = async ({
     const durings = (60 * 60 * 24 * during) / 6;
     const commissionRate = 0;
 
-    const priceAmount = unit.mul(bnToBn(price));
+    const priceAmount = (Number(price) * unitNum).toString();
     const call = PolkaSDK.api.tx.nftmartOrder.submitOffer(
       NATIVE_CURRENCY_ID,
       priceAmount,

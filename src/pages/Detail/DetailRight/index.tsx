@@ -141,7 +141,7 @@ const DetailRight: FC<Props> = (({
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
 
-  const formatAddress = (addr: string) => `${addr?.slice(0, 4)}...${addr?.slice(-4)}`;
+  const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : null);
   const price = nftData?.nftInfo?.price ? priceStringDivUnit(nftData?.nftInfo?.price) : null;
   const auctionPrice = nftData?.nftInfo?.auction?.price ? priceStringDivUnit(nftData?.nftInfo?.auction?.price) : null;
 
@@ -458,7 +458,7 @@ const DetailRight: FC<Props> = (({
               ) : (
                 <Identicon
                   className="ownerAvatar"
-                  string={nftData?.nftInfo.owner_id}
+                  string={nftData?.nftInfo?.owner_id}
                 />
               )}
               <Flex flexDirection="column">

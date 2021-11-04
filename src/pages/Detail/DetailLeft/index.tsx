@@ -104,7 +104,7 @@ const DetailLeft: FC<Props> = (({
     { icon: medium.default, name: 'medium', linkPrefix: 'https://www.medium.com/@' },
     { icon: telegram.default, name: 'telegram', linkPrefix: 'https://t.me/' },
   ];
-  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+  const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : null);
   const collectionName = collectionsData?.collection?.metadata?.name;
   const collectionDescription = collectionsData?.collection?.metadata?.description;
   const links = collectionsData?.collection?.metadata?.links;

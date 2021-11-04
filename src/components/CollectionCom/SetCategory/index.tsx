@@ -53,6 +53,7 @@ const ChangeLanguage: FC<Props> = (({
     >
       <PopoverTrigger>
         <Flex
+          display={categories.length === 2 ? 'none' : 'flex'}
           width="124px"
           height="40px"
           borderRadius="4px"
