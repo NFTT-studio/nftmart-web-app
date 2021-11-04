@@ -37,7 +37,10 @@ export const extractBalanceText = (balanceText: string) => {
   };
 };
 
-export const priceStringDivUnit = (priceString: string) => toBigNumber(priceString).div(UnitBn.toNumber());
+export const priceStringDivUnit = (priceString: string) => {
+  const nmtBn = toBigNumber(priceString).div(UnitBn.toNumber());
+  return nmtBn.toString();
+};
 
 export const nmtNumberToString = (nmtNumber: string) => {
   const nmtBn = toBigNumber(nmtNumber).div(UnitBn.toNumber());
