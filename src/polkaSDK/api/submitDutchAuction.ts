@@ -3,7 +3,7 @@ import { web3FromAddress } from '@polkadot/extension-dapp';
 import { bnToBn } from '@polkadot/util';
 import PolkaSDK from '..';
 import { txLog } from '../../utils/txLog';
-import { unit } from '../utils/unit';
+import { unitNum } from '../utils/unit';
 
 type submitDutchAuctionProps = {
   address: string,
@@ -46,11 +46,11 @@ export const submitDutchAuction = async ({
     deadlineBlock += Number(block.block.header.number);
 
     // eslint-disable-next-line camelcase
-    const min_deposit = unit.mul(bnToBn(dutchDeposits));
+    const min_deposit = (Number(dutchDeposits) * unitNum).toString();
     // eslint-disable-next-line camelcase
-    const min_price = unit.mul(bnToBn(minPrice));
+    const min_price = (Number(minPrice) * unitNum).toString();
     // eslint-disable-next-line camelcase
-    const max_price = unit.mul(bnToBn(maxPrice));
+    const max_price = (Number(maxPrice) * unitNum).toString();
     const NativeCurrencyID = 0;
 
     const minRaise = float2PerU16(range); // 50%

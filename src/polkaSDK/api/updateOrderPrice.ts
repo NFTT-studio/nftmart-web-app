@@ -4,7 +4,7 @@ import { bnToBn } from '@polkadot/util';
 import PolkaSDK from '..';
 
 import { txLog } from '../../utils/txLog';
-import { unit } from '../utils/unit';
+import { unitNum } from '../utils/unit';
 
 export const updateOrderPrice = async ({
   address = '', // address of current user
@@ -19,7 +19,7 @@ export const updateOrderPrice = async ({
 
   if (order.isSome) {
     // convert on chain precision
-    const priceAmount = unit.mul(bnToBn(price));
+    const priceAmount = (Number(price) * unitNum).toString();
     order = order.unwrap();
     const call = PolkaSDK.api.tx.nftmart.updateOrderPrice(classId, tokenId, priceAmount);
     const res = await call.signAndSend(address, { signer: injector.signer }, cb);

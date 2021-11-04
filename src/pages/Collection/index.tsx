@@ -259,9 +259,9 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               padding="81px 40px 20px 40px"
             >
               <Flex mr="20px" w="100%" maxWidth="301px" direction="column">
-                <Flex h="33px" alignItems="center">
+                <Flex alignItems="center">
                   <Text
-                    fontSize="28px"
+                    fontSize="24px"
                     fontFamily="TTHoves-Bold, TTHoves"
                     fontWeight="bold"
                     color="#000000"
