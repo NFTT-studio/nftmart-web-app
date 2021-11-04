@@ -146,7 +146,6 @@ const DetailLeft: FC<Props> = (({
                 m="20px"
                 w="520px"
                 minH="260px"
-                maxH="1040px"
                 justifyContent="center"
               >
                 <Link
@@ -162,6 +161,7 @@ const DetailLeft: FC<Props> = (({
                     maxWidth="520px"
                     objectFit="contain"
                     height="auto"
+                    maxHeight="1040px"
                     src={nftData?.nftInfo?.metadata?.fileType === 'gif' ? `${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata?.logoUrl}` : `${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata.logoUrl}!detail`}
                   />
                 </Link>
