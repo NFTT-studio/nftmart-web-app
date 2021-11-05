@@ -109,8 +109,7 @@ const ShareWeb: FC<ShareWebProps> = () => {
           </Flex>
           <TwitterShareButton
             url={i18n.language === 'zh' ? `@NFTMartio 查看 ${url}`
-              : `Check out this NFT on NFTMart ${url} via @NFTMartio`}
-            title=""
+              : `Check out this NFT on NFTMart ${url}  @NFTMartio`}
             className="shareBtn col-md-1 col-sm-1 col-xs-1"
           >
             <Flex
