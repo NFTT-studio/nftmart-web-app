@@ -211,8 +211,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   return (
     <>
       <Helmet>
-        {nftData?.nftInfo?.metadata?.name && <meta property="og: title" content={nftData?.nftInfo?.metadata?.name} />}
-        {nftData?.nftInfo?.metadata?.description && <meta property="og:url" content={nftData?.nftInfo?.metadata?.description} />}
+        {nftData?.nftInfo?.metadata?.name && <meta property="og:title" content={nftData?.nftInfo?.metadata?.name} />}
+        {nftData?.nftInfo?.metadata?.description && <meta property="og:description" content={nftData?.nftInfo?.metadata?.description} />}
         {nftData?.nftInfo?.metadata?.logoUrl && <meta property="og:url" content={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata?.logoUrl}`} />}
       </Helmet>
       {nftDataIsLoading || collectionsDateIsLoading || !nftData || refresh ? (
