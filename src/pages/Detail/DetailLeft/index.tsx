@@ -114,7 +114,7 @@ const DetailLeft: FC<Props> = (({
   const ICON_LIST = ICONS.map((item, index) => ({
     src: item.icon,
     id: index,
-    link: links[item.name] ? item.linkPrefix + links[item.name] : '',
+    link: links ? links[item.name] ? item.linkPrefix + links[item.name] : '' : '',
   }));
   const newLink = ICON_LIST.filter((item) => item.link !== '');
   const fileType = nftData?.nftInfo?.metadata?.fileType;
