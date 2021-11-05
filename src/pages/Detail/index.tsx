@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
+import Helmet from 'react-helmet';
 import {
   Flex,
   Container,
@@ -209,6 +210,11 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   return (
     <>
+      <Helmet>
+        <meta name="twitter:title" content={nftData?.nftInfo?.metadata?.name} />
+        <meta name="twitter:description" content={nftData?.nftInfo?.metadata?.description} />
+        <meta name="twitter:image" content={`${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata?.logoUrl}`} />
+      </Helmet>
       {nftDataIsLoading || collectionsDateIsLoading || !nftData || refresh ? (
         <Center width="100%" height="100vh">
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
