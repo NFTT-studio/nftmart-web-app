@@ -25,7 +25,7 @@ import StatusSelector from '../../components/StatusSelector';
 import CollectionSelector from '../../components/CollectionSelector';
 import useCollections from '../../hooks/reactQuery/useCollections';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
-import NftCard from '../../components/NftCard';
+import OrderCard from '../../components/OrderCard';
 import SortBy from '../../components/SortBy';
 
 import {
@@ -121,7 +121,7 @@ const Browsing = () => {
 
   return (
     <MainContainer title={t('Browsing.title')}>
-      <Container maxWidth="1364px" w="100%" mt="40px" display="flex" justifyContent="space-between">
+      <Container className="container" w="100%" mt="40px" display="flex" justifyContent="space-between" p="0 50px">
         <Flex
           w="260px"
           h="790px"
@@ -193,7 +193,7 @@ const Browsing = () => {
 
         </Flex>
 
-        <Flex maxWidth="1015px" w="100%" flexDirection="column" justifyContent="flex-start">
+        <Flex w="100%" flexDirection="column" justifyContent="flex-start">
 
           <Flex minH="36px" w="100%">
             {categoriesData
@@ -225,7 +225,7 @@ const Browsing = () => {
             </Text>
             <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
           </Flex>
-          <Flex maxWidth="1015px" w="100%">
+          <Flex w="100%">
             {nftsIsLoading
               ? (
                 <Center width="100%" height="353px">
@@ -234,6 +234,7 @@ const Browsing = () => {
               ) : nftsData?.pages[0].pageInfo.totalNum
                 ? (
                   <InfiniteScroll
+                    className="browsingScroll"
                     dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
                     next={fetchNextPage}
                     hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
@@ -241,14 +242,19 @@ const Browsing = () => {
                     initialScrollY={1}
                   >
                     <SimpleGrid
+                      // flexFlow="row wrap"
                       width="100%"
                       p="0 5px"
                       m="0px 0px 20px 0px"
-                      columns={[1, 1, 2, 2, 3]}
-                      spacing="35px"
+                      minChildWidth="280px"
+                      spacing="20px"
                     >
                       {nftsData?.pages.map((page) => page.nfts.map(
-                        (nft) => <Flex mt="1px"><NftCard nft={nft} remainingTime={remainingTime} /></Flex>,
+                        (nft) => (
+                          <Flex>
+                            <OrderCard nft={nft} remainingTime={remainingTime} />
+                          </Flex>
+                        ),
                       ))}
                     </SimpleGrid>
                   </InfiniteScroll>
