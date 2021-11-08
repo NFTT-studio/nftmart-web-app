@@ -203,7 +203,7 @@ const NftCard: FC<NftCardProps> = ({
         minWidth="250px"
         height="100%"
         backgroundColor="#fff"
-        borderRadius="4px"
+        borderRadius="10px"
         cursor="pointer"
         marginTop="5px"
         _hover={{ boxShadow: 'lg' }}
@@ -233,7 +233,7 @@ const NftCard: FC<NftCardProps> = ({
                 maxWidth: '320px',
                 minWidth: '250px',
                 height: '100%',
-                borderRadius: '4px 4px 0 0 ',
+                borderRadius: '10px 10px 0 0 ',
               }}
               src={nft?.metadata?.fileType === 'gif' ? `${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}` : `${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
               effect="blur"
@@ -274,7 +274,7 @@ const NftCard: FC<NftCardProps> = ({
                         objectFit: 'cover',
                         width: '100%',
                         height: '100%',
-                        borderRadius: '4px 4px 0 0 ',
+                        borderRadius: '10px 10px 0 0 ',
                       }}
                       src={`${PINATA_SERVER}nft/${nft?.metadata?.previewUrl}!list`}
                       effect="blur"
@@ -312,7 +312,7 @@ const NftCard: FC<NftCardProps> = ({
                         objectFit: 'cover',
                         width: '100%',
                         height: '100%',
-                        borderRadius: '4px 4px 0 0 ',
+                        borderRadius: '10px 10px 0 0 ',
                       }}
                       src={`${PINATA_SERVER}nft/${nft?.metadata?.previewUrl}!list`}
                       effect="blur"
@@ -332,7 +332,7 @@ const NftCard: FC<NftCardProps> = ({
                       objectFit: 'cover',
                       width: '100%',
                       height: '100%',
-                      borderRadius: '4px 4px 0 0 ',
+                      borderRadius: '10px 10px 0 0 ',
                     }}
                     src={`${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
                     effect="blur"
@@ -351,7 +351,7 @@ const NftCard: FC<NftCardProps> = ({
                       objectFit: 'cover',
                       width: '100%',
                       height: '100%',
-                      borderRadius: '4px 4px 0 0 ',
+                      borderRadius: '10px 10px 0 0 ',
                     }}
                     src={`${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
                     effect="blur"
@@ -360,7 +360,7 @@ const NftCard: FC<NftCardProps> = ({
           )}
         <Box
           padding="0 20px"
-          borderRadius="0 0 4px 4px"
+          borderRadius="0 0 10px 10px"
           h="177px"
           display="flex"
           flexDirection="column"

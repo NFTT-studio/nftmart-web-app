@@ -202,9 +202,9 @@ const NftCard: FC<NftCardProps> = ({
         minWidth="250px"
         height="100%"
         backgroundColor="#fff"
-        borderRadius="4px"
         cursor="pointer"
         border="#e9e6e6 1px solid"
+        borderRadius="10px"
         _hover={{ boxShadow: 'lg' }}
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.98 }}
@@ -232,7 +232,7 @@ const NftCard: FC<NftCardProps> = ({
                 maxWidth: '320px',
                 minWidth: '250px',
                 height: '100%',
-                borderRadius: '4px 4px 0 0 ',
+                borderRadius: '10px 10px 0 0 ',
               }}
               src={nft?.metadata?.fileType === 'gif' ? `${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}` : `${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
               effect="blur"
@@ -311,7 +311,7 @@ const NftCard: FC<NftCardProps> = ({
                         objectFit: 'cover',
                         width: '100%',
                         height: '100%',
-                        borderRadius: '4px 4px 0 0 ',
+                        borderRadius: '10px 10px 0 0 ',
                       }}
                       src={`${PINATA_SERVER}nft/${nft?.metadata?.previewUrl}!list`}
                       effect="blur"
@@ -331,7 +331,7 @@ const NftCard: FC<NftCardProps> = ({
                       objectFit: 'cover',
                       width: '100%',
                       height: '100%',
-                      borderRadius: '4px 4px 0 0 ',
+                      borderRadius: '10px 10px 0 0 ',
                     }}
                     src={`${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
                     effect="blur"
@@ -350,7 +350,7 @@ const NftCard: FC<NftCardProps> = ({
                       objectFit: 'cover',
                       width: '100%',
                       height: '100%',
-                      borderRadius: '4px 4px 0 0 ',
+                      borderRadius: '10px 10px 0 0 ',
                     }}
                     src={`${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
                     effect="blur"
@@ -359,7 +359,7 @@ const NftCard: FC<NftCardProps> = ({
           )}
         <Box
           padding="0 20px"
-          borderRadius="0 0 4px 4px"
+          borderRadius="0 0 10px 10px"
           h="177px"
           display="flex"
           flexDirection="column"
