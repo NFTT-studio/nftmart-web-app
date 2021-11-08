@@ -38,9 +38,6 @@ const obj = {
       outline: 'none',
       boxShadow: 'none',
     },
-    '.css-xzjcmu': {
-      maxWidth: '1364px',
-    },
     '.swiper-container-horizontal>.swiper-scrollbar': {
       width: '1364px',
       height: '16px',
@@ -174,7 +171,16 @@ const obj = {
     '.video-react-fluid': {
       height: '100% !important',
     },
-
+    '.browsingScroll': {
+      width: '100% !important',
+    },
+    '.infinite-scroll-component__outerdiv': {
+      width: '100% !important',
+    },
+    '.container': {
+      width: '100% !important',
+      maxWidth: '100% !important',
+    },
   }),
 };
 

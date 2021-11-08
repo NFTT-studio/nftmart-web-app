@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-mixed-operators */
@@ -13,22 +12,21 @@ import {
   Text,
   Link,
   Image,
-  Spinner,
 } from '@chakra-ui/react';
 import { Shimmer } from 'react-shimmer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link as RouterLink } from 'react-router-dom';
-import {
-  Player,
-} from 'video-react';
 import { useTranslation } from 'react-i18next';
-import { IPFS_URL } from '../../constants';
+import { PINATA_SERVER } from '../../constants';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { renderNmtNumberText } from '../Balance';
 import { priceStringDivUnit, currentPrice } from '../../utils/format';
+// eslint-disable-next-line import/no-unresolved
+
 import {
   IconTime,
   HeadPortrait,
+  play,
 } from '../../assets/images';
 import MotionBox from '../MotionBox';
 
@@ -37,11 +35,15 @@ type NftCardProps = {
   remainingTime:number,
 } & HTMLChakraProps<'div'>
 
-const OrderCard: FC<NftCardProps> = ({
+const NftCard: FC<NftCardProps> = ({
   nft,
   remainingTime,
 }) => {
+  const pictureType = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+  const videoType = ['mp4', 'webm'];
+  const audioType = ['mp3', 'wav', 'ogg'];
   const { t } = useTranslation();
+  const type = nft?.auction?.type;
   const [events, setEvents] = useState(
     {
       times: 0,
@@ -51,8 +53,8 @@ const OrderCard: FC<NftCardProps> = ({
       second: 0,
     },
   );
-  const formatAddress = (addr: string) => (addr ? `${addr.slice(0, 4)}...${addr.slice(-4)}` : null);
 
+  const formatAddress = (addr: string) => (addr ? `${addr.slice(0, 4)}...${addr.slice(-4)}` : null);
   const countFun = (index:number) => {
     const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
     // eslint-disable-next-line no-param-reassign
@@ -72,19 +74,15 @@ const OrderCard: FC<NftCardProps> = ({
   };
 
   useEffect(() => {
-    if (nft?.type && remainingTime) {
-      countFun(nft.deadline);
+    if (type && remainingTime) {
+      countFun(nft?.auction?.deadline);
     }
-  }, [remainingTime]);
-
-  const types = nft?.type || false;
-  const price = renderNmtNumberText(nft.price);
-  const duchPrice = currentPrice(Number(nft?.max_price), Number(nft?.min_price), Number(nft?.deadline), remainingTime, Number(nft?.block_created));
-  const front = (time:number) => {
+  }, [remainingTime, nft?.auction?.deadline]);
+  const front = (time) => {
     const b = time.toString().split('.');
     return b[0];
   };
-  const hinder = (time:number) => {
+  const hinder = (time) => {
     const b = time.toString().split('.');
     return b[1];
   };
@@ -186,34 +184,43 @@ const OrderCard: FC<NftCardProps> = ({
       </Box>
     </Flex>
   );
+  const price = renderNmtNumberText(nft.price);
+  const duchPrice = currentPrice(Number(nft?.auction?.max_price), Number(nft?.auction?.min_price), Number(nft?.auction?.deadline), remainingTime, Number(nft?.auction?.block_created));
+  const fileType = nft?.metadata?.fileType;
   return (
     <Link
-      key={nft.id}
-      width="320px"
+      key={nft?.metadata.name}
+      maxWidth="320px"
+      minWidth="250px"
       height="396px"
       as={RouterLink}
-      to={`/item/${nft?.nft_id}`}
+      to={`/item/${nft.id}`}
     >
       <MotionBox
-        width="320px"
+        width="100%"
+        maxWidth="320px"
+        minWidth="250px"
         height="100%"
         backgroundColor="#fff"
         borderRadius="4px"
         cursor="pointer"
-        marginTop="5px"
+        border="#e9e6e6 1px solid"
         _hover={{ boxShadow: 'lg' }}
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.98 }}
         display="flex"
         flexDirection="column"
       >
+
         {nft?.metadata
-          && nft?.metadata?.fileType === 'jpg' || nft?.metadata?.fileType === 'png' || nft?.metadata?.fileType === 'gif'
+          && pictureType.indexOf(fileType) > -1
           ? (
             <LazyLoadImage
               wrapperProps={{
                 style: {
-                  width: '320px',
+                  width: '100%',
+                  maxWidth: '320px',
+                  minWidth: '250px',
                   height: '219px',
                   display: 'flex',
                   justifyContent: 'center',
@@ -222,59 +229,99 @@ const OrderCard: FC<NftCardProps> = ({
               style={{
                 objectFit: 'cover',
                 width: '100%',
+                maxWidth: '320px',
+                minWidth: '250px',
                 height: '100%',
                 borderRadius: '4px 4px 0 0 ',
               }}
-              src={IPFS_URL + nft?.metadata.logoUrl}
+              src={nft?.metadata?.fileType === 'gif' ? `${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}` : `${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
               effect="blur"
-              placeholder={(
-                <Spinner
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  color="blue.500"
-                  size="xl"
-                />
-              )}
+              // fallback={<Shimmer height={219} width="100%" />}
             />
           )
           : (
             nft?.metadata?.previewUrl
-              ? nft?.metadata?.fileType === 'mp4'
+              ? videoType.indexOf(fileType) > -1
                 ? (
                   <Box
-                    width="320px"
+                    width="100%"
                     height="219px"
                     maxWidth="420px"
+                    position="relative"
                   >
-                    <Player
-                      width="100%"
-                      height="100%"
-                      poster={`${IPFS_URL}${nft?.metadata?.previewUrl}`}
-                    >
-                      <source style={{ height: 'auto' }} src={`${IPFS_URL}${nft?.metadata?.previewUrl}`} />
-                    </Player>
+                    <Image
+                      position="absolute"
+                      zIndex="3"
+                      w="54px"
+                      h="auto"
+                      left="calc(50% - 27px)"
+                      top="calc(50% - 27px)"
+                      src={play.default}
+                      borderRadius="50%"
+                      background="rgba(43,51,63,.7)"
+                    />
+                    <LazyLoadImage
+                      wrapperProps={{
+                        style: {
+                          width: '100%',
+                          height: '219px',
+                          display: 'flex',
+                          justifyContent: 'center',
+                        },
+                      }}
+                      style={{
+                        objectFit: 'cover',
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '4px 4px 0 0 ',
+                      }}
+                      src={`${PINATA_SERVER}nft/${nft?.metadata?.previewUrl}!list`}
+                      effect="blur"
+                    />
                   </Box>
                 )
-                : (
+                : audioType.indexOf(fileType) > -1 ? (
                   <Box
-                    width="320px"
+                    width="100%"
                     height="219px"
                     maxWidth="420px"
+                    position="relative"
                   >
-                    <Player
-                      width="100%"
-                      height="100%"
-                      poster={`${IPFS_URL}${nft?.metadata?.previewUrl}`}
-                    >
-                      <source style={{ height: 'auto' }} src={`${IPFS_URL}${nft?.metadata?.previewUrl}`} />
-                    </Player>
+                    <Image
+                      position="absolute"
+                      zIndex="3"
+                      w="54px"
+                      h="auto"
+                      left="calc(50% - 27px)"
+                      top="calc(50% - 27px)"
+                      src={play.default}
+                      borderRadius="50%"
+                      background="rgba(43,51,63,.7)"
+                    />
+                    <LazyLoadImage
+                      wrapperProps={{
+                        style: {
+                          width: '100%',
+                          height: '219px',
+                          display: 'flex',
+                          justifyContent: 'center',
+                        },
+                      }}
+                      style={{
+                        objectFit: 'cover',
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '4px 4px 0 0 ',
+                      }}
+                      src={`${PINATA_SERVER}nft/${nft?.metadata?.previewUrl}!list`}
+                      effect="blur"
+                    />
                   </Box>
                 ) : (
                   <LazyLoadImage
                     wrapperProps={{
                       style: {
-                        width: '320px',
+                        width: '100%',
                         height: '219px',
                         display: 'flex',
                         justifyContent: 'center',
@@ -286,13 +333,30 @@ const OrderCard: FC<NftCardProps> = ({
                       height: '100%',
                       borderRadius: '4px 4px 0 0 ',
                     }}
-                    src={IPFS_URL + nft?.metadata.logoUrl}
+                    src={`${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
                     effect="blur"
-                    fallback={<Shimmer height={219} width={320} />}
+                  />
+                ) : (
+                  <LazyLoadImage
+                    wrapperProps={{
+                      style: {
+                        width: '100%',
+                        height: '219px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                      },
+                    }}
+                    style={{
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: '4px 4px 0 0 ',
+                    }}
+                    src={`${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
+                    effect="blur"
                   />
               )
           )}
-
         <Box
           padding="0 20px"
           borderRadius="0 0 4px 4px"
@@ -310,7 +374,7 @@ const OrderCard: FC<NftCardProps> = ({
             color="#999999"
             fontFamily="TTHoves-Light, TTHoves"
           >
-            <Box>{nft?.class.name}</Box>
+            <Box userSelect="none">{nft?.class?.name}</Box>
           </Box>
           <Box
             mt="3px"
@@ -322,7 +386,8 @@ const OrderCard: FC<NftCardProps> = ({
             lineHeight="18px"
             fontFamily="TTHoves-Medium, TTHoves"
           >
-            {nft?.metadata && (
+            <Box w="100%">
+              {nft?.metadata && (
               <Text
                 maxWidth="100%"
                 color="#FFFFFF"
@@ -335,52 +400,82 @@ const OrderCard: FC<NftCardProps> = ({
               >
                 {nft?.metadata.name}
               </Text>
-            )}
+              )}
+            </Box>
           </Box>
           <Box
             mt="13px"
             display="flex"
             justifyContent="space-between"
           >
-            {nft?.price && (
-            <Box textAlign="right" display="flex" justifyContent="center">
-              <Flex flexDirection="column" alignItems="flex-start">
-                <Box
-                  color="#FFFFFF"
-                  fontWeight="500"
-                  fontFamily="TTHoves-Medium, TTHoves"
-                  lineHeight="24px"
-                  fontSize="20px"
-                >
-                  {types === 'Dutch' && !nft?.allow_british_auction ? (
-                    renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
-                  ) : null}
-                  {types === 'Dutch' && nft?.allow_british_auction && nft?.bid_count === 0 ? (
-                    renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
-                  ) : null}
-                  {types === 'Dutch' && nft?.allow_british_auction && nft?.bid_count > 0 ? (
-                    price
-                  ) : null}
-                  {!types ? (
-                    price
-                  ) : null}
-                  {types === 'British' ? (
-                    price
-                  ) : null}
-                  NMT
-                </Box>
-                <Box
-                  mt="2px"
-                  color="#999999"
-                  fontWeight="300"
-                  fontFamily="TTHoves-Light, TTHoves"
-                  lineHeight="14px"
-                  fontSize="12px"
-                >
-                  list price
-                </Box>
-              </Flex>
-            </Box>
+            {Number(nft?.auction?.price) || Number(nft?.price) ? (
+              <Box textAlign="right" display="flex" justifyContent="center">
+                <Flex flexDirection="column" alignItems="flex-start">
+                  <Box
+                    height="24px"
+                    color="#FFFFFF"
+                    fontWeight="500"
+                    fontFamily="TTHoves-Medium, TTHoves"
+                    lineHeight="24px"
+                    fontSize="20px"
+                  >
+                    {type === 'Dutch' && !nft?.auction?.allow_british_auction ? (
+                      renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
+                    ) : null}
+                    {type === 'Dutch' && nft?.auction?.allow_british_auction && nft?.auction?.bid_count === 0 ? (
+                      renderNmtNumberText((Number(duchPrice) * 1000000000000).toString())
+                    ) : null}
+                    {type === 'Dutch' && nft?.auction?.allow_british_auction && nft?.auction?.bid_count > 0 ? (
+                      renderNmtNumberText((Number(nft?.auction?.price)).toString())
+                    ) : null}
+                    {!type ? (
+                      Number(nft?.price) ? price : ''
+                    ) : null}
+                    {type === 'British' ? (
+                      renderNmtNumberText((Number(nft?.auction?.price)).toString())
+                    ) : null}
+                    {Number(nft?.auction?.price) ? 'NMT' : '' }
+                    {Number(nft?.price) ? 'NMT' : '' }
+                  </Box>
+                  {Number(nft?.auction?.price) || Number(nft?.price) ? (
+                    <Box
+                      mt="2px"
+                      color="#999999"
+                      fontWeight="300"
+                      fontFamily="TTHoves-Light, TTHoves"
+                      lineHeight="14px"
+                      fontSize="12px"
+                    >
+                      {t('common.currentPrice')}
+                    </Box>
+                  ) : '' }
+                </Flex>
+              </Box>
+            ) : (
+              <Box textAlign="right" display="flex" justifyContent="center">
+                <Flex flexDirection="column" alignItems="flex-start">
+                  <Box
+                    height="24px"
+                    color="#FFFFFF"
+                    fontWeight="500"
+                    fontFamily="TTHoves-Medium, TTHoves"
+                    lineHeight="24px"
+                    fontSize="20px"
+                  >
+                    - NMT
+                  </Box>
+                  <Box
+                    mt="2px"
+                    color="#999999"
+                    fontWeight="300"
+                    fontFamily="TTHoves-Light, TTHoves"
+                    lineHeight="14px"
+                    fontSize="12px"
+                  >
+                    {t('common.currentPrice')}
+                  </Box>
+                </Flex>
+              </Box>
             )}
           </Box>
           <Box
@@ -396,19 +491,19 @@ const OrderCard: FC<NftCardProps> = ({
             h="100%"
           >
             <Flex justifyContent="center" alignItems="center">
-              {nft?.creator.avatar ? (
+              {nft?.creator?.avatar ? (
                 <Image
                   mr="4px"
                   w="auto"
                   h="26px"
                   borderRadius="50%"
                   border="1px solid #FFFFFF"
-                  src={nft?.creator.avatar || HeadPortrait.default}
+                  src={`${PINATA_SERVER}user/${nft?.creator.avatar}` || HeadPortrait.default}
                 />
               ) : (
                 <Identicon
                   className="userAvatar"
-                  string={nft?.creator.id}
+                  string={nft?.creator?.id}
                 />
               )}
               <Text
@@ -418,10 +513,10 @@ const OrderCard: FC<NftCardProps> = ({
                 whiteSpace="nowrap"
                 textAlign="start"
               >
-                {nft?.creator.name || formatAddress(nft?.creator.id)}
+                {nft?.creator?.name || formatAddress(nft?.creator?.id) }
               </Text>
             </Flex>
-            {nft?.type && Number(events.day) > 0 ? (
+            {type && Number(events.day) > 2 ? (
               <Box textAlign="right" display="flex" justifyContent="center">
                 <Flex align="flex-start" alignItems="center">
                   <Box w="16px" h="16px" src={IconTime.default} as="img" alt="" mr="4px" />
@@ -433,7 +528,7 @@ const OrderCard: FC<NftCardProps> = ({
                 </Flex>
               </Box>
             ) : null}
-            {nft?.type && Number(events.times) === 0 ? (
+            {type && Number(events.times) === 0 ? (
               <Box textAlign="right" display="flex" justifyContent="center">
                 <Flex align="flex-start" alignItems="center">
                   <Box color="#999999" mr="6px">Last</Box>
@@ -444,13 +539,13 @@ const OrderCard: FC<NftCardProps> = ({
                     color="#FFFFFF"
                     lineHeight="16px"
                   >
-                    {nft?.type === 'Dutch' ? renderNmtNumberText((Number(duchPrice) * 1000000000000).toString()) : price}
+                    {type === 'Dutch' ? renderNmtNumberText((Number(duchPrice) * 1000000000000).toString()) : renderNmtNumberText(nft?.auction?.price)}
                   </Box>
                   <Box color="#999999">NMT</Box>
                 </Flex>
               </Box>
             ) : null}
-            {nft?.type && Number(events.day) < 1 && Number(events.times) > 0 ? (
+            {type && Number(events.day) < 3 && Number(events.times) > 0 ? (
               <Box
                 fontSize="12px"
                 fontFamily="TTHoves-Medium, TTHoves"
@@ -481,4 +576,4 @@ const OrderCard: FC<NftCardProps> = ({
   );
 };
 
-export default OrderCard;
+export default NftCard;
