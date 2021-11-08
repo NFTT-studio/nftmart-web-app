@@ -204,7 +204,6 @@ const NftCard: FC<NftCardProps> = ({
         backgroundColor="#fff"
         borderRadius="4px"
         cursor="pointer"
-        marginTop="5px"
         border="#e9e6e6 1px solid"
         _hover={{ boxShadow: 'lg' }}
         whileHover={{ scale: 1.03 }}

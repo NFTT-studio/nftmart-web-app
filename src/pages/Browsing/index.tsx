@@ -242,9 +242,8 @@ const Browsing = () => {
                     initialScrollY={1}
                   >
                     <SimpleGrid
-                      // flexFlow="row wrap"
                       width="100%"
-                      p="0 5px"
+                      p="5px 5px 0 5px"
                       m="0px 0px 20px 0px"
                       minChildWidth="280px"
                       spacing="20px"
