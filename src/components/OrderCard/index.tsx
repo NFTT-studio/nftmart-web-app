@@ -191,7 +191,7 @@ const NftCard: FC<NftCardProps> = ({
     <Link
       key={nft?.metadata.name}
       maxWidth="320px"
-      minWidth="250px"
+      minWidth="280px"
       height="396px"
       as={RouterLink}
       to={`/item/${nft.id}`}
@@ -199,7 +199,7 @@ const NftCard: FC<NftCardProps> = ({
       <MotionBox
         width="100%"
         maxWidth="320px"
-        minWidth="250px"
+        minWidth="280px"
         height="100%"
         backgroundColor="#fff"
         cursor="pointer"
@@ -273,7 +273,7 @@ const NftCard: FC<NftCardProps> = ({
                         objectFit: 'cover',
                         width: '100%',
                         height: '100%',
-                        borderRadius: '4px 4px 0 0 ',
+                        borderRadius: '10px 10px 0 0 ',
                       }}
                       src={`${PINATA_SERVER}nft/${nft?.metadata?.previewUrl}!list`}
                       effect="blur"
