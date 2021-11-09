@@ -2,7 +2,7 @@ import { ComponentStyleConfig } from '@chakra-ui/react';
 
 const Container: ComponentStyleConfig = {
   baseStyle: {
-    maxWidth: '1364px',
+    maxWidth: '100%',
     paddingX: '0',
   },
 };
