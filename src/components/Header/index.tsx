@@ -58,8 +58,9 @@ const Header: FC<HeaderProps> = () => {
       transition="background-color 1s"
     >
       <Container
-        py={2}
-        maxW={1364}
+        p={location.pathname === '/' ? '0 0' : '0 50px'}
+        w="100%"
+        maxWidth={location.pathname === '/' ? '1364px' : '100%'}
         height="80px"
         display="flex"
         justifyContent="space-between"
