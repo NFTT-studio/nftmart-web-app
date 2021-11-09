@@ -478,7 +478,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
               mt="0px"
               display="flex"
               flexDirection="column"
-              maxW="1364px"
+              maxWidth="1364px"
               w="100%"
               height="100%"
               justifyContent="flex-start"
