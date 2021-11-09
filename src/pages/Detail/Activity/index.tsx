@@ -27,6 +27,7 @@ const Events: FC<Props> = (({
   };
   const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : '');
   const date = JSON.parse(events?.event?.data);
+  console.log(date);
   const { t } = useTranslation();
   return (
     <Flex

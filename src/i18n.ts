@@ -3,12 +3,13 @@ import Backend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+const language = ['zh', 'en'];
 i18n
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    lng: `${(localStorage.getItem('i18nextLng') === 'zh' || localStorage.getItem('i18nextLng') === 'en')
+    lng: `${language.indexOf(localStorage.getItem('i18nextLng') || '') > -1
       ? localStorage.getItem('i18nextLng') : 'en'}`,
     debug: true,
     interpolation: {
