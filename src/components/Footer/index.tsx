@@ -28,8 +28,8 @@ const ICONS = [
 const links = [
   'https://www.nftmart.io/',
   'https://nftmart-io.medium.com/',
-  'https://twitter.com/NFTmartio',
-  'https://t.me/NFTmart',
+  'https://twitter.com/NFTMart',
+  'https://t.me/NFTMartOfficial',
   'https://github.com/NFTT-studio',
 ];
 
