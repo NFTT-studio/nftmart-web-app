@@ -22,7 +22,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import ReactAudioPlayer from 'react-audio-player';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import Identicon from 'react-identicons';
+import Identicon from '@polkadot/react-identicon';
 import NoData from '../NoData';
 
 import {
@@ -277,47 +277,6 @@ const DetailLeft: FC<Props> = (({
                 >
                   {t('Detail.detail')}
                 </Text>
-                <Flex
-                  height="100%"
-                  alignItems="center"
-                  justifyContent="flex"
-
-                >
-                  <Box
-                    width="0"
-                    height="0"
-                    borderWidth="0 13px 20px"
-                    borderStyle="solid"
-                    borderColor="transparent transparent #FFE0D8"
-                    transform="rotate(270deg)"
-                  />
-                  <Box
-                    position="relative"
-                    left="-5px"
-                    width="100px"
-                    height="24px"
-                    backgroundColor="#FFE0D8"
-                    display="flex"
-                    alignItems="center"
-                    fontSize="12px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#FF6C47"
-                  >
-                    <Box
-                      mr="4px"
-                      width="8px"
-                      height="8px"
-                      borderRadius="50%"
-                      backgroundColor="#FF6C47"
-                      paddingRight="8px"
-                    />
-                    {t('Detail.Royalties')}
-                    {' '}
-                    {Math.ceil(number2PerU16(nftData?.nftInfo?.royalty_rate))}
-                    %
-                  </Box>
-                </Flex>
               </Flex>
               <AccordionIcon />
             </AccordionButton>
@@ -342,7 +301,7 @@ const DetailLeft: FC<Props> = (({
                   ) : (
                     <Identicon
                       className="creatorAvatar"
-                      string={nftData?.nftInfo?.creator?.id}
+                      value={nftData?.nftInfo?.creator?.id}
                     />
                   )}
                 </Link>

@@ -2,7 +2,7 @@
 import React, {
   useState, MouseEventHandler, useEffect, ChangeEventHandler,
 } from 'react';
-import Identicon from 'react-identicons';
+import Identicon from '@polkadot/react-identicon';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, RouteComponentProps, useLocation } from 'react-router-dom';
 import {
@@ -282,7 +282,11 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
         ) : (
           <Identicon
             className="identicon"
-            string={address}
+            value={address}
+            style={{
+              width: 'auto !important',
+              height: '108px !important',
+            }}
           />
         )}
       </Flex>
@@ -493,7 +497,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                           loader={<h4>Loading...</h4>}
                           initialScrollY={1}
                         >
-                          {Offersend?.pages.map((page) => page?.orders?.map((item) => (
+                          {Offersend?.pages.map((page) => page?.offers?.map((item) => (
                             <OfferItem offers={item} />
                           )))}
                         </InfiniteScroll>

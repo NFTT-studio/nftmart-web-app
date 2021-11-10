@@ -16,7 +16,7 @@
     "recentlySold": "Recently Sold",
     "endingSoon": "Ending Soon",
     "cheapest": "Cheapest",
-    "mostStarted": "Most Started ",
+    "mostStarted": "Most Stars ",
     "oldest": "Oldest"
   },
   "common": {
@@ -162,6 +162,7 @@
   },
   "Detail": {
     "Royalties":"Royalties",
+    "royaltiesTip": "Royalties will be charged proportionally for each transaction",
     "Sell": "Sell",
     "AuctionEndsIn":"Auction ends in",
     "title": "-NFTMart|A Professional NFT Market",
@@ -176,7 +177,7 @@
     "from": "From",
     "price": "Price",
     "expiration": "Expiration",
-    "CreationTime": "Create",
+    "CreationTime": "Date",
     "to": "To",
     "date": "Date",
     "buyNow": "Buy Now",
@@ -202,6 +203,7 @@
     "dealReceive": "Please collect this NFT",
     "buyError": "Buy Error",
     "createdBy": "Created by",
+    "owner": "Owner",
     "currentPrice":"Current Price",
     "placeBid":"Place Bid",
     "noDataYet":"No data yet",

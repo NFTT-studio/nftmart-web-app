@@ -27,7 +27,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { any } from 'ramda';
 import { timeStamp } from 'console';
-import Identicon from 'react-identicons';
+import Identicon from '@polkadot/react-identicon';
 import MainContainer from '../../layout/MainContainer';
 import NftCard from '../../components/NftCard';
 import { useAppSelector } from '../../hooks/redux';
@@ -297,7 +297,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                       ) : (
                         <Identicon
                           className="creatorAvatar"
-                          string={collectionsData?.collection?.creator_id}
+                          value={collectionsData?.collection?.creator_id}
                         />
                       )}
                     </Link>

@@ -2,7 +2,7 @@
 import React, {
   useEffect,
 } from 'react';
-import Identicon from 'react-identicons';
+import Identicon from '@polkadot/react-identicon';
 import { useTranslation } from 'react-i18next';
 import {
   Link as RouterLink, RouteComponentProps, useLocation, useHistory,
@@ -157,7 +157,7 @@ const Account = () => {
             ) : (
               <Identicon
                 className="identicon"
-                string={account?.address}
+                value={account?.address}
               />
             )}
           </Flex>

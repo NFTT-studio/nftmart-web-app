@@ -15,7 +15,7 @@ import {
   Image,
   useClipboard,
 } from '@chakra-ui/react';
-import Identicon from 'react-identicons';
+import Identicon from '@polkadot/react-identicon';
 
 import { useTranslation } from 'react-i18next';
 
@@ -113,7 +113,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
           ) : (
             <Identicon
               className="headerAvatar"
-              string={address}
+              value={address}
             />
           )}
 

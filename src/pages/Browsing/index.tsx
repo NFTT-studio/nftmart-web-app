@@ -98,7 +98,7 @@ const Browsing = () => {
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     function check(collection: Collection) {
-      return collection.metadata.name.indexOf(value) > -1;
+      return collection.metadata.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
     }
     if (collectionsData) {
       setCollectionsArr(collectionsData.collections.filter(check));

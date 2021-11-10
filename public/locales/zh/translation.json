@@ -17,7 +17,7 @@
     "endingSoon": "即将结束",
     "cheapest": "最便宜的",
     "mostStarted": "最多星的",
-    "oldest": "最旧的"
+    "oldest": "最早发行"
   },
   "common": {
     "category":"类别",
@@ -130,8 +130,8 @@
   },
   "Browsing": {
     "title": "浏览",
-    "collectionPlaceholder": "过滤集合",
-    "collections": "集合",
+    "collectionPlaceholder": "过滤作品集",
+    "collections": "作品集",
     "status": "状态",
     "buyNow": "售卖中",
     "onAuction": "拍卖中",
@@ -162,6 +162,7 @@
   },
   "Detail": {
     "Royalties":"版税",
+    "royaltiesTip": "每次交易将按比例收取版税",
     "Sell": "上架出售",
     "AuctionEndsIn":"拍卖将结束于",
     "title": "-NFTMart|专业NFT交易市场",
@@ -176,12 +177,12 @@
     "from": "来自",
     "price": "价格",
     "expiration": "有效期",
-    "CreationTime": "创建时间",
+    "CreationTime": "时间",
     "to": "目标",
     "date": "时间",
     "buyNow": "购买",
     "checkout": "结账",
-    "item": "作品",
+    "Item": "项目",
     "subtotal": "明细",
     "total": "总额",
     "balance": "余额",
@@ -201,7 +202,8 @@
     "dealDesc": "你想接受这个提议吗？",
     "dealReceive": "请收下这个NFT",
     "buyError": "购买错误",
-    "createdBy": "创作于",
+    "createdBy": "创作者",
+    "owner": "持有者",
     "currentPrice": "当前价格",
     "placeBid": "出价竞拍",
     "noDataYet": "没有数据",
@@ -210,7 +212,7 @@
     "activities": "相关活动",
     "makeAnOffer": "提交报价",
     "offer": "Make an offer",
-    "inAday": "提交报价",
+    "inAday": "有效天数",
     "makeOffer": "提交报价",
     "offerExplain": "*I如果拥有者接受报价，交易将会自动完成。",
     "deal": "成交",
@@ -317,10 +319,10 @@
     "featuredImageRule": "此图片将显示在您的个人主页上，建议 1440 x 400"
   },
   "class": {
-    "Items": "作品",
-    "Owners": "持有",
-    "Viewers": "浏览",
-    "Stars": "收藏"
+    "Items": "作品数",
+    "Owners": "持有人数",
+    "Viewers": "浏览人数",
+    "Stars": "加星人数"
   },
   "Trx": {
     "inblock": "交易区块正在确认中",
