@@ -192,6 +192,7 @@ const NftCard: FC<NftCardProps> = ({
       key={nft?.metadata.name}
       maxWidth="320px"
       minWidth="280px"
+      width="100%"
       height="396px"
       as={RouterLink}
       to={`/item/${nft.id}`}
@@ -219,8 +220,6 @@ const NftCard: FC<NftCardProps> = ({
               wrapperProps={{
                 style: {
                   width: '100%',
-                  maxWidth: '320px',
-                  minWidth: '250px',
                   height: '219px',
                   display: 'flex',
                   justifyContent: 'center',
@@ -229,8 +228,6 @@ const NftCard: FC<NftCardProps> = ({
               style={{
                 objectFit: 'cover',
                 width: '100%',
-                maxWidth: '320px',
-                minWidth: '250px',
                 height: '100%',
                 borderRadius: '10px 10px 0 0 ',
               }}

@@ -131,7 +131,7 @@ const Events: FC<Props> = (({
             localStorage.setItem('ButtonSelect', '0');
           }}
         >
-          {date[1] ? formatAddress(date[0]) : ''}
+          {date[1] ? '' : ''}
         </Link>
       </Text>
       <Text
