@@ -69,7 +69,21 @@ export default function Footer() {
             © 2021 NFTMart
           </Text>
           <Text color="#FFF" fontSize="14px">
-            {t('Footer.PrivacyPolicy')}
+            <Link
+              target="blank"
+              href="https://docs.google.com/forms/d/1WCNeiufW1XxLsyme7dJUys7y7t-XJRyp1nQR0bhnvVQ"
+            >
+              Artist Invites
+            </Link>
+            {' '}
+            |
+            {' '}
+            <Link
+              target="blank"
+              href="https://www.gate.io/en/trade/NMT_USDT"
+            >
+              Buy NMT
+            </Link>
           </Text>
         </Box>
         <Box maxW="50%" minW="20%">

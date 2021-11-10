@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+import { isString } from 'lodash';
 import { priceStringDivUnit, formatNum } from '../../../utils/format';
 
 interface Props {
@@ -25,9 +26,8 @@ const Events: FC<Props> = (({
     const s = times.getSeconds();
     return `${y}/${add0(m)}/${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
   };
-  const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : '');
+  const formatAddress = (addr: string) => (isString(addr) ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : '');
   const date = JSON.parse(events?.event?.data);
-  console.log(date);
   const { t } = useTranslation();
   return (
     <Flex
@@ -131,7 +131,11 @@ const Events: FC<Props> = (({
             localStorage.setItem('ButtonSelect', '0');
           }}
         >
-          {date[1] ? '' : ''}
+          {events?.method === 'TransferredToken' ? formatAddress(date[1]) : ''}
+          {events?.method === 'RedeemedBritishAuction' ? formatAddress(date[1]) : ''}
+          {events?.method === 'RedeemedDutchAuction' ? formatAddress(date[1]) : ''}
+          {events?.method === 'TakenOffer' ? formatAddress(date[1]) : ''}
+          {events?.method === 'TakenOrder' ? formatAddress(date[1]) : ''}
         </Link>
       </Text>
       <Text

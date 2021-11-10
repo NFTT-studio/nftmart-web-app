@@ -110,7 +110,7 @@ const obj = {
         },
       },
     },
-    '.identicon': {
+    '.identicon svg': {
       position: 'absolute',
       bottom: '-54px',
       border: '3px solid #FFFFFF',
@@ -122,7 +122,7 @@ const obj = {
       height: '108px !important',
       objectFit: 'cover',
     },
-    '.userAvatar': {
+    '.userAvatar svg': {
       marginRight: '4px',
       background: '#FFFFFF',
       width: 'auto !important',
@@ -130,7 +130,7 @@ const obj = {
       borderRadius: '50%',
       border: '1px solid #FFFFFF',
     },
-    '.ownerAvatar': {
+    '.ownerAvatar svg': {
       marginRight: '4px',
       background: '#FFFFFF',
       width: '50px !important',
@@ -138,7 +138,7 @@ const obj = {
       borderRadius: '50%',
       border: '1px solid #D3D5DC',
     },
-    '.creatorAvatar': {
+    '.creatorAvatar svg': {
       marginRight: '4px',
       background: '#FFFFFF',
       width: '22px !important',
@@ -146,7 +146,7 @@ const obj = {
       borderRadius: '50%',
       border: '1px solid #D3D5DC',
     },
-    '.headerAvatar': {
+    '.headerAvatar svg': {
       marginLeft: '40px',
       marginRight: '8px',
       background: '#FFFFFF',

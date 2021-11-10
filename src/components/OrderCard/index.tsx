@@ -4,7 +4,7 @@
 /* eslint-disable no-mixed-operators */
 import React, { FC, useState, useEffect } from 'react';
 import Countdown, { zeroPad } from 'react-countdown';
-import Identicon from 'react-identicons';
+import Identicon from '@polkadot/react-identicon';
 import {
   HTMLChakraProps,
   Box,
@@ -500,7 +500,7 @@ const NftCard: FC<NftCardProps> = ({
               ) : (
                 <Identicon
                   className="userAvatar"
-                  string={nft?.creator?.id}
+                  value={nft?.creator?.id}
                 />
               )}
               <Text

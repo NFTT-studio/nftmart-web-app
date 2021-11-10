@@ -13,11 +13,18 @@ import {
   Box,
   Link,
   Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import Identicon from 'react-identicons';
+import Identicon from '@polkadot/react-identicon';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import NoData from '../NoData';
 import TimeBy from '../TimeBy';
@@ -131,6 +138,9 @@ const DetailRight: FC<Props> = (({
   setIsAllowBritish,
   setIsShowRemove,
 }) => {
+  function number2PerU16(x) {
+    return (x / 65535.0) * 100;
+  }
   const {
     data: eventDate, fetchNextPage: fetchNextPageEventDate, refetch: fetchOEventDate,
   } = useEvent(
@@ -458,7 +468,7 @@ const DetailRight: FC<Props> = (({
               ) : (
                 <Identicon
                   className="ownerAvatar"
-                  string={nftData?.nftInfo?.owner_id}
+                  value={nftData?.nftInfo?.owner_id}
                 />
               )}
               <Flex flexDirection="column">
@@ -489,7 +499,7 @@ const DetailRight: FC<Props> = (({
                   fontWeight="100"
                   lineHeight="14px"
                 >
-                  Owner
+                  {t('Detail.owner')}
                 </Text>
               </Flex>
             </Flex>
@@ -506,16 +516,74 @@ const DetailRight: FC<Props> = (({
         >
           <Flex flexDirection="column">
             <Flex h="100%" flexDirection="column" justifyContent="center">
-              <Text
-                fontSize="24px"
-                fontFamily="TTHoves-Medium, TTHoves"
-                fontWeight="500"
-                color="#000000"
-                lineHeight="29px"
+              <Flex
+                height="34px"
                 mb="8px"
+                justifyContent="flex-start"
               >
-                {t('Detail.currentPrice')}
-              </Text>
+                <Text
+                  fontSize="24px"
+                  fontFamily="TTHoves-Medium, TTHoves"
+                  fontWeight="500"
+                  color="#000000"
+                >
+                  {t('Detail.currentPrice')}
+                </Text>
+                <Popover>
+                  <PopoverTrigger>
+                    <Flex
+                      ml="10px"
+                      height="100%"
+                      alignItems="center"
+                    >
+                      <Box
+                        width="0"
+                        height="0"
+                        borderWidth="0 13px 20px"
+                        borderStyle="solid"
+                        borderColor="transparent transparent #FFE0D8"
+                        transform="rotate(270deg)"
+                      />
+                      <Box
+                        position="relative"
+                        left="-5px"
+                        height="24px"
+                        backgroundColor="#FFE0D8"
+                        display="flex"
+                        alignItems="center"
+                        fontSize="12px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#FF6C47"
+                        paddingRight="10px"
+                      >
+                        <Box
+                          mr="4px"
+                          width="8px"
+                          height="8px"
+                          borderRadius="50%"
+                          backgroundColor="#FF6C47"
+                          paddingRight="8px"
+                        />
+                        {t('Detail.Royalties')}
+                        {' '}
+                        {Math.ceil(number2PerU16(nftData?.nftInfo?.royalty_rate))}
+                        %
+                      </Box>
+                    </Flex>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    position="absolute"
+                    bottom="45px"
+                    left="-60px"
+                    _focus={{
+                      outline: 'none',
+                    }}
+                  >
+                    <PopoverBody>{t('Detail.royaltiesTip')}</PopoverBody>
+                  </PopoverContent>
+                </Popover>
+              </Flex>
               <Flex flexDirection="column" justifyContent="flex-start">
                 <Flex height="43px" flexDirection="row" alignItems="flex-end">
                   <Text
@@ -921,54 +989,26 @@ const DetailRight: FC<Props> = (({
                           justifyContent="space-between"
                           align="center"
                         >
-                          {!item.bidder_id
-                            ? (
-                              <Text
-                                w="136px"
-                                textAlign="left"
-                                fontSize="14px"
-                                fontFamily="TTHoves-Regular, TTHoves"
-                                fontWeight="400"
-                                color="#3D00FF"
-                                lineHeight="20px"
-                              >
-                                <Link
-                                  as={RouterLink}
-                                  to={`/account/${item?.order?.seller_id ? item?.order?.seller_id : item?.order?.buyer_id}/wallet`}
-                                  onClick={() => {
-                                    localStorage.setItem('ButtonSelect', '1');
-                                  }}
-                                >
-                                  {item.user_info?.name ? item.user_info?.name
-                                    : (item?.order?.seller_id
-                                      ? formatAddress(item?.order?.seller_id)
-                                      : formatAddress(item?.order?.buyer_id))}
-                                </Link>
-                              </Text>
-                            ) : null}
-                          {item.bidder_id
-                            ? (
-                              <Text
-                                w="136px"
-                                textAlign="left"
-                                fontSize="14px"
-                                fontFamily="TTHoves-Regular, TTHoves"
-                                fontWeight="400"
-                                color="#3D00FF"
-                                lineHeight="20px"
-                              >
-                                <Link
-                                  as={RouterLink}
-                                  to={`/account/${item?.order?.seller_id ? item?.order?.seller_id : item?.order?.buyer_id}/wallet`}
-                                  onClick={() => {
-                                    localStorage.setItem('ButtonSelect', '1');
-                                  }}
-                                >
-                                  {item.user_info?.name ? item.user_info?.name
-                                    : formatAddress(item.bidder_id)}
-                                </Link>
-                              </Text>
-                            ) : null}
+                          <Text
+                            w="136px"
+                            textAlign="left"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#3D00FF"
+                            lineHeight="20px"
+                          >
+                            <Link
+                              as={RouterLink}
+                              to={`/account/${item.bidder_id}/wallet`}
+                              onClick={() => {
+                                localStorage.setItem('ButtonSelect', '1');
+                              }}
+                            >
+                              {item.user_info?.name ? item.user_info?.name
+                                : formatAddress(item.bidder_id)}
+                            </Link>
+                          </Text>
                           <Text
                             w="136px"
                             display="flex"
@@ -988,7 +1028,7 @@ const DetailRight: FC<Props> = (({
                               NMT
                             </Text>
                           </Text>
-                          {item?.order?.deadline && item.order.status_id === 'Created' ? (
+                          {item?.deadline && item.type === 'order' ? (
                             <Text
                               minW="136px"
                               textAlign="center"
@@ -999,12 +1039,12 @@ const DetailRight: FC<Props> = (({
                               lineHeight="20px"
                             >
                               {' '}
-                              {Number(item?.order?.deadline - remainingTime) > 0
+                              {Number(item?.deadline - remainingTime) > 0
                                 ? (
                                   <Countdown
                                     autoStart
                                     daysInHours
-                                    date={Date.now() + Number(timeSurplus(item?.order?.deadline))}
+                                    date={Date.now() + Number(timeSurplus(item?.deadline))}
                                   />
                                 )
                                 : '-'}
@@ -1023,7 +1063,7 @@ const DetailRight: FC<Props> = (({
                               {item.timestamp ? format(item.timestamp) : '-'}
                             </Text>
                           )}
-                          {Number(item?.order?.deadline - remainingTime) > 0 && isLoginAddress && item.order.status_id === 'Created' ? (
+                          {!types && Number(item?.deadline - remainingTime) > 0 && isLoginAddress && item.type === 'order' ? (
                             <Text
                               w="136px"
                               textAlign="right"
@@ -1033,13 +1073,13 @@ const DetailRight: FC<Props> = (({
                               color="#3D00FF"
                               lineHeight="20px"
                               onClick={() => {
-                                handleDeal(item.order_id, item.order.buyer_id);
+                                handleDeal(item.order_id, item.bidder_id);
                               }}
                             >
                               {' '}
                               {t('Detail.deal')}
                             </Text>
-                          ) : account?.address === item?.order?.buyer_id && item.order.status_id === 'Created' ? (
+                          ) : account?.address === item?.bidder_id && item.type === 'order' ? (
                             <Text
                               w="136px"
                               textAlign="right"
