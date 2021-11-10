@@ -369,7 +369,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               color="#000000"
                               lineHeight="16px"
                               border="1px solid #000000"
-                              isDisabled={offersLength > 1}
+                              isDisabled={bidCount > 0}
                               _hover={{
                                 background: '#000000',
                                 color: '#FFFFFF',
