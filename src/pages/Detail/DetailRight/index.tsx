@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
@@ -230,32 +231,6 @@ const DetailRight: FC<Props> = (({
     const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
     return times;
   };
-  const timeBlock = (index:numer) => {
-    const times = (index - remainingTime) * 6;
-
-    let theTime = parseInt(times.toString(), 10);
-    let middle = 0;
-    let hour = 0;
-
-    if (theTime > 60) {
-      middle = parseInt((theTime / 60).toString(), 10);
-      theTime = parseInt((theTime % 60).toString(), 10);
-      if (middle > 60) {
-        hour = parseInt((middle / 60).toString(), 10);
-        middle = parseInt((middle % 60).toString(), 10);
-      }
-    }
-    // let result = null;
-    let result = `${parseInt(theTime.toString(), 10)}`;
-    if (middle > 0) {
-      result = `${parseInt(middle.toString(), 10)}:${result}`;
-    }
-    if (hour > 0) {
-      result = `${parseInt(hour.toString(), 10)}:${result}`;
-      // result = `${parseInt(hour.toString(), 10)}`;
-    }
-    return result;
-  };
   const add0 = (m) => (m < 10 ? `0${m}` : m);
   const format = (time:string) => {
     const times = new Date(time);
@@ -267,6 +242,56 @@ const DetailRight: FC<Props> = (({
     const s = times.getSeconds();
     return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
   };
+
+  function getDateDiff(dateTimeStamp:string) {
+    let result;
+    const minute = 1000 * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+    const times = new Date(dateTimeStamp);
+    const idata = times.getTime();
+    const now = new Date().getTime();
+    const diffValue = now - idata;
+    const y = times.getFullYear();
+    const m = times.getMonth() + 1;
+    const d = times.getDate();
+    if (diffValue < 0) {
+      return result = '-';
+    }
+    const dayC = diffValue / day;
+    const hourC = diffValue / hour;
+    const minC = diffValue / minute;
+    if (dayC >= 1) {
+      result = `${y}-${add0(m)}-${add0(d)}`;
+    } else if (hourC >= 1) {
+      result = `${parseInt(hourC.toString(), 10)} hour(s) ago`;
+    } else if (minC >= 1) {
+      result = `${parseInt(minC.toString(), 10)} minute(s) ago`;
+    } else { result = `${parseInt(diffValue.toString(), 10)} minute(s) ago`; }
+    return result;
+  }
+  function getDateIn(dateTimeStamp:string) {
+    let result;
+    const minute = 1000 * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+
+    const diffValue = Number(dateTimeStamp);
+    if (diffValue < 0) {
+      return result = '-';
+    }
+    const dayC = diffValue / day;
+    const hourC = diffValue / hour;
+    const minC = diffValue / minute;
+    if (dayC >= 1) {
+      result = `in ${parseInt(dayC.toString(), 10)} day(s) `;
+    } else if (hourC >= 1) {
+      result = `in ${parseInt(hourC.toString(), 10)} hour(s) `;
+    } else if (minC >= 1) {
+      result = `in ${parseInt(minC.toString(), 10)} minute(s) `;
+    } else { result = `in ${parseInt(diffValue.toString(), 10)} second(s) `; }
+    return result;
+  }
   const TABS = [
     {
       id: '0',
@@ -824,7 +849,7 @@ const DetailRight: FC<Props> = (({
             </Flex>
           ) : null}
         </Flex>
-        {Number(nftData.nftInfo.auction?.hammer_price) && Number(events.times) > 0
+        {Number(nftData?.nftInfo.auction?.hammer_price) && Number(events.times) > 0
           ? (
             <Flex
               width="100%"
@@ -862,7 +887,7 @@ const DetailRight: FC<Props> = (({
                     fontWeight="400"
                     color="#000000"
                   >
-                    {formatNum(priceStringDivUnit(nftData.nftInfo.auction?.hammer_price))}
+                    {formatNum(priceStringDivUnit(nftData?.nftInfo.auction?.hammer_price))}
                   </Text>
                   NMT
                 </Text>
@@ -929,7 +954,7 @@ const DetailRight: FC<Props> = (({
       {selectTabId === 0 ? (
         <Box p="20px 0">
           <Flex w="100%" flexDirection="column" justifyContent="flex-start">
-            {OffersArr.length
+            {OffersArr?.length
               ? (
                 <>
                   <Flex h="40px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
@@ -1040,14 +1065,8 @@ const DetailRight: FC<Props> = (({
                             >
                               {' '}
                               {Number(item?.deadline - remainingTime) > 0
-                                ? (
-                                  <Countdown
-                                    autoStart
-                                    daysInHours
-                                    date={Date.now() + Number(timeSurplus(item?.deadline))}
-                                  />
-                                )
-                                : '-'}
+                                ? getDateIn(Number(timeSurplus(item?.deadline)))
+                                : getDateDiff(item.timestamp)}
                               {' '}
                             </Text>
                           ) : (

@@ -199,8 +199,8 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const termOfValidity = !!((nftData?.nftInfo?.auction?.deadline - remainingTime) > 0);
   const auctionId = nftData?.nftInfo?.auction?.id;
   const initPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.init_price);
-  const minRaise = auctionPrice * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
-  const minActionRaise = priceStringDivUnit(nftData?.nftInfo?.auction?.price) * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
+  const minRaise = Number(auctionPrice) * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
+  const minActionRaise = Number(priceStringDivUnit(nftData?.nftInfo?.auction?.price)) * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
   const creatorId = nftData?.nftInfo?.auction?.creator_id;
   const offersLength = nftData?.nftInfo?.offers.length;
   const recipientsId = nftData?.nftInfo?.offers[0]?.bidder_id;
