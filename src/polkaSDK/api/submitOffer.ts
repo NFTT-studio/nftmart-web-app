@@ -30,12 +30,12 @@ export const submitOffer = async ({
 }: submitOfferProps) => {
   try {
     const injector = await web3FromAddress(address);
-    const currentBlockNumber = bnToBn(await PolkaSDK.api.query.system.number());
+    const currentBlockNumber = bnToBn(await (await PolkaSDK.getSaveInstance()).api.query.system.number());
     const durings = (60 * 60 * 24 * during) / 6;
     const commissionRate = 0;
 
     const priceAmount = (Number(price) * unitNum).toString();
-    const call = PolkaSDK.api.tx.nftmartOrder.submitOffer(
+    const call = (await PolkaSDK.getSaveInstance()).api.tx.nftmartOrder.submitOffer(
       NATIVE_CURRENCY_ID,
       priceAmount,
       currentBlockNumber.add(bnToBn(durings)),

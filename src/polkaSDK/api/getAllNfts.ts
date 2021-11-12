@@ -7,7 +7,7 @@ import { getAllNftsByClassId } from './getAllNftsByClassId';
 
 export const getAllNfts = async (classId?: number): Promise<Work[]> => {
   if (classId === undefined) {
-    const allClasses = await PolkaSDK.api.query.ormlNft.classes.entries();
+    const allClasses = await (await PolkaSDK.getSaveInstance()).api.query.ormlNft.classes.entries();
     const result = await Promise.all(
       allClasses.map(async (c: any) => {
         const cid = getClassId(c);

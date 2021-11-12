@@ -16,10 +16,10 @@ export const settingOffer = async ({
     const injector = await web3FromAddress(address);
     const commissionAgent = null;
     const txs = [
-      PolkaSDK.api.tx.nftmartOrder.removeOrder(orderId),
-      PolkaSDK.api.tx.nftmartOrder.takeOffer(offerId, offerOwner, commissionAgent, null),
+      (await PolkaSDK.getSaveInstance()).api.tx.nftmartOrder.removeOrder(orderId),
+      (await PolkaSDK.getSaveInstance()).api.tx.nftmartOrder.takeOffer(offerId, offerOwner, commissionAgent, null),
     ];
-    const batchExtrinsic = PolkaSDK.api.tx.utility.batchAll(txs);
+    const batchExtrinsic = (await PolkaSDK.getSaveInstance()).api.tx.utility.batchAll(txs);
     const res = await batchExtrinsic.signAndSend(
       address, { signer: injector.signer }, (result: any) => txLog(result, cb.success),
     );

@@ -669,7 +669,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
             color="#5C74FF"
             cursor="pointer"
             as={RouterLink}
-            to={`/connect?callbackUrl=${location.pathname}`}
+            to={`/connect?callbackUrl=${location.pathname + location.search}`}
             onClick={() => setOpening(false)}
           >
             {t('header.switchAccounts')}

@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import {
   Box,
 } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import NLink from '../Link';
 import { statusArr } from '../../constants/Status';
 import { useAppSelector } from '../../hooks/redux';
@@ -15,6 +16,7 @@ export interface NavLinkProps {
 }
 
 const NavLink: FC<NavLinkProps> = ({ address }) => {
+  const { i18n } = useTranslation();
   const location = useLocation();
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
@@ -46,12 +48,12 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
       requiredLogin: false,
       requiredWhitelist: false,
     },
-    // {
-    //   title: 'common.nav.navActive',
-    //   path: '/active',
-    //   requiredLogin: false,
-    //   requiredWhitelist: false,
-    // },
+    {
+      title: 'common.nav.buynmt',
+      path: i18n.language === 'zh' ? 'https://www.gate.io/cn/trade/NMT_USDT' : 'https://www.gate.io/en/trade/NMT_USDT',
+      requiredLogin: false,
+      requiredWhitelist: false,
+    },
     {
       title: 'common.nav.navCreate',
       path: data?.createdClassCount ? `/account/${account?.address}/wallet?id=4`

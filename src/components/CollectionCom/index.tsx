@@ -33,7 +33,6 @@ import LeftAddonInput from '../LeftAddonInput';
 import LeftImgonInput from '../LeftImgonInput';
 import FromTextarea from '../FromTextarea';
 import SubmitButton from '../SubmitButton';
-import LoginDetector from '../LoginDetector';
 import { createClass } from '../../polkaSDK/api/createClass';
 import { useAppSelector } from '../../hooks/redux';
 import MyModal from '../MyModal';
@@ -584,7 +583,6 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
           onClose={onCloseModal}
         />
         <MyToast isCloseable />
-        <LoginDetector />
       </Flex>
     </Flex>
   );

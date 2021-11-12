@@ -15,7 +15,7 @@ type bidBritishAuctionProps = {
 }
 async function getAuctionDeadline(allowDelay, deadline, lastBidBlock) {
   try {
-    const d = await PolkaSDK.api.ws.call('nftmart_getAuctionDeadline', [allowDelay, deadline, lastBidBlock], 10000);
+    const d = await (await PolkaSDK.getSaveInstance()).api.ws.call('nftmart_getAuctionDeadline', [allowDelay, deadline, lastBidBlock], 10000);
     return bnToBn(d);
   } catch (e) {
     return null;
@@ -52,7 +52,7 @@ export const bidDutchAuction = async ({
           return;
         }
         const uselessPrice = price * unit; // The real price used will be calculated by Dutch auction logic.
-        call = PolkaSDK.api.tx.nftmartAuction.bidDutchAuction(uselessPrice, auctionCreatorAddress, auctionId, null, 'hello bidDutchAuction');
+        call = (await PolkaSDK.getSaveInstance()).api.tx.nftmartAuction.bidDutchAuction(uselessPrice, auctionCreatorAddress, auctionId, null, 'hello bidDutchAuction');
       } else {
         // This if branch is at least the second bidding.
         // const deadline = await getAuctionDeadline(true, 0, bid.lastBidBlock);
@@ -63,7 +63,7 @@ export const bidDutchAuction = async ({
         const minRaise = perU16ToFloat(auction.minRaise);
         const lowest = (1 + minRaise) * (bid.lastBidPrice / unit);
         if (price > lowest) {
-          call = PolkaSDK.api.tx.nftmartAuction.bidDutchAuction(price * unit, auctionCreatorAddress, auctionId, null, 'hello bidDutchAuction');
+          call = (await PolkaSDK.getSaveInstance()).api.tx.nftmartAuction.bidDutchAuction(price * unit, auctionCreatorAddress, auctionId, null, 'hello bidDutchAuction');
         } else {
           console.log('price %s NMT should be greater than %s NMT', price, lowest);
           return;

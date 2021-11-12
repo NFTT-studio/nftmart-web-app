@@ -5,7 +5,7 @@ import { filterUnparsableClass } from '../utils/filterUnparsableClass';
 import { mapClassToCollection } from '../utils/mapClassToCollection';
 
 export const queryClassByAddress = async ({ address = '' }) => {
-  const allClasses = await PolkaSDK.api.query.ormlNft.classes.entries();
+  const allClasses = await (await PolkaSDK.getSaveInstance()).api.query.ormlNft.classes.entries();
 
   const arr = allClasses.map(async (clz: any) => {
     let key = clz[0];
@@ -15,7 +15,7 @@ export const queryClassByAddress = async ({ address = '' }) => {
     const clazz = clz[1].toJSON();
     clazz.metadata = hexToUtf8(clazz.metadata.slice(2));
     clazz.classId = classId;
-    clazz.adminList = await PolkaSDK.api.query.proxy.proxies(clazz.owner);
+    clazz.adminList = await (await PolkaSDK.getSaveInstance()).api.query.proxy.proxies(clazz.owner);
 
     const res = clazz.adminList[0].map((admin: any) => {
       const adminAddress = admin.delegate.toString();

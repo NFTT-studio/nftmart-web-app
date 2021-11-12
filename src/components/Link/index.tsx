@@ -42,25 +42,50 @@ const NLink: FC<NLinkProps> = (props) => {
         position="relative"
         {...restStyles}
       >
-        <Link
-          outline="none"
-          as={RouterLink}
-          key={title}
-          to={path}
-          color={location.pathname === '/' ? active ? `${y > 820 ? '#000000' : 'white'}` : '#999' : active ? '#000000' : '#999'}
-          _after={active && bordered ? borderBottom : {}}
-          _hover={{
-            textDecoration: 'none',
-            color: location.pathname === '/' ? y > 0 ? '#000000' : 'white' : '#000000',
-          }}
-          _focus={{
-            border: 'none',
-            textDecoration: 'none',
-          }}
-          {...linkProps}
-        >
-          {t(title)}
-        </Link>
+        {title === 'common.nav.buynmt'
+          ? (
+            <Link
+              outline="none"
+              target="_blank"
+              key={title}
+              href={path}
+              color={location.pathname === '/' ? active ? `${y > 820 ? '#000000' : 'white'}` : '#999' : active ? '#000000' : '#999'}
+              _after={active && bordered ? borderBottom : {}}
+              _hover={{
+                textDecoration: 'none',
+                color: location.pathname === '/' ? y > 0 ? '#000000' : 'white' : '#000000',
+              }}
+              _focus={{
+                border: 'none',
+                textDecoration: 'none',
+              }}
+              {...linkProps}
+            >
+              {t(title)}
+            </Link>
+          )
+          : (
+            <Link
+              outline="none"
+              as={RouterLink}
+              key={title}
+              to={path}
+              color={location.pathname === '/' ? active ? `${y > 820 ? '#000000' : 'white'}` : '#999' : active ? '#000000' : '#999'}
+              _after={active && bordered ? borderBottom : {}}
+              _hover={{
+                textDecoration: 'none',
+                color: location.pathname === '/' ? y > 0 ? '#000000' : 'white' : '#000000',
+              }}
+              _focus={{
+                border: 'none',
+                textDecoration: 'none',
+              }}
+              {...linkProps}
+            >
+              {t(title)}
+            </Link>
+          )}
+
       </Text>
 
     </>

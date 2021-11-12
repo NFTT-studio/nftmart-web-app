@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
@@ -161,20 +162,26 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     }
   }, [remainingTime]);
   useEffect(() => {
-    getBlock().then((res) => {
-      setRemainingTime(res);
-    });
+    if (allowBritish) {
+      getBlock().then((res) => {
+        setRemainingTime(res);
+      });
+    }
   }, [allowBritish]);
   useEffect(() => {
-    getBlock().then((res) => {
-      setRemainingTime(res);
-    });
+    if (isShowDutch) {
+      getBlock().then((res) => {
+        setRemainingTime(res);
+      });
+    }
   }, [isShowDutch]);
   useEffect(() => {
-    getBlock().then((res) => {
-      setRemainingTime(res);
-    });
-  }, [isShowDutch]);
+    if (isShowBritish) {
+      getBlock().then((res) => {
+        setRemainingTime(res);
+      });
+    }
+  }, [isShowBritish]);
 
   const { data: token } = useToken();
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo?.owner_id);

@@ -71,7 +71,6 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
-  const { address } = match.params;
   const location = useLocation();
   const [isPerson, setIsPerson] = useState(false);
   const search = parse(location.search.replace('?', ''));
@@ -118,8 +117,10 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
   useEffect(() => {
     if (collectionsData?.collection?.creator_id === account?.address) {
       setIsPerson(true);
+    } else {
+      setIsPerson(false);
     }
-  }, [collectionsData?.collection?.creator_id, address]);
+  }, [collectionsData?.collection?.creator_id, account?.address]);
   useEffect(() => {
     refetchCollectionsData();
     refetchNftsData();
