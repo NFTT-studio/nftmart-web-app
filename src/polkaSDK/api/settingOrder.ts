@@ -26,15 +26,15 @@ export const settingOrder = async ({
 }) => {
   try {
     const injector = await web3FromAddress(address);
-    const currentBlockNumber = bnToBn(await PolkaSDK.api.query.system.number());
+    const currentBlockNumber = bnToBn(await (await PolkaSDK.getSaveInstance()).api.query.system.number());
     const commissionRates = float2PerU16(commissionRate);
 
     // convert on chain precision
     const priceAmount = (Number(price) * unitNum).toString();
     const deposit = (Number(deposits) * unitNum).toString();
     const txs = [
-      PolkaSDK.api.tx.nftmartOrder.removeOrder(orderId),
-      PolkaSDK.api.tx.nftmartOrder.submitOrder(
+      (await PolkaSDK.getSaveInstance()).api.tx.nftmartOrder.removeOrder(orderId),
+      (await PolkaSDK.getSaveInstance()).api.tx.nftmartOrder.submitOrder(
         NATIVE_CURRENCY_ID,
         deposit,
         priceAmount,
@@ -43,7 +43,7 @@ export const settingOrder = async ({
         commissionRates,
       ),
     ];
-    const batchExtrinsic = PolkaSDK.api.tx.utility.batchAll(txs);
+    const batchExtrinsic = (await PolkaSDK.getSaveInstance()).api.tx.utility.batchAll(txs);
     const res = await batchExtrinsic.signAndSend(
       address, { signer: injector.signer }, (result: any) => txLog(result, cb.success),
     );

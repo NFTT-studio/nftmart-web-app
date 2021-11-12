@@ -2,7 +2,7 @@
 import PolkaSDK from '..';
 
 export const getCategories = async () => {
-  let categories = await PolkaSDK.api.query.nftmart.categories.entries();
+  let categories = await (await PolkaSDK.getSaveInstance()).api.query.nftmart.categories.entries();
   categories = categories.map((category: any) => {
     let key = category[0];
     const data = category[1].unwrap();

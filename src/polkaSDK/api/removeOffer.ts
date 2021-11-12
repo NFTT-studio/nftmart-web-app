@@ -15,7 +15,7 @@ export const removeOffer = async ({
 }: takeOfferProps) => {
   try {
     const injector = await web3FromAddress(address);
-    const call = PolkaSDK.api.tx.nftmartOrder.removeOffer(offerId);
+    const call = (await PolkaSDK.getSaveInstance()).api.tx.nftmartOrder.removeOffer(offerId);
     await call.signAndSend(address, { signer: injector.signer }, (result: any) => txLog(result, cb.success));
   } catch (error) {
     cb.error(error.toString());

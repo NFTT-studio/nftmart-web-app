@@ -4,7 +4,7 @@ import PolkaSDK from '..';
 import { mapNFTToAsset } from '../utils/mapNFTToAsset';
 
 export const queryNftByAddress = async ({ address = '' }) => {
-  const nfts = await PolkaSDK.api.query.ormlNft.tokensByOwner.entries(address);
+  const nfts = await (await PolkaSDK.getSaveInstance()).api.query.ormlNft.tokensByOwner.entries(address);
 
   const arr = nfts.map(async (clzToken: any) => {
     const clzTokenObj = clzToken[0];
@@ -17,7 +17,7 @@ export const queryNftByAddress = async ({ address = '' }) => {
     // const tokenIdHigh32 = tokenIdRaw[1];
     const tokenId = tokenIdLow32;
 
-    let nft: any = await PolkaSDK.api.query.ormlNft.tokens(classId, tokenId);
+    let nft: any = await (await PolkaSDK.getSaveInstance()).api.query.ormlNft.tokens(classId, tokenId);
     if (nft.isSome) {
       nft = nft.toHuman();
       return mapNFTToAsset(nft, classId, tokenId);

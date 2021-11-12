@@ -16,6 +16,7 @@ import {
   Center,
   Spinner,
 } from '@chakra-ui/react';
+import { useLocalStorage } from 'react-use';
 import MainContainer from '../../layout/MainContainer';
 import { useAppSelector } from '../../hooks/redux';
 import {
@@ -42,32 +43,28 @@ const Account = () => {
   const { t } = useTranslation();
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
+  const [address, setValue] = useLocalStorage<string>('LOGIN_ADDRESS');
   const history = useHistory();
   const {
     data: Offerreceive, refetch: fetchOfferReceive,
   } = useOffer(
     {
-      addressId: account?.address,
+      addressId: address,
       type: 'receive',
     },
   );
-  const { data: userData, isLoading: userDataLoading, refetch: fetchUserData } = useUser(account?.address);
+  const { data: userData, isLoading: userDataLoading, refetch: fetchUserData } = useUser(address);
   const { data: nftsDataCollecte, refetch: fetchCollecte } = useNftsCollect(
     {
-      collecterId: account?.address,
+      collecterId: address,
     },
   );
 
   useEffect(() => {
-    fetchUserData();
-    fetchCollecte();
-    fetchOfferReceive();
-  }, [account, whiteList.length]);
-  useEffect(() => {
-    if (!account) {
+    if (!address) {
       history.push(`/connect?callbackUrl=${window.location.pathname}`);
     }
-  }, [!account]);
+  }, [address]);
   const TABS = [
     {
       id: '0',

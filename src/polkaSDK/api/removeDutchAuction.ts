@@ -16,7 +16,7 @@ export const removeDutchAuction = async ({
 }: removeDutchAuctionProps) => {
   try {
     const injector = await web3FromAddress(auctionCreatorAddress);
-    const call = PolkaSDK.api.tx.nftmartAuction.removeDutchAuction(auctionId);
+    const call = (await PolkaSDK.getSaveInstance()).api.tx.nftmartAuction.removeDutchAuction(auctionId);
     await call.signAndSend(
       auctionCreatorAddress, { signer: injector.signer }, (result: any) => txLog(result, cb.success),
     );

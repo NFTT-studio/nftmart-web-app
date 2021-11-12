@@ -63,6 +63,8 @@ const Connect: FC = () => {
     if (callbackUrl && callbackUrl.length > 0) {
       if (callbackUrl.indexOf('/account/') > -1) {
         history.push(`/account/${address}/wallet`);
+      } else if (callbackUrl.indexOf('/connect') > -1) {
+        history.push('/');
       } else {
         history.push(callbackUrl);
       }

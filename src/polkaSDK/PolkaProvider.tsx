@@ -11,21 +11,20 @@ import {
   setAccount, setAccounts, setInjector, setWhiteList,
 } from '../redux/chainSlice';
 import { useAppDispatch } from '../hooks/redux';
+import useWhiteList from '../hooks/reactQuery/useWhiteList';
 
 interface Props {
   children: React.ReactNode;
 }
 
 const PolkaProvider = ({ children }: Props) => {
+  const { data } = useWhiteList();
   const [isInitialized, setIsInitialized] = useState(false);
   const [value, setValue] = useLocalStorage<string>(LOGIN_LOCAL_STORAGE_KEY);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const init = async () => {
-      await PolkaSDK.init({
-        ss58Format: SS58_FORMAT,
-      });
       setIsInitialized(true);
       const allInjected = await web3Enable('NFTMart');
       if (allInjected.length > 0) {
@@ -47,6 +46,17 @@ const PolkaProvider = ({ children }: Props) => {
       }
     };
     init();
+  }, []);
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem('whiteList', JSON.stringify(data));
+      const whiteList = JSON.parse(localStorage.getItem('whiteList'));
+      dispatch(setWhiteList(whiteList));
+    }
+  }, [data, dispatch]);
+  useEffect(() => {
+    const whiteList = JSON.parse(localStorage.getItem('whiteList'));
+    dispatch(setWhiteList(whiteList));
   }, []);
 
   return (

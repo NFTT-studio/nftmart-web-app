@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 import { WsProvider, ApiPromise, Keyring } from '@polkadot/api';
 import { Client } from 'rpc-websockets';
-import { NODE_URL, TYPES } from '../constants';
+import { NODE_URL, SS58_FORMAT, TYPES } from '../constants';
 
 interface PolkaSDKInitOptions {
   ss58Format: number
@@ -23,12 +23,24 @@ class PolkaSDK {
 
   keyring!: Keyring
 
-  static getInstance() {
-    if (!PolkaSDK.__instance) {
-      PolkaSDK.__instance = new PolkaSDK();
+  static async getSaveInstance() {
+    if (!PolkaSDK.__instance || !PolkaSDK.__instance.isInitialized) {
+      const tmp:PolkaSDK = new PolkaSDK();
+      // PolkaSDK.__instance = new PolkaSDK();
+      await tmp.init({
+        ss58Format: SS58_FORMAT,
+      });
+      PolkaSDK.__instance = tmp;
     }
     return PolkaSDK.__instance;
   }
+
+  // static getInstance() {
+  //   if (!PolkaSDK.__instance) {
+  //     PolkaSDK.__instance = new PolkaSDK();
+  //   }
+  //   return PolkaSDK.__instance;
+  // }
 
   public async init(options: PolkaSDKInitOptions) {
     if (!PolkaSDK.__instance) {
@@ -54,4 +66,4 @@ class PolkaSDK {
   }
 }
 
-export default PolkaSDK.getInstance();
+export default PolkaSDK;

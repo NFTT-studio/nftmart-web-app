@@ -18,7 +18,7 @@ interface Props {
   userData?: [],
 }
 const Header: FC<Props> = (({ userData }) => {
-  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+  const formatAddress = (addr: string) => `${addr?.slice(0, 4)}...${addr?.slice(-4)}`;
   const isPerson = useIsLoginAddress(userData?.address);
 
   return (
