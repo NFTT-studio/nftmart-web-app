@@ -2,7 +2,7 @@
 import PolkaSDK from '..';
 
 export const getAllOrders = async () => {
-  const allOrders = await PolkaSDK.api.query.nftmart.orders.entries();
+  const allOrders = await (await PolkaSDK.getSaveInstance()).api.query.nftmart.orders.entries();
 
   const arr = allOrders.map(async (order: any) => {
     const key = order[0];
@@ -15,7 +15,7 @@ export const getAllOrders = async () => {
     const tokenIdLow32 = tokenIdRaw[0];
     // const tokenIdHigh32 = tokenIdRaw[1];
     const tokenId = tokenIdLow32;
-    let nft: any = await PolkaSDK.api.query.ormlNft.tokens(classId, tokenId);
+    let nft: any = await (await PolkaSDK.getSaveInstance()).api.query.ormlNft.tokens(classId, tokenId);
     if (nft.isSome) {
       nft = nft.unwrap().toHuman();
     }

@@ -38,12 +38,6 @@ const Header: FC<HeaderProps> = () => {
 
   const { data } = useWhiteList();
 
-  useEffect(() => {
-    if (data) {
-      dispatch(setWhiteList(data));
-    }
-  }, [data, dispatch]);
-
   return (
     <Flex
       as="header"

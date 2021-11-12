@@ -39,10 +39,10 @@ export const submitDutchAuction = async ({
   try {
     const injector = await web3FromAddress(address);
 
-    const blockTimeSec = PolkaSDK.api.consts.babe.expectedBlockTime.toNumber() / 1000;
+    const blockTimeSec = (await PolkaSDK.getSaveInstance()).api.consts.babe.expectedBlockTime.toNumber() / 1000;
     // eslint-disable-next-line camelcase
     let deadlineBlock = (expirationDate * 24 * 60 * 60) / blockTimeSec;
-    const block = await PolkaSDK.api.rpc.chain.getBlock();
+    const block = await (await PolkaSDK.getSaveInstance()).api.rpc.chain.getBlock();
     deadlineBlock += Number(block.block.header.number);
 
     // eslint-disable-next-line camelcase
@@ -55,7 +55,7 @@ export const submitDutchAuction = async ({
 
     const minRaise = float2PerU16(range); // 50%
     const commission = float2PerU16(commissionRate);
-    const call = PolkaSDK.api.tx.nftmartAuction.submitDutchAuction(
+    const call = (await PolkaSDK.getSaveInstance()).api.tx.nftmartAuction.submitDutchAuction(
       NativeCurrencyID, min_deposit, min_price, max_price,
       deadlineBlock, tokens, allow_british_auction, minRaise, commission,
     );

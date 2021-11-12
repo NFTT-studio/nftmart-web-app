@@ -1,0 +1,15 @@
+{
+  http_port 80
+  debug
+  admin off
+}
+
+:80 {
+  encode zstd gzip
+
+  route /* {
+    file_server {
+      root /srv/build
+    }
+  }
+}

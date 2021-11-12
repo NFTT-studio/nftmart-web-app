@@ -40,10 +40,10 @@ export const submitBritishAuction = async ({
   try {
     const injector = await web3FromAddress(address);
 
-    const blockTimeSec = PolkaSDK.api.consts.babe.expectedBlockTime.toNumber() / 1000;
+    const blockTimeSec = (await PolkaSDK.getSaveInstance()).api.consts.babe.expectedBlockTime.toNumber() / 1000;
     // eslint-disable-next-line camelcase
     let deadlineBlock = (expirationDate * 24 * 60 * 60) / blockTimeSec;
-    const block = await PolkaSDK.api.rpc.chain.getBlock();
+    const block = await (await PolkaSDK.getSaveInstance()).api.rpc.chain.getBlock();
     deadlineBlock += Number(block.block.header.number);
 
     // eslint-disable-next-line camelcase
@@ -56,7 +56,7 @@ export const submitBritishAuction = async ({
 
     const minRaise = float2PerU16(range); // 50%
     const commission = float2PerU16(commissionRate); // 10%
-    const call = PolkaSDK.api.tx.nftmartAuction.submitBritishAuction(
+    const call = (await PolkaSDK.getSaveInstance()).api.tx.nftmartAuction.submitBritishAuction(
       NativeCurrencyID, hammer_price, minRaise, min_deposit, init_price,
       deadlineBlock, allow_delay, tokens, commission,
     );

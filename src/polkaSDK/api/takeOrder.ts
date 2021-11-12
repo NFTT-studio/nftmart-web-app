@@ -17,7 +17,7 @@ export const takeOrder = async ({
   try {
     const injector = await web3FromAddress(address);
     const commissionAgent = null;
-    const call = PolkaSDK.api.tx.nftmartOrder.takeOrder(
+    const call = (await PolkaSDK.getSaveInstance()).api.tx.nftmartOrder.takeOrder(
       orderId,
       orderOwner,
       commissionAgent,

@@ -24,14 +24,14 @@ export const createOrder = async ({
 }) => {
   try {
     const injector = await web3FromAddress(address);
-    const currentBlockNumber = bnToBn(await PolkaSDK.api.query.system.number());
+    const currentBlockNumber = bnToBn(await (await PolkaSDK.getSaveInstance()).api.query.system.number());
 
     // convert on chain precision
     const priceAmount = (price * unitNum).toString();
     const deposit = (Number(deposits) * unitNum).toString();
     const commissionRates = float2PerU16(commissionRate);
 
-    const call = PolkaSDK.api.tx.nftmartOrder.submitOrder(
+    const call = (await PolkaSDK.getSaveInstance()).api.tx.nftmartOrder.submitOrder(
       NATIVE_CURRENCY_ID,
       deposit,
       priceAmount,
