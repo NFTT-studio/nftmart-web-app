@@ -57,7 +57,7 @@ const PolkaProvider = ({ children }: Props) => {
   useEffect(() => {
     const whiteList = JSON.parse(localStorage.getItem('whiteList'));
     dispatch(setWhiteList(whiteList));
-  }, []);
+  }, [localStorage.getItem('whiteList')]);
 
   return (
     <>

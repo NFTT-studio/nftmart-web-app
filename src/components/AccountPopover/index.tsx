@@ -73,14 +73,14 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
   };
   useEffect(() => {
     fetchUserData();
-    if (address && whiteList.indexOf(address) > -1) {
+    if (address && whiteList?.indexOf(address) > -1) {
       setISWhiteList(true);
     } else {
       setISWhiteList(false);
     }
   }, [address]);
   useEffect(() => {
-    if (address && whiteList.indexOf(address) > -1) {
+    if (address && whiteList?.indexOf(address) > -1) {
       setISWhiteList(true);
     } else {
       setISWhiteList(false);
