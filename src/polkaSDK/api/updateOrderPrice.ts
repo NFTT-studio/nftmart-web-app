@@ -15,13 +15,13 @@ export const updateOrderPrice = async ({
   cb = txLog,
 }) => {
   const injector = await web3FromAddress(address);
-  let order: any = await PolkaSDK.api.query.nftmart.orders([classId, tokenId], ownerAddress);
+  let order: any = await (await PolkaSDK.getSaveInstance()).api.query.nftmart.orders([classId, tokenId], ownerAddress);
 
   if (order.isSome) {
     // convert on chain precision
     const priceAmount = (Number(price) * unitNum).toString();
     order = order.unwrap();
-    const call = PolkaSDK.api.tx.nftmart.updateOrderPrice(classId, tokenId, priceAmount);
+    const call = (await PolkaSDK.getSaveInstance()).api.tx.nftmart.updateOrderPrice(classId, tokenId, priceAmount);
     const res = await call.signAndSend(address, { signer: injector.signer }, cb);
     return res;
   }

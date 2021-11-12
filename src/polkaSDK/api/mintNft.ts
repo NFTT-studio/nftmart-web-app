@@ -32,7 +32,7 @@ export const mintNft = async ({
       cb.error('error');
       return null;
     }
-    const classInfo: any = await PolkaSDK.api.query.ormlNft.classes(classId);
+    const classInfo: any = await (await PolkaSDK.getSaveInstance()).api.query.ormlNft.classes(classId);
     if (!classInfo.isSome) {
       cb.error('error');
       return null;
@@ -41,15 +41,15 @@ export const mintNft = async ({
     // eslint-disable-next-line camelcase
     const royalty_rate = float2PerU16(royaltyRate);
     const txs = [
-      PolkaSDK.api.tx.balances.transfer(ownerOfClass, balancesNeeded),
-      PolkaSDK.api.tx.proxy.proxy(
+      (await PolkaSDK.getSaveInstance()).api.tx.balances.transfer(ownerOfClass, balancesNeeded),
+      (await PolkaSDK.getSaveInstance()).api.tx.proxy.proxy(
         ownerOfClass,
         null,
-        PolkaSDK.api.tx.nftmart.mint(address, classId, metadataStr, quantity, royalty_rate),
+        (await PolkaSDK.getSaveInstance()).api.tx.nftmart.mint(address, classId, metadataStr, quantity, royalty_rate),
       ),
     ];
 
-    const batchExtrinsic = PolkaSDK.api.tx.utility.batchAll(txs);
+    const batchExtrinsic = (await PolkaSDK.getSaveInstance()).api.tx.utility.batchAll(txs);
     const res = await batchExtrinsic.signAndSend(
       address,
       { signer: injector.signer },

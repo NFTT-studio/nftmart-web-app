@@ -3,9 +3,9 @@ import PolkaSDK from '..';
 import { hexToUtf8 } from '../../utils/number';
 
 export const getAllNftsByClassId = async (classId: number) => {
-  const nextTokenId: any = await PolkaSDK.api.query.ormlNft.nextTokenId(classId);
+  const nextTokenId: any = await (await PolkaSDK.getSaveInstance()).api.query.ormlNft.nextTokenId(classId);
   // let tokenCount = 0;
-  let classInfo: any = await PolkaSDK.api.query.ormlNft.classes(classId);
+  let classInfo: any = await (await PolkaSDK.getSaveInstance()).api.query.ormlNft.classes(classId);
   if (classInfo.isSome) {
     const arr = [];
     classInfo = classInfo.unwrap();

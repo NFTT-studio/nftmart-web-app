@@ -18,7 +18,7 @@ export const redeemBritishAuction = async ({
 }: redeemBritishAuctionProps) => {
   try {
     const injector = await web3FromAddress(address);
-    const call = PolkaSDK.api.tx.nftmartAuction.redeemBritishAuction(
+    const call = (await PolkaSDK.getSaveInstance()).api.tx.nftmartAuction.redeemBritishAuction(
       auctionCreatorAddress, auctionId,
     );
     await call.signAndSend(

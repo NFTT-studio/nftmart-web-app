@@ -2,7 +2,7 @@
 import PolkaSDK from '..';
 
 export const getWhiteList = async () => {
-  const whiteList = (await PolkaSDK.api.query.nftmartConf.accountWhitelist.entries()) || [];
+  const whiteList = (await (await PolkaSDK.getSaveInstance()).api.query.nftmartConf.accountWhitelist.entries()) || [];
   const whiteListStringArr = whiteList.map((user: any) => {
     let key = user[0];
     const len = key.length;

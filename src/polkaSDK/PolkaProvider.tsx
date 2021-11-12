@@ -23,9 +23,6 @@ const PolkaProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const init = async () => {
-      await PolkaSDK.init({
-        ss58Format: SS58_FORMAT,
-      });
       setIsInitialized(true);
       const allInjected = await web3Enable('NFTMart');
       if (allInjected.length > 0) {
