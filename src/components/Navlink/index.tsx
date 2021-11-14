@@ -64,7 +64,7 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
   ];
   let filteredNav = NAV_MAP;
 
-  if (account && whiteList.indexOf(account?.address) < 0) {
+  if (account && whiteList?.indexOf(account?.address) < 0) {
     filteredNav = NAV_MAP.filter((nav) => nav.requiredLogin === false);
   }
 

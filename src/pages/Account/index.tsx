@@ -163,7 +163,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     setSelectTabId(Number(localStorage.getItem('ButtonSelect')) || 0);
   }, [Number(localStorage.getItem('ButtonSelect'))]);
   useEffect(() => {
-    if (account && whiteList.indexOf(address) < 0) {
+    if (account && whiteList?.indexOf(address) < 0) {
       localStorage.setItem('ButtonSelect', '0');
     }
   }, [account?.address, whiteList?.length !== 0]);
@@ -236,7 +236,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   ];
 
   let filteredTABS = TABS;
-  if (account && whiteList.indexOf(address) < 0) {
+  if (account && whiteList?.indexOf(address) < 0) {
     filteredTABS = TABS.filter((nav) => nav.requiredWhitelist === false);
   }
 

@@ -70,7 +70,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
   };
 
   useEffect(() => {
-    if (!account || whiteList.indexOf(account?.address) < 0) {
+    if (!account || whiteList?.indexOf(account?.address) < 0) {
       setIsShowModal(true);
     }
   }, [account?.address, whiteList !== 0]);

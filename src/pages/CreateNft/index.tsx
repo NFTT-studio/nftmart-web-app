@@ -66,7 +66,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     history.push('/');
   };
   useEffect(() => {
-    if (!account || whiteList.indexOf(account?.address) < 0) {
+    if (!account || whiteList?.indexOf(account?.address) < 0) {
       setIsShowModal(true);
     }
   }, [account, whiteList.length !== 0]);

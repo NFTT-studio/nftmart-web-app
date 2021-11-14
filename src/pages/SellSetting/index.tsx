@@ -367,7 +367,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       >
 
         <Flex
-          maxW="1364px"
+          maxWidth="1364px"
           w="100VW"
           height="40px"
           flexDirection="row"
@@ -427,6 +427,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         </Flex>
       </Flex>
       <Container
+        maxWidth="1364px"
         display="flex"
         flexDirection="column"
         width="100%"
