@@ -194,6 +194,7 @@ const NftCard: FC<NftCardProps> = ({
       minWidth="280px"
       width="100%"
       height="396px"
+      display="inline-block"
       as={RouterLink}
       to={`/item/${nft.id}`}
     >

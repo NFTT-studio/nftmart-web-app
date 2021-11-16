@@ -242,17 +242,17 @@ const Browsing = () => {
                     initialScrollY={1}
                   >
                     <SimpleGrid
+                      display={nftsData?.pages[0].pageInfo.totalNum < 5 ? 'flex' : 'grid'}
                       width="100%"
                       p="5px 5px 0 5px"
                       m="0px 0px 20px 0px"
                       minChildWidth="280px"
+                      // gridTemplateColumns="repeat(auto-fit, minmax(280px,320px))"
                       spacing="20px"
                     >
                       {nftsData?.pages.map((page) => page.nfts.map(
                         (nft) => (
-                          <Flex>
-                            <OrderCard nft={nft} remainingTime={remainingTime} />
-                          </Flex>
+                          <OrderCard nft={nft} remainingTime={remainingTime} />
                         ),
                       ))}
                     </SimpleGrid>
