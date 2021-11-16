@@ -36,8 +36,6 @@ const Header: FC<HeaderProps> = () => {
   const { t } = useTranslation();
   const { account } = chainState;
 
-  const { data } = useWhiteList();
-
   return (
     <Flex
       as="header"

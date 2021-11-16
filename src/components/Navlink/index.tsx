@@ -5,11 +5,11 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import { useLocalStorage } from 'react-use';
 import NLink from '../Link';
 import { statusArr } from '../../constants/Status';
 import { useAppSelector } from '../../hooks/redux';
 import useAccount from '../../hooks/reactQuery/useAccount';
-import useWhiteList from '../../hooks/reactQuery/useWhiteList';
 
 export interface NavLinkProps {
   address: string;
@@ -18,10 +18,11 @@ export interface NavLinkProps {
 const NavLink: FC<NavLinkProps> = ({ address }) => {
   const { i18n } = useTranslation();
   const location = useLocation();
+  const [userAddress] = useLocalStorage<string>('LOGIN_ADDRESS');
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
 
-  const { data } = useAccount(address);
+  const { data } = useAccount(address || userAddress);
 
   const NAV_MAP = [
     {

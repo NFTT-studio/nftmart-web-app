@@ -84,14 +84,10 @@ interface Props {
       id: string
     }
   } | undefined,
-  logoUrl:string,
-  propertiesArr:[],
 }
 const DetailLeft: FC<Props> = (({
   nftData,
   collectionsData,
-  logoUrl,
-  propertiesArr,
 }) => {
   function number2PerU16(x) {
     return (x / 65535.0) * 100;
