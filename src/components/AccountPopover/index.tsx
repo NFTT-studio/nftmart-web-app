@@ -18,8 +18,6 @@ import {
 import Identicon from '@polkadot/react-identicon';
 
 import { useTranslation } from 'react-i18next';
-
-import { useLocalStorage } from 'react-use';
 import {
   HeadPortrait,
   Address,
@@ -32,10 +30,8 @@ import {
 } from '../../assets/images';
 import { statusArr } from '../../constants/Status';
 import {
-  EXPLORER_URL,
   PINATA_SERVER,
 } from '../../constants';
-import useAccount from '../../hooks/reactQuery/useAccount';
 import { renderNmtNumberText } from '../Balance';
 import useUserTop from '../../hooks/reactQuery/useUserTop';
 import { useAppSelector } from '../../hooks/redux';
@@ -50,7 +46,6 @@ const ICONS = {
   quickAreaCollections: Created,
 };
 const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
-  const [userAddress] = useLocalStorage<string>('LOGIN_ADDRESS');
   const chainState = useAppSelector((state) => state.chain);
 
   const { whiteList } = chainState;
@@ -60,7 +55,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
   const [opening, setOpening] = useState(false);
   const [iswhiteList, setISWhiteList] = useState(false);
   const { onCopy } = useClipboard(address);
-  const { data: userData, refetch: fetchUserData } = useUserTop(userAddress || address);
+  const { data: userData, refetch: fetchUserData } = useUserTop(address);
   // const [hideMenu, setHideMenu] = useState(false);
   const toast = useToast();
   const handleCopy = () => {
@@ -81,6 +76,14 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
     }
     fetchUserData();
   }, [opening]);
+  useEffect(() => {
+    if (address && whiteList?.indexOf(address) > -1) {
+      setISWhiteList(true);
+    } else {
+      setISWhiteList(false);
+    }
+    fetchUserData();
+  }, [address]);
 
   return (
     <Popover
