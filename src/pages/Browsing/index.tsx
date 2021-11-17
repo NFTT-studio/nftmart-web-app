@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-nested-ternary */
 import React, {
   useState, useEffect, MouseEventHandler, ChangeEventHandler,
@@ -24,7 +25,7 @@ import useCategories from '../../hooks/reactQuery/useCategories';
 import StatusSelector from '../../components/StatusSelector';
 import CollectionSelector from '../../components/CollectionSelector';
 import useCollections from '../../hooks/reactQuery/useCollections';
-import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
+import useNftsAll from '../../hooks/reactQuery/useNftsAll';
 import OrderCard from '../../components/OrderCard';
 import SortBy from '../../components/SortBy';
 
@@ -35,17 +36,20 @@ import {
   Emptyimg,
   Historyempty,
 } from '../../assets/images';
-import useParams from '../../hooks/url/useParams';
 import { statusArr } from '../../constants/Status';
 import Sort from '../../constants/Sort';
 import { DEFAULT_PAGE_LIMIT } from '../../constants';
 import { getBlock } from '../../polkaSDK/api/getBlock';
 
 const Browsing = () => {
+  function GetQueryString(name) {
+    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
+    const r = decodeURI(window.location.search.substr(1)).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+  const status = GetQueryString('status');
   const { t } = useTranslation();
-
-  const params = useParams();
-  const status = params.get('status');
 
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
@@ -53,17 +57,11 @@ const Browsing = () => {
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const [remainingTime, setRemainingTime] = useState(0);
 
-  useEffect(() => {
-    getBlock().then((res) => {
-      setRemainingTime(res);
-    });
-  }, []);
-
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
   const { data: collectionsData, isLoading: collectionsIsLoading } = useCollections({});
   const {
-    data: nftsData, isLoading: nftsIsLoading, fetchNextPage,
-  } = useNftsPersonal(
+    data: nftsData, isLoading: nftsIsLoading, fetchNextPage, refetch: refetchnftsData,
+  } = useNftsAll(
     {
       categoryId: selectedCategoryId,
       collectionId: selectedCollection,
@@ -71,6 +69,14 @@ const Browsing = () => {
       sortBy: selectedSort,
     },
   );
+  useEffect(() => {
+    getBlock().then((res) => {
+      setRemainingTime(res);
+    });
+    if (status === null) {
+      refetchnftsData();
+    }
+  }, []);
 
   const [collectionsArr, setCollectionsArr] = useState<Collection[]>([]);
 
@@ -113,6 +119,22 @@ const Browsing = () => {
     }
   }, [status]);
 
+  useEffect(() => {
+    if (selectedStatusArr?.length !== 0) {
+      refetchnftsData();
+    }
+    if (status === null) {
+      refetchnftsData();
+    }
+  }, [selectedStatusArr]);
+  useEffect(() => {
+    if (selectedStatusArr?.length !== 0) {
+      refetchnftsData();
+    }
+    if (status === null) {
+      refetchnftsData();
+    }
+  }, [selectedSort, selectedCategoryId]);
   useEffect(() => {
     if (collectionsData) {
       setCollectionsArr(collectionsData.collections);
