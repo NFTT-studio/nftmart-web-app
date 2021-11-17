@@ -29,7 +29,7 @@ import { any } from 'ramda';
 import { timeStamp } from 'console';
 import Identicon from '@polkadot/react-identicon';
 import MainContainer from '../../layout/MainContainer';
-import NftCard from '../../components/NftCard';
+import OrderCard from '../../components/OrderCard';
 import { useAppSelector } from '../../hooks/redux';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import { getBlock } from '../../polkaSDK/api/getBlock';
@@ -214,16 +214,16 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 </Flex>
               </Flex>
             ) : ''}
-            <Flex maxWidth="1400px" w="100%" position="relative">
+            <Flex w="100%" position="relative">
               <Box
-                maxWidth="1400px"
                 w="100vw"
                 minHeight="200px"
+                maxHeight="400px"
               >
                 <Image
-                  maxWidth="1400px"
                   width="100%"
-                  height="auto"
+                  height="100%"
+                  objectFit="cover"
                   src={collectionsData?.collection?.metadata?.banner
                     ? `${PINATA_SERVER}banner/${collectionsData?.collection?.metadata?.banner}`
                     : CollectionBackground.default}
@@ -254,7 +254,6 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
             </Flex>
             <Flex
               w="100%"
-              maxWidth="1400px"
               direction="row"
               justifyContent="space-between"
               padding="81px 40px 20px 40px"
@@ -541,11 +540,10 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
               </Flex>
              */}
               </Flex>
-              <Flex maxWidth="1003px" w="100%" direction="column">
+              <Flex w="100%" direction="column">
                 <Flex
                   m="10px 0 0px 0"
                   width="100%"
-                  maxWidth="1003px"
                   h="36px"
                   flexDirection="column"
                   justifyContent="space-between"
@@ -579,13 +577,18 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                       initialScrollY={1}
                     >
                       <SimpleGrid
-                        w="100%"
-                        m="20px 0 20px 0"
-                        columns={[1, 1, 1, 2, 3]}
+                        display={nftsData?.pages[0].pageInfo.totalNum < 5 ? 'flex' : 'grid'}
+                        width="100%"
+                        p="5px 5px 0 5px"
+                        m="0px 0px 20px 0px"
+                        minChildWidth="280px"
+                      // gridTemplateColumns="repeat(auto-fit, minmax(280px,320px))"
                         spacing="20px"
                       >
-                        {nftsData?.pages.map((page) => page.nfts?.map(
-                          (nft) => <NftCard nft={nft} remainingTime={remainingTime} />,
+                        {nftsData?.pages.map((page) => page.nfts.map(
+                          (nft) => (
+                            <OrderCard nft={nft} remainingTime={remainingTime} />
+                          ),
                         ))}
                       </SimpleGrid>
                     </InfiniteScroll>

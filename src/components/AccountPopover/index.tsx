@@ -18,7 +18,6 @@ import {
 import Identicon from '@polkadot/react-identicon';
 
 import { useTranslation } from 'react-i18next';
-
 import {
   HeadPortrait,
   Address,
@@ -31,10 +30,8 @@ import {
 } from '../../assets/images';
 import { statusArr } from '../../constants/Status';
 import {
-  EXPLORER_URL,
   PINATA_SERVER,
 } from '../../constants';
-import useAccount from '../../hooks/reactQuery/useAccount';
 import { renderNmtNumberText } from '../Balance';
 import useUserTop from '../../hooks/reactQuery/useUserTop';
 import { useAppSelector } from '../../hooks/redux';
@@ -50,15 +47,15 @@ const ICONS = {
 };
 const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
   const chainState = useAppSelector((state) => state.chain);
+
   const { whiteList } = chainState;
   const location = useLocation();
-  const { data } = useAccount(address);
-  const { data: userData, refetch: fetchUserData } = useUserTop(address);
   const history = useHistory();
   const { t } = useTranslation();
   const [opening, setOpening] = useState(false);
   const [iswhiteList, setISWhiteList] = useState(false);
   const { onCopy } = useClipboard(address);
+  const { data: userData, refetch: fetchUserData } = useUserTop(address);
   // const [hideMenu, setHideMenu] = useState(false);
   const toast = useToast();
   const handleCopy = () => {
@@ -72,14 +69,6 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
     onCopy();
   };
   useEffect(() => {
-    fetchUserData();
-    if (address && whiteList?.indexOf(address) > -1) {
-      setISWhiteList(true);
-    } else {
-      setISWhiteList(false);
-    }
-  }, [address]);
-  useEffect(() => {
     if (address && whiteList?.indexOf(address) > -1) {
       setISWhiteList(true);
     } else {
@@ -87,6 +76,14 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
     }
     fetchUserData();
   }, [opening]);
+  useEffect(() => {
+    if (address && whiteList?.indexOf(address) > -1) {
+      setISWhiteList(true);
+    } else {
+      setISWhiteList(false);
+    }
+    fetchUserData();
+  }, [address]);
 
   return (
     <Popover
@@ -188,7 +185,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 fontWeight="400"
                 color="#191A24"
               >
-                {data ? renderNmtNumberText(data?.balance?.total) : 0}
+                {userData ? renderNmtNumberText(userData?.balance?.total) : 0}
               </Text>
             </Flex>
             <Text
@@ -203,9 +200,9 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               NMT
             </Text>
           </Flex>
-          {Number(data?.balance?.reserved)
-            || Number(data?.balance?.bonded)
-            || Number(data?.balance?.locked)
+          {Number(userData?.balance?.reserved)
+            || Number(userData?.balance?.bonded)
+            || Number(userData?.balance?.locked)
             ? (
               <Flex
                 width="100%"
@@ -232,7 +229,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="400"
                     color="#999999"
                   >
-                    {data && renderNmtNumberText(data?.balance?.transferrable)}
+                    {userData && renderNmtNumberText(userData?.balance?.transferrable)}
                   </Text>
                 </Flex>
                 <Text
@@ -248,7 +245,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 </Text>
               </Flex>
             ) : null}
-          {Number(data?.balance?.reserved)
+          {Number(userData?.balance?.reserved)
             ? (
               <Flex
                 width="100%"
@@ -275,7 +272,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="400"
                     color="#999999"
                   >
-                    {data && renderNmtNumberText(data?.balance?.reserved)}
+                    {userData && renderNmtNumberText(userData?.balance?.reserved)}
                   </Text>
                 </Flex>
                 <Text
@@ -292,7 +289,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Flex>
             )
             : null}
-          {Number(data?.balance?.locked)
+          {Number(userData?.balance?.locked)
             ? (
               <Flex
                 width="100%"
@@ -319,7 +316,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="400"
                     color="#999999"
                   >
-                    {data && renderNmtNumberText(data?.balance?.locked)}
+                    {userData && renderNmtNumberText(userData?.balance?.locked)}
                   </Text>
                 </Flex>
                 <Text
@@ -335,7 +332,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 </Text>
               </Flex>
             ) : null}
-          {Number(data?.balance?.bonded)
+          {Number(userData?.balance?.bonded)
             ? (
               <Flex
                 width="100%"
@@ -362,7 +359,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                     fontWeight="400"
                     color="#999999"
                   >
-                    {data && renderNmtNumberText(data?.balance?.bonded)}
+                    {userData && renderNmtNumberText(userData?.balance?.bonded)}
                   </Text>
                 </Flex>
                 <Text
@@ -422,7 +419,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 fontWeight="400"
                 color="#858999"
               >
-                {data?.ownerNftscount}
+                {userData?.ownerNftscount}
               </Text>
             </Flex>
             <Link
@@ -490,7 +487,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   fontWeight="400"
                   color="#858999"
                 >
-                  {data?.createdNftCount}
+                  {userData?.createdNftCount}
                 </Text>
               </Flex>
               <Link
@@ -559,12 +556,12 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   fontWeight="400"
                   color="#858999"
                 >
-                  {data?.createdClassCount}
+                  {userData?.createdClassCount}
                 </Text>
               </Flex>
               <Link
                 as={RouterLink}
-                to={`/account/${data?.address}/wallet?id=4`}
+                to={`/account/${userData?.address}/wallet?id=4`}
                 width="47px"
                 textAlign="right"
                 ml="12px"

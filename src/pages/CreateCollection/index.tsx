@@ -43,7 +43,7 @@ const Account = () => {
   const { t } = useTranslation();
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
-  const [address, setValue] = useLocalStorage<string>('LOGIN_ADDRESS');
+  const [address] = useLocalStorage<string>('LOGIN_ADDRESS');
   const history = useHistory();
   const {
     data: Offerreceive, refetch: fetchOfferReceive,

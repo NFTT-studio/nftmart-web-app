@@ -84,14 +84,10 @@ interface Props {
       id: string
     }
   } | undefined,
-  logoUrl:string,
-  propertiesArr:[],
 }
 const DetailLeft: FC<Props> = (({
   nftData,
   collectionsData,
-  logoUrl,
-  propertiesArr,
 }) => {
   function number2PerU16(x) {
     return (x / 65535.0) * 100;
@@ -349,126 +345,105 @@ const DetailLeft: FC<Props> = (({
               </Text>
             </AccordionPanel>
           </AccordionItem>
-          {/* <AccordionItem mt="20px" width="100%" border="none">
-            <AccordionButton
-              height="62px"
-              width="100%"
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              p="0 20px"
-              border="1px solid #E5E5E5"
-              outline="none"
-              _focus={{
-                textDecoration: 'none',
-                boxShadow: 'none',
-              }}
-            >
-              <Flex height="100%" alignItems="center">
-                <Image
-                  mr="8px"
-                  w="auto"
-                  h="22px"
-                  src={IconProperties.default}
-                />
-                <Text
-                  fontSize="16px"
-                  fontFamily="TTHoves-Medium, TTHoves"
-                  fontWeight="500"
-                  color="#000000"
-                  lineHeight="18px"
-                >
-                  {t('Detail.properties')}
-                </Text>
-              </Flex>
-              <AccordionIcon />
-            </AccordionButton>
-            {0 / 1
-              ? (
-                <AccordionPanel
-                  p="16px 20px 4px 20px"
+          {nftData?.nftInfo?.metadata?.properties?.length
+            ? (
+              <AccordionItem mt="20px" width="100%" border="none">
+                <AccordionButton
+                  height="62px"
+                  width="100%"
                   display="flex"
-                  flexFlow="row wrap"
                   justifyContent="space-between"
+                  alignItems="center"
+                  p="0 20px"
+                  border="1px solid #E5E5E5"
+                  outline="none"
+                  _focus={{
+                    textDecoration: 'none',
+                    boxShadow: 'none',
+                  }}
                 >
-                  {propertiesArr.map((item) => (
-                    <Flex
-                      key={item}
-                      mb="12px"
-                      width="165px"
-                      height="86px"
-                      borderRadius="4px"
-                      border="1px solid #000000"
-                      flexDirection="column"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-
-                      <Text
-                        fontSize="12px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="14px"
-                      >
-                        HEAD
-                      </Text>
-                      <Text
-                        m="8px 0"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Medium, TTHoves"
-                        fontWeight="400"
-                        color="#000000"
-                        lineHeight="18px"
-                      >
-                        PANDA
-                      </Text>
-                      <Text
-                        fontSize="12px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#999999"
-                        lineHeight="14px"
-                      >
-                        1.23% have this trait
-                      </Text>
-                    </Flex>
-                  ))}
-
-                </AccordionPanel>
-              )
-              : (
-                <AccordionPanel p="0px">
-                  <Flex
-                    width="100%"
-                    height="260px"
-                    background="#FFFFFF"
-                    flexDirection="column"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
+                  <Flex height="100%" alignItems="center">
                     <Image
-                      w="150px"
-                      h="100px"
-                      border="1px solid #999999"
-                      borderStyle="dashed"
-                      src={Historyempty.default}
+                      mr="8px"
+                      w="auto"
+                      h="22px"
+                      src={IconProperties.default}
                     />
                     <Text
-                      mt="10px"
-                      fontSize="14px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#999999"
-                      lineHeight="20px"
+                      fontSize="16px"
+                      fontFamily="TTHoves-Medium, TTHoves"
+                      fontWeight="500"
+                      color="#000000"
+                      lineHeight="18px"
                     >
-                      No trading data yet
+                      {t('Detail.properties')}
                     </Text>
                   </Flex>
-                </AccordionPanel>
-              )}
+                  <AccordionIcon />
+                </AccordionButton>
+                {nftData?.nftInfo?.metadata?.properties?.length
+                  ? (
+                    <AccordionPanel
+                      p="16px 20px 4px 20px"
+                      display="flex"
+                      flexFlow="row wrap"
+                      justifyContent="space-between"
+                    >
+                      {nftData?.nftInfo?.metadata?.properties.map((item) => (
+                        <Flex
+                          key={item}
+                          mb="12px"
+                          width="165px"
+                          height="86px"
+                          borderRadius="4px"
+                          border="1px solid #000000"
+                          flexDirection="column"
+                          alignItems="center"
+                          justifyContent="center"
+                        >
 
-          </AccordionItem> */}
+                          <Text
+                            fontSize="12px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="14px"
+                          >
+                            {item.key}
+                          </Text>
+                          <Text
+                            m="8px 0"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Medium, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="18px"
+                          >
+                            {item.value}
+                          </Text>
+                          {/* <Text
+                            fontSize="12px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#999999"
+                            lineHeight="14px"
+                          >
+                            1.23% have this trait
+                          </Text> */}
+                        </Flex>
+                      ))}
+
+                    </AccordionPanel>
+                  )
+                  : (
+                    <AccordionPanel p="0px">
+                      <NoData widths="100%" />
+                    </AccordionPanel>
+                  )}
+
+              </AccordionItem>
+            ) : null}
+
           <AccordionItem mt="20px" width="100%" border="none">
             <AccordionButton
               height="62px"

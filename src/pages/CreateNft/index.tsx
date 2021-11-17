@@ -1,7 +1,9 @@
+/* eslint-disable no-multi-assign */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-return-assign */
 /* eslint-disable react/no-children-prop */
 import React, {
-  useState, useEffect, useCallback,
+  useState, useEffect, useCallback, ChangeEventHandler,
 } from 'react';
 import {
   useHistory, RouteComponentProps, Link as RouterLink,
@@ -25,6 +27,14 @@ import {
   Box,
   Switch,
   useToast,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
 } from '@chakra-ui/react';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import Upload from '../../components/Upload';
@@ -49,6 +59,8 @@ import MyModal from '../../components/MyModal';
 import MyToast, { ToastBody } from '../../components/MyToast';
 
 const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
+  const [propertiesArr, setPropertiesArr] = useState([{ key: '', value: '' }]);
+
   function number2PerU16(x) {
     return Math.round((x / 65535.0) * 100);
   }
@@ -89,8 +101,21 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       setroyaltiesSl(true);
     }
   }, [collectionsData]);
+  const addMore = () => {
+    const arr = propertiesArr.concat({ key: '', value: '' });
+    setPropertiesArr(arr);
+  };
+  const handleInputKey: ChangeEventHandler<HTMLInputElement> = (item) => {
+    propertiesArr[Number(item.target.id)].key = item.target.value;
+    setPropertiesArr(propertiesArr);
+  };
+  const handleInputValue: ChangeEventHandler<HTMLInputElement> = (item) => {
+    propertiesArr[Number(item.target.id)].value = item.target.value;
+    setPropertiesArr(propertiesArr);
+  };
 
   const mint = useCallback(async (formValue, cb) => {
+    const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
     const normalizedFormData = {
       address: account?.address,
       metadata: {
@@ -100,6 +125,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
         name: formValue.name,
         stub: formValue.stub ? `https://${formValue.stub}` : null,
         description: formValue.description,
+        properties: propertiesLet,
       },
       classId: collectionId,
       quantity: 1,
@@ -324,9 +350,95 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           {formik.errors.description && formik.touched.description ? (
             <div style={{ color: 'red' }}>{formik.errors.description}</div>
           ) : null}
+          {/* <Text
+            marginTop="30px"
+            fontSize="16px"
+            fontFamily="TTHoves-Medium, TTHoves"
+            fontWeight="500"
+            color="#000000"
+            lineHeight="18px"
+          >
+            Properties
+          </Text>
+          <Table
+            marginTop="24px"
+            borderRadius="4px"
+            border="1px solid #E5E5E5"
+          >
+            <Thead>
+              <Tr>
+                <Th
+                  width="50%"
+                  textAlign="center"
+                  borderRight="1px solid #E5E5E5"
+                  background="#F4F4F4"
+                  fontFamily="TTHoves-Medium, TTHoves"
+                  fontWeight="500"
+                  color="#000000"
+                >
+                  Name
+                </Th>
+                <Th
+                  width="50%"
+                  textAlign="center"
+                  background="#F4F4F4"
+                  fontFamily="TTHoves-Medium, TTHoves"
+                  fontWeight="500"
+                  color="#000000"
+                >
+                  Value
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {Array.from(propertiesArr)?.map((item, index) => (
+                <Tr>
+                  <Td
+                    width="50%"
+                    textAlign="center"
+                    borderRight="1px solid #E5E5E5"
+                  >
+                    <Input
+                      id={index.toString()}
+                      fontSize="14px"
+                      color="#000000"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      placeholder="property name"
+                      // value={propertiesArr[index].key}
+                      onChange={handleInputKey}
+                    />
+                  </Td>
+                  <Td
+                    width="50%"
+                    textAlign="center"
+                  >
+                    <Input
+                      id={index.toString()}
+                      fontSize="14px"
+                      color="#000000"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      placeholder="property value"
+                      // value={propertiesArr[index].value}
+                      onChange={handleInputValue}
+                    />
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+          <Text
+            ml="3px"
+            height="16px"
+            display="inline-block"
+            color="#3D00FF"
+            onClick={addMore}
+          >
+            Add  more
+          </Text> */}
           <Flex
             w="100%"
-            h="80px"
             mt="20px"
             flexDirection="row"
             justifyContent="space-between"
@@ -386,13 +498,12 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                   formik.values.isRoyalties = !royaltiesSl;
                   setroyaltiesSl(!royaltiesSl);
                 }}
-                height="40px"
                 size="lg"
               />
               <InputGroup
+                mt="10px"
                 display={royaltiesSl ? 'flex' : 'none'}
                 width="200px"
-                height="40px"
                 background="#FFFFFF"
                 borderRadius="4px"
                 border="1px solid #E5E5E5"
