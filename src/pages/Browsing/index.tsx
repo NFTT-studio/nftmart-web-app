@@ -134,7 +134,7 @@ const Browsing = () => {
     if (status === null) {
       refetchnftsData();
     }
-  }, [selectedSort, selectedCategoryId]);
+  }, [selectedSort, selectedCategoryId, selectedCollection]);
   useEffect(() => {
     if (collectionsData) {
       setCollectionsArr(collectionsData.collections);
