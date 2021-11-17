@@ -350,7 +350,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           {formik.errors.description && formik.touched.description ? (
             <div style={{ color: 'red' }}>{formik.errors.description}</div>
           ) : null}
-          <Text
+          {/* <Text
             marginTop="30px"
             fontSize="16px"
             fontFamily="TTHoves-Medium, TTHoves"
@@ -436,7 +436,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             onClick={addMore}
           >
             Add  more
-          </Text>
+          </Text> */}
           <Flex
             w="100%"
             mt="20px"
