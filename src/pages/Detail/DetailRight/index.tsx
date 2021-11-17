@@ -451,7 +451,7 @@ const DetailRight: FC<Props> = (({
           <Link
             mt="10px"
             as={RouterLink}
-            to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
+            to={`/collection/${collectionsData?.collection?.creator_id}?collectionId=${collectionsData?.collection?.id}`}
           >
             <Flex alignItems="center">
               <Text
