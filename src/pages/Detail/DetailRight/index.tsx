@@ -475,10 +475,7 @@ const DetailRight: FC<Props> = (({
           <Link
             display="inline-block"
             as={RouterLink}
-            to={`/account/${nftData?.nftInfo?.owner_id}/wallet`}
-            onClick={() => {
-              localStorage.setItem('ButtonSelect', '0');
-            }}
+            to={`/account/${nftData?.nftInfo?.owner_id}${nftData?.nftInfo?.owner?.name ? `-${nftData?.nftInfo?.owner?.name}` : ''}/owned`}
           >
             <Flex p="20px 0 0 0" justifyContent="flex-start" alignItems="center">
               {nftData?.nftInfo?.owner?.avatar ? (
@@ -1025,10 +1022,7 @@ const DetailRight: FC<Props> = (({
                           >
                             <Link
                               as={RouterLink}
-                              to={`/account/${item.bidder_id}/wallet`}
-                              onClick={() => {
-                                localStorage.setItem('ButtonSelect', '1');
-                              }}
+                              to={`/account/${item.bidder_id}${item.user_info?.name ? `-${item.user_info?.name}` : ''}/owned`}
                             >
                               {item.user_info?.name ? item.user_info?.name
                                 : formatAddress(item.bidder_id)}

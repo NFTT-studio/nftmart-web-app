@@ -72,7 +72,7 @@ const DealDialog: FC<Props> = (({
               setTimeout(() => {
                 setIshowReceive(false);
                 setIsSubmitting(false);
-                history.push(`/account/${account?.address}/wallet`);
+                history.push('/account/owned');
               }, 2500);
             }
           },

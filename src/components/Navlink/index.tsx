@@ -57,7 +57,7 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
     },
     {
       title: 'common.nav.navCreate',
-      path: data?.createdClassCount ? `/account/${account?.address}/wallet?id=4`
+      path: data?.createdClassCount ? '/account/collections'
         : '/account/collections/create',
       requiredLogin: true,
       requiredWhitelist: true,
@@ -87,14 +87,6 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
               marginRight="8px"
               marginLeft="28px"
               bordered
-              onClick={() => {
-                if (nav.path === `/account/${account?.address}/wallet?id=4`) {
-                  localStorage.setItem('ButtonSelect', '4');
-                }
-                if (nav.path === `/account/${account?.address}/wallet?id=5`) {
-                  localStorage.setItem('ButtonSelect', '5');
-                }
-              }}
             />
             <Box
               w="16px"

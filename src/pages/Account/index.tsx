@@ -174,7 +174,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
       setSelectTabId(4);
       setUrlName('collections');
     }
-  }, []);
+  }, [window.location.href]);
 
   useEffect(() => {
     if (address === account?.address) {

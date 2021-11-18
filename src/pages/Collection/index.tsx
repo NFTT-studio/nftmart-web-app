@@ -278,10 +278,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                   <Flex alignItems="center" m="20px 0">
                     <Link
                       as={RouterLink}
-                      to={`/account/${collectionsData?.collection?.creator_id}/wallet`}
-                      onClick={() => {
-                        localStorage.setItem('ButtonSelect', '1');
-                      }}
+                      to={`/account/${collectionsData?.collection?.creator_id}${dataCreator?.name ? `-${dataCreator?.name}` : ''}/owned`}
                     >
                       {dataCreator?.avatar ? (
                         <Image
@@ -317,7 +314,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                         {t('Detail.createdBy')}
                         <Link
                           as={RouterLink}
-                          to={`/account/${collectionsData?.collection?.creator_id}/wallet`}
+                          to={`/account/${collectionsData?.collection?.creator_id}${dataCreator?.name ? `-${dataCreator?.name}` : ''}/owned`}
                           m="0 3px"
                           fontSize="14px"
                           fontFamily="TTHoves-Regular, TTHoves"

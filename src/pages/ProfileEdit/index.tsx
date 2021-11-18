@@ -103,7 +103,7 @@ const CreateCollection: FC = () => {
         },
       }).then((res) => {
         setIsSubmitting(false);
-        history.push(`/account/${account?.address}/wallet`);
+        history.push('/account/owned');
       });
     },
     validationSchema: schema,
