@@ -54,7 +54,7 @@ const Banner = ((
     {
       id: '0',
       icon: banner06.default,
-      url: '/collection/nmvgfQjN1RTEeQgMzKg462E67rggfroyxVyvvdzqpqYHba7r7?collectionId=50',
+      url: '/account/nmtuJqWeTadEu7jDu4bjPW9G59txCnEG42kDE4XxMMPgjyMws/wallet',
       w: '205px',
       h: '215px',
     },
