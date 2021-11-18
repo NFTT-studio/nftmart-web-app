@@ -12,5 +12,6 @@ export default ({
   }),
   {
     getNextPageParam: (lastPage, pages) => (pages.length),
+    enabled: false,
   },
 );

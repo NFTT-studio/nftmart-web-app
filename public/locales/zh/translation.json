@@ -99,7 +99,7 @@
     "cheapest": "最便宜"
   },
   "Collection": {
-    "title": "-NFTMart|专业NFT交易市场",
+    "title": "创建作品集 ",
     "editProfile": "修改资料",
     "addItem": "添加作品",
     "createCollection": "创建NFT",
@@ -234,7 +234,7 @@
     "buySuccess": "购买成功"
   },
   "SellSetting": {
-    "title": "设置价格-NFTMart|专业的NFT交易市场",
+    "title": "售卖设置",
     "dutchRule":"截止价格不能低于起始价格",
     "formTitle": "选择售卖方式",
     "sellAtaFixedPrice": "固定价格售卖",
@@ -308,6 +308,7 @@
     "expiration": "有效期"
   },
   "ProfileEdit": {
+    "title": "资料修改",
     "portrait": "*头像",
     "portraitRule": "要求尺寸 350×350",
     "username": "*昵称",

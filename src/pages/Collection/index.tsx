@@ -19,7 +19,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { without } from 'lodash';
 import {
-  RouteComponentProps, useLocation, useHistory, Link as RouterLink,
+  RouteComponentProps, useHistory, Link as RouterLink,
 } from 'react-router-dom';
 import { parse } from 'search-params';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -65,16 +65,14 @@ const ICONS = [
   { icon: telegram.default, name: 'telegram', linkPrefix: 'https://t.me/' },
 ];
 
-const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
+const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
   const { t } = useTranslation();
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
 
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
-  const location = useLocation();
   const [isPerson, setIsPerson] = useState(false);
-  const search = parse(location.search.replace('?', ''));
-  const classId = search.collectionId;
+  const classId = match.params.collectionId;
   const [remainingTime, setRemainingTime] = useState(0);
   const [selectedCollection] = useState<string[]>([classId]);
   useEffect(() => {
@@ -111,7 +109,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
 
   const history = useHistory();
   function handleCreate() {
-    history.push(`/profile/nft/create/${classId}`);
+    history.push(`/account/items/create${classId}`);
   }
 
   useEffect(() => {
@@ -189,7 +187,7 @@ const Collection = ({ match }: RouteComponentProps<{ address: string }>) => {
                 </Button> */}
                   <Link
                     as={RouterLink}
-                    to={`/profile/nft/create/${classId}`}
+                    to={`/account/items/create${classId}`}
                   >
                     <Button
                       width="137px"

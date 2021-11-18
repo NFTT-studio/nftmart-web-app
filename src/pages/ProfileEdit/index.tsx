@@ -25,6 +25,7 @@ import MyToast, { ToastBody } from '../../components/MyToast';
 import { useAppSelector } from '../../hooks/redux';
 import useUser from '../../hooks/reactQuery/useUser';
 import { CACHE_SERVER_URL } from '../../constants';
+import MainContainer from '../../layout/MainContainer';
 
 const CreateCollection: FC = () => {
   const { t } = useTranslation();
@@ -109,96 +110,96 @@ const CreateCollection: FC = () => {
   });
 
   return (
-    <Flex
-      marginTop="120px"
-      w="600px"
-      minHeight="100vh"
-    >
-      <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="avatar">
-          {' '}
-          <EditFormTitle text={t('ProfileEdit.portrait')} />
-          <EditFromSubTitle text={t('ProfileEdit.portraitRule')} />
-        </label>
-        <UploadPersonal
-          id="avatar"
-          mediatype="cutting"
-          rectangle=""
-          proportion={16 / 16}
-          value={formik.values.avatar}
-          edit={userData?.avatar}
-          setStateCrop={setStateCrop}
-          onChange={(v) => {
-            formik.setFieldValue('avatar', v);
-          }}
+    <MainContainer title={`${t('ProfileEdit.title')}|${t('Home.title')}`}>
+      <Flex
+        w="600px"
+      >
+        <form onSubmit={formik.handleSubmit}>
+          <label htmlFor="avatar">
+            {' '}
+            <EditFormTitle text={t('ProfileEdit.portrait')} />
+            <EditFromSubTitle text={t('ProfileEdit.portraitRule')} />
+          </label>
+          <UploadPersonal
+            id="avatar"
+            mediatype="cutting"
+            rectangle=""
+            proportion={16 / 16}
+            value={formik.values.avatar}
+            edit={userData?.avatar}
+            setStateCrop={setStateCrop}
+            onChange={(v) => {
+              formik.setFieldValue('avatar', v);
+            }}
+          />
+          {formik.errors.avatar && formik.touched.avatar ? (
+            <div style={{ color: 'red' }}>{formik.errors.avatar}</div>
+          ) : null}
+          <label htmlFor="name">
+            {' '}
+            <EditFormTitle text={t('ProfileEdit.username')} />
+            <EditFromSubTitle text={t('ProfileEdit.usernameRule')} />
+          </label>
+          <FormInput id="name" value={formik.values.name} onChange={formik.handleChange} />
+          {formik.errors.name && formik.touched.name ? (
+            <div style={{ color: 'red' }}>{formik.errors.name}</div>
+          ) : null}
+          <label htmlFor="email">
+            {' '}
+            <EditFormTitle text={t('ProfileEdit.emai')} />
+            <EditFromSubTitle text={t('ProfileEdit.emaiRule')} />
+          </label>
+          <FormInput id="email" value={formik.values.email} onChange={formik.handleChange} />
+          {formik.errors.email && formik.touched.email ? (
+            <div style={{ color: 'red' }}>{formik.errors.email}</div>
+          ) : null}
+          <label htmlFor="twitter">
+            {' '}
+            <EditFormTitle text={t('ProfileEdit.twitter')} />
+            <EditFromSubTitle text={t('ProfileEdit.twitterRule')} />
+          </label>
+          <FormInput id="twitter" value={formik.values.twitter} onChange={formik.handleChange} />
+          {formik.errors.twitter && formik.touched.twitter ? (
+            <div style={{ color: 'red' }}>{formik.errors.twitter}</div>
+          ) : null}
+          <label htmlFor="featured_image">
+            {' '}
+            <EditFormTitle text={t('ProfileEdit.featuredImage')} />
+            <EditFromSubTitle text={t('ProfileEdit.featuredImageRule')} />
+          </label>
+          <UploadPersonal
+            id="featured_image"
+            mediatype="cutting"
+            rectangle="600px"
+            proportion={1400 / 400}
+            value={formik.values.featured_image}
+            edit={userData?.featured_image}
+            setStateCrop={setStateCrop}
+            onChange={(v) => {
+              formik.setFieldValue('featured_image', v);
+            }}
+          />
+          <Flex
+            w="600px"
+            justifyContent="center"
+          >
+            <SubmitButton text={t('common.save')} isSubmitting={isSubmitting} />
+          </Flex>
+        </form>
+        <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+          <ModalOverlay />
+        </Modal>
+        <MyModal
+          isOpen={isShowModal}
+          type="warning"
+          isCloseable
+          title="You are not in the whitelist"
+          message="Please contact our team"
+          onClose={onCloseModal}
         />
-        {formik.errors.avatar && formik.touched.avatar ? (
-          <div style={{ color: 'red' }}>{formik.errors.avatar}</div>
-        ) : null}
-        <label htmlFor="name">
-          {' '}
-          <EditFormTitle text={t('ProfileEdit.username')} />
-          <EditFromSubTitle text={t('ProfileEdit.usernameRule')} />
-        </label>
-        <FormInput id="name" value={formik.values.name} onChange={formik.handleChange} />
-        {formik.errors.name && formik.touched.name ? (
-          <div style={{ color: 'red' }}>{formik.errors.name}</div>
-        ) : null}
-        <label htmlFor="email">
-          {' '}
-          <EditFormTitle text={t('ProfileEdit.emai')} />
-          <EditFromSubTitle text={t('ProfileEdit.emaiRule')} />
-        </label>
-        <FormInput id="email" value={formik.values.email} onChange={formik.handleChange} />
-        {formik.errors.email && formik.touched.email ? (
-          <div style={{ color: 'red' }}>{formik.errors.email}</div>
-        ) : null}
-        <label htmlFor="twitter">
-          {' '}
-          <EditFormTitle text={t('ProfileEdit.twitter')} />
-          <EditFromSubTitle text={t('ProfileEdit.twitterRule')} />
-        </label>
-        <FormInput id="twitter" value={formik.values.twitter} onChange={formik.handleChange} />
-        {formik.errors.twitter && formik.touched.twitter ? (
-          <div style={{ color: 'red' }}>{formik.errors.twitter}</div>
-        ) : null}
-        <label htmlFor="featured_image">
-          {' '}
-          <EditFormTitle text={t('ProfileEdit.featuredImage')} />
-          <EditFromSubTitle text={t('ProfileEdit.featuredImageRule')} />
-        </label>
-        <UploadPersonal
-          id="featured_image"
-          mediatype="cutting"
-          rectangle="600px"
-          proportion={1400 / 400}
-          value={formik.values.featured_image}
-          edit={userData?.featured_image}
-          setStateCrop={setStateCrop}
-          onChange={(v) => {
-            formik.setFieldValue('featured_image', v);
-          }}
-        />
-        <Flex
-          w="600px"
-          justifyContent="center"
-        >
-          <SubmitButton text={t('common.save')} isSubmitting={isSubmitting} />
-        </Flex>
-      </form>
-      <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
-        <ModalOverlay />
-      </Modal>
-      <MyModal
-        isOpen={isShowModal}
-        type="warning"
-        isCloseable
-        title="You are not in the whitelist"
-        message="Please contact our team"
-        onClose={onCloseModal}
-      />
-      <MyToast isCloseable />
-    </Flex>
+        <MyToast isCloseable />
+      </Flex>
+    </MainContainer>
   );
 };
 

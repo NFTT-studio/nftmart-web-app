@@ -451,7 +451,7 @@ const DetailRight: FC<Props> = (({
           <Link
             mt="10px"
             as={RouterLink}
-            to={`/collection/${collectionsData?.collection?.creator_id}?collectionId=${collectionsData?.collection?.id}`}
+            to={`/collection/${collectionsData?.collection?.id}-${collectionName}`}
           >
             <Flex alignItems="center">
               <Text
@@ -849,7 +849,7 @@ const DetailRight: FC<Props> = (({
             </Flex>
           ) : null}
         </Flex>
-        {Number(nftData?.nftInfo.auction?.hammer_price) && Number(events.times) > 0
+        {Number(nftData?.nftInfo?.auction?.hammer_price) && Number(events.times) > 0
           ? (
             <Flex
               width="100%"

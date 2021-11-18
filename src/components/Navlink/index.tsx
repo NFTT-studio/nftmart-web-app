@@ -58,7 +58,7 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
     {
       title: 'common.nav.navCreate',
       path: data?.createdClassCount ? `/account/${account?.address}/wallet?id=4`
-        : '/profile/collection/create',
+        : '/account/collections/create',
       requiredLogin: true,
       requiredWhitelist: true,
     },

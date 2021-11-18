@@ -168,7 +168,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           setTimeout(() => {
             setIsSubmitting(false);
             formAction.resetForm();
-            history.push(`/collection/${account!.address}?collectionId=${collectionId}`);
+            history.push(`/collection/${collectionId}-${collectionsData?.collection?.metadata.name}`);
           }, 3000);
         },
         error: (error: string) => {
@@ -196,7 +196,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       >
         <Link
           as={RouterLink}
-          to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
+          to={`/collection/${collectionId}-${collectionsData?.collection?.metadata.name}`}
         >
           <Flex
             maxW="1364px"
