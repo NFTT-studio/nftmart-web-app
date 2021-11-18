@@ -280,7 +280,7 @@ const DetailLeft: FC<Props> = (({
               <Flex alignItems="center" mb="11px">
                 <Link
                   as={RouterLink}
-                  to={`/account/${nftData?.nftInfo?.creator_id}/wallet`}
+                  to={`/account/${nftData?.nftInfo?.creator_id}${nftData?.nftInfo?.creator?.name ? `-${nftData?.nftInfo?.creator?.name}` : ''}/owned`}
                   onClick={() => {
                     localStorage.setItem('ButtonSelect', '1');
                   }}
@@ -319,7 +319,7 @@ const DetailLeft: FC<Props> = (({
                     {t('Detail.createdBy')}
                     <Link
                       as={RouterLink}
-                      to={`/account/${nftData?.nftInfo?.creator_id}/wallet`}
+                      to={`/account/${nftData?.nftInfo?.creator_id}${nftData?.nftInfo?.creator?.name ? `-${nftData?.nftInfo?.creator?.name}` : ''}/owned`}
                       m="0 3px"
                       fontSize="14px"
                       fontFamily="TTHoves-Regular, TTHoves"

@@ -392,9 +392,8 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               width="100%"
               justifyContent="space-between"
               onClick={() => {
-                history.push(`/account/${address}/wallet?id=0`);
+                history.push('/account/owned');
                 setOpening(false);
-                localStorage.setItem('ButtonSelect', '0');
               }}
             >
               <Flex width="100%" justifyContent="flex-start" alignItems="center">
@@ -460,9 +459,8 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 width="100%"
                 justifyContent="space-between"
                 onClick={() => {
-                  history.push(`/account/${address}/wallet?id=1`);
+                  history.push('/account/created');
                   setOpening(false);
-                  localStorage.setItem('ButtonSelect', '1');
                 }}
               >
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
@@ -492,7 +490,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Flex>
               <Link
                 as={RouterLink}
-                to={`/account/${address}/wallet?id=1`}
+                to="/account/created"
                 width="47px"
                 textAlign="right"
                 ml="12px"
@@ -530,8 +528,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                 width="100%"
                 justifyContent="space-between"
                 onClick={() => {
-                  history.push(`/account/${address}/wallet?id=4`); setOpening(false);
-                  localStorage.setItem('ButtonSelect', '4');
+                  history.push('/account/collections'); setOpening(false);
                 }}
               >
                 <Flex width="100%" justifyContent="flex-start" alignItems="center">
@@ -561,7 +558,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
               </Flex>
               <Link
                 as={RouterLink}
-                to={`/account/${userData?.address}/wallet?id=4`}
+                to="/account/collections"
                 width="47px"
                 textAlign="right"
                 ml="12px"

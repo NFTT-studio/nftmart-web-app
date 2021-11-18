@@ -60,7 +60,7 @@ import ShareDetail from '../../components/ShareDetail';
 const propertiesArr = [1, 2, 3, 4, 5, 6];
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
 
-const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
+const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: string, nftName: string, }>) => {
   function number2PerU16(x) {
     return (x / 65535) * 100;
   }
@@ -72,14 +72,14 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
 
   const [remainingTime, setRemainingTime] = useState(0);
   const { account } = chainState;
-  const { nftId } = match.params;
-  const { data: nftData, isLoading: nftDataIsLoading, refetch: refetchNftData } = useNft(nftId);
-  const collectionsId = nftId.split('-')[0];
-  const tokenId = nftId.split('-')[1];
+  const { collectionId, nftId, nftName } = match.params;
+  const { data: nftData, isLoading: nftDataIsLoading, refetch: refetchNftData } = useNft(`${collectionId}-${nftId}`);
+  const collectionsId = collectionId;
+  const tokenId = nftId;
 
   const collectNft = async (type:string) => {
     const data = {
-      nft_id: nftId,
+      nft_id: `${collectionId}-${nftId}`,
       collecter_id: account?.address,
       type,
     };
@@ -96,7 +96,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   };
   const browse = async () => {
     const data = {
-      nft_id: nftId,
+      nft_id: `${collectionId}-${nftId}`,
       viewer_id: account?.address || '',
     };
     await axios.get(`${CACHE_SERVER_URL}nfts/action/view`, { params: data });
@@ -191,7 +191,6 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
   const auctionPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.price);
   const collectionName = collectionsData?.collection?.metadata?.name;
-  const nftName = nftData?.nftInfo?.metadata.name;
 
   useEffect(() => {
     getBlock().then((res) => {
@@ -283,7 +282,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               background: '#000000',
                               color: '#FFFFFF',
                             }}
-                            onClick={() => history.push(`/sellSetting/${nftId}`)}
+                            onClick={() => history.push(`/${collectionId}-${nftId}/sellSetting`)}
                           >
                             {t('Detail.setting')}
                           </Button>
@@ -322,7 +321,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               background: '#000000',
                               color: '#FFFFFF',
                             }}
-                            onClick={() => history.push(`/sellSetting/${nftId}`)}
+                            onClick={() => history.push(`/${collectionId}-${nftId}/sellSetting`)}
                           >
                             {t('Detail.Sell')}
                           </Button>
@@ -471,7 +470,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         background: '#000000',
                         color: '#FFFFFF',
                       }}
-                      onClick={() => history.push(`/sellSetting/${nftId}`)}
+                      onClick={() => history.push(`/${nftId}/sellSetting`)}
                     >
                       {t('Detail.setting')}
                     </Button> */}
@@ -608,7 +607,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                   propertiesArr={propertiesArr}
                 />
                 <DetailRight
-                  nftId={nftId}
+                  nftId={`${collectionId}-${nftId}`}
                   nftData={nftData}
                   collectionsData={collectionsData}
                   account={account}
@@ -704,7 +703,7 @@ const Detail = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                 isShowCancel={isShowCancel}
                 setIsShowCancel={setIsShowCancel}
                 orderId={nftData?.nftInfo.status === 'Selling' ? orderId : ''}
-                nftId={nftId}
+                nftId={`${collectionId}-${nftId}`}
               />
               )}
               {isCancelAuction && (

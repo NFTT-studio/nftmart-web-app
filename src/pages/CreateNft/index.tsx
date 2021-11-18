@@ -168,7 +168,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           setTimeout(() => {
             setIsSubmitting(false);
             formAction.resetForm();
-            history.push(`/collection/${account!.address}?collectionId=${collectionId}`);
+            history.push(`/collection/${collectionId}-${collectionsData?.collection?.metadata.name}`);
           }, 3000);
         },
         error: (error: string) => {
@@ -196,7 +196,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       >
         <Link
           as={RouterLink}
-          to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
+          to={`/collection/${collectionId}-${collectionsData?.collection?.metadata.name}`}
         >
           <Flex
             maxW="1364px"
@@ -350,7 +350,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           {formik.errors.description && formik.touched.description ? (
             <div style={{ color: 'red' }}>{formik.errors.description}</div>
           ) : null}
-          <Text
+          {/* <Text
             marginTop="30px"
             fontSize="16px"
             fontFamily="TTHoves-Medium, TTHoves"
@@ -436,7 +436,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             onClick={addMore}
           >
             Add  more
-          </Text>
+          </Text> */}
           <Flex
             w="100%"
             mt="20px"

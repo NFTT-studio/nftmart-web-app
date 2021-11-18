@@ -192,7 +192,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setTimeout(() => {
               setIsSubmitting(false);
               formAction.resetForm();
-              history.push(`/item/${nftData?.nftInfo?.id}`);
+              history.push(`/items/${nftData?.nftInfo?.id}-${nftData?.nftInfo?.metadata?.name}`);
             }, 3000);
           },
           error: (error) => {
@@ -231,7 +231,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setTimeout(() => {
               setIsSubmitting(false);
               formAction.resetForm();
-              history.push(`/item/${nftData?.nftInfo?.id}`);
+              history.push(`/items/${nftData?.nftInfo?.id}-${nftData?.nftInfo?.metadata?.name}`);
             }, 3000);
           },
           error: (error) => {
@@ -270,7 +270,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setIsSubmitting(false);
             formAction.resetForm();
             setTimeout(() => {
-              history.push(`/item/${nftData?.nftInfo?.id}`);
+              history.push(`/items/${nftData?.nftInfo?.id}--${nftData?.nftInfo?.metadata?.name}`);
             }, 3000);
           },
           error: (error) => {
@@ -309,7 +309,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setTimeout(() => {
               setIsSubmitting(false);
               formAction.resetForm();
-              history.push(`/item/${nftData?.nftInfo?.id}`);
+              history.push(`/items/${nftData?.nftInfo?.id}-${nftData?.nftInfo?.metadata?.name}`);
             }, 3000);
           },
           error: (error) => {
@@ -356,7 +356,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   });
 
   return (
-    <MainContainer title={t('SellSetting.title')}>
+    <MainContainer title={`${t('SellSetting.title')}-${nftData?.nftInfo?.metadata?.name}-${collectionsData?.collection?.metadata?.name}|${t('Home.title')}`}>
       <Flex
         w="100vw"
         h="80px"
@@ -376,7 +376,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         >
           <Link
             as={RouterLink}
-            to={`/item/${nftData?.nftInfo?.id}`}
+            to={`/items/${nftData?.nftInfo?.id}-${nftData?.nftInfo?.metadata?.name}`}
           >
             <Flex
               height="40px"

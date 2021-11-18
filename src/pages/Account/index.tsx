@@ -45,24 +45,17 @@ import {
 import { statusArr } from '../../constants/Status';
 // import useCollections from '../../hooks/reactQuery/useCollections';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
-import useNftsCollect from '../../hooks/reactQuery/useNftsCollect';
 import useOffer from '../../hooks/reactQuery/useOffer';
 import useOffersend from '../../hooks/reactQuery/useOffersend';
 import CreateCard from './CreateCard';
 import OfferItem from './OfferItem';
 import NftItem from './NftItem';
 import Headers from './Header';
-import useAccount from '../../hooks/reactQuery/useAccount';
 import Sort from '../../constants/Sort';
-import useNfts from '../../hooks/reactQuery/useNfts';
 import useUser from '../../hooks/reactQuery/useUser';
 
-const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
+const Account = ({ match }: RouteComponentProps<{ address: string, username:string}>) => {
   const { t } = useTranslation();
-  const { address } = match.params;
-
-  const { data: userData, isLoading: userDataLoading, refetch: fetchUserData } = useUser(address);
-
   const offersMadeButton = [
     {
       id: '0',
@@ -73,17 +66,18 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
       title: t('Account.offersReceived'),
     },
   ];
-
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
-  const dataPerson = useAccount(address);
+  const address = match.params.address || account?.address;
+  console.log(match);
   const [isPerson, setIsPerson] = useState(false);
-
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
   const [selectedCollection, setSelectedCollectionArr] = useState();
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const [remainingTime, setRemainingTime] = useState(0);
+
+  const { data: userData, isLoading: userDataLoading, refetch: fetchUserData } = useUser(address);
 
   useEffect(() => {
     getBlock().then((res) => {
@@ -91,9 +85,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     });
   }, []);
 
-  const [selectTabId, setSelectTabId] = useState(Number(localStorage.getItem('ButtonSelect')) || 0);
+  const [selectTabId, setSelectTabId] = useState(0);
+  const [urlName, setUrlName] = useState('');
   const handletabSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
-    localStorage.setItem('ButtonSelect', event.currentTarget.id);
     setSelectTabId(Number(event.currentTarget.id));
   };
 
@@ -160,37 +154,51 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
     );
   };
   useEffect(() => {
-    setSelectTabId(Number(localStorage.getItem('ButtonSelect')) || 0);
-  }, [Number(localStorage.getItem('ButtonSelect'))]);
-  useEffect(() => {
-    if (account && whiteList?.indexOf(address) < 0) {
-      localStorage.setItem('ButtonSelect', '0');
+    if (window.location.href.indexOf('owned') > -1) {
+      setSelectTabId(0);
+      setUrlName('myWallet');
     }
-  }, [account?.address, whiteList?.length !== 0]);
-
-  const [collections, setCollections] = useState([]);
-
-  useEffect(() => {
-    setCollections(collectionsData?.collections);
-  }, [collectionsData?.collections]);
+    if (window.location.href.indexOf('created') > -1) {
+      setSelectTabId(1);
+      setUrlName('Created');
+    }
+    if (window.location.href.indexOf('Stars') > -1) {
+      setSelectTabId(2);
+      setUrlName('Stars');
+    }
+    if (window.location.href.indexOf('Offers') > -1) {
+      setSelectTabId(3);
+      setUrlName('offers');
+    }
+    if (window.location.href.indexOf('collections') > -1) {
+      setSelectTabId(4);
+      setUrlName('collections');
+    }
+  }, [window.location.href]);
 
   useEffect(() => {
     if (address === account?.address) {
       setIsPerson(true);
+    } else {
+      setIsPerson(false);
     }
-  }, [account?.address, address]);
-  useEffect(() => {
-    if (address === account?.address) {
-      setIsPerson(true);
+    if (address) {
+      fetchUserData();
+      fetchCollections();
+      fetchNftsData();
+      fetchNftsDataCreate();
+      fetchNftsDataCollecte();
+      fetchOffersend();
+      fetchOfferreceive();
     }
-    fetchUserData();
-    fetchCollections();
-    fetchNftsData();
-    fetchNftsDataCreate();
-    fetchNftsDataCollecte();
-    fetchOffersend();
-    fetchOfferreceive();
   }, [address]);
+  useEffect(() => {
+    if (address) {
+      fetchNftsData();
+      fetchNftsDataCreate();
+      fetchNftsDataCollecte();
+    }
+  }, [selectedStatusArr, selectedSort]);
 
   const TABS = [
     {
@@ -241,7 +249,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
   }
 
   return (
-    <MainContainer title={t('Home.title')}>
+    <MainContainer title={`${t(`Account.${urlName}`)}-${userData?.name || address}|${t('Home.title')}`}>
       <Flex maxWidth="1400px" flexDirection="column" position="relative">
         <Box
           maxWidth="1400px"
@@ -303,7 +311,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
               <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
             </Center>
           ) : (
-            <Headers userData={userData} dataPerson={dataPerson} />
+            <Headers userData={userData} />
           )}
           <Flex
             mt="53px"
@@ -603,7 +611,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string }>) => {
                       {collectionsData ? collectionsData.collections.map((item) => (
                         <Link
                           as={RouterLink}
-                          to={`/collection/${address}?collectionId=${item.id}`}
+                          to={`/collection/${item.id}-${item.metadata.name}`}
                         >
                           <Flex
                             key={item.id}

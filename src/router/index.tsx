@@ -27,14 +27,28 @@ export default () => (
         <Route exact strict path="/" component={Home} />
         <Route exact strict path="/browsing" component={Browsing} />
         <Route exact strict path="/connect" component={Connect} />
-        <Route exact strict path="/collection/:address" component={Collection} />
-        <Route exact strict path="/item/:nftId" component={Detail} />
+        <Route exact strict path="/collection/:collectionId-:collectionName" component={Collection} />
+        <Route exact strict path="/items/:collectionId-:nftId-:nftName" component={Detail} />
         <Route exact strict path="/account/:address/wallet" component={Account} />
+        <Route exact strict path="/account/:address-:username/owned" component={Account} />
+        <Route exact strict path="/account/:address-:username/created" component={Account} />
+        <Route exact strict path="/account/:address-:username/Stars" component={Account} />
+        <Route exact strict path="/account/:address-:username/Offers" component={Account} />
+        <Route exact strict path="/account/:address-:username/collections" component={Account} />
+        <Route exact strict path="/account/:address/owned" component={Account} />
+        <Route exact strict path="/account/:address/created" component={Account} />
+        <Route exact strict path="/account/:address/Stars" component={Account} />
+        <Route exact strict path="/account/:address/Offers" component={Account} />
         <Route exact strict path="/account/:address/collections" component={Account} />
-        <Route exact strict path="/profile/collection/create" component={CreateCollection} />
-        <Route exact strict path="/profile/nft/create/:collectionId" component={CreateNft} />
-        <Route exact strict path="/profile" component={EditProfile} />
-        <Route exact strict path="/sellSetting/:nftId" component={SellSetting} />
+        <Route exact strict path="/account/owned" component={Account} />
+        <Route exact strict path="/account/created" component={Account} />
+        <Route exact strict path="/account/stars" component={Account} />
+        <Route exact strict path="/account/offers" component={Account} />
+        <Route exact strict path="/account/collections" component={Account} />
+        <Route exact strict path="/account/collections/create" component={CreateCollection} />
+        <Route exact strict path="/account/items/create:collectionId" component={CreateNft} />
+        <Route exact strict path="/account/profile/settings" component={EditProfile} />
+        <Route exact strict path="/:nftId/sellSetting" component={SellSetting} />
       </Switch>
     </PolkaProvider>
     <Footer />

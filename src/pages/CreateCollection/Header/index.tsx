@@ -18,7 +18,7 @@ interface Props {
   userData?: [],
 }
 const Header: FC<Props> = (({ userData }) => {
-  const formatAddress = (addr: string) => `${addr?.slice(0, 4)}...${addr?.slice(-4)}`;
+  const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : '');
   const isPerson = useIsLoginAddress(userData?.address);
 
   return (
@@ -63,7 +63,7 @@ const Header: FC<Props> = (({ userData }) => {
         {isPerson ? (
           <Link
             as={RouterLink}
-            to="/profile"
+            to="/account/profile/settings"
           >
             <Box
               key="index"

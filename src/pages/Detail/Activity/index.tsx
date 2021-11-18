@@ -106,7 +106,7 @@ const Events: FC<Props> = (({
         <Link
           display="inline-block"
           as={RouterLink}
-          to={`/account/${date[0]}/wallet`}
+          to={`/account/${date[0]}/owned`}
           onClick={() => {
             localStorage.setItem('ButtonSelect', '0');
           }}
@@ -123,20 +123,55 @@ const Events: FC<Props> = (({
         color="#3D00FF"
         lineHeight="20px"
       >
-        <Link
-          display="inline-block"
-          as={RouterLink}
-          to={`/account/${date[1]}/wallet`}
-          onClick={() => {
-            localStorage.setItem('ButtonSelect', '0');
-          }}
-        >
-          {events?.method === 'TransferredToken' ? formatAddress(date[1]) : ''}
-          {events?.method === 'RedeemedBritishAuction' ? formatAddress(date[1]) : ''}
-          {events?.method === 'RedeemedDutchAuction' ? formatAddress(date[1]) : ''}
-          {events?.method === 'TakenOffer' ? formatAddress(date[1]) : ''}
-          {events?.method === 'TakenOrder' ? formatAddress(date[1]) : ''}
-        </Link>
+
+        {events?.method === 'TransferredToken'
+          ? (
+            <Link
+              display="inline-block"
+              as={RouterLink}
+              to={`/account/${date[1]}/owned`}
+            >
+              {formatAddress(date[1])}
+            </Link>
+          )
+          : ''}
+        {events?.method === 'RedeemedBritishAuction' ? (
+          <Link
+            display="inline-block"
+            as={RouterLink}
+            to={`/account/${date[1]}/owned`}
+          >
+            {formatAddress(date[1])}
+          </Link>
+        ) : ''}
+        {events?.method === 'RedeemedDutchAuction' ? (
+          <Link
+            display="inline-block"
+            as={RouterLink}
+            to={`/account/${date[1]}/owned`}
+          >
+            {formatAddress(date[1])}
+          </Link>
+        ) : ''}
+        {events?.method === 'TakenOffer' ? (
+          <Link
+            display="inline-block"
+            as={RouterLink}
+            to={`/account/${date[1]}/owned`}
+          >
+            {formatAddress(date[1])}
+          </Link>
+        ) : ''}
+        {events?.method === 'TakenOrder' ? (
+          <Link
+            display="inline-block"
+            as={RouterLink}
+            to={`/account/${date[1]}/owned`}
+          >
+            {formatAddress(date[1])}
+          </Link>
+        ) : ''}
+
       </Text>
       <Text
         w="136px"

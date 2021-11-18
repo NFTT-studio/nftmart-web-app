@@ -99,7 +99,7 @@
     "cheapest": "CHEAPEST"
   },
   "Collection": {
-    "title": "-NFTMart|A Professional NFT Market",
+    "title": "Create Collection",
     "editProfile": "Edit profile",
     "addItem": "Add Item",
     "createCollection": "Create NFT",
@@ -234,7 +234,7 @@
     "buySuccess": "Buy Success"
   },
   "SellSetting": {
-    "title": "Set Price-NFTMart|A Professional NFT Market",
+    "title": "sellSetting",
     "dutchRule":"The Ending price cannot be lower than the starting price",
     "formTitle": "Select your sell method",
     "sellAtaFixedPrice": "Sell at a fixed price",
@@ -307,6 +307,7 @@
     "expiration": "Expiration"
   },
   "ProfileEdit": {
+    "title": "Settings",
     "portrait": "*Portrait",
     "portraitRule": "350×350 recommended",
     "username": "*Username",

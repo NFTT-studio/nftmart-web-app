@@ -72,7 +72,7 @@ const BuyDialog: FC<Props> = (({
             localStorage.setItem('ButtonSelect', '0');
             setTimeout(() => {
               setIsSubmitting(false);
-              history.push(`/account/${account?.address}/wallet`);
+              history.push(`/account/${account?.address}${data?.name ? `-${data?.name}` : ''}/owned`);
             }, 3000);
           }
         },

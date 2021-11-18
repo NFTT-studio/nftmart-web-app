@@ -56,7 +56,7 @@ const OfferItem: FC<Props> = (({ offers }) => {
   return (
     <Link
       as={RouterLink}
-      to={`/item/${offers?.nft_id}`}
+      to={`/items/${offers?.nft_id}-${offers?.nft?.name}`}
 
     >
       <Flex
