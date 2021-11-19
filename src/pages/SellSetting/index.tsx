@@ -192,7 +192,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setTimeout(() => {
               setIsSubmitting(false);
               formAction.resetForm();
-              history.push(`/items/${nftData?.nftInfo?.id}-${nftData?.nftInfo?.metadata?.name}`);
+              history.push(`/items/${nftData?.nftInfo?.id}-${encodeURIComponent(nftData?.nftInfo?.metadata?.name)}`);
             }, 3000);
           },
           error: (error) => {
@@ -231,7 +231,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setTimeout(() => {
               setIsSubmitting(false);
               formAction.resetForm();
-              history.push(`/items/${nftData?.nftInfo?.id}-${nftData?.nftInfo?.metadata?.name}`);
+              history.push(`/items/${nftData?.nftInfo?.id}-${encodeURIComponent(nftData?.nftInfo?.metadata?.name)}`);
             }, 3000);
           },
           error: (error) => {
@@ -270,7 +270,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setIsSubmitting(false);
             formAction.resetForm();
             setTimeout(() => {
-              history.push(`/items/${nftData?.nftInfo?.id}--${nftData?.nftInfo?.metadata?.name}`);
+              history.push(`/items/${nftData?.nftInfo?.id}-${encodeURIComponent(nftData?.nftInfo?.metadata?.name)}`);
             }, 3000);
           },
           error: (error) => {
@@ -309,7 +309,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
             setTimeout(() => {
               setIsSubmitting(false);
               formAction.resetForm();
-              history.push(`/items/${nftData?.nftInfo?.id}-${nftData?.nftInfo?.metadata?.name}`);
+              history.push(`/items/${nftData?.nftInfo?.id}-${encodeURIComponent(nftData?.nftInfo?.metadata?.name)}`);
             }, 3000);
           },
           error: (error) => {

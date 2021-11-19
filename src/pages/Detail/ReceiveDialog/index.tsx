@@ -68,7 +68,6 @@ const DealDialog: FC<Props> = (({
                   <ToastBody title="Success" message={t('common.success')} type="success" />
                 ),
               });
-              localStorage.setItem('ButtonSelect', '0');
               setTimeout(() => {
                 setIshowReceive(false);
                 setIsSubmitting(false);
@@ -102,11 +101,21 @@ const DealDialog: FC<Props> = (({
         cb: {
           success: (result) => {
             if (result.dispatchError) {
-              toast(<ToastBody title="Error" message={t('common.error')} type="error" />);
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={result.dispatchError.toString()} type="error" />
+                ),
+              });
               setIshowReceive(false);
               setIsSubmitting(false);
             } else {
-              toast(<ToastBody title="Success" message={t('common.success')} type="success" />);
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Success" message={t('common.success')} type="success" />
+                ),
+              });
               setTimeout(() => {
                 setIshowReceive(false);
                 setIsSubmitting(false);
@@ -115,7 +124,12 @@ const DealDialog: FC<Props> = (({
             }
           },
           error: (error) => {
-            toast(<ToastBody title="Error" message={error} type="error" />);
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={error} type="error" />
+              ),
+            });
             setIshowReceive(false);
             setIsSubmitting(false);
           },
