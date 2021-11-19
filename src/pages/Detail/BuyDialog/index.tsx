@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { FC, useRef, useState } from 'react';
 import {
   Flex,
@@ -72,7 +73,7 @@ const BuyDialog: FC<Props> = (({
             localStorage.setItem('ButtonSelect', '0');
             setTimeout(() => {
               setIsSubmitting(false);
-              history.push(encodeURI(`/account/${account?.address}${data?.name ? `-${data?.name}` : ''}/owned`));
+              history.push(`/account/${account?.address}${data?.name ? `-${encodeURIComponent(data?.name)}` : ''}/owned`);
             }, 3000);
           }
         },

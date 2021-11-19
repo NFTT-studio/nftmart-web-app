@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-multi-assign */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-return-assign */
@@ -168,7 +169,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           setTimeout(() => {
             setIsSubmitting(false);
             formAction.resetForm();
-            history.push(encodeURI(`/collection/${collectionId}-${collectionsData?.collection?.metadata.name}`));
+            history.push(`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`);
           }, 3000);
         },
         error: (error: string) => {
@@ -196,7 +197,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       >
         <Link
           as={RouterLink}
-          to={encodeURI(`/collection/${collectionId}-${collectionsData?.collection?.metadata.name}`)}
+          to={`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`}
         >
           <Flex
             maxW="1364px"

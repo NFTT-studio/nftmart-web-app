@@ -278,7 +278,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                   <Flex alignItems="center" m="20px 0">
                     <Link
                       as={RouterLink}
-                      to={encodeURI(`/account/${collectionsData?.collection?.creator_id}${dataCreator?.name ? `-${dataCreator?.name}` : ''}/owned`)}
+                      to={`/account/${collectionsData?.collection?.creator_id}${dataCreator?.name ? `-${encodeURIComponent(dataCreator?.name)}` : ''}/owned`}
                     >
                       {dataCreator?.avatar ? (
                         <Image
