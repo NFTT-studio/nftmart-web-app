@@ -73,6 +73,7 @@ const Account = () => {
       fetchOfferReceive();
     }
   }, [address]);
+
   const TABS = [
     {
       id: '0',
@@ -81,7 +82,7 @@ const Account = () => {
       title: t('Account.myWallet'),
       num: userData?.ownerNftscount,
       requiredWhitelist: false,
-      url: '/account/nmvkzZYRfirHr4S8GuJNNuvPrx62KDzJjMKPRrd9jtUBiB9hJ/wallet?id=0',
+      url: '/account/owned',
     },
     {
       id: '1',
@@ -90,7 +91,7 @@ const Account = () => {
       title: t('Account.Created'),
       num: userData?.createdNftCount,
       requiredWhitelist: true,
-      url: '/account/nmvkzZYRfirHr4S8GuJNNuvPrx62KDzJjMKPRrd9jtUBiB9hJ/wallet?id=1',
+      url: '/account/created',
     },
     {
       id: '2',
@@ -99,7 +100,7 @@ const Account = () => {
       title: t('Account.Stars'),
       num: nftsDataCollecte?.pages[0]?.pageInfo?.totalNum,
       requiredWhitelist: false,
-      url: '/account/nmvkzZYRfirHr4S8GuJNNuvPrx62KDzJjMKPRrd9jtUBiB9hJ/wallet?id=2',
+      url: '/account/stars',
     },
     {
       id: '3',
@@ -108,7 +109,7 @@ const Account = () => {
       title: t('Account.offers'),
       num: Offerreceive?.pages[0].pageInfo.totalNum,
       requiredWhitelist: false,
-      url: '/account/nmvkzZYRfirHr4S8GuJNNuvPrx62KDzJjMKPRrd9jtUBiB9hJ/wallet?id=3',
+      url: '/account/offers',
     },
     {
       id: '4',
@@ -117,7 +118,7 @@ const Account = () => {
       title: t('Account.collections'),
       num: userData?.createdClassCount,
       requiredWhitelist: true,
-      url: '/account/nmvkzZYRfirHr4S8GuJNNuvPrx62KDzJjMKPRrd9jtUBiB9hJ/wallet?id=4',
+      url: '/account/collections',
     },
   ];
 

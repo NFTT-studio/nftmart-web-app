@@ -4,7 +4,9 @@ import React, {
 } from 'react';
 import Identicon from '@polkadot/react-identicon';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink, RouteComponentProps, useLocation } from 'react-router-dom';
+import {
+  Link as RouterLink, RouteComponentProps, useLocation, useHistory,
+} from 'react-router-dom';
 import {
   Flex,
   Box,
@@ -55,6 +57,7 @@ import Sort from '../../constants/Sort';
 import useUser from '../../hooks/reactQuery/useUser';
 
 const Account = ({ match }: RouteComponentProps<{ address: string, username:string}>) => {
+  const history = useHistory();
   const { t } = useTranslation();
   const offersMadeButton = [
     {
@@ -66,10 +69,57 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
       title: t('Account.offersReceived'),
     },
   ];
+  function historyUrl(idTab:string, str:string) {
+    if (idTab === '0') {
+      const url = window.location.pathname.replace(str, '/owned');
+      history.push(encodeURI(url));
+      return;
+    }
+    if (idTab === '1') {
+      const url = window.location.pathname.replace(str, '/created');
+      history.push(encodeURI(url));
+      return;
+    }
+    if (idTab === '2') {
+      const url = window.location.pathname.replace(str, '/stars');
+      history.push(encodeURI(url));
+      return;
+    }
+    if (idTab === '3') {
+      const url = window.location.pathname.replace(str, '/offers');
+      history.push(encodeURI(url));
+      return;
+    }
+    if (idTab === '4') {
+      const url = window.location.pathname.replace(str, '/collections');
+      history.push(encodeURI(url));
+    }
+  }
+
+  function historyTabUrl(idTab:string) {
+    if (window.location.href.indexOf('owned') > -1) {
+      historyUrl(idTab, '/owned');
+      return;
+    }
+    if (window.location.href.indexOf('created') > -1) {
+      historyUrl(idTab, '/created');
+      return;
+    }
+    if (window.location.href.indexOf('stars') > -1) {
+      historyUrl(idTab, '/stars');
+      return;
+    }
+    if (window.location.href.indexOf('offers') > -1) {
+      historyUrl(idTab, '/offers');
+      return;
+    }
+    if (window.location.href.indexOf('collections') > -1) {
+      historyUrl(idTab, '/collections');
+    }
+  }
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
   const address = match.params.address || account?.address;
-  console.log(match);
   const [isPerson, setIsPerson] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
@@ -88,7 +138,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
   const [selectTabId, setSelectTabId] = useState(0);
   const [urlName, setUrlName] = useState('');
   const handletabSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
-    setSelectTabId(Number(event.currentTarget.id));
+    historyTabUrl(event.currentTarget.id);
   };
 
   const [offersMadeButtonId, setOffersMadeButtonId] = useState(1);
@@ -162,11 +212,11 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
       setSelectTabId(1);
       setUrlName('Created');
     }
-    if (window.location.href.indexOf('Stars') > -1) {
+    if (window.location.href.indexOf('stars') > -1) {
       setSelectTabId(2);
       setUrlName('Stars');
     }
-    if (window.location.href.indexOf('Offers') > -1) {
+    if (window.location.href.indexOf('offers') > -1) {
       setSelectTabId(3);
       setUrlName('offers');
     }
@@ -611,7 +661,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
                       {collectionsData ? collectionsData.collections.map((item) => (
                         <Link
                           as={RouterLink}
-                          to={`/collection/${item.id}-${item.metadata.name}`}
+                          to={encodeURI(`/collection/${item.id}-${item.metadata.name}`)}
                         >
                           <Flex
                             key={item.id}

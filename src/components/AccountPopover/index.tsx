@@ -505,7 +505,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
                   border: 'none',
                   textDecoration: 'none',
                 }}
-                onClick={() => { setOpening(false); localStorage.setItem('ButtonSelect', '1'); }}
+                onClick={() => { setOpening(false); }}
               >
                 {t('common.add')}
               </Link>
