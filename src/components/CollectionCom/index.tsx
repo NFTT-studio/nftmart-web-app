@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-useless-escape */
 /* eslint-disable react/no-children-prop */
@@ -124,7 +125,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             });
             setTimeout(() => {
               setIsSubmitting(false);
-              history.push(encodeURI(`/collection/${result.events[5].event.data[1].toString()}-${formValue.name}`));
+              history.push(`/collection/${result.events[5].event.data[1].toString()}-${encodeURIComponent(formValue.name)}`);
               formActions.resetForm();
             }, 2500);
           }

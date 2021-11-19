@@ -661,7 +661,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
                       {collectionsData ? collectionsData.collections.map((item) => (
                         <Link
                           as={RouterLink}
-                          to={encodeURI(`/collection/${item.id}-${item.metadata.name}`)}
+                          to={`/collection/${item.id}-${encodeURIComponent(item.metadata.name)}`}
                         >
                           <Flex
                             key={item.id}
