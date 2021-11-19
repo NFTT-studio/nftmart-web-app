@@ -124,7 +124,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             });
             setTimeout(() => {
               setIsSubmitting(false);
-              history.push(`/collection/${result.events[5].event.data[1].toString()}-${formValue.name}`);
+              history.push(encodeURI(`/collection/${result.events[5].event.data[1].toString()}-${formValue.name}`));
               formActions.resetForm();
             }, 2500);
           }
