@@ -3,4 +3,7 @@ import fetchCollections, { FetchCollectionsParams } from '../../api/fetchCollect
 import { QUERY_KEYS } from '../../constants';
 
 export default ({ address }: FetchCollectionsParams) => useQuery(QUERY_KEYS.COLLECTIONS,
-  () => fetchCollections({ address }));
+  () => fetchCollections({ address }),
+  {
+    enabled: false,
+  });

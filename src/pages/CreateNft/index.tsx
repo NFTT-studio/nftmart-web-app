@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-multi-assign */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-return-assign */
@@ -59,6 +60,13 @@ import MyModal from '../../components/MyModal';
 import MyToast, { ToastBody } from '../../components/MyToast';
 
 const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
+  function GetQueryString(name) {
+    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
+    const r = decodeURI(window.location.search.substr(1)).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+  const status = GetQueryString('collectionId');
   const [propertiesArr, setPropertiesArr] = useState([{ key: '', value: '' }]);
 
   function number2PerU16(x) {
@@ -68,7 +76,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const toast = useToast();
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
-  const { collectionId } = match.params;
+  const collectionId = match.params.collectionId || status;
   const { account, whiteList } = chainState;
   const [isShowModal, setIsShowModal] = useState(false);
   const [preview, setIsPreview] = useState(false);
@@ -168,7 +176,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           setTimeout(() => {
             setIsSubmitting(false);
             formAction.resetForm();
-            history.push(`/collection/${account!.address}?collectionId=${collectionId}`);
+            history.push(`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`);
           }, 3000);
         },
         error: (error: string) => {
@@ -196,7 +204,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       >
         <Link
           as={RouterLink}
-          to={`/collection/${account?.address}?collectionId=${collectionsData?.collection?.id}`}
+          to={`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`}
         >
           <Flex
             maxW="1364px"

@@ -58,7 +58,7 @@ const Browsing = () => {
   const [remainingTime, setRemainingTime] = useState(0);
 
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
-  const { data: collectionsData, isLoading: collectionsIsLoading } = useCollections({});
+  const { data: collectionsData, isLoading: collectionsIsLoading, refetch: fetchCollections } = useCollections({});
   const {
     data: nftsData, isLoading: nftsIsLoading, fetchNextPage, refetch: refetchnftsData,
   } = useNftsAll(
@@ -76,6 +76,7 @@ const Browsing = () => {
     if (status === null) {
       refetchnftsData();
     }
+    fetchCollections();
   }, []);
 
   const [collectionsArr, setCollectionsArr] = useState<Collection[]>([]);
@@ -142,7 +143,7 @@ const Browsing = () => {
   }, [collectionsData]);
 
   return (
-    <MainContainer title={t('Browsing.title')}>
+    <MainContainer title={`${t('Browsing.title')}|${t('Home.title')}`}>
       <Container className="container" w="100%" mt="40px" display="flex" justifyContent="space-between" p="0 50px">
         <Flex
           w="260px"

@@ -451,7 +451,7 @@ const DetailRight: FC<Props> = (({
           <Link
             mt="10px"
             as={RouterLink}
-            to={`/collection/${collectionsData?.collection?.creator_id}?collectionId=${collectionsData?.collection?.id}`}
+            to={`/collection/${collectionsData?.collection?.id}-${encodeURIComponent(collectionName)}`}
           >
             <Flex alignItems="center">
               <Text
@@ -475,10 +475,7 @@ const DetailRight: FC<Props> = (({
           <Link
             display="inline-block"
             as={RouterLink}
-            to={`/account/${nftData?.nftInfo?.owner_id}/wallet`}
-            onClick={() => {
-              localStorage.setItem('ButtonSelect', '0');
-            }}
+            to={`/account/${nftData?.nftInfo?.owner_id}${nftData?.nftInfo?.owner?.name ? `-${encodeURIComponent(nftData?.nftInfo?.owner?.name)}` : ''}/owned`}
           >
             <Flex p="20px 0 0 0" justifyContent="flex-start" alignItems="center">
               {nftData?.nftInfo?.owner?.avatar ? (
@@ -849,7 +846,7 @@ const DetailRight: FC<Props> = (({
             </Flex>
           ) : null}
         </Flex>
-        {Number(nftData?.nftInfo.auction?.hammer_price) && Number(events.times) > 0
+        {Number(nftData?.nftInfo?.auction?.hammer_price) && Number(events.times) > 0
           ? (
             <Flex
               width="100%"
@@ -1025,10 +1022,7 @@ const DetailRight: FC<Props> = (({
                           >
                             <Link
                               as={RouterLink}
-                              to={`/account/${item.bidder_id}/wallet`}
-                              onClick={() => {
-                                localStorage.setItem('ButtonSelect', '1');
-                              }}
+                              to={`/account/${item.bidder_id}${item.user_info?.name ? `-${encodeURIComponent(item.user_info?.name)}` : ''}/owned`}
                             >
                               {item.user_info?.name ? item.user_info?.name
                                 : formatAddress(item.bidder_id)}

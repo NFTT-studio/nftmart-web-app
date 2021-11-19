@@ -39,11 +39,17 @@ import useOffer from '../../hooks/reactQuery/useOffer';
 import Headers from './Header';
 import CollectionCom from '../../components/CollectionCom/index';
 
+import {
+  DEFAULT_PAGE_LIMIT,
+  PINATA_SERVER,
+} from '../../constants';
+
 const Account = () => {
   const { t } = useTranslation();
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
-  const [address] = useLocalStorage<string>('LOGIN_ADDRESS');
+  const [addressLoc] = useLocalStorage<string>('LOGIN_ADDRESS');
+  const address = account?.address || addressLoc;
   const history = useHistory();
   const {
     data: Offerreceive, refetch: fetchOfferReceive,
@@ -61,10 +67,13 @@ const Account = () => {
   );
 
   useEffect(() => {
-    if (!address) {
-      history.push(`/connect?callbackUrl=${window.location.pathname}`);
+    if (address) {
+      fetchUserData();
+      fetchCollecte();
+      fetchOfferReceive();
     }
   }, [address]);
+
   const TABS = [
     {
       id: '0',
@@ -73,7 +82,7 @@ const Account = () => {
       title: t('Account.myWallet'),
       num: userData?.ownerNftscount,
       requiredWhitelist: false,
-      url: '/account/nmvkzZYRfirHr4S8GuJNNuvPrx62KDzJjMKPRrd9jtUBiB9hJ/wallet?id=0',
+      url: '/account/owned',
     },
     {
       id: '1',
@@ -82,7 +91,7 @@ const Account = () => {
       title: t('Account.Created'),
       num: userData?.createdNftCount,
       requiredWhitelist: true,
-      url: '/account/nmvkzZYRfirHr4S8GuJNNuvPrx62KDzJjMKPRrd9jtUBiB9hJ/wallet?id=1',
+      url: '/account/created',
     },
     {
       id: '2',
@@ -91,7 +100,7 @@ const Account = () => {
       title: t('Account.Stars'),
       num: nftsDataCollecte?.pages[0]?.pageInfo?.totalNum,
       requiredWhitelist: false,
-      url: '/account/nmvkzZYRfirHr4S8GuJNNuvPrx62KDzJjMKPRrd9jtUBiB9hJ/wallet?id=2',
+      url: '/account/stars',
     },
     {
       id: '3',
@@ -100,7 +109,7 @@ const Account = () => {
       title: t('Account.offers'),
       num: Offerreceive?.pages[0].pageInfo.totalNum,
       requiredWhitelist: false,
-      url: '/account/nmvkzZYRfirHr4S8GuJNNuvPrx62KDzJjMKPRrd9jtUBiB9hJ/wallet?id=3',
+      url: '/account/offers',
     },
     {
       id: '4',
@@ -109,7 +118,7 @@ const Account = () => {
       title: t('Account.collections'),
       num: userData?.createdClassCount,
       requiredWhitelist: true,
-      url: '/account/nmvkzZYRfirHr4S8GuJNNuvPrx62KDzJjMKPRrd9jtUBiB9hJ/wallet?id=4',
+      url: '/account/collections',
     },
   ];
 
@@ -122,7 +131,7 @@ const Account = () => {
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         </Center>
       ) : (
-        <MainContainer title={t('Home.title')}>
+        <MainContainer title={`${t('Collection.title')}|${t('Home.title')}`}>
           <Flex maxWidth="1400px" flexDirection="column" position="relative">
             <Box
               maxWidth="1400px"
@@ -133,7 +142,12 @@ const Account = () => {
                 w="100%"
                 maxWidth="1400px"
                 h="auto"
-                src={userData?.featured_image || AccountBanner.default}
+                src={userData?.featured_image ? `${PINATA_SERVER}user/${userData?.featured_image}` : AccountBanner.default}
+                fallback={(
+                  <Center width="100%" height="300px">
+                    <Spinner />
+                  </Center>
+                )}
                 alt=""
               />
             </Box>
@@ -149,7 +163,12 @@ const Account = () => {
                 borderRadius="50%"
                 height="108px"
                 objectFit="cover"
-                src={userData?.avatar || HeadPortrait.default}
+                src={`${PINATA_SERVER}user/${userData?.avatar}` || HeadPortrait.default}
+                fallback={(
+                  <Center width="108px" height="108px">
+                    <Spinner />
+                  </Center>
+                )}
               />
             ) : (
               <Identicon

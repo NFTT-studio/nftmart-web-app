@@ -16,10 +16,9 @@ import useIsLoginAddress from '../../../hooks/utils/useIsLoginAddress';
 
 interface Props {
   userData?: [],
-  dataPerson?: []
 }
-const Header: FC<Props> = (({ userData, dataPerson }) => {
-  const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+const Header: FC<Props> = (({ userData }) => {
+  const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : '');
   const isPerson = useIsLoginAddress(userData?.address);
 
   return (
@@ -45,7 +44,7 @@ const Header: FC<Props> = (({ userData, dataPerson }) => {
           color="#191A24"
           lineHeight="33px"
         >
-          {userData?.name || formatAddress(dataPerson.data?.address)}
+          {userData?.name || formatAddress(userData?.address)}
         </Text>
         <Text
           w="100%"
@@ -57,14 +56,14 @@ const Header: FC<Props> = (({ userData, dataPerson }) => {
           lineHeight="18px"
           wordBreak="break-all"
         >
-          {dataPerson.data?.address}
+          {userData?.address}
         </Text>
       </Flex>
       <Flex position="absolute" right="0px" top="0px">
         {isPerson ? (
           <Link
             as={RouterLink}
-            to="/profile"
+            to="/account/profile/settings"
           >
             <Box
               key="index"

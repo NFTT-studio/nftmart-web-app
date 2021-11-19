@@ -195,7 +195,7 @@ const NftCard: FC<NftCardProps> = ({
       minWidth="250px"
       height="396px"
       as={RouterLink}
-      to={`/item/${nft.id}`}
+      to={`/items/${nft.id}-${nft?.metadata.name}`}
     >
       <MotionBox
         width="100%"
