@@ -28,7 +28,6 @@ export interface HeaderProps {
 
 const Header: FC<HeaderProps> = () => {
   const history = useHistory();
-  const dispatch = useAppDispatch();
   const location = useLocation();
   const { y } = useWindowScroll();
 

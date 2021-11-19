@@ -46,9 +46,18 @@ export default () => (
         <Route exact strict path="/account/offers" component={Account} />
         <Route exact strict path="/account/collections" component={Account} />
         <Route exact strict path="/account/collections/create" component={CreateCollection} />
-        <Route exact strict path="/account/items/create:collectionId" component={CreateNft} />
+        <Route exact strict path="/account/items/create" component={CreateNft} />
         <Route exact strict path="/account/profile/settings" component={EditProfile} />
         <Route exact strict path="/:nftId/sellSetting" component={SellSetting} />
+        <Route exact strict path="/browsing" component={Browsing} />
+        <Route exact strict path="/connect" component={Connect} />
+        <Route exact strict path="/collection/:address" component={Collection} />
+        <Route exact strict path="/item/:nftId" component={Detail} />
+        <Route exact strict path="/account/:address/wallet" component={Account} />
+        <Route exact strict path="/profile/collection/create" component={CreateCollection} />
+        <Route exact strict path="/profile/nft/create/:collectionId" component={CreateNft} />
+        <Route exact strict path="/profile" component={EditProfile} />
+        <Route exact strict path="/sellSetting/:nftId" component={SellSetting} />
       </Switch>
     </PolkaProvider>
     <Footer />

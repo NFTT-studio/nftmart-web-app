@@ -60,6 +60,13 @@ import MyModal from '../../components/MyModal';
 import MyToast, { ToastBody } from '../../components/MyToast';
 
 const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
+  function GetQueryString(name) {
+    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
+    const r = decodeURI(window.location.search.substr(1)).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+  const status = GetQueryString('collectionId');
   const [propertiesArr, setPropertiesArr] = useState([{ key: '', value: '' }]);
 
   function number2PerU16(x) {
@@ -69,7 +76,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const toast = useToast();
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
-  const { collectionId } = match.params;
+  const collectionId = match.params.collectionId || status;
   const { account, whiteList } = chainState;
   const [isShowModal, setIsShowModal] = useState(false);
   const [preview, setIsPreview] = useState(false);

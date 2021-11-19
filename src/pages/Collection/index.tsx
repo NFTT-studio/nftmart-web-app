@@ -109,7 +109,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
 
   const history = useHistory();
   function handleCreate() {
-    history.push(`/account/items/create${classId}`);
+    history.push(`/account/items/create?collectionId=${classId}`);
   }
 
   useEffect(() => {
@@ -187,7 +187,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                 </Button> */}
                   <Link
                     as={RouterLink}
-                    to={`/account/items/create${classId}`}
+                    to={`/account/items/create?collectionId=${classId}`}
                   >
                     <Button
                       width="137px"
