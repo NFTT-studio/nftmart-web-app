@@ -52,7 +52,7 @@ export default () => (
         <Route exact strict path="/browsing" component={Browsing} />
         <Route exact strict path="/connect" component={Connect} />
         <Route exact strict path="/collection/:address" component={Collection} />
-        <Route exact strict path="/item/:nftId" component={Detail} />
+        <Route exact strict path="/item/:collectionId-:nftId" component={Detail} />
         <Route exact strict path="/account/:address/wallet" component={Account} />
         <Route exact strict path="/profile/collection/create" component={CreateCollection} />
         <Route exact strict path="/profile/nft/create/:collectionId" component={CreateNft} />
