@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Center, Spinner } from '@chakra-ui/react';
+import { useLocation } from 'react-router-dom';
 import { web3Enable, web3Accounts, web3FromSource } from '@polkadot/extension-dapp';
 import { encodeAddress } from '@polkadot/util-crypto';
-
 import { useLocalStorage } from 'react-use';
 import { isEmpty } from 'lodash';
+import ReactGA from 'react-ga';
 import PolkaSDK from '.';
-import { LOGIN_LOCAL_STORAGE_KEY, SS58_FORMAT } from '../constants';
+import {
+  LOGIN_LOCAL_STORAGE_KEY,
+  REACT_APP_GA,
+} from '../constants';
 import {
   setAccount, setAccounts, setInjector, setWhiteList,
 } from '../redux/chainSlice';
@@ -18,11 +22,16 @@ interface Props {
 }
 
 const PolkaProvider = ({ children }: Props) => {
+  const location = useLocation();
   const { data } = useWhiteList();
   const [isInitialized, setIsInitialized] = useState(false);
   const [value, setValue] = useLocalStorage<string>(LOGIN_LOCAL_STORAGE_KEY);
   const dispatch = useAppDispatch();
 
+  ReactGA.initialize(REACT_APP_GA);
+  useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+  }, [location.pathname, location.search]);
   useEffect(() => {
     const init = async () => {
       setIsInitialized(true);
