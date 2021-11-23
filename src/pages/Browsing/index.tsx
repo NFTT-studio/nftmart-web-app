@@ -87,11 +87,12 @@ const Browsing = () => {
 
   const handleSelectStatus: MouseEventHandler<HTMLButtonElement> = (event) => {
     const clickedStatus = event.currentTarget.id;
-    setSelectedStatusArr(
-      selectedStatusArr.indexOf(clickedStatus) > -1
-        ? without(selectedStatusArr, event.currentTarget.id)
-        : union(selectedStatusArr, [event.currentTarget.id]),
-    );
+    setSelectedStatusArr([clickedStatus]);
+    // setSelectedStatusArr(
+    //   selectedStatusArr.indexOf(clickedStatus) > -1
+    //     ? without(selectedStatusArr, event.currentTarget.id)
+    //     : union(selectedStatusArr, [event.currentTarget.id]),
+    // );
   };
 
   const handleSelectCollection: MouseEventHandler<HTMLButtonElement> = (event) => {

@@ -197,13 +197,32 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
 
   const handleSelectStatus: MouseEventHandler<HTMLButtonElement> = (event) => {
     const clickedStatus = event.currentTarget.id;
-    setSelectedStatusArr(
-      selectedStatusArr.indexOf(clickedStatus) > -1
-        ? without(selectedStatusArr, event.currentTarget.id)
-        : union(selectedStatusArr, [event.currentTarget.id]),
-    );
+    setSelectedStatusArr([event.currentTarget.id]);
+    // setSelectedStatusArr(
+    //   selectedStatusArr.indexOf(clickedStatus) > -1
+    //     ? without(selectedStatusArr, event.currentTarget.id)
+    //     : union(selectedStatusArr, [event.currentTarget.id]),
+    // );
   };
   useEffect(() => {
+    if (address) {
+      if (window.location.href.indexOf('owned') > -1) {
+        fetchNftsData();
+      }
+      if (window.location.href.indexOf('created') > -1) {
+        fetchNftsDataCreate();
+      }
+      if (window.location.href.indexOf('stars') > -1) {
+        fetchNftsDataCollecte();
+      }
+      if (window.location.href.indexOf('offers') > -1) {
+        fetchOffersend();
+        fetchOfferreceive();
+      }
+      if (window.location.href.indexOf('collections') > -1) {
+        fetchCollections();
+      }
+    }
     if (window.location.href.indexOf('owned') > -1) {
       setSelectTabId(0);
       setUrlName('myWallet');
@@ -234,19 +253,44 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
     }
     if (address) {
       fetchUserData();
-      fetchCollections();
-      fetchNftsData();
-      fetchNftsDataCreate();
-      fetchNftsDataCollecte();
-      fetchOffersend();
       fetchOfferreceive();
+      fetchNftsDataCollecte();
+      if (window.location.href.indexOf('owned') > -1) {
+        fetchNftsData();
+      }
+      if (window.location.href.indexOf('created') > -1) {
+        fetchNftsDataCreate();
+      }
+      if (window.location.href.indexOf('stars') > -1) {
+        fetchNftsDataCollecte();
+      }
+      if (window.location.href.indexOf('offers') > -1) {
+        fetchOffersend();
+        fetchOfferreceive();
+      }
+      if (window.location.href.indexOf('collections') > -1) {
+        fetchCollections();
+      }
     }
   }, [address]);
   useEffect(() => {
     if (address) {
-      fetchNftsData();
-      fetchNftsDataCreate();
-      fetchNftsDataCollecte();
+      if (window.location.href.indexOf('owned') > -1) {
+        fetchNftsData();
+      }
+      if (window.location.href.indexOf('created') > -1) {
+        fetchNftsDataCreate();
+      }
+      if (window.location.href.indexOf('stars') > -1) {
+        fetchNftsDataCollecte();
+      }
+      if (window.location.href.indexOf('offers') > -1) {
+        fetchOffersend();
+        fetchOfferreceive();
+      }
+      if (window.location.href.indexOf('collections') > -1) {
+        fetchCollections();
+      }
     }
   }, [selectedStatusArr, selectedSort]);
 
