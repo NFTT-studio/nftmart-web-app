@@ -18,7 +18,9 @@ export const UPLOAD_PINATA_SERVER = 'https://gateway.pinata.cloud/ipfs/';
 // eslint-disable-next-line max-len
 export const UPLOAD_OWN_SERVER = 'https://ipfs-api.bcdata.top/api/v0/add?stream-channels=true&pin=true&progress=true&wrap-with-directory=false';
 export const EXPLORER_URL = 'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fstaging-ws.nftmart.io#/accounts';
-
+const REACT_APP_GAPROD = 'UA-197448335-4';
+const REACT_APP_GATEST = 'UA-197448335-5';
+export const REACT_APP_GA = `${window.location.origin === 'https://app.nftmart.io' ? REACT_APP_GAPROD : REACT_APP_GATEST}`;
 // online
 
 export const MAX_FILE_SIZE = 1024 * 1024 * 100;
