@@ -35,6 +35,7 @@ import LeftImgonInput from '../LeftImgonInput';
 import FromTextarea from '../FromTextarea';
 import SubmitButton from '../SubmitButton';
 import { createClass } from '../../polkaSDK/api/createClass';
+import { updateClass } from '../../polkaSDK/api/updateClass';
 import { useAppSelector } from '../../hooks/redux';
 import MyModal from '../MyModal';
 import MyToast, { ToastBody } from '../MyToast';
@@ -53,9 +54,20 @@ import {
 export interface Props {
   account: any;
   whiteList:any;
+  collectionsData:any;
 }
 
-const CreateCollection: FC<Props> = ({ account, whiteList }) => {
+const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) => {
+  function number2PerU16(x) {
+    return (x / 65535.0) * 100;
+  }
+  function GetQueryString(name) {
+    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
+    const r = decodeURI(window.location.search.substr(1)).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+  const status = GetQueryString('collectionId');
   const { t } = useTranslation();
   const history = useHistory();
   const toast = useToast();
@@ -69,12 +81,17 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
     setIsShowModal(false);
     history.push('/');
   };
+  useEffect(() => {
+    if (status && collectionsData?.collection?.royalty_rate) {
+      setroyaltiesSl(true);
+    }
+  }, [collectionsData]);
 
   useEffect(() => {
     if (!account || whiteList?.indexOf(account?.address) < 0) {
       setIsShowModal(true);
     }
-  }, [account?.address, whiteList !== 0]);
+  }, [account?.address, whiteList]);
   const remove = (l) => {
     const index = categories.indexOf(l);
     if (index > -1) {
@@ -142,6 +159,65 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
       },
     });
   }, [account, history, t]);
+  const update = useCallback((formValue, formActions) => {
+    updateClass({
+      classId: Number(status),
+      address: account!.address,
+      ownerId: collectionsData?.collection?.owner_id,
+      metadata: {
+        logoUrl: formValue.logoUrl,
+        banner: formValue.banner,
+        featuredUrl: formValue.featuredUrl,
+        name: formValue.name,
+        stub: formValue.stub,
+        description: formValue.description,
+        links: {
+          website: formValue.website,
+          discord: formValue.discord,
+          twitter: formValue.twitter,
+          ins: formValue.ins,
+          medium: formValue.medium,
+          telegram: formValue.telegram,
+        },
+      },
+      royaltyRate: Number(formValue.royalties) / 100,
+      cate: formValue.cate.split(','),
+      cb: {
+        success: (result) => {
+          if (result.dispatchError) {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={t('create.error')} type="error" />
+              ),
+            });
+            setIsSubmitting(false);
+          } else {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
+            setTimeout(() => {
+              setIsSubmitting(false);
+              history.push(`/collection/${Number(status)}-${encodeURIComponent(formValue.name)}`);
+              formActions.resetForm();
+            }, 2500);
+          }
+        },
+        error: (error) => {
+          toast({
+            position: 'top',
+            render: () => (
+              <ToastBody title="Error" message={error} type="error" />
+            ),
+          });
+          setIsSubmitting(false);
+        },
+      },
+    });
+  }, [account, history, t]);
 
   const schema = Yup.object().shape({
     logoUrl: Yup.string().required(t('Collection.required')),
@@ -159,20 +235,20 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
 
   const formik = useFormik({
     initialValues: {
-      logoUrl: '',
-      featuredUrl: '',
-      name: '',
-      stub: '',
-      description: '',
-      royalties: 0,
-      cate: '',
-      website: '',
-      discord: '',
-      twitter: '',
-      ins: '',
-      medium: '',
-      telegram: '',
-      banner: '',
+      logoUrl: collectionsData?.collection?.metadata?.logoUrl || '',
+      featuredUrl: collectionsData?.collection?.metadata?.featuredUrl || '',
+      name: collectionsData?.collection?.metadata?.name || '',
+      stub: collectionsData?.collection?.metadata?.stub || '',
+      description: collectionsData?.collection?.metadata?.description || '',
+      royalties: Math.ceil(number2PerU16(collectionsData?.collection?.royalty_rate)) || 0,
+      cate: collectionsData?.collection?.metadata?.cate || '',
+      website: collectionsData?.collection?.metadata?.links?.website || '',
+      discord: collectionsData?.collection?.metadata?.links?.discord || '',
+      twitter: collectionsData?.collection?.metadata?.links?.twitter || '',
+      ins: collectionsData?.collection?.metadata?.links?.ins || '',
+      medium: collectionsData?.collection?.metadata?.links?.medium || '',
+      telegram: collectionsData?.collection?.metadata?.links?.telegram || '',
+      banner: collectionsData?.collection?.metadata?.banner || '',
     },
     onSubmit: (values, formActions) => {
       if (stateCrop) {
@@ -185,7 +261,11 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
         return;
       }
       setIsSubmitting(true);
-      create(values, formActions);
+      if (status) {
+        update(values, formActions);
+      } else {
+        create(values, formActions);
+      }
     },
     validationSchema: schema,
   });
@@ -230,6 +310,8 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             value={formik.values.logoUrl}
             setStateCrop={setStateCrop}
             fileClass="logo"
+            url={formik.values.logoUrl}
+            fileName="jpg"
             onChange={(v) => {
               formik.values.logoUrl = v;
             }}
@@ -245,9 +327,11 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
             mediatype="cutting"
             rectangle="600px"
             proportion={1400 / 400}
-            value={formik.values.logoUrl}
+            value={formik.values.banner}
             setStateCrop={setStateCrop}
             fileClass="banner"
+            url={formik.values.banner}
+            fileName="jpg"
             onChange={(v) => {
               formik.values.banner = v;
             }}
@@ -558,6 +642,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList }) => {
                   resultArr.splice(index, 0, item.id);
                 });
                 formik.values.cate = resultArr.toString();
+                console.log(resultArr);
               }}
             />
 

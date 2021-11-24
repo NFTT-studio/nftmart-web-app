@@ -20,6 +20,7 @@ export const QUERY_KEYS = {
   Event: 'Event',
   ExpensiveNFTS: 'ExpensiveNFTS',
   CheapNFTS: 'CheapNFTS',
+  CATEGORIEINFO: 'CATEGORIEINFO',
 };
 
 export const DEFAULT_PAGE_LIMIT = 20;

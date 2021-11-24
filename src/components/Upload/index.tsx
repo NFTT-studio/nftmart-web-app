@@ -144,6 +144,8 @@ export interface UploadProps {
   proportion: number;
   setStateCrop:React.Dispatch<React.SetStateAction<boolean>>,
   fileClass: string;
+  fileName: string;
+  url: string;
 }
 
 const Upload: FC<UploadProps> = ({
@@ -156,11 +158,13 @@ const Upload: FC<UploadProps> = ({
   proportion,
   setStateCrop,
   fileClass,
+  fileName,
+  url,
   ...rest
 }) => {
   const toast = useToast();
-  const [fileType, setFileType] = useState('');
-  const [value, setValue] = useState(valueFromProp?.url || '');
+  const [fileType, setFileType] = useState(fileName || '');
+  const [value, setValue] = useState(url || '');
   const [isLoading, setLoadingStatus] = useState(false);
   const [imgName, setImgName] = useState('');
   const [file, setFile] = useState(null);
@@ -419,7 +423,7 @@ const Upload: FC<UploadProps> = ({
             <>
               {pictureType.indexOf(fileType) > -1
                 ? (
-                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${fileClass}/${value}!preview`} />
+                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${fileClass}/${value}`} />
                 )
                 : (
                   videoType.indexOf(fileType) > -1
