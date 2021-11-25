@@ -13,6 +13,7 @@ import {
   ModalOverlay,
   Center,
   Box,
+  Link,
 } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
 
@@ -246,7 +247,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                         h="100%"
                         maxWidth="1364px"
                         w="100%"
-                        justifyContent="flex-end"
+                        justifyContent="space-between"
                       >
                         <Flex h="100%" alignItems="center">
                           <Button
@@ -305,8 +306,57 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                         width="100%"
                         h="100%"
                         maxWidth="1364px"
-                        justifyContent="flex-end"
+                        justifyContent="space-between"
+                        alignItems="center"
                       >
+                        <Flex
+                          width="100%"
+                          maxWidth="1364px"
+                          justifyContent="flex-start"
+                        >
+                          <Link
+                            as={RouterLink}
+                            to={`/account/items/create?collectionId=${collectionId}&modifyId=${collectionId}-${nftId}`}
+                          >
+                            <Button
+                              width="137px"
+                              height="40px"
+                              mr="20px"
+                              background="#FFFFFF"
+                              borderRadius="4px"
+                              border="1px solid #000000"
+                              fontSize="14px"
+                              fontFamily="TTHoves-Regular, TTHoves"
+                              fontWeight="400"
+                              color="#000000"
+                              lineHeight="16px"
+                              _hover={{
+                                background: '#000000',
+                                color: '#FFFFFF',
+                              }}
+                            >
+                              Modify
+                            </Button>
+                          </Link>
+                          <Button
+                            width="137px"
+                            height="40px"
+                            background="#FFFFFF"
+                            borderRadius="4px"
+                            border="1px solid #000000"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="16px"
+                            _hover={{
+                              background: '#000000',
+                              color: '#FFFFFF',
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </Flex>
                         <Flex h="100%" alignItems="center">
                           <Button
                             ml="10px"

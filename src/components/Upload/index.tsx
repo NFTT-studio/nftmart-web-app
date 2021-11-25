@@ -436,9 +436,13 @@ const Upload: FC<UploadProps> = ({
                     )
                     : audioType.indexOf(fileType) > -1 ? (
                       <Box maxWidth="420px">
-                        <Player width="100%">
+                        <ReactAudioPlayer
+                          src={`${PINATA_SERVER}${fileClass}/${value}`}
+                          controls
+                        />
+                        {/* <Player width="100%">
                           <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${fileClass}/${value}`} />
-                        </Player>
+                        </Player> */}
                       </Box>
                     )
                       : (

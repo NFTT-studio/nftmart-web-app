@@ -57,7 +57,7 @@ import {
 } from '../../constants';
 import SortBy from '../../components/SortBy';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
-import useAccount from '../../hooks/reactQuery/useAccount';
+import DelDialog from './DelDialog';
 import { destroyClass } from '../../polkaSDK/api/destroyClass';
 import Sort from '../../constants/Sort';
 import MyToast, { ToastBody } from '../../components/MyToast';
@@ -73,6 +73,7 @@ const ICONS = [
 
 const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isShowDel, setIsShowDel] = useState(false);
   const { t } = useTranslation();
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
   const toast = useToast();
@@ -115,46 +116,6 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
   );
 
   const history = useHistory();
-  const destroy = useCallback((ownerId:string) => {
-    destroyClass({
-      classId: Number(classId),
-      address: account!.address,
-      ownerId,
-      cb: {
-        success: (result) => {
-          if (result.dispatchError) {
-            toast({
-              position: 'top',
-              render: () => (
-                <ToastBody title="Error" message={t('create.error')} type="error" />
-              ),
-            });
-            setIsSubmitting(false);
-          } else {
-            toast({
-              position: 'top',
-              render: () => (
-                <ToastBody title="Success" message={t('common.success')} type="success" />
-              ),
-            });
-            setTimeout(() => {
-              setIsSubmitting(false);
-              history.push('/account/collections');
-            }, 2500);
-          }
-        },
-        error: (error) => {
-          toast({
-            position: 'top',
-            render: () => (
-              <ToastBody title="Error" message={error} type="error" />
-            ),
-          });
-          setIsSubmitting(false);
-        },
-      },
-    });
-  }, [account, history, t]);
   function handleCreate() {
     history.push(`/account/items/create?collectionId=${classId}`);
   }
@@ -162,8 +123,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
     history.push(`/account/collections/create?collectionId=${classId}`);
   }
   function handleDelete() {
-    setIsSubmitting(true);
-    destroy(collectionsData?.collection?.owner_id);
+    setIsShowDel(true);
   }
 
   useEffect(() => {
@@ -700,6 +660,15 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                   )}
               </Flex>
             </Flex>
+            {isShowDel && (
+              <DelDialog
+                isShowDel={isShowDel}
+                setIsShowDel={setIsShowDel}
+                classId={Number(classId)}
+                ownerId={collectionsData?.collection?.owner_id}
+                collectionName={collectionsData?.collection?.metadata?.name}
+              />
+            )}
             <MyToast isCloseable />
             <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
               <ModalOverlay />

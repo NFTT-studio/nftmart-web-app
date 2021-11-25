@@ -37,6 +37,7 @@ import {
   Td,
   TableCaption,
 } from '@chakra-ui/react';
+import { trim } from 'lodash';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import Upload from '../../components/Upload';
 import EditFormTitle from '../../components/EditFormTitle';
@@ -48,6 +49,7 @@ import LeftAddonInput from '../../components/LeftAddonInput';
 import { useAppSelector } from '../../hooks/redux';
 import LoginDetector from '../../components/LoginDetector';
 import MainContainer from '../../layout/MainContainer';
+import useNft from '../../hooks/reactQuery/useNft';
 
 import {
   PINATA_SERVER,
@@ -67,6 +69,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     return null;
   }
   const status = GetQueryString('collectionId');
+  const modifyId = GetQueryString('modifyId');
   const [propertiesArr, setPropertiesArr] = useState([{ key: '', value: '' }]);
 
   function number2PerU16(x) {
@@ -91,6 +94,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     }
   }, [account, whiteList.length !== 0]);
   const { data: collectionsData } = useCollectionsSinger(collectionId);
+  const { data: nftData, isLoading: nftDataIsLoading, refetch: refetchNftData } = useNft(modifyId);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateCrop, setStateCrop] = useState(false);
 
@@ -128,7 +132,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       address: account?.address,
       metadata: {
         logoUrl: formValue.logoUrl,
-        previewUrl: formValue.previewUrl,
+        previewUrl: preview ? formValue.previewUrl : '',
         fileType: formValue.fileType,
         name: formValue.name,
         stub: formValue.stub ? `https://${formValue.stub}` : null,
@@ -145,13 +149,13 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
 
   const formik = useFormik({
     initialValues: {
-      logoUrl: '',
-      previewUrl: '',
-      name: '',
-      stub: '',
-      description: '',
-      royalties: number2PerU16(collectionsData?.collection?.royalty_rate || 0),
-      fileType: '',
+      logoUrl: nftData?.nftInfo?.metadata?.logoUrl || '',
+      previewUrl: nftData?.nftInfo?.metadata?.previewUrl || '',
+      name: nftData?.nftInfo?.metadata?.name || '',
+      stub: trim(nftData?.nftInfo?.metadata?.stub?.replace(/https:\/\//i, '')) || '',
+      description: nftData?.nftInfo?.metadata?.description || '',
+      royalties: number2PerU16(nftData?.nftInfo?.royalty_rate || 0) || number2PerU16(collectionsData?.collection?.royalty_rate || 0),
+      fileType: nftData?.nftInfo?.metadata?.fileType || '',
       isRoyalties: !!collectionsData?.collection?.royalty_rate,
     },
     onSubmit: (formValue, formAction) => {
@@ -277,6 +281,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             value={formik.values.logoUrl}
             setStateCrop={setStateCrop}
             fileClass="nft"
+            url={formik.values.logoUrl}
+            fileName={nftData?.nftInfo?.metadata?.fileType}
             onChange={(v, b) => {
               formik.setFieldValue('logoUrl', v);
               formik.setFieldValue('fileType', b);
@@ -301,6 +307,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                   rectangle=""
                   proportion={16 / 16}
                   value={formik.values.previewUrl}
+                  url={formik.values.previewUrl}
+                  fileName=""
                   setStateCrop={setStateCrop}
                   fileClass="nft"
                   onChange={(v, b) => {
