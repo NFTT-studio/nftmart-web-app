@@ -6,7 +6,7 @@ import { txLog } from '../../utils/txLog';
 import { NATIVE_CURRENCY_ID } from '../../constants';
 import { unit, unitNum } from '../utils/unit';
 
-const oneMonth = (60000000 * 60 * 24 * 30) / 6;
+const oneMonth = (60 * 60 * 24 * 30 * 600) / 6;
 function float2PerU16(x) {
   return Math.trunc(x * 65535.0);
 }
