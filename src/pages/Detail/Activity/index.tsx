@@ -49,13 +49,13 @@ const Events: FC<Props> = (({
       >
         {events?.method === 'MintedToken' ? 'Created' : ''}
         {events?.method === 'TransferredToken' ? 'Sales' : ''}
-        {events?.method === 'CreatedBritishAuction' ? 'Listings' : ''}
-        {events?.method === 'CreatedDutchAuction' ? 'Listings' : ''}
+        {events?.method === 'CreatedBritishAuction' ? 'Listing' : ''}
+        {events?.method === 'CreatedDutchAuction' ? 'Listing' : ''}
         {events?.method === 'BidDutchAuction' ? 'Bids' : ''}
         {events?.method === 'BidBritishAuction' ? 'Bids' : ''}
         {events?.method === 'RedeemedBritishAuction' ? 'Sales' : ''}
         {events?.method === 'RedeemedDutchAuction' ? 'Sales' : ''}
-        {events?.method === 'CreatedOrder' ? 'Listings' : ''}
+        {events?.method === 'CreatedOrder' ? 'Listing' : ''}
         {events?.method === 'CreatedOffer' ? 'Bids' : ''}
         {events?.method === 'TakenOffer' ? 'Sales' : ''}
         {events?.method === 'TakenOrder' ? 'Sales' : ''}

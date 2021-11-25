@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
@@ -73,7 +74,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
 
   const [remainingTime, setRemainingTime] = useState(0);
   const { account } = chainState;
-  const { collectionId, nftId, nftName } = match.params;
+  const { collectionId, nftId } = match.params;
   const { data: nftData, isLoading: nftDataIsLoading, refetch: refetchNftData } = useNft(`${collectionId}-${nftId}`);
   const collectionsId = collectionId;
   const tokenId = nftId;
@@ -205,6 +206,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
   const orderId = nftData?.nftInfo?.order_id;
   const termOfValidity = !!((nftData?.nftInfo?.auction?.deadline - remainingTime) > 0);
   const auctionId = nftData?.nftInfo?.auction?.id;
+  const nftName = match.params.nftName || nftData?.nftInfo?.metadata?.name;
   const initPrice = priceStringDivUnit(nftData?.nftInfo?.auction?.init_price);
   const minRaise = Number(auctionPrice) * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
   const minActionRaise = Number(priceStringDivUnit(nftData?.nftInfo?.auction?.price)) * (1 + number2PerU16(nftData?.nftInfo?.auction?.min_raise) / 100);
