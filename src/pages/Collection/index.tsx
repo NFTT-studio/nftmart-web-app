@@ -162,6 +162,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
     history.push(`/account/collections/create?collectionId=${classId}`);
   }
   function handleDelete() {
+    setIsSubmitting(true);
     destroy(collectionsData?.collection?.owner_id);
   }
 
