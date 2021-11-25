@@ -132,7 +132,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       address: account?.address,
       metadata: {
         logoUrl: formValue.logoUrl,
-        previewUrl: preview ? formValue.previewUrl : '',
+        previewUrl: formValue.previewUrl,
         fileType: formValue.fileType,
         name: formValue.name,
         stub: formValue.stub ? `https://${formValue.stub}` : null,
@@ -286,10 +286,11 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             onChange={(v, b) => {
               formik.setFieldValue('logoUrl', v);
               formik.setFieldValue('fileType', b);
-              if (b !== 'gif' && b !== 'png' && b !== 'jpg' && b !== 'jpg' && b !== '' && b !== 'jpeg') {
+              if (b !== 'gif' && b !== 'png' && b !== 'jpg' && b !== '' && b !== 'jpeg') {
                 setIsPreview(true);
               } else {
                 setIsPreview(false);
+                formik.setFieldValue('previewUrl', '');
               }
             }}
           />

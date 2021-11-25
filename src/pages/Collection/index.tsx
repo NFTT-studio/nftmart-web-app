@@ -185,6 +185,27 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                     maxWidth="1364px"
                     justifyContent="flex-start"
                   >
+                    <Button
+                      mr="20px"
+                      width="137px"
+                      height="40px"
+                      borderRadius="4px"
+                      border="1px solid #000000"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      lineHeight="16px"
+                      color={nftsData?.pages[0].pageInfo.totalNum > 0 ? '#FFFFFF' : '#000000'}
+                      background={nftsData?.pages[0].pageInfo.totalNum > 0 ? '#000000' : '#FFFFFF'}
+                      isDisabled={nftsData?.pages[0].pageInfo.totalNum > 0}
+                      _hover={{
+                        background: '#000000',
+                        color: '#FFFFFF',
+                      }}
+                      onClick={handleDelete}
+                    >
+                      {t('Update.delete')}
+                    </Button>
                     <Link
                       as={RouterLink}
                       to={`/account/collections/create?collectionId=${classId}`}
@@ -192,7 +213,6 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                       <Button
                         width="137px"
                         height="40px"
-                        mr="20px"
                         background="#FFFFFF"
                         borderRadius="4px"
                         border="1px solid #000000"
@@ -206,28 +226,9 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                           color: '#FFFFFF',
                         }}
                       >
-                        Modify
+                        {t('Update.modify')}
                       </Button>
                     </Link>
-                    <Button
-                      width="137px"
-                      height="40px"
-                      background="#FFFFFF"
-                      borderRadius="4px"
-                      border="1px solid #000000"
-                      fontSize="14px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#000000"
-                      lineHeight="16px"
-                      _hover={{
-                        background: '#000000',
-                        color: '#FFFFFF',
-                      }}
-                      onClick={handleDelete}
-                    >
-                      Delete
-                    </Button>
                   </Flex>
                   <Link
                     as={RouterLink}

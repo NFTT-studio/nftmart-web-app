@@ -340,6 +340,21 @@
     "ninety": "过去 90 天",
     "year": "去年"
   },
+  "Update": {
+    "modifyCollection": "修改作品集",
+    "burning": "销毁",
+    "modify": "修改",
+    "burningConfirm": "销毁确认",
+    "burningExplain": "销毁操作不可撤销，不可恢复，请再次确认需要销毁。如果你确认，请在下边输入NFT的名称： ",
+    "nftName": "请填写NFT名称",
+    "reduceRoyalties": "下调版税",
+    "reduceExplain": "为了保障当前拥有人的权益，您只能下调版税。请确保您输入的版税比当前的版税更低： ",
+    "submit": "提交",
+    "delete": "删除",
+    "deleteConfirm": "删除确认",
+    "deleteExplain": "删除操作不可撤销，不可恢复，请再次确认需要删除。如果您确认，请在下边输入作品集的名称",
+    "collectionName": "请填写作品集名称"
+  },
   "Footer": {
     "PrivacyPolicy": "隐私政策"
   }

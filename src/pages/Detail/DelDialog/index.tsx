@@ -22,19 +22,19 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { useHistory } from 'react-router-dom';
-import { destroyClass } from '../../../polkaSDK/api/destroyClass';
+import { burnToken } from '../../../polkaSDK/api/burnToken';
 import { useAppSelector } from '../../../hooks/redux';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 
 interface Props {
   classId:number,
-  ownerId:string,
-  collectionName:string,
+  tokenId:number,
+  nftName:string,
   isShowDel: boolean,
   setIsShowDel: React.Dispatch<React.SetStateAction<boolean>>,
 }
 const OfferDialog: FC<Props> = (({
-  classId, ownerId, collectionName, isShowDel, setIsShowDel,
+  classId, tokenId, nftName, isShowDel, setIsShowDel,
 }) => {
   const toast = useToast();
   const chainState = useAppSelector((state) => state.chain);
@@ -50,7 +50,7 @@ const OfferDialog: FC<Props> = (({
       name: '',
     },
     onSubmit: (formValue) => {
-      if (formValue.name !== collectionName) {
+      if (formValue.name !== nftName) {
         toast({
           position: 'top',
           render: () => (
@@ -60,10 +60,10 @@ const OfferDialog: FC<Props> = (({
         return;
       }
       setIsSubmitting(true);
-      destroyClass({
+      burnToken({
         classId: Number(classId),
         address: account!.address,
-        ownerId,
+        tokenId: Number(tokenId),
         cb: {
           success: (result) => {
             if (result.dispatchError) {
@@ -129,7 +129,7 @@ const OfferDialog: FC<Props> = (({
                   fontWeight="bold"
                   color="#000000"
                 >
-                  {t('Update.delete')}
+                  {t('Detail.makeAnOffer')}
                 </Text>
               </Flex>
               <Flex mb="13px" alignItems="center" justifyContent="center">
@@ -140,7 +140,8 @@ const OfferDialog: FC<Props> = (({
                   fontWeight="400"
                   color="#999999"
                 >
-                  {t('Update.deleteExplain')}
+                  The delete operation cannot be undone and cannot be restored. Please check again whether it is really going to be deleted.
+                  If you are sure, please enter the name of the collection below:
                   <Text
                     display="inline-block"
                     fontSize="16px"
@@ -148,7 +149,7 @@ const OfferDialog: FC<Props> = (({
                     fontWeight="bold"
                     color="red"
                   >
-                    {collectionName}
+                    {nftName}
                   </Text>
                 </Text>
 
@@ -173,7 +174,7 @@ const OfferDialog: FC<Props> = (({
                   color: '#000000',
                   border: '1px solid #000000',
                 }}
-                placeholder={t('Update.collectionName')}
+                placeholder={t('SellSetting.name')}
                 _placeholder={{
                   color: '#999999',
                   fontSize: '12px',
@@ -198,7 +199,7 @@ const OfferDialog: FC<Props> = (({
                     background: '#000000 !important',
                   }}
                 >
-                  {t('Update.deleteConfirm')}
+                  {t('Detail.makeOffer')}
                 </Button>
               </Flex>
 

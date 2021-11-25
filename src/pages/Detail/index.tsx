@@ -56,6 +56,7 @@ import OfferDialog from './OfferDialog';
 import DutchDialog from './DutchDialog';
 import BritishDialog from './BritishDialog';
 import FixedDialog from './FixedDialog';
+import DelDialog from './DelDialog';
 import AllowBritishDialog from './AllowBritishDialog';
 import ShareDetail from '../../components/ShareDetail';
 
@@ -118,6 +119,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [offerId, setOfferId] = useState('');
   const [offerOwner, setOfferOwner] = useState('');
+  const [isShowDel, setIsShowDel] = useState(false);
   const [events, setEvents] = useState(
     {
       times: 0,
@@ -355,6 +357,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                               background: '#000000',
                               color: '#FFFFFF',
                             }}
+                            onClick={() => setIsShowDel(true)}
                           >
                             Delete
                           </Button>
@@ -793,6 +796,15 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                 auctionId={auctionId}
                 creatorId={creatorId}
                 type={type}
+              />
+              )}
+              {isShowDel && (
+              <DelDialog
+                isShowDel={isShowDel}
+                setIsShowDel={setIsShowDel}
+                classId={Number(collectionId)}
+                tokenId={Number(nftId)}
+                nftName={nftData?.nftInfo?.metadata?.name}
               />
               )}
             </Container>

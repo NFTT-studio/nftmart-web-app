@@ -287,7 +287,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
           color="#191A24"
           lineHeight="27px"
         >
-          {t('Create.collection')}
+          {status ? t('Update.modifyCollection') : t('Create.collection')}
         </Text>
       </Flex>
       <Flex
