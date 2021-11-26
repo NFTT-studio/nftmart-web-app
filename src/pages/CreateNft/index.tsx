@@ -58,6 +58,7 @@ import {
   IconLeft,
 } from '../../assets/images';
 import { mintNft } from '../../polkaSDK/api/mintNft';
+import { updateToken } from '../../polkaSDK/api/updateToken';
 import MyModal from '../../components/MyModal';
 import MyToast, { ToastBody } from '../../components/MyToast';
 
@@ -71,7 +72,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const status = GetQueryString('collectionId');
   const modifyId = GetQueryString('modifyId');
   const [propertiesArr, setPropertiesArr] = useState([{ key: '', value: '' }]);
-
+  const tokenId = modifyId?.split('-')[1];
   function number2PerU16(x) {
     return Math.round((x / 65535.0) * 100);
   }
@@ -146,6 +147,27 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     };
     mintNft(normalizedFormData);
   }, [account?.address, collectionId]);
+  const update = useCallback(async (formValue, cb) => {
+    const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
+    const normalizedFormData = {
+      address: account?.address,
+      metadata: {
+        logoUrl: formValue.logoUrl,
+        previewUrl: formValue.previewUrl,
+        fileType: formValue.fileType,
+        name: formValue.name,
+        stub: formValue.stub ? `https://${formValue.stub}` : null,
+        description: formValue.description,
+        properties: propertiesLet,
+      },
+      classId: collectionId,
+      tokenId,
+      quantity: 1,
+      royaltyRate: formValue.isRoyalties ? (Number(formValue.royalties) / 100) : 0,
+      cb,
+    };
+    updateToken(normalizedFormData);
+  }, [account?.address, collectionId]);
 
   const formik = useFormik({
     initialValues: {
@@ -169,30 +191,57 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
         return;
       }
       setIsSubmitting(true);
-      mint(formValue, {
-        success: () => {
-          toast({
-            position: 'top',
-            render: () => (
-              <ToastBody title="Success" message={t('common.success')} type="success" />
-            ),
-          });
-          setTimeout(() => {
+      if (modifyId) {
+        update(formValue, {
+          success: () => {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
+            setTimeout(() => {
+              setIsSubmitting(false);
+              formAction.resetForm();
+              history.push(`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`);
+            }, 3000);
+          },
+          error: (error: string) => {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={error} type="error" />
+              ),
+            });
             setIsSubmitting(false);
-            formAction.resetForm();
-            history.push(`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`);
-          }, 3000);
-        },
-        error: (error: string) => {
-          toast({
-            position: 'top',
-            render: () => (
-              <ToastBody title="Error" message={error} type="error" />
-            ),
-          });
-          setIsSubmitting(false);
-        },
-      });
+          },
+        });
+      } else {
+        mint(formValue, {
+          success: () => {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
+            setTimeout(() => {
+              setIsSubmitting(false);
+              formAction.resetForm();
+              history.push(`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`);
+            }, 3000);
+          },
+          error: (error: string) => {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={error} type="error" />
+              ),
+            });
+            setIsSubmitting(false);
+          },
+        });
+      }
     },
     validationSchema: schema,
   });

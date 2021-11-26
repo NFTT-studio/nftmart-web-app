@@ -17,7 +17,7 @@ export const burnToken = async ({
 }: burnTokenProps) => {
   try {
     const injector = await web3FromAddress(address);
-    const call = (await PolkaSDK.getSaveInstance()).api.tx.nftmart
+    await (await PolkaSDK.getSaveInstance()).api.tx.nftmart
       .burn(classId, tokenId, 1)
       .signAndSend(address, { signer: injector.signer }, (result: any) => txLog(result, cb.success));
   } catch (error) {

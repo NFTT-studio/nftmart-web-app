@@ -3,23 +3,28 @@ import { web3FromAddress } from '@polkadot/extension-dapp';
 import PolkaSDK from '..';
 import { txLog } from '../../utils/txLog';
 
-type takeOfferProps = {
+type burnTokenProps = {
   classId: number,
   address: string,
-  ownerId: string,
+  tokenId: number,
+  royalties: number,
   cb: Callback
 }
-export const destroyClass = async ({
+export const updateTokenRoyalty = async ({
   classId,
   address, // address of current user
-  ownerId,
+  tokenId,
+  royalties,
   cb,
-}: takeOfferProps) => {
+}: burnTokenProps) => {
   try {
     const injector = await web3FromAddress(address);
-    const tx = (await PolkaSDK.getSaveInstance()).api.tx.nftmart.destroyClass(classId, address);
-    const call = await (await PolkaSDK.getSaveInstance()).api.tx.proxy
-      .proxy(ownerId, null, tx)
+    await (await PolkaSDK.getSaveInstance()).api.tx.nftmart
+      .updateTokenRoyalty(
+        classId,
+        tokenId,
+        royalties,
+      )
       .signAndSend(address, { signer: injector.signer }, (result: any) => txLog(result, cb.success));
   } catch (error) {
     cb.error(error.toString());

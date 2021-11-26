@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable max-len */
@@ -57,6 +58,7 @@ import DutchDialog from './DutchDialog';
 import BritishDialog from './BritishDialog';
 import FixedDialog from './FixedDialog';
 import DelDialog from './DelDialog';
+import ReduceRoyalties from './ReduceRoyalties';
 import AllowBritishDialog from './AllowBritishDialog';
 import ShareDetail from '../../components/ShareDetail';
 
@@ -120,6 +122,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
   const [offerId, setOfferId] = useState('');
   const [offerOwner, setOfferOwner] = useState('');
   const [isShowDel, setIsShowDel] = useState(false);
+  const [isShowRoyalties, setIsShowRoyalties] = useState(false);
   const [events, setEvents] = useState(
     {
       times: 0,
@@ -190,6 +193,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
   const { data: token } = useToken();
   const isLoginAddress = useIsLoginAddress(nftData?.nftInfo?.owner_id);
   const isBidder = useIsLoginAddress(nftData?.nftInfo?.auction?.auctionbid[0]?.bidder_id);
+  const isCreator = useIsLoginAddress(nftData?.nftInfo?.creator_id);
 
   const logoUrl = `${PINATA_SERVER}nft/${nftData?.nftInfo?.metadata?.logoUrl}`;
   const price = priceStringDivUnit(nftData?.nftInfo?.price);
@@ -318,31 +322,8 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                           maxWidth="1364px"
                           justifyContent="flex-start"
                         >
-                          <Link
-                            as={RouterLink}
-                            to={`/account/items/create?collectionId=${collectionId}&modifyId=${collectionId}-${nftId}`}
-                          >
-                            <Button
-                              width="137px"
-                              height="40px"
-                              mr="20px"
-                              background="#FFFFFF"
-                              borderRadius="4px"
-                              border="1px solid #000000"
-                              fontSize="14px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#000000"
-                              lineHeight="16px"
-                              _hover={{
-                                background: '#000000',
-                                color: '#FFFFFF',
-                              }}
-                            >
-                              Modify
-                            </Button>
-                          </Link>
                           <Button
+                            mr="20px"
                             width="137px"
                             height="40px"
                             background="#FFFFFF"
@@ -359,8 +340,34 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                             }}
                             onClick={() => setIsShowDel(true)}
                           >
-                            Delete
+                            {t('Update.burning')}
                           </Button>
+                          {isCreator
+                            ? (
+                              <Link
+                                as={RouterLink}
+                                to={`/account/items/create?collectionId=${collectionId}&modifyId=${collectionId}-${nftId}`}
+                              >
+                                <Button
+                                  width="137px"
+                                  height="40px"
+                                  background="#FFFFFF"
+                                  borderRadius="4px"
+                                  border="1px solid #000000"
+                                  fontSize="14px"
+                                  fontFamily="TTHoves-Regular, TTHoves"
+                                  fontWeight="400"
+                                  color="#000000"
+                                  lineHeight="16px"
+                                  _hover={{
+                                    background: '#000000',
+                                    color: '#FFFFFF',
+                                  }}
+                                >
+                                  {t('Update.modify')}
+                                </Button>
+                              </Link>
+                            ) : ''}
                         </Flex>
                         <Flex h="100%" alignItems="center">
                           <Button
@@ -388,7 +395,51 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                     </Flex>
                   )}
               </>
-            ) : ''}
+            )
+              : isCreator ? (
+                <Flex
+                  w="100vw"
+                  background="#F9F9F9"
+                  justifyContent="center"
+                  h="80px"
+                  alignItems="center"
+                >
+                  <Flex
+                    width="100%"
+                    h="100%"
+                    maxWidth="1364px"
+                    justifyContent="space-start"
+                    alignItems="center"
+                  >
+                    <Flex
+                      width="100%"
+                      maxWidth="1364px"
+                      justifyContent="flex-start"
+                    >
+                      <Button
+                        mr="20px"
+                        width="137px"
+                        height="40px"
+                        background="#FFFFFF"
+                        borderRadius="4px"
+                        border="1px solid #000000"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#000000"
+                        lineHeight="16px"
+                        _hover={{
+                          background: '#000000',
+                          color: '#FFFFFF',
+                        }}
+                        onClick={() => setIsShowRoyalties(true)}
+                      >
+                        {t('Update.reduceRoyalties')}
+                      </Button>
+                    </Flex>
+                  </Flex>
+                </Flex>
+              ) : ''}
             {type && isLoginAddress ? (
               <>
                 {termOfValidity
@@ -805,6 +856,15 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                 classId={Number(collectionId)}
                 tokenId={Number(nftId)}
                 nftName={nftData?.nftInfo?.metadata?.name}
+              />
+              )}
+              {isShowRoyalties && (
+              <ReduceRoyalties
+                isShowDel={isShowRoyalties}
+                setIsShowDel={setIsShowRoyalties}
+                classId={Number(collectionId)}
+                tokenId={Number(nftId)}
+                oldRoyalties={Number(Math.ceil(number2PerU16(nftData?.nftInfo?.royalty_rate)))}
               />
               )}
             </Container>

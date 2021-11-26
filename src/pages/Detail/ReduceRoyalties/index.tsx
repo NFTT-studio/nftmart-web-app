@@ -22,19 +22,20 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { useHistory } from 'react-router-dom';
-import { burnToken } from '../../../polkaSDK/api/burnToken';
+import * as Yup from 'yup';
+import { updateTokenRoyalty } from '../../../polkaSDK/api/updateTokenRoyalty';
 import { useAppSelector } from '../../../hooks/redux';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 
 interface Props {
   classId:number,
   tokenId:number,
-  nftName:string,
+  oldRoyalties: number,
   isShowDel: boolean,
   setIsShowDel: React.Dispatch<React.SetStateAction<boolean>>,
 }
 const OfferDialog: FC<Props> = (({
-  classId, tokenId, nftName, isShowDel, setIsShowDel,
+  classId, tokenId, oldRoyalties, isShowDel, setIsShowDel,
 }) => {
   const toast = useToast();
   const chainState = useAppSelector((state) => state.chain);
@@ -44,26 +45,21 @@ const OfferDialog: FC<Props> = (({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation();
   const cancelRef = useRef<HTMLDivElement>(null);
+  const schema = Yup.object().shape({
+    royalties: Yup.number().min(0).max(oldRoyalties).required(t('Create.required')),
+  });
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      royalties: 0,
     },
     onSubmit: (formValue) => {
-      if (formValue.name !== nftName) {
-        toast({
-          position: 'top',
-          render: () => (
-            <ToastBody title="Error" message={t('create.error')} type="error" />
-          ),
-        });
-        return;
-      }
       setIsSubmitting(true);
-      burnToken({
+      updateTokenRoyalty({
         classId: Number(classId),
         address: account!.address,
         tokenId: Number(tokenId),
+        royalties: formValue.royalties,
         cb: {
           success: (result) => {
             if (result.dispatchError) {
@@ -88,17 +84,18 @@ const OfferDialog: FC<Props> = (({
             }
           },
           error: (error) => {
-            setIsSubmitting(false);
             toast({
               position: 'top',
               render: () => (
                 <ToastBody title="Error" message={error} type="error" />
               ),
             });
+            setIsSubmitting(false);
           },
         },
       });
     },
+    validationSchema: schema,
   });
 
   return (
@@ -129,7 +126,7 @@ const OfferDialog: FC<Props> = (({
                   fontWeight="bold"
                   color="#000000"
                 >
-                  {t('Update.burning')}
+                  {t('Update.reduceRoyalties')}
                 </Text>
               </Flex>
               <Flex mb="13px" alignItems="center" justifyContent="center">
@@ -140,7 +137,7 @@ const OfferDialog: FC<Props> = (({
                   fontWeight="400"
                   color="#999999"
                 >
-                  {t('Update.burningExplain')}
+                  {t('Update.reduceExplain')}
                   <Text
                     display="inline-block"
                     fontSize="16px"
@@ -148,40 +145,67 @@ const OfferDialog: FC<Props> = (({
                     fontWeight="bold"
                     color="red"
                   >
-                    {nftName}
+                    {oldRoyalties}
+                    %
                   </Text>
                 </Text>
 
               </Flex>
-              <Input
-                id="name"
-                name="name"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-                fontSize="16px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                lineHeight="14px"
-                color="#000000"
+              <InputGroup
+                width="360px"
+                height="40px"
+                background="#FFFFFF"
+                borderRadius="4px"
+                border="1px solid #E5E5E5"
+                mb="10px"
                 _focus={{
                   boxShadow: 'none',
-                  color: '#000000',
-                  border: '1px solid #000000',
-                }}
-                _after={{
-                  boxShadow: 'none',
-                  color: '#000000',
-                  border: '1px solid #000000',
-                }}
-                placeholder={t('Update.nftName')}
-                _placeholder={{
-                  color: '#999999',
-                  fontSize: '12px',
-                }}
-              />
 
-              {formik.errors.name && formik.touched.name ? (
-                <div style={{ color: 'red' }}>{formik.errors.name}</div>
+                }}
+              >
+                <Input
+                  id="royalties"
+                  name="royalties"
+                  value={formik.values.royalties}
+                  onChange={formik.handleChange}
+                  fontSize="16px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  lineHeight="14px"
+                  color="#000000"
+                  _focus={{
+                    boxShadow: 'none',
+                    color: '#000000',
+                    border: '1px solid #000000',
+                  }}
+                  _after={{
+                    boxShadow: 'none',
+                    color: '#000000',
+                    border: '1px solid #000000',
+                  }}
+                  placeholder="0"
+                  _placeholder={{
+                    color: '#999999',
+                    fontSize: '12px',
+                  }}
+                />
+                <InputRightAddon
+                  height="40px"
+                  background="#F4F4F4"
+                  borderRadius="0px 4px 4px 0px"
+                  border="1px solid #E5E5E5"
+                  fontSize="14px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#999999"
+                  lineHeight="14px"
+                // eslint-disable-next-line react/no-children-prop
+                  children="%"
+                />
+              </InputGroup>
+
+              {formik.errors.royalties && formik.touched.royalties ? (
+                <div style={{ color: 'red' }}>{formik.errors.royalties}</div>
               ) : null}
               <Flex w="100%" justifyContent="center" pt="10px">
                 <Button
@@ -198,10 +222,9 @@ const OfferDialog: FC<Props> = (({
                     background: '#000000 !important',
                   }}
                 >
-                  {t('Update.burningConfirm')}
+                  {t('Update.submit')}
                 </Button>
               </Flex>
-
             </Flex>
           </form>
           <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
