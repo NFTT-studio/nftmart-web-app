@@ -26,19 +26,19 @@ const Banner = ((
 ) => {
   const { t } = useTranslation();
   const bannerImgLeft = [
-    {
-      id: '0',
-      icon: banner10.default,
-      url: `/items/33-2-${encodeURIComponent('G1 1/1')}`,
-      w: '205px',
-      h: '205px',
-    },
+    // {
+    //   id: '0',
+    //   icon: banner10.default,
+    //   url: `/items/33-2-${encodeURIComponent('G1 1/1')}`,
+    //   w: '205px',
+    //   h: '205px',
+    // },
   ];
   const bannerImgMiddle = [
     {
       id: '0',
       icon: banner09.default,
-      url: '/items/71-6-Beauty And The West Chamber 03',
+      url: '/items/54-2-The%20Face%20of%20Facebook%201%2F1',
       w: '410px',
       h: '615px',
     },
@@ -47,14 +47,14 @@ const Banner = ((
     {
       id: '0',
       icon: banner05.default,
-      url: '/items/60-2-THE SPRING FLOWS',
+      url: '/items/79-3-Room%20No.4%3A%20I%20Also%20Want%201%2F1',
       w: '205px',
       h: '410px',
     },
     {
       id: '0',
       icon: banner06.default,
-      url: '/account/nmtuJqWeTadEu7jDu4bjPW9G59txCnEG42kDE4XxMMPgjyMws/owned',
+      url: '/collection/22-Paper%20P',
       w: '205px',
       h: '215px',
     },
@@ -63,28 +63,35 @@ const Banner = ((
     {
       id: '0',
       icon: banner01.default,
-      url: '/items/28-0-mermaid dance under sun',
+      url: '/items/33-4-Pull%20It%20Out%201%2F1',
       w: '205px',
       h: '205px',
     },
     {
       id: '1',
       icon: banner02.default,
-      url: '/collection/57-PORTRAIT by Yu Shitao',
-      w: '410px',
+      url: '/items/55-4-Twinborn%201%2F10',
+      w: '205px',
       h: '205px',
     },
     {
       id: '2',
+      icon: banner10.default,
+      url: '/items/64-1-Crater%201%2F1',
+      w: '205px',
+      h: '205px',
+    },
+    {
+      id: '3',
       icon: banner03.default,
-      url: '/items/68-6-Blublublu',
+      url: '/items/65-18-White%20House%20and%20Black%20House-The%20Stars%20in%201985%201%2F1',
       w: '410px',
       h: '205px',
     },
     {
       id: '3',
       icon: banner04.default,
-      url: '/collection/20-relation',
+      url: '/items/58-1-That%20Sea%202%2F60',
       w: '205px',
       h: '205px',
     },
