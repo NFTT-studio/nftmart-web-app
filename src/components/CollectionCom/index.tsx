@@ -85,6 +85,9 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
     if (status && collectionsData?.collection?.royalty_rate) {
       setroyaltiesSl(true);
     }
+    if (status && collectionsData?.collection?.category) {
+      setCategories(collectionsData?.collection?.category);
+    }
   }, [collectionsData]);
 
   useEffect(() => {
