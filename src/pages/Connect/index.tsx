@@ -48,7 +48,7 @@ const Connect: FC = () => {
 
     initExtension();
   }, []);
-
+  console.log(callbackUrl);
   const handleClick = async (index: number) => {
     // treat first account as signer
 
@@ -60,10 +60,12 @@ const Connect: FC = () => {
     dispatch(setInjector(injector));
     dispatch(setAccounts(injectedAccounts));
     setValue(injectedAccounts[index].address);
+
     if (callbackUrl && callbackUrl.length > 0) {
       if (callbackUrl.indexOf('/connect') > -1) {
         history.push('/');
       } else {
+        console.log(callbackUrl);
         history.push(callbackUrl);
       }
     } else {

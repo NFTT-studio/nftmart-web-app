@@ -3,5 +3,5 @@ import fetchCollectionsSinger from '../../api/fetchCollectionsSinger';
 import { QUERY_KEYS } from '../../constants';
 
 export default (collectionId: string) => useQuery(
-  QUERY_KEYS.CATEGORIES, () => fetchCollectionsSinger(collectionId),
+  QUERY_KEYS.CATEGORIEINFO, () => fetchCollectionsSinger(collectionId),
 );

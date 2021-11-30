@@ -21,7 +21,7 @@ const LeftAddonInput: FC<Props> = ({
 }) => (
   <InputGroup
     width="600px"
-    height="42px"
+    height="43px"
     background="#FFFFFF"
     // eslint-disable-next-line no-nested-ternary
     borderRadius={position === 'top' ? '4px 4px 0px 4px'
@@ -34,8 +34,10 @@ const LeftAddonInput: FC<Props> = ({
     fontFamily="TTHoves-Regular, TTHoves"
     fontWeight="400"
     color="#999999"
+    boxSizing="border-box"
   >
     <InputLeftAddon
+      boxSizing="border-box"
       border="none"
       borderRadius="0"
       h="100%"
@@ -47,6 +49,7 @@ const LeftAddonInput: FC<Props> = ({
       {url}
     </InputLeftAddon>
     <InputLeftAddon
+      boxSizing="border-box"
       h="100%"
       m="0"
       p="0 0 0 10px"

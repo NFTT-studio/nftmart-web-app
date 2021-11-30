@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-nested-ternary */
 import React, {
@@ -24,7 +25,7 @@ import CategorySelector from '../../components/CategorySelector';
 import useCategories from '../../hooks/reactQuery/useCategories';
 import StatusSelector from '../../components/StatusSelector';
 import CollectionSelector from '../../components/CollectionSelector';
-import useCollections from '../../hooks/reactQuery/useCollections';
+import useCollections from '../../hooks/reactQuery/useCollectionsRecommend';
 import useNftsAll from '../../hooks/reactQuery/useNftsAll';
 import OrderCard from '../../components/OrderCard';
 import SortBy from '../../components/SortBy';
@@ -58,7 +59,9 @@ const Browsing = () => {
   const [remainingTime, setRemainingTime] = useState(0);
 
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
-  const { data: collectionsData, isLoading: collectionsIsLoading, refetch: fetchCollections } = useCollections({});
+  const { data: collectionsData, isLoading: collectionsIsLoading, refetch: fetchCollections } = useCollections({
+    limit: 1000,
+  });
   const {
     data: nftsData, isLoading: nftsIsLoading, fetchNextPage, refetch: refetchnftsData,
   } = useNftsAll(
@@ -109,7 +112,7 @@ const Browsing = () => {
       return collection.metadata.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
     }
     if (collectionsData) {
-      setCollectionsArr(collectionsData.collections.filter(check));
+      setCollectionsArr(collectionsData?.pages[0]?.collections.filter(check));
     }
   };
 
@@ -138,8 +141,8 @@ const Browsing = () => {
     }
   }, [selectedSort, selectedCategoryId, selectedCollection]);
   useEffect(() => {
-    if (collectionsData) {
-      setCollectionsArr(collectionsData.collections);
+    if (collectionsData?.pages[0]?.collections) {
+      setCollectionsArr(collectionsData?.pages[0]?.collections);
     }
   }, [collectionsData]);
 

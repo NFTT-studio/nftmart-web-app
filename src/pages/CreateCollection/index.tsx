@@ -38,6 +38,7 @@ import useNftsCollect from '../../hooks/reactQuery/useNftsCollect';
 import useOffer from '../../hooks/reactQuery/useOffer';
 import Headers from './Header';
 import CollectionCom from '../../components/CollectionCom/index';
+import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 
 import {
   DEFAULT_PAGE_LIMIT,
@@ -45,6 +46,14 @@ import {
 } from '../../constants';
 
 const Account = () => {
+  function GetQueryString(name) {
+    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
+    const r = decodeURI(window.location.search.substr(1)).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+  const status = GetQueryString('collectionId');
+  const { data: collectionsData } = useCollectionsSinger(status);
   const { t } = useTranslation();
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
@@ -250,7 +259,7 @@ const Account = () => {
                     <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                   </Center>
                 )
-                : <CollectionCom account={account} whiteList={whiteList} />}
+                : <CollectionCom account={account} whiteList={whiteList} collectionsData={collectionsData} />}
             </Flex>
           </Flex>
         </MainContainer>

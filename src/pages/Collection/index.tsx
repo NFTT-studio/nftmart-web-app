@@ -2,7 +2,7 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import {
   Flex,
@@ -15,6 +15,9 @@ import {
   SimpleGrid,
   Box,
   Link,
+  useToast,
+  Modal,
+  ModalOverlay,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { without } from 'lodash';
@@ -28,6 +31,7 @@ import remarkGfm from 'remark-gfm';
 import { any } from 'ramda';
 import { timeStamp } from 'console';
 import Identicon from '@polkadot/react-identicon';
+import { number } from 'yup/lib/locale';
 import MainContainer from '../../layout/MainContainer';
 import OrderCard from '../../components/OrderCard';
 import { useAppSelector } from '../../hooks/redux';
@@ -53,8 +57,10 @@ import {
 } from '../../constants';
 import SortBy from '../../components/SortBy';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
-import useAccount from '../../hooks/reactQuery/useAccount';
+import DelDialog from './DelDialog';
+import { destroyClass } from '../../polkaSDK/api/destroyClass';
 import Sort from '../../constants/Sort';
+import MyToast, { ToastBody } from '../../components/MyToast';
 
 const ICONS = [
   { icon: WEBSITE.default, name: 'website', linkPrefix: '' },
@@ -66,8 +72,11 @@ const ICONS = [
 ];
 
 const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isShowDel, setIsShowDel] = useState(false);
   const { t } = useTranslation();
   const formatAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+  const toast = useToast();
 
   const chainState = useAppSelector((state) => state.chain);
   const { account } = chainState;
@@ -80,7 +89,6 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
       setRemainingTime(res);
     });
   }, []);
-
   const {
     data: collectionsData,
     isLoading: collectionsIsLoading,
@@ -110,6 +118,12 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
   const history = useHistory();
   function handleCreate() {
     history.push(`/account/items/create?collectionId=${classId}`);
+  }
+  function handleModify() {
+    history.push(`/account/collections/create?collectionId=${classId}`);
+  }
+  function handleDelete() {
+    setIsShowDel(true);
   }
 
   useEffect(() => {
@@ -152,7 +166,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
           </Center>
         )
         : (
-          <MainContainer title={`${collectionsData?.collection?.metadata.name}${t('Collection.title')}`}>
+          <MainContainer title={`${collectionsData?.collection?.metadata.name}|${t('Home.title')}`}>
             {isPerson ? (
               <Flex
                 w="100vw"
@@ -164,27 +178,58 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                 <Flex
                   width="100%"
                   maxWidth="1364px"
-                  justifyContent="flex-end"
+                  justifyContent="space-between"
                 >
-                  {/* <Button
-                  mr="10px"
-                  width="137px"
-                  height="40px"
-                  background="#FFFFFF"
-                  borderRadius="4px"
-                  border="1px solid #000000"
-                  fontSize="14px"
-                  fontFamily="TTHoves-Regular, TTHoves"
-                  fontWeight="400"
-                  color="#000000"
-                  lineHeight="16px"
-                  _hover={{
-                    background: '#000000',
-                    color: '#FFFFFF',
-                  }}
-                >
-                  {t('Collection.Editprofile')}
-                </Button> */}
+                  <Flex
+                    width="100%"
+                    maxWidth="1364px"
+                    justifyContent="flex-start"
+                  >
+                    <Button
+                      mr="20px"
+                      width="137px"
+                      height="40px"
+                      borderRadius="4px"
+                      border="1px solid #000000"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      lineHeight="16px"
+                      color={nftsData?.pages[0].pageInfo.totalNum > 0 ? '#FFFFFF' : '#000000'}
+                      background={nftsData?.pages[0].pageInfo.totalNum > 0 ? '#000000' : '#FFFFFF'}
+                      isDisabled={nftsData?.pages[0].pageInfo.totalNum > 0}
+                      _hover={{
+                        background: '#000000',
+                        color: '#FFFFFF',
+                      }}
+                      onClick={handleDelete}
+                    >
+                      {t('Update.delete')}
+                    </Button>
+                    <Link
+                      as={RouterLink}
+                      to={`/account/collections/create?collectionId=${classId}`}
+                    >
+                      <Button
+                        width="137px"
+                        height="40px"
+                        background="#FFFFFF"
+                        borderRadius="4px"
+                        border="1px solid #000000"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#000000"
+                        lineHeight="16px"
+                        _hover={{
+                          background: '#000000',
+                          color: '#FFFFFF',
+                        }}
+                      >
+                        {t('Update.modify')}
+                      </Button>
+                    </Link>
+                  </Flex>
                   <Link
                     as={RouterLink}
                     to={`/account/items/create?collectionId=${classId}`}
@@ -616,6 +661,19 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                   )}
               </Flex>
             </Flex>
+            {isShowDel && (
+              <DelDialog
+                isShowDel={isShowDel}
+                setIsShowDel={setIsShowDel}
+                classId={Number(classId)}
+                ownerId={collectionsData?.collection?.owner_id}
+                collectionName={collectionsData?.collection?.metadata?.name}
+              />
+            )}
+            <MyToast isCloseable />
+            <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting(false)}>
+              <ModalOverlay />
+            </Modal>
 
           </MainContainer>
         )}

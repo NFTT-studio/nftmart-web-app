@@ -11,7 +11,7 @@ type Nfts = {
   }
 }
 
-export type fetchPersonalNftsParams = {
+export type fetchNftHotParams = {
   ownerId?: string
   collecterId?: string
   creatorId?: string
@@ -26,8 +26,8 @@ export type fetchPersonalNftsParams = {
 
 export default async ({
   ownerId, collecterId, sortBy, categoryId, collectionId, status, classId, creatorId, number = DEFAULT_PAGE_LIMIT, pageParam,
-}: fetchPersonalNftsParams) => {
-  const res = await axiosClient.get<Nfts>('/nfts/list', {
+}: fetchNftHotParams) => {
+  const res = await axiosClient.get<Nfts>('/nfts/hot', {
     params: pickBy({
       ownerId,
       collecterId,
