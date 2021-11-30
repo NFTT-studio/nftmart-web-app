@@ -203,7 +203,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             setTimeout(() => {
               setIsSubmitting(false);
               formAction.resetForm();
-              history.push(`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`);
+              history.push(`/items/${nftData?.nftInfo?.id}-${encodeURIComponent(formValue.name)}`);
             }, 3000);
           },
           error: (error: string) => {

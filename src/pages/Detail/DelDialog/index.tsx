@@ -83,7 +83,7 @@ const OfferDialog: FC<Props> = (({
               });
               setTimeout(() => {
                 setIsSubmitting(false);
-                history.push('/account/collections');
+                history.push('/account/owned');
               }, 2500);
             }
           },

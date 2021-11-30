@@ -255,7 +255,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                         h="100%"
                         maxWidth="1364px"
                         w="100%"
-                        justifyContent="space-between"
+                        justifyContent="flex-end"
                       >
                         <Flex h="100%" alignItems="center">
                           <Button
