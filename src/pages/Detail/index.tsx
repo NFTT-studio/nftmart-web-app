@@ -599,7 +599,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
               justifyContent="flex-start"
             >
               <Flex m="26px 0 22px 0" p="0 20px 0 20px" width="100%" h="40px" justifyContent="flex-end" alignItems="center">
-                {nftData?.nftInfo?.view_count ? (
+                {/* {nftData?.nftInfo?.view_count ? (
                   <Flex h="22px" justifyContent="flex-start" alignItems="center" mr="20px">
                     <Image
                       mr="4px"
@@ -634,7 +634,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                       {nftData?.nftInfo?.collect_count}
                     </Text>
                   </Flex>
-                ) : null}
+                ) : null} */}
 
                 <Flex>
                   <Box

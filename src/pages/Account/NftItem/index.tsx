@@ -78,10 +78,10 @@ const NftItem: FC<Props> = (({
           {' '}
           {t('results')}
         </Text>
-        <Flex>
+        {/* <Flex>
           <StatusSelectorRow statusArr={statusArr} selectedArr={selectedStatusArr} handleSelect={handleSelectStatus} />
           <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
-        </Flex>
+        </Flex> */}
       </Flex>
       <Flex width="100%" flexFlow="row wrap">
         {nftsIsLoading

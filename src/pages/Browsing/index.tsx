@@ -86,6 +86,7 @@ const Browsing = () => {
 
   const handleSelectCategory: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectedCategoryId(event.currentTarget.id);
+    setSelectedCollectionIdArr([]);
   };
 
   const handleSelectStatus: MouseEventHandler<HTMLButtonElement> = (event) => {
