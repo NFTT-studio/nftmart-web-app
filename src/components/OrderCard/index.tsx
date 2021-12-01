@@ -406,7 +406,7 @@ const NftCard: FC<NftCardProps> = ({
             display="flex"
             justifyContent="space-between"
           >
-            {Number(nft?.auction?.price) || Number(nft?.price) ? (
+            {Number(nft?.auction?.price) > 0 || Number(nft?.price) > 0 ? (
               <Box textAlign="right" display="flex" justifyContent="center">
                 <Flex flexDirection="column" alignItems="flex-start">
                   <Box
@@ -432,10 +432,10 @@ const NftCard: FC<NftCardProps> = ({
                     {type === 'British' ? (
                       renderNmtNumberText((Number(nft?.auction?.price)).toString())
                     ) : null}
-                    {type && Number(nft?.auction?.price) ? 'NMT' : '' }
-                    {!type && Number(nft?.price) ? 'NMT' : '' }
+                    {type && Number(nft?.auction?.price) > 0 ? 'NMT' : '' }
+                    {!type && Number(nft?.price) > 0 ? 'NMT' : '' }
                   </Box>
-                  {Number(nft?.auction?.price) || Number(nft?.price) ? (
+                  {Number(nft?.auction?.price) > 0 || Number(nft?.price) > 0 ? (
                     <Box
                       mt="2px"
                       color="#999999"
