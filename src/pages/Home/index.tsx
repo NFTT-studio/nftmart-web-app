@@ -104,7 +104,6 @@ const Home = () => {
                 lineHeight="38px"
               >
                 {t('Home.hottest')}
-
               </Text>
               <Flex>
                 <Button

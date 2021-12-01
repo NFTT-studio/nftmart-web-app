@@ -432,8 +432,8 @@ const NftCard: FC<NftCardProps> = ({
                     {type === 'British' ? (
                       renderNmtNumberText((Number(nft?.auction?.price)).toString())
                     ) : null}
-                    {Number(nft?.auction?.price) ? 'NMT' : '' }
-                    {Number(nft?.price) ? 'NMT' : '' }
+                    {type && Number(nft?.auction?.price) ? 'NMT' : '' }
+                    {!type && Number(nft?.price) ? 'NMT' : '' }
                   </Box>
                   {Number(nft?.auction?.price) || Number(nft?.price) ? (
                     <Box
