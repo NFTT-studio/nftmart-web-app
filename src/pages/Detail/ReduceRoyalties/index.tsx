@@ -23,9 +23,14 @@ import { useTranslation } from 'react-i18next';
 
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useQueryClient } from 'react-query';
 import { updateTokenRoyalty } from '../../../polkaSDK/api/updateTokenRoyalty';
 import { useAppSelector } from '../../../hooks/redux';
 import MyToast, { ToastBody } from '../../../components/MyToast';
+
+import {
+  QUERY_KEYS,
+} from '../../../constants';
 
 interface Props {
   classId:number,
@@ -38,6 +43,7 @@ const OfferDialog: FC<Props> = (({
   classId, tokenId, oldRoyalties, isShowDel, setIsShowDel,
 }) => {
   const toast = useToast();
+  const queryCliet = useQueryClient();
   const chainState = useAppSelector((state) => state.chain);
   const history = useHistory();
 
@@ -51,7 +57,7 @@ const OfferDialog: FC<Props> = (({
 
   const formik = useFormik({
     initialValues: {
-      royalties: 0,
+      royalties: oldRoyalties || 0,
     },
     onSubmit: (formValue) => {
       setIsSubmitting(true);
@@ -69,6 +75,7 @@ const OfferDialog: FC<Props> = (({
                   <ToastBody title="Error" message={t('create.error')} type="error" />
                 ),
               });
+              setIsShowDel(false);
               setIsSubmitting(false);
             } else {
               toast({
@@ -79,7 +86,8 @@ const OfferDialog: FC<Props> = (({
               });
               setTimeout(() => {
                 setIsSubmitting(false);
-                history.push('/account/collections');
+                setIsShowDel(false);
+                queryCliet.refetchQueries(QUERY_KEYS.NFT);
               }, 2500);
             }
           },
@@ -91,6 +99,7 @@ const OfferDialog: FC<Props> = (({
               ),
             });
             setIsSubmitting(false);
+            setIsShowDel(false);
           },
         },
       });
