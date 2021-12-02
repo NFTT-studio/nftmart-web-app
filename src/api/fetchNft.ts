@@ -29,6 +29,6 @@ type NftData = {
 }
 
 export default async (id: string) => {
-  const res = await axiosClient.get<NftData>(`/nfts/${id}`);
+  const res = await axiosClient.get<NftData>(`/nfts/detail/${id}`);
   return res.data;
 };

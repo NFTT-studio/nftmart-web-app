@@ -628,7 +628,7 @@ const DetailRight: FC<Props> = (({
                       formatNum(auctionPrice)
                     ) : null}
                     {!types ? (
-                      Number(price) ? formatNum(price) : '-'
+                      Number(price) > 0 ? formatNum(price) : '-'
                     ) : null}
                   </Text>
                   <Text
@@ -651,7 +651,7 @@ const DetailRight: FC<Props> = (({
                       Number(auctionPrice) && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(auctionPrice))})` : 'NMT'
                     ) : null}
                     {!types ? (
-                      Number(price) && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(price))})` : 'NMT'
+                      Number(price) > 0 && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(price))})` : 'NMT'
                     ) : null}
                   </Text>
                   {types === 'Dutch' && !allowBritishAuction ? (
@@ -678,7 +678,7 @@ const DetailRight: FC<Props> = (({
                       src={IconRankUp.default}
                     />
                   ) : null}
-                  {Number(auctionPrice) && types === 'British'
+                  {Number(auctionPrice) > 0 && types === 'British'
                     ? (
                       <Image
                         m="0 0 8px 10px"
