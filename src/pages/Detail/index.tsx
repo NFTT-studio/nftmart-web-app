@@ -396,7 +396,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                   )}
               </>
             )
-              : isCreator ? (
+              : isCreator && nftData?.nftInfo?.status_id === 'Idle' ? (
                 <Flex
                   w="100vw"
                   background="#F9F9F9"

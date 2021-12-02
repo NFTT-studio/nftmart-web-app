@@ -92,7 +92,12 @@ const Browsing = () => {
 
   const handleSelectStatus: MouseEventHandler<HTMLButtonElement> = (event) => {
     const clickedStatus = event.currentTarget.id;
-    setSelectedStatusArr([clickedStatus]);
+    // setSelectedStatusArr([clickedStatus]);
+    setSelectedStatusArr(
+      selectedStatusArr.indexOf(clickedStatus) > -1
+        ? without(selectedStatusArr, event.currentTarget.id)
+        : [clickedStatus],
+    );
     // setSelectedStatusArr(
     //   selectedStatusArr.indexOf(clickedStatus) > -1
     //     ? without(selectedStatusArr, event.currentTarget.id)
