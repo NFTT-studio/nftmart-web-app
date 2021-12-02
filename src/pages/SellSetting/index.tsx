@@ -146,18 +146,18 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       id: 1,
       title: t('SellSetting.dutchAuction'),
       subtitle: t('SellSetting.sellAtaDecliningPrice'),
-      isDisabled: !!(selectId === 0 && Number(nftData?.nftInfo?.price) && !type),
+      isDisabled: !!(selectId === 0 && Number(nftData?.nftInfo?.price) > 0 && !type),
     },
     {
       id: 2,
       title: t('SellSetting.englishAuction'),
       subtitle: t('SellSetting.auctionToTheHighestBidder'),
-      isDisabled: !!(selectId === 0 && Number(nftData?.nftInfo?.price) && !type),
+      isDisabled: !!(selectId === 0 && Number(nftData?.nftInfo?.price) > 0 && !type),
     },
   ];
   const formik = useFormik({
     initialValues: {
-      price: Number(NumberToString(nftData?.nftInfo?.price) || 0) || '',
+      price: Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.price) : '',
       deposits: '',
       dutchDeposits: '',
       englishDeposits: '',
@@ -328,10 +328,10 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         },
       };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (selectId === 0 && Number(nftData?.nftInfo?.price)) {
+      if (selectId === 0 && Number(nftData?.nftInfo?.price) > 0) {
         settingOrder(settingOrderParams as any);
       }
-      if (selectId === 0 && !Number(nftData?.nftInfo?.price)) {
+      if (selectId === 0 && !(Number(nftData?.nftInfo?.price) > 0)) {
         createOrder(orderParams as any);
       }
       if (selectId === 1) {
