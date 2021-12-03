@@ -21,6 +21,7 @@ export const QUERY_KEYS = {
   ExpensiveNFTS: 'ExpensiveNFTS',
   CheapNFTS: 'CheapNFTS',
   CATEGORIEINFO: 'CATEGORIEINFO',
+  Historyprice: 'Historyprice',
 };
 
 export const DEFAULT_PAGE_LIMIT = 20;

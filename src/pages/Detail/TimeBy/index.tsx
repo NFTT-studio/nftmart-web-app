@@ -25,28 +25,30 @@ import {
 type TimeByProps = {
   selectedTime: string,
   setSelectedTime: React.Dispatch<React.SetStateAction<string>>
+  setSelectedTimeValue: React.Dispatch<React.SetStateAction<string>>
 }
 
-const TimeBy: FC<TimeByProps> = ({ selectedTime, setSelectedTime }) => {
+const TimeBy: FC<TimeByProps> = ({ selectedTime, setSelectedTime, setSelectedTimeValue }) => {
   const { t } = useTranslation();
   const queryCliet = useQueryClient();
   const [opening, setOpening] = useState(false);
   const Time = [
-    { key: 'seven', value: t('Time.seven') },
-    { key: 'fourteen', value: t('Time.fourteen') },
-    { key: 'thirty', value: t('Time.thirty') },
+    { key: 'seven', value: t('Time.seven'), time: '7' },
+    { key: 'fourteen', value: t('Time.fourteen'), time: '14' },
+    { key: 'thirty', value: t('Time.thirty'), time: '30' },
     // { key: 'sixty', value: t('Time.sixty') },
-    { key: 'ninety', value: t('Time.ninety') },
-    { key: 'year', value: t('Time.year') },
+    { key: 'ninety', value: t('Time.ninety'), time: '90' },
+    { key: 'year', value: t('Time.year'), time: '365' },
   ];
 
-  const handleSelect = (key: string) => {
-    // queryCliet.refetchQueries(QUERY_KEYS.NFT);
+  const handleSelect = (key: string, time:string) => {
+    setSelectedTimeValue(time);
     setSelectedTime(key);
     setOpening(false);
+    // queryCliet.refetchQueries(QUERY_KEYS.Historyprice);
   };
 
-  const renderButton = (time: { key: string, value: string }) => (
+  const renderButton = (time: { key: string, value: string, time: string}) => (
     <Button
       display="flex"
       justifyContent="flex-start"
@@ -56,7 +58,7 @@ const TimeBy: FC<TimeByProps> = ({ selectedTime, setSelectedTime }) => {
       fontFamily="TTHoves-Regular, TTHoves"
       fontWeight="400"
       color="#191A24"
-      onClick={() => handleSelect(time.key)}
+      onClick={() => handleSelect(time.key, time.time)}
     >
       {time.value}
     </Button>

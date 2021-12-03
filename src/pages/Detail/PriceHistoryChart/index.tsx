@@ -35,10 +35,10 @@ const PriceHistoryChart = ({
   };
   const PriceDateone = JSON.parse(JSON.stringify(PriceDate));
   PriceDateone.forEach((item) => {
-    const num = Number(NumberToString(item.price));
+    const num = Number(NumberToString(item.avgprice));
     // item.price = Number(num);
     // item.date = format(item.date);
-    item.date = format(item.date);
+    item.date = format(item.d);
     item.price = num;
   });
   // useEffect(() => {

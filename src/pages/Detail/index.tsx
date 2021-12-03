@@ -41,8 +41,6 @@ import {
   IconDetailsCollection,
   IconDetailsCollectionS,
   IconDetailsRefresh,
-  IconBrowse,
-  IconLiulan,
 } from '../../assets/images';
 
 import useNft from '../../hooks/reactQuery/useNft';

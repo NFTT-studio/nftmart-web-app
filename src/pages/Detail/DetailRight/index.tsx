@@ -34,6 +34,7 @@ import PriceHistoryChart from '../PriceHistoryChart';
 import { priceStringDivUnit, currentPrice, formatNum } from '../../../utils/format';
 import { renderNmtNumberText } from '../../../components/Balance';
 import useEvent from '../../../hooks/reactQuery/useEvent';
+import useHistoryprice from '../../../hooks/reactQuery/useHistoryprice';
 import {
   PINATA_SERVER,
   DEFAULT_PAGE_LIMIT,
@@ -151,7 +152,15 @@ const DetailRight: FC<Props> = (({
   );
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
+  const [selectedTimeValue, setSelectedTimeValue] = useState('7');
 
+  const { data: historyPrice } = useHistoryprice(
+    {
+      id: nftId,
+      timePeriod: selectedTimeValue,
+    },
+  );
+  console.log(historyPrice?.pages[0]);
   const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : null);
   const price = nftData?.nftInfo?.price ? priceStringDivUnit(nftData?.nftInfo?.price) : null;
   const auctionPrice = nftData?.nftInfo?.auction?.price ? priceStringDivUnit(nftData?.nftInfo?.auction?.price) : null;
@@ -164,7 +173,7 @@ const DetailRight: FC<Props> = (({
   const allowBritishAuction = nftData?.nftInfo?.auction?.allow_british_auction || false;
   const bidCount = nftData?.nftInfo?.auction?.bid_count || false;
 
-  const PriceHistory = nftData?.nftInfo?.history[selectedTime];
+  const PriceHistory = historyPrice?.pages[0];
   const [events, setEvents] = useState(
     {
       times: 0,
@@ -1258,7 +1267,11 @@ const DetailRight: FC<Props> = (({
       {selectTabId === 2 ? (
         <Box p="20px 0">
           <Flex flexDirection="row" justifyContent="flex-start" mb="20px">
-            <TimeBy selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+            <TimeBy
+              selectedTime={selectedTime}
+              setSelectedTime={setSelectedTime}
+              setSelectedTimeValue={setSelectedTimeValue}
+            />
             <Flex m="0 20px" textAlign="center" flexDirection="column" justifyContent="center">
               <Text
                 mb="2px"
@@ -1281,7 +1294,7 @@ const DetailRight: FC<Props> = (({
                   color="#000000"
                   lineHeight="18px"
                 >
-                  {renderNmtNumberText(PriceHistory?.average) || '0'}
+                  {PriceHistory?.avgprice ? formatNum(priceStringDivUnit(PriceHistory?.avgprice)) : '0'}
                 </Text>
               </Flex>
             </Flex>
@@ -1307,14 +1320,14 @@ const DetailRight: FC<Props> = (({
                   color="#000000"
                   lineHeight="18px"
                 >
-                  {PriceHistory?.volume || '0'}
+                  {PriceHistory?.totalvolume || '0'}
                 </Text>
               </Flex>
             </Flex>
           </Flex>
-          {PriceHistory?.price_list.length
+          {PriceHistory?.priceList?.length
             ? (
-              <PriceHistoryChart PriceDate={PriceHistory.price_list} />)
+              <PriceHistoryChart PriceDate={PriceHistory?.priceList} />)
             : (
               <NoData widths="100%" />
             )}
