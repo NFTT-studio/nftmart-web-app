@@ -160,7 +160,7 @@ const DetailRight: FC<Props> = (({
       timePeriod: selectedTimeValue,
     },
   );
-  console.log(historyPrice?.pages[0]);
+  console.log(eventDate?.pages[Number(eventDate?.pages?.length) - 1].events, eventDate?.pages[Number(eventDate?.pages?.length) - 1].length);
   const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : null);
   const price = nftData?.nftInfo?.price ? priceStringDivUnit(nftData?.nftInfo?.price) : null;
   const auctionPrice = nftData?.nftInfo?.auction?.price ? priceStringDivUnit(nftData?.nftInfo?.auction?.price) : null;
@@ -1144,7 +1144,7 @@ const DetailRight: FC<Props> = (({
       ) : null}
       {selectTabId === 1 ? (
         <Box p="20px">
-          {eventDate?.pages.length ? (
+          {eventDate?.pages?.length ? (
             <Box>
               <Flex w="100%" flexDirection="column" justifyContent="flex-start">
                 <Flex h="40px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
@@ -1217,17 +1217,17 @@ const DetailRight: FC<Props> = (({
 
                 </Flex>
                 <InfiniteScroll
-                  dataLength={eventDate?.pages.length * DEFAULT_PAGE_LIMIT}
+                  dataLength={eventDate?.pages?.length * DEFAULT_PAGE_LIMIT}
                   next={fetchNextPageEventDate}
-                  hasMore={eventDate?.pages.length
-                                * DEFAULT_PAGE_LIMIT < eventDate?.pages[0].pageInfo?.totalNum}
+                  hasMore={eventDate?.pages[Number(eventDate?.pages?.length) - 1]?.events?.length === 20}
                   loader={<h4>Loading...</h4>}
                   initialScrollY={1}
-                  height="260px"
+                  height="200px"
                 >
-                  {eventDate?.pages.map((page) => page?.events?.map((item) => (
+                  {eventDate?.pages?.map((page) => page?.events?.map((item) => (
                     item.method === 'BurnnedToken'
                     || item.method === 'BurnRemovedBritishAuctionnedToken'
+                    || item.method === 'UpdatedTokenRoyalty'
                       ? null : (<Activity events={item} />)
                   )))}
                 </InfiniteScroll>

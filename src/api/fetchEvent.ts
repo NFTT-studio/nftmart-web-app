@@ -18,13 +18,13 @@ export type fetchPersonalEventParams = {
 }
 
 export default async ({
-  nftId, number = DEFAULT_PAGE_LIMIT, pageParam,
+  nftId, number, pageParam,
 }: fetchPersonalEventParams) => {
   const res = await axiosClient.get<Event>('orders/event/list', {
     params: pickBy({
       nftId,
-      number,
-      page: pageParam,
+      limit: number,
+      offset: pageParam * number,
     }, identity),
   });
   return res.data;

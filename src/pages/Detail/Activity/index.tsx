@@ -27,7 +27,6 @@ const Events: FC<Props> = (({
     return `${y}/${add0(m)}/${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
   };
   const formatAddress = (addr: string) => (isString(addr) ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : '');
-  const date = JSON.parse(events?.event?.data);
   const { t } = useTranslation();
   return (
     <Flex
@@ -75,12 +74,12 @@ const Events: FC<Props> = (({
         color="#000000"
         lineHeight="20px"
       >
-        {events?.price ? formatNum(priceStringDivUnit(events?.price)) : null}
+        {Number(events?.price) > 0 ? formatNum(priceStringDivUnit(events?.price)) : null}
         <Text
           ml="3px"
           color="#999999"
         >
-          {events?.price ? 'NMT' : null}
+          {Number(events?.price) > 0 ? 'NMT' : null}
         </Text>
       </Text>
       <Text
@@ -106,12 +105,12 @@ const Events: FC<Props> = (({
         <Link
           display="inline-block"
           as={RouterLink}
-          to={`/account/${date[0]}/owned`}
+          to={`/account/${events?.from_id}/owned`}
           onClick={() => {
             localStorage.setItem('ButtonSelect', '0');
           }}
         >
-          {date[0] ? formatAddress(date[0]) : ''}
+          {events?.from?.name ? events?.from?.name : formatAddress(events?.from_id)}
         </Link>
       </Text>
       <Text
@@ -124,54 +123,17 @@ const Events: FC<Props> = (({
         lineHeight="20px"
       >
 
-        {events?.method === 'TransferredToken'
+        {events?.to_id
           ? (
             <Link
               display="inline-block"
               as={RouterLink}
-              to={`/account/${date[1]}/owned`}
+              to={`/account/${events?.to_id}/owned`}
             >
-              {formatAddress(date[1])}
+              {events?.to?.name ? events?.to?.name : formatAddress(events?.to_id)}
             </Link>
           )
           : ''}
-        {events?.method === 'RedeemedBritishAuction' ? (
-          <Link
-            display="inline-block"
-            as={RouterLink}
-            to={`/account/${date[1]}/owned`}
-          >
-            {formatAddress(date[1])}
-          </Link>
-        ) : ''}
-        {events?.method === 'RedeemedDutchAuction' ? (
-          <Link
-            display="inline-block"
-            as={RouterLink}
-            to={`/account/${date[1]}/owned`}
-          >
-            {formatAddress(date[1])}
-          </Link>
-        ) : ''}
-        {events?.method === 'TakenOffer' ? (
-          <Link
-            display="inline-block"
-            as={RouterLink}
-            to={`/account/${date[1]}/owned`}
-          >
-            {formatAddress(date[1])}
-          </Link>
-        ) : ''}
-        {events?.method === 'TakenOrder' ? (
-          <Link
-            display="inline-block"
-            as={RouterLink}
-            to={`/account/${date[1]}/owned`}
-          >
-            {formatAddress(date[1])}
-          </Link>
-        ) : ''}
-
       </Text>
       <Text
         w="136px"
