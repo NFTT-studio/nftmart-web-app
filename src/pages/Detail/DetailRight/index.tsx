@@ -1222,7 +1222,7 @@ const DetailRight: FC<Props> = (({
                   hasMore={eventDate?.pages[Number(eventDate?.pages?.length) - 1]?.events?.length === 20}
                   loader={<h4>Loading...</h4>}
                   initialScrollY={1}
-                  height="200px"
+                  height="260px"
                 >
                   {eventDate?.pages?.map((page) => page?.events?.map((item) => (
                     item.method === 'BurnnedToken'
