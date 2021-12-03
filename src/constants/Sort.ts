@@ -6,4 +6,5 @@ export default [
   { key: 'cheapest', value: 'cheapest' },
   // { key: 'most_stared', value: 'mostStarted' },
   { key: 'oldest', value: 'oldest' },
+  { key: 'pledge', value: 'pledge' },
 ];
