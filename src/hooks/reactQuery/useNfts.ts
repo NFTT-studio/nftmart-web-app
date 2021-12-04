@@ -6,7 +6,7 @@ import fetchPersonalNfts, { fetchPersonalNftsParams } from '../../api/fetchPerso
 import { QUERY_KEYS } from '../../constants';
 
 const hot = 'most_stared';
-const expensive = 'expensive';
+const expensive = 'dealprice';
 const cheap = 'cheapest';
 
 export default ({
