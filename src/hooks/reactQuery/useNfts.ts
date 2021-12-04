@@ -31,6 +31,7 @@ export const useHotNfts = (categoryId?: string) => useQuery(
 export const useExpensiveNfts = (categoryId?: string) => useQuery(
   [QUERY_KEYS.ExpensiveNFTS, expensive, categoryId], () => fetchPersonalNfts({
     sortBy: expensive,
+    status: ['buyNow'],
     categoryId,
   }),
 );
