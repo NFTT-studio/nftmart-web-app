@@ -46,7 +46,6 @@ import {
 } from '../../constants';
 
 const Account = () => {
-  console.log(process.env);
   function GetQueryString(name) {
     const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
     const r = decodeURI(window.location.search.substr(1)).match(reg);
@@ -260,7 +259,7 @@ const Account = () => {
                     <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                   </Center>
                 )
-                : <CollectionCom account={account} whiteList={whiteList} collectionsData={collectionsData} />}
+                : <CollectionCom account={account} whiteList={whiteList} collectionsData={status ? collectionsData : {}} />}
             </Flex>
           </Flex>
         </MainContainer>
