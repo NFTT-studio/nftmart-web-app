@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-children-prop */
 /* eslint-disable no-nested-ternary */
@@ -135,31 +136,16 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
   }, [collectionsData?.collection?.creator_id, account?.address]);
   useEffect(() => {
     refetchCollectionsData();
-    refetchNftsData();
   }, [classId]);
   useEffect(() => {
     refetchCreatorData();
   }, [dataCreator?.address === 'undefined']);
-  const begin = any;
   useEffect(() => {
-    refetchCollectionsData();
     refetchNftsData();
-    refetchCreatorData();
-    // if (JSON.stringify(collectionsData) === '{}') {
-    //   begin = setInterval(() => {
-
-    //   }, 3000);
-    // } else {
-    //   clearInterval(begin);
-    // }
-  }, [JSON.stringify(collectionsData) === '{}']);
-  useEffect(() => () => {
-    clearInterval(begin);
-  }, []);
-  // isLoading
+  }, [selectedSort]);
   return (
     <>
-      { nftsIsLoading || collectionsIsLoading || JSON.stringify(collectionsData) === '{}'
+      {collectionsIsLoading || JSON.stringify(collectionsData) === '{}'
         ? (
           <Center width="100%" height="100vh">
             <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
@@ -448,7 +434,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                       {collectionsData?.collection?.owner_count || 0}
                     </Flex>
                   </Flex>
-                  <Flex
+                  {/* <Flex
                     width="25%"
                     flexDirection="column"
                     alignContent="center"
@@ -475,8 +461,8 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                     >
                       {collectionsData?.collection?.view_count || 0}
                     </Flex>
-                  </Flex>
-                  <Flex
+                  </Flex> */}
+                  {/* <Flex
                     width="25%"
                     flexDirection="column"
                     alignContent="center"
@@ -503,7 +489,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                     >
                       {collectionsData?.collection?.collect_count || 0}
                     </Flex>
-                  </Flex>
+                  </Flex> */}
 
                 </Flex>
                 <Flex>
@@ -633,31 +619,41 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                       </SimpleGrid>
                     </InfiniteScroll>
                   ) : (
-                    <Flex
-                      width="100%"
-                      height="500px"
-                      background="#FFFFFF"
-                      flexDirection="column"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      <Image
-                        w="150px"
-                        h="100px"
-                        borderStyle="dashed"
-                        src={Emptyimg.default}
-                      />
-                      <Text
-                        mt="10px"
-                        fontSize="14px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#999999"
-                        lineHeight="20px"
+                    nftsIsLoading ? (
+                      <Center
+                        width="100%"
+                        height="500px"
                       >
-                        {t('common.noDataYet')}
-                      </Text>
-                    </Flex>
+                        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                      </Center>
+                    )
+                      : (
+                        <Flex
+                          width="100%"
+                          height="500px"
+                          background="#FFFFFF"
+                          flexDirection="column"
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Image
+                            w="150px"
+                            h="100px"
+                            borderStyle="dashed"
+                            src={Emptyimg.default}
+                          />
+                          <Text
+                            mt="10px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#999999"
+                            lineHeight="20px"
+                          >
+                            {t('common.noDataYet')}
+                          </Text>
+                        </Flex>
+                      )
                   )}
               </Flex>
             </Flex>

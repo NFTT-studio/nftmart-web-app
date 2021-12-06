@@ -21,6 +21,7 @@
     "oldest": "Oldest"
   },
   "common": {
+    "nameerror":"The correct name was not entered",
     "category":"Category",
     "cuttingConfirmed":"Cutting needs to be confirmed",
     "currentPrice":"Current price",
