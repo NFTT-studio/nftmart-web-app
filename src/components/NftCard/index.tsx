@@ -189,7 +189,7 @@ const NftCard: FC<NftCardProps> = ({
   const fileType = nft?.metadata?.fileType;
   return (
     <Link
-      key={nft?.metadata.name}
+      key={nft?.id}
       width="24vw"
       maxWidth="320px"
       minWidth="250px"

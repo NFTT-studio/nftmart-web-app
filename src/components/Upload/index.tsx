@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable consistent-return */
 /* eslint-disable no-mixed-operators */

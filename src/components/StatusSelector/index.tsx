@@ -15,7 +15,7 @@ const StatusSelector: FC<StatusSelectorProps> = (({ selectedArr, statusArr, hand
   return (
     <Box w="220px" display="flex" flexFlow="row wrap" justifyContent="space-between">
       {statusArr.map((status) => {
-        const isselected = selectedArr.indexOf(status) > -1;
+        const isselected = selectedArr?.indexOf(status) > -1;
         return (
           <Button
             mt="10px"

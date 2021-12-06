@@ -1228,6 +1228,8 @@ const DetailRight: FC<Props> = (({
                     item.method === 'BurnnedToken'
                     || item.method === 'BurnRemovedBritishAuctionnedToken'
                     || item.method === 'UpdatedTokenRoyalty'
+                    || item.method === 'UpdatedToken'
+                    || item.method === 'TransferredToken'
                       ? null : (<Activity events={item} />)
                   )))}
                 </InfiniteScroll>

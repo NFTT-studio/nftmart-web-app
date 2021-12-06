@@ -565,16 +565,18 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
                   >
                     {t('Account.quantity')}
                   </Text>
-                  <Text
-                    width="60px"
-                    fontSize="12px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#000000"
-                    lineHeight="20px"
-                  >
-                    {t('Account.from')}
-                  </Text>
+                  {offersMadeButtonId === 1 ? (
+                    <Text
+                      width="60px"
+                      fontSize="12px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#000000"
+                      lineHeight="20px"
+                    >
+                      {t('Account.from')}
+                    </Text>
+                  ) : ''}
                   <Text
                     width="120px"
                     textAlign="right"
@@ -600,7 +602,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
                           initialScrollY={1}
                         >
                           {Offersend?.pages.map((page) => page?.offers?.map((item) => (
-                            <OfferItem offers={item} />
+                            <OfferItem offers={item} hide={false} />
                           )))}
                         </InfiniteScroll>
                       ) : (
@@ -647,7 +649,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
                           initialScrollY={1}
                         >
                           {Offerreceive?.pages.map((page) => page?.offers?.map((item) => (
-                            <OfferItem offers={item} />
+                            <OfferItem offers={item} hide />
                           )))}
                         </InfiniteScroll>
                       ) : (

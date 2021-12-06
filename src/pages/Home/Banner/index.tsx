@@ -52,7 +52,7 @@ const Banner = ((
       h: '410px',
     },
     {
-      id: '0',
+      id: '1',
       icon: banner06.default,
       url: '/account/nmtuJqWeTadEu7jDu4bjPW9G59txCnEG42kDE4XxMMPgjyMws/owned',
       w: '205px',
