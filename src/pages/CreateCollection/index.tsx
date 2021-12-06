@@ -46,6 +46,7 @@ import {
 } from '../../constants';
 
 const Account = () => {
+  console.log(process.env);
   function GetQueryString(name) {
     const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
     const r = decodeURI(window.location.search.substr(1)).match(reg);
