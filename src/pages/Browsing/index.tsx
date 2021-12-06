@@ -53,7 +53,7 @@ const Browsing = () => {
   const { t } = useTranslation();
 
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
-  const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
+  const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>();
   const [selectedCollection, setSelectedCollectionIdArr] = useState<string[]>([]);
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const [remainingTime, setRemainingTime] = useState(0);
@@ -76,9 +76,6 @@ const Browsing = () => {
     getBlock().then((res) => {
       setRemainingTime(res);
     });
-    if (status === null) {
-      refetchnftsData();
-    }
     fetchCollections();
   }, []);
 
@@ -87,14 +84,13 @@ const Browsing = () => {
   const handleSelectCategory: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectedCategoryId(event.currentTarget.id);
     setSelectedCollectionIdArr([]);
-    setSelectedStatusArr([]);
   };
 
   const handleSelectStatus: MouseEventHandler<HTMLButtonElement> = (event) => {
     const clickedStatus = event.currentTarget.id;
     // setSelectedStatusArr([clickedStatus]);
     setSelectedStatusArr(
-      selectedStatusArr.indexOf(clickedStatus) > -1
+      selectedStatusArr?.indexOf(clickedStatus) > -1
         ? without(selectedStatusArr, event.currentTarget.id)
         : [clickedStatus],
     );
@@ -132,21 +128,10 @@ const Browsing = () => {
   }, [status]);
 
   useEffect(() => {
-    if (selectedStatusArr?.length !== 0) {
+    if (selectedStatusArr) {
       refetchnftsData();
     }
-    if (status === null) {
-      refetchnftsData();
-    }
-  }, [selectedStatusArr]);
-  useEffect(() => {
-    if (selectedStatusArr?.length !== 0) {
-      refetchnftsData();
-    }
-    if (status === null) {
-      refetchnftsData();
-    }
-  }, [selectedSort, selectedCategoryId, selectedCollection]);
+  }, [selectedStatusArr, selectedSort, selectedCategoryId, selectedCollection]);
   useEffect(() => {
     if (collectionsData?.pages[0]?.collections) {
       setCollectionsArr(collectionsData?.pages[0]?.collections);
