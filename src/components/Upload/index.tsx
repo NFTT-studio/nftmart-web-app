@@ -21,7 +21,8 @@ import {
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import axios from 'axios';
-import { create } from 'ipfs-http-client';
+// import { create } from 'ipfs-http-client';
+import { create } from 'ipfs-core';
 import ReactAudioPlayer from 'react-audio-player';
 import {
   Player,
@@ -62,6 +63,8 @@ const cos = new COS({
     });
   },
 });
+
+let ipfs;
 
 interface INavProps {
   imgUrl: string;
@@ -218,15 +221,21 @@ const Upload: FC<UploadProps> = ({
     //   return;
     // }
     try {
-      const ipfs = create({ url: IPFS_POST_SERVER });
+      if (!ipfs) {
+        console.info('ipfs init');
+        ipfs = await create({ repo: 'ipfs-nftmart-'.toString() + Math.random() });
+        const ipfsid = await ipfs.id();
+        console.info(ipfsid);
+      }
+      // const ipfs = create({ url: IPFS_POST_SERVER });
       if (files.length === 0) {
         return;
       }
       const addOptions = {
-        // onlyHash: true,
-        progress: (arg: any) => {
-          setProgresses(1);
-        },
+        onlyHash: true,
+        // progress: (arg: any) => {
+        //   setProgresses(1);
+        // },
       };
       setLoadingStatus(true);
       const added = await ipfs.add(files[0], addOptions);
@@ -241,7 +250,6 @@ const Upload: FC<UploadProps> = ({
           onProgress(progressData) {
             setProgresses(Math.floor((progressData.percent) * 100));
           },
-
         },
         (err: any, data: any) => {
           if (err) {
@@ -259,6 +267,7 @@ const Upload: FC<UploadProps> = ({
         },
       );
     } catch (e) {
+      console.info(e);
       toast({
         position: 'top',
         render: () => (
