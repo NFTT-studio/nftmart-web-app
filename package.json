@@ -1,7 +1,7 @@
 {
   "name": "nftmart-web-app",
   "version": "0.1.0",
-  "homepage": "https://NFTT-studio.github.io/nftmart-web-app",
+  "homepage": "http://testnet-app.nftmart.io",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.20",
@@ -75,6 +75,7 @@
     "remark-gfm": "^3.0.0",
     "rpc-websockets": "^7.4.12",
     "search-params": "^4.0.1",
+    "serve": "^13.0.2",
     "swiper": "^6.7.1",
     "typescript": "^3.9.5",
     "uuid": "^8.3.2",
@@ -91,8 +92,8 @@
     "prepare": "husky install",
     "download-schema": "apollo service:download --endpoint=https://api.subquery.network/sq/subqns/nftmart-beta-4 graphql-schema.json",
     "codegen": "npm run download-schema && apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --tagName=gql",
-    "predeploy" : "yarn run build" , 
-    "deploy" : "gh-pages -d build"
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [

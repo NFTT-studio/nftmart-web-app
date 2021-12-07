@@ -223,10 +223,8 @@ const Upload: FC<UploadProps> = ({
     // }
     try {
       if (!ipfs) {
-        console.info('ipfs init');
         ipfs = await create({ repo: 'ipfs-nftmart-'.toString() + Math.random() });
         const ipfsid = await ipfs.id();
-        console.info(ipfsid);
       }
       // const ipfs = create({ url: IPFS_POST_SERVER });
       if (files.length === 0) {
