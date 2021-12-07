@@ -54,7 +54,7 @@ const OfferDialog: FC<Props> = (({
         toast({
           position: 'top',
           render: () => (
-            <ToastBody title="Error" message={t('create.error')} type="error" />
+            <ToastBody title="Error" message={t('common.nameerror')} type="error" />
           ),
         });
         return;
@@ -87,14 +87,18 @@ const OfferDialog: FC<Props> = (({
               }, 2500);
             }
           },
-          error: (error) => {
-            toast({
-              position: 'top',
-              render: () => (
-                <ToastBody title="Error" message={error} type="error" />
-              ),
-            });
+          error: (error:string) => {
             setIsSubmitting(false);
+            if (error === 'Error: Cancelled') {
+              setIsSubmitting(false);
+            } else {
+              toast({
+                position: 'top',
+                render: () => (
+                  <ToastBody title="Error" message={error} type="error" />
+                ),
+              });
+            }
           },
         },
       });

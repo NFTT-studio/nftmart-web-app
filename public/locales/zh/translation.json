@@ -21,6 +21,7 @@
     "oldest": "最早发行"
   },
   "common": {
+    "nameerror":"没有输入正确的名称",
     "category":"类别",
     "cuttingConfirmed":"裁剪需要确认",
     "currentPrice":"当前价格",
