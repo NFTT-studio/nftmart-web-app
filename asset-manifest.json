@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.js": "/NFTT-studio/tree/feat/component/static/js/main.f5149d18.chunk.js",
+    "main.js.map": "/NFTT-studio/tree/feat/component/static/js/main.f5149d18.chunk.js.map",
+    "runtime-main.js": "/NFTT-studio/tree/feat/component/static/js/runtime-main.9e3a5041.js",
+    "runtime-main.js.map": "/NFTT-studio/tree/feat/component/static/js/runtime-main.9e3a5041.js.map",
+    "static/css/2.c19d4261.chunk.css": "/NFTT-studio/tree/feat/component/static/css/2.c19d4261.chunk.css",
+    "static/js/2.bc091b4a.chunk.js": "/NFTT-studio/tree/feat/component/static/js/2.bc091b4a.chunk.js",
+    "static/js/2.bc091b4a.chunk.js.map": "/NFTT-studio/tree/feat/component/static/js/2.bc091b4a.chunk.js.map",
+    "static/js/3.a0ad8946.chunk.js": "/NFTT-studio/tree/feat/component/static/js/3.a0ad8946.chunk.js",
+    "static/js/3.a0ad8946.chunk.js.map": "/NFTT-studio/tree/feat/component/static/js/3.a0ad8946.chunk.js.map",
+    "index.html": "/NFTT-studio/tree/feat/component/index.html",
+    "static/css/2.c19d4261.chunk.css.map": "/NFTT-studio/tree/feat/component/static/css/2.c19d4261.chunk.css.map",
+    "static/js/2.bc091b4a.chunk.js.LICENSE.txt": "/NFTT-studio/tree/feat/component/static/js/2.bc091b4a.chunk.js.LICENSE.txt",
+    "static/media/001.19cfbd45.png": "/NFTT-studio/tree/feat/component/static/media/001.19cfbd45.png",
+    "static/media/002.1f3c5df8.png": "/NFTT-studio/tree/feat/component/static/media/002.1f3c5df8.png",
+    "static/media/003.bb80c36b.png": "/NFTT-studio/tree/feat/component/static/media/003.bb80c36b.png",
+    "static/media/004.87e8a727.png": "/NFTT-studio/tree/feat/component/static/media/004.87e8a727.png",
+    "static/media/005.1ab2b35d.png": "/NFTT-studio/tree/feat/component/static/media/005.1ab2b35d.png",
+    "static/media/006.b0cd9781.png": "/NFTT-studio/tree/feat/component/static/media/006.b0cd9781.png",
+    "static/media/009.f15e9505.png": "/NFTT-studio/tree/feat/component/static/media/009.f15e9505.png",
+    "static/media/010.20f03bfd.png": "/NFTT-studio/tree/feat/component/static/media/010.20f03bfd.png",
+    "static/media/empty.66186417.png": "/NFTT-studio/tree/feat/component/static/media/empty.66186417.png",
+    "static/media/getFetch.cjs": "/NFTT-studio/tree/feat/component/static/media/getFetch.582d29c4.cjs",
+    "static/media/img_Profile_bg@2x.f314b0ab.png": "/NFTT-studio/tree/feat/component/static/media/img_Profile_bg@2x.f314b0ab.png",
+    "static/media/img_bg_Collection.f57a60c4.png": "/NFTT-studio/tree/feat/component/static/media/img_bg_Collection.f57a60c4.png",
+    "static/media/polkadot.666edab7.png": "/NFTT-studio/tree/feat/component/static/media/polkadot.666edab7.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9e3a5041.js",
+    "static/css/2.c19d4261.chunk.css",
+    "static/js/2.bc091b4a.chunk.js",
+    "static/js/main.f5149d18.chunk.js"
+  ]
+}
