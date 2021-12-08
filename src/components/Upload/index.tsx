@@ -22,8 +22,10 @@ import {
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import axios from 'axios';
-// import { create } from 'ipfs-http-client';
-import { create } from 'ipfs-core';
+// 1
+import { create } from 'ipfs-http-client';
+// 2
+// import { create } from 'ipfs';
 import ReactAudioPlayer from 'react-audio-player';
 import {
   Player,
@@ -182,53 +184,23 @@ const Upload: FC<UploadProps> = ({
 
   const saveToIpfs = useCallback(async (files: any[]) => {
     setStateCrop(false);
-    // if (REACT_APP_PINATA_ENABLE === 'true') {
-    //   setLoadingStatus(true);
-    //   const formData = new FormData();
-    //   formData.append('file', files[0]);
-
-    //   const owFormData = new FormData();
-    //   owFormData.append('file-0', files[0]);
-
-    //   // const result = await fetch(PINATA_POST_SERVER, {
-    //   //   method: 'POST',
-
-    //   //   headers: {
-    //   //     pinata_api_key: REACT_APP_PINATA_API_KEY!,
-    //   //     pinata_secret_api_key: REACT_APP_PINATA_API_SECRET_KEY!,
-    //   //   },
-
-    //   //   body: formData,
-
-    //   // });
-
-    //   const result = await axios.post(PINATA_POST_SERVER, formData, {
-    //     headers: {
-    //       pinata_api_key: REACT_APP_PINATA_API_KEY!,
-    //       pinata_secret_api_key: REACT_APP_PINATA_API_SECRET_KEY!,
-    //     },
-    //     onUploadProgress: (progress) => {
-    //       // 格式化成百分数
-    //       setProgresses(Math.floor((progress.loaded / progress.total) * 100));
-    //     },
-    //   });
-    //   axios.post(UPLOAD_OWN_SERVER, owFormData);
-
-    //   const responseData = await result;
-    //   setValue(responseData.data.IpfsHash);
-    //   setShowCrop(false);
-    //   setLoadingStatus(false);
-    //   setProgresses(0);
-    //   return;
-    // }
     try {
       if (!ipfs) {
         console.info('ipfs init');
-        ipfs = await create({ repo: 'ipfs-nftmart-'.toString() + Math.random() });
-        const ipfsid = await ipfs.id();
-        console.info(ipfsid);
+        //1:
+        const auth = Buffer.from('21zPVzYCCiZdv8HErHmd7R6p9tO:fcddc1ceea96541ba987dbae2a05f0ff').toString('base64');
+        ipfs = create({
+          host: 'ipfs.infura.io',
+          port: 5001,
+          protocol: 'https',
+          headers: { authorization: `Basic ${auth}` },
+        });
+        //2:
+        // ipfs = await create();
+        // const ipfsid = await ipfs.id();
+        // console.info(ipfsid);
+        // end
       }
-      // const ipfs = create({ url: IPFS_POST_SERVER });
       if (files.length === 0) {
         return;
       }
@@ -239,6 +211,7 @@ const Upload: FC<UploadProps> = ({
         // },
       };
       setLoadingStatus(true);
+      // ipfs.
       const added = await ipfs.add(files[0], addOptions);
       console.log(added.cid.toString());
       await cos.putObject(
