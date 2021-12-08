@@ -4912,13 +4912,8 @@ alphanum-sort@^1.0.0:
 
 ansi-align@^3.0.0:
   version "3.0.1"
-<<<<<<< HEAD
-  resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-3.0.1.tgz#0cdf12e111ace773a86e9a1fad1225c43cb19a59"
-  integrity sha512-IOfwwBF5iczOjp/WeY4YxyjqAFMQoZufdQWDd19SEExbVLNXqvpzSJ/M7Za4/sCPmQ0+GRquoA7bGcINcxew6w==
-=======
   resolved "https://registry.npmmirror.com/ansi-align/download/ansi-align-3.0.1.tgz#0cdf12e111ace773a86e9a1fad1225c43cb19a59"
   integrity sha1-DN8S4RGs53OobpofrRIlxDyxmlk=
->>>>>>> test
   dependencies:
     string-width "^4.1.0"
 
@@ -4971,13 +4966,8 @@ ansi-regex@^5.0.0:
 
 ansi-regex@^5.0.1:
   version "5.0.1"
-<<<<<<< HEAD
-  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"
-  integrity sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==
-=======
   resolved "https://registry.nlark.com/ansi-regex/download/ansi-regex-5.0.1.tgz?cache=0&sync_timestamp=1631634988487&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fansi-regex%2Fdownload%2Fansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"
   integrity sha1-CCyyyJyf6GWaMRpTvWpNxTAdswQ=
->>>>>>> test
 
 ansi-styles@^2.2.1:
   version "2.2.1"
@@ -5271,21 +5261,15 @@ aproba@^1.0.3, aproba@^1.1.1:
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
   integrity sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==
 
-<<<<<<< HEAD
-arch@^2.1.1:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/arch/-/arch-2.2.0.tgz#1bc47818f305764f23ab3306b0bfc086c5a29d11"
-  integrity sha512-Of/R0wqp83cgHozfIYLbBMnej79U/SVGOOyuB3VVFv1NRM/PSFMK12x9KVtiYzJqmnU5WR2qp0Z5rHb7sWGnFQ==
-
-arg@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/arg/-/arg-2.0.0.tgz#c06e7ff69ab05b3a4a03ebe0407fac4cba657545"
-  integrity sha512-XxNTUzKnz1ctK3ZIcI2XUPlD96wbHP2nGqkPKpvk/HNRlPveYrXIVSTk9m3LcqOgDPg3B1nMvdV/K8wZd7PG4w==
-=======
 "aproba@^1.0.3 || ^2.0.0":
   version "2.0.0"
   resolved "https://registry.nlark.com/aproba/download/aproba-2.0.0.tgz#52520b8ae5b569215b354efc0caa3fe1e45a8adc"
   integrity sha1-UlILiuW1aSFbNU78DKo/4eRaitw=
+
+arch@^2.1.1:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/arch/-/arch-2.2.0.tgz#1bc47818f305764f23ab3306b0bfc086c5a29d11"
+  integrity sha512-Of/R0wqp83cgHozfIYLbBMnej79U/SVGOOyuB3VVFv1NRM/PSFMK12x9KVtiYzJqmnU5WR2qp0Z5rHb7sWGnFQ==
 
 are-we-there-yet@^2.0.0:
   version "2.0.0"
@@ -5302,7 +5286,11 @@ are-we-there-yet@~1.1.2:
   dependencies:
     delegates "^1.0.0"
     readable-stream "^2.0.6"
->>>>>>> test
+
+arg@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/arg/-/arg-2.0.0.tgz#c06e7ff69ab05b3a4a03ebe0407fac4cba657545"
+  integrity sha512-XxNTUzKnz1ctK3ZIcI2XUPlD96wbHP2nGqkPKpvk/HNRlPveYrXIVSTk9m3LcqOgDPg3B1nMvdV/K8wZd7PG4w==
 
 arg@^4.1.0:
   version "4.1.3"
@@ -5522,16 +5510,12 @@ async-limiter@~1.0.0:
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
 
-<<<<<<< HEAD
-async@^2.6.1, async@^2.6.2:
-=======
 async@0.9.x:
   version "0.9.2"
   resolved "https://registry.npmmirror.com/async/download/async-0.9.2.tgz#aea74d5e61c1f899613bf64bda66d4c78f2fd17d"
   integrity sha1-rqdNXmHB+JlhO/ZL2mbUx48v0X0=
 
-async@^2.6.2:
->>>>>>> test
+async@^2.6.1, async@^2.6.2:
   version "2.6.3"
   resolved "https://registry.npmjs.org/async/-/async-2.6.3.tgz"
   integrity sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
@@ -6022,24 +6006,10 @@ boolean@^3.0.1:
   resolved "https://registry.yarnpkg.com/boolean/-/boolean-3.1.2.tgz#e30f210a26b02458482a8cc353ab06f262a780c2"
   integrity sha512-YN6UmV0FfLlBVvRvNPx3pz5W/mUoYB24J4WSXOKP/OOJpi+Oq6WYqPaNTHzjI0QzwWtnvEd5CGYyQPgp1jFxnw==
 
-boxen@^5.0.0:
+boxen@5.1.2, boxen@^5.0.0:
   version "5.1.2"
   resolved "https://registry.npmmirror.com/boxen/download/boxen-5.1.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fboxen%2Fdownload%2Fboxen-5.1.2.tgz#788cb686fc83c1f486dfa8a40c68fc2b831d2b50"
   integrity sha1-eIy2hvyDwfSG36ikDGj8K4MdK1A=
-  dependencies:
-    ansi-align "^3.0.0"
-    camelcase "^6.2.0"
-    chalk "^4.1.0"
-    cli-boxes "^2.2.1"
-    string-width "^4.2.2"
-    type-fest "^0.20.2"
-    widest-line "^3.1.0"
-    wrap-ansi "^7.0.0"
-
-boxen@5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/boxen/-/boxen-5.1.2.tgz#788cb686fc83c1f486dfa8a40c68fc2b831d2b50"
-  integrity sha512-9gYgQKXx+1nP8mP7CzFyaUARhg7D3n1dF/FnErWmu9l6JvGpNUN278h0aSb+QjoiKSWG+iZ3uHrcqk0qrY9RQQ==
   dependencies:
     ansi-align "^3.0.0"
     camelcase "^6.2.0"
@@ -6508,7 +6478,6 @@ ccount@^2.0.0:
   resolved "https://registry.yarnpkg.com/ccount/-/ccount-2.0.0.tgz#3d6fb55803832766a24c6f339abc507297eb5d25"
   integrity sha512-VOR0NWFYX65n9gELQdcpqsie5L5ihBXuZGAgaPEp/U7IOSjnPMEH6geE+2f6lcekaNEfWzAHS45mPvSo5bqsUA==
 
-<<<<<<< HEAD
 chalk@2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.1.tgz#18c49ab16a037b6eb0152cc83e3471338215b66e"
@@ -6518,10 +6487,7 @@ chalk@2.4.1:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chalk@2.4.2, chalk@^2.0.0, chalk@^2.4.1, chalk@^2.4.2:
-=======
 chalk@2.4.2, chalk@^2.0.0, chalk@^2.3.0, chalk@^2.4.1, chalk@^2.4.2:
->>>>>>> test
   version "2.4.2"
   resolved "https://registry.npmjs.org/chalk/-/chalk-2.4.2.tgz"
   integrity sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==
@@ -6728,13 +6694,8 @@ clean-stack@^3.0.0:
 
 cli-boxes@^2.2.1:
   version "2.2.1"
-<<<<<<< HEAD
-  resolved "https://registry.yarnpkg.com/cli-boxes/-/cli-boxes-2.2.1.tgz#ddd5035d25094fce220e9cab40a45840a440318f"
-  integrity sha512-y4coMcylgSCdVinjiDBuR8PCC2bLjyGTwEmPb9NHR/QaNU6EUOXcTY/s6VjGMD6ENSEaeQYHCY0GNGS5jfMwPw==
-=======
   resolved "https://registry.nlark.com/cli-boxes/download/cli-boxes-2.2.1.tgz#ddd5035d25094fce220e9cab40a45840a440318f"
   integrity sha1-3dUDXSUJT84iDpyrQKRYQKRAMY8=
->>>>>>> test
 
 cli-cursor@^2.0.0, cli-cursor@^2.1.0:
   version "2.1.0"
@@ -6996,11 +6957,7 @@ commander@2.17.x:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
   integrity sha512-wPMUt6FnH2yzG95SA6mzjQOEKUU3aLaDEmzs1ti+1E9h+CsrZghRlqEM/EJ4KscsQVG8uNN4uVreUeT8+drlgg==
 
-<<<<<<< HEAD
-commander@^2.15.0, commander@^2.18.0, commander@^2.20.0:
-=======
-commander@^2.20.0:
->>>>>>> test
+commander@^2.18.0, commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
@@ -7924,13 +7881,8 @@ deep-equal@^1.0.1:
 
 deep-extend@^0.6.0:
   version "0.6.0"
-<<<<<<< HEAD
-  resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
-  integrity sha512-LOHxIOaPYdHlJRtCQfDIVZtfw/ufM8+rVj649RIHzcm/vGwQRXFt6OPqIFWsm2XEMrNIEtWR64sY1LEKD2vAOA==
-=======
   resolved "https://registry.nlark.com/deep-extend/download/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
   integrity sha1-xPp8lUBKF6nD6Mp+FTcxK3NjMKw=
->>>>>>> test
 
 deep-is@^0.1.3, deep-is@~0.1.3:
   version "0.1.3"
@@ -9445,7 +9397,13 @@ file-uri-to-path@1.0.0:
   resolved "https://registry.npmjs.org/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz"
   integrity sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==
 
-<<<<<<< HEAD
+filelist@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/filelist/download/filelist-1.0.2.tgz#80202f21462d4d1c2e214119b1807c1bc0380e5b"
+  integrity sha1-gCAvIUYtTRwuIUEZsYB8G8A4Dls=
+  dependencies:
+    minimatch "^3.0.4"
+
 filename-reserved-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/filename-reserved-regex/-/filename-reserved-regex-2.0.0.tgz#abf73dfab735d045440abfea2d91f389ebbfa229"
@@ -9459,14 +9417,6 @@ filenamify@^4.3.0:
     filename-reserved-regex "^2.0.0"
     strip-outer "^1.0.1"
     trim-repeated "^1.0.0"
-=======
-filelist@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.npm.taobao.org/filelist/download/filelist-1.0.2.tgz#80202f21462d4d1c2e214119b1807c1bc0380e5b"
-  integrity sha1-gCAvIUYtTRwuIUEZsYB8G8A4Dls=
-  dependencies:
-    minimatch "^3.0.4"
->>>>>>> test
 
 filesize@6.1.0:
   version "6.1.0"
@@ -10895,14 +10845,11 @@ inherits@2.0.3:
   resolved "https://registry.npmjs.org/inherits/-/inherits-2.0.3.tgz"
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
-<<<<<<< HEAD
-=======
 ini@2.0.0:
   version "2.0.0"
   resolved "https://registry.nlark.com/ini/download/ini-2.0.0.tgz#e5fd556ecdd5726be978fa1001862eacb0a94bc5"
   integrity sha1-5f1Vbs3VcmvpePoQAYYurLCpS8U=
 
->>>>>>> test
 ini@^1.3.5, ini@~1.3.0:
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
@@ -11027,9 +10974,9 @@ ipaddr.js@^2.0.1:
   resolved "https://registry.nlark.com/ipaddr.js/download/ipaddr.js-2.0.1.tgz#eca256a7a877e917aeb368b0a7497ddf42ef81c0"
   integrity sha1-7KJWp6h36Reus2iwp0l930LvgcA=
 
-ipfs-bitswap@^7.0.0:
+ipfs-bitswap@^7.0.1:
   version "7.0.1"
-  resolved "https://registry.npmmirror.com/ipfs-bitswap/download/ipfs-bitswap-7.0.1.tgz#15e0509a8ae3136d687bf7d265134003beb155a4"
+  resolved "https://registry.yarnpkg.com/ipfs-bitswap/-/ipfs-bitswap-7.0.1.tgz#15e0509a8ae3136d687bf7d265134003beb155a4"
   integrity sha512-ssVNWIBJcBnZyo3p/mLTT/I2/QywKYH1DCfb9Gt5nIvTAwDoRzyLQivIPaCT/jbahfcwwfT1AOrMVdVrc4t+Yg==
   dependencies:
     "@vascosantos/moving-average" "^1.1.0"
@@ -11052,9 +10999,6 @@ ipfs-bitswap@^7.0.0:
     varint "^6.0.0"
     varint-decoder "^1.0.0"
 
-<<<<<<< HEAD
-ipfs-core-config@^0.1.0:
-=======
 ipfs-cli@^0.10.2:
   version "0.10.2"
   resolved "https://registry.npmmirror.com/ipfs-cli/download/ipfs-cli-0.10.2.tgz#286a8f645f609d3a3f7ed20ef974f0f6c4edf02a"
@@ -11097,9 +11041,8 @@ ipfs-cli@^0.10.2:
     yargs "^16.0.3"
 
 ipfs-core-config@^0.1.4:
->>>>>>> test
   version "0.1.4"
-  resolved "https://registry.npmmirror.com/ipfs-core-config/download/ipfs-core-config-0.1.4.tgz#6f37df96bb44547906b44426337ce70f11de8ef0"
+  resolved "https://registry.yarnpkg.com/ipfs-core-config/-/ipfs-core-config-0.1.4.tgz#6f37df96bb44547906b44426337ce70f11de8ef0"
   integrity sha512-rjzZFwRNrm8Tr3C4wd0jN+5Rrwa503eZZ26gtrNe94PIUt9n5Z28LyXbTiuZnpdYJvV0DaJY1HBy7WMmL+Uxww==
   dependencies:
     "@chainsafe/libp2p-noise" "^4.0.0"
@@ -11127,22 +11070,7 @@ ipfs-core-config@^0.1.4:
     p-queue "^6.6.1"
     uint8arrays "^3.0.0"
 
-<<<<<<< HEAD
-ipfs-core-types@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/ipfs-core-types/-/ipfs-core-types-0.5.1.tgz#e6fa489aed9cd2aa989de672f04179f2496ff92f"
-  integrity sha512-HE5iE4j9Qa6c/4mfaD1cYYx8mbRRkrrcWekDG1JAP7mEK2wPnMvMemmFTgFF4KN6bW9gIusJjqPpCweesORPuA==
-  dependencies:
-    cids "^1.1.6"
-    interface-datastore "^4.0.0"
-    ipld-block "^0.11.1"
-    multiaddr "^9.0.1"
-    multibase "^4.0.2"
-
-ipfs-core-types@^0.8.0, ipfs-core-types@^0.8.1:
-=======
 ipfs-core-types@^0.8.4:
->>>>>>> test
   version "0.8.4"
   resolved "https://registry.npmmirror.com/ipfs-core-types/download/ipfs-core-types-0.8.4.tgz#4d483dc6035714ea48a0b02e3f82b6c6d55c8525"
   integrity sha512-sbRZA1QX3xJ6ywTiVQZMOxhlhp4osAZX2SXx3azOLxAtxmGWDMkHYt722VV4nZ2GyJy8qyk5GHQIZ0uvQnpaTg==
@@ -11151,24 +11079,17 @@ ipfs-core-types@^0.8.4:
     multiaddr "^10.0.0"
     multiformats "^9.4.13"
 
-<<<<<<< HEAD
-ipfs-core-utils@^0.11.0, ipfs-core-utils@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/ipfs-core-utils/-/ipfs-core-utils-0.11.1.tgz#4ac2143f2d89917f0823c9b8104e5ed489383ecb"
-  integrity sha512-SYBTeESuLgjYeDh8meCgttHV/LlES8FbljIDCySp+DpgPxYJA4EyC4GhywBaneQc/X3GWvHEzvW5b7ADluFcAw==
-=======
 ipfs-core-utils@^0.12.2:
   version "0.12.2"
   resolved "https://registry.npmmirror.com/ipfs-core-utils/download/ipfs-core-utils-0.12.2.tgz#f5365ac884fd93a3bcb6e7b6f17cebe09d841501"
   integrity sha512-RfxP3rPhXuqKIUmTAUhmee6fmaV3A7LMnjOUikRKpSyqESz/DR7aGK7tbttMxkZdkSEr0rFXlqbyb0vVwmn0wQ==
->>>>>>> test
   dependencies:
     any-signal "^2.1.2"
     blob-to-it "^1.0.1"
     browser-readablestream-to-it "^1.0.1"
     debug "^4.1.1"
     err-code "^3.0.1"
-    ipfs-core-types "^0.8.1"
+    ipfs-core-types "^0.8.4"
     ipfs-unixfs "^6.0.3"
     ipfs-utils "^9.0.2"
     it-all "^1.0.4"
@@ -11178,45 +11099,16 @@ ipfs-core-utils@^0.12.2:
     merge-options "^3.0.4"
     multiaddr "^10.0.0"
     multiaddr-to-uri "^8.0.0"
-    multiformats "^9.4.1"
+    multiformats "^9.4.13"
     nanoid "^3.1.23"
     parse-duration "^1.0.0"
     timeout-abort-controller "^1.1.1"
     uint8arrays "^3.0.0"
 
-<<<<<<< HEAD
-ipfs-core-utils@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/ipfs-core-utils/-/ipfs-core-utils-0.8.2.tgz#47d20d29e383a4b097675f9340867904b0070c23"
-  integrity sha512-vz3BugR4ykoJzoWQPcAyGjoW8RfUNWDyjqd51GgfcYICTFATh4c2k8Md1aEGuKdOUJNvCpOL48j1lXv8KNIp7A==
-  dependencies:
-    any-signal "^2.1.2"
-    blob-to-it "^1.0.1"
-    browser-readablestream-to-it "^1.0.1"
-    cids "^1.1.6"
-    err-code "^3.0.1"
-    ipfs-core-types "^0.5.1"
-    ipfs-unixfs "^4.0.3"
-    ipfs-utils "^8.1.2"
-    it-all "^1.0.4"
-    it-map "^1.0.4"
-    it-peekable "^1.0.1"
-    multiaddr "^9.0.1"
-    multiaddr-to-uri "^7.0.0"
-    parse-duration "^1.0.0"
-    timeout-abort-controller "^1.1.1"
-    uint8arrays "^2.1.3"
-
-ipfs-core@0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/ipfs-core/-/ipfs-core-0.11.0.tgz#421202ca92882f004db723fd0c9ab0b1d105a05b"
-  integrity sha512-URt7K9FXPA1S+AayBJ6LMP/Ch4UatqiCE8VN/WszXkVECEib/KAunyEub+4IkA+WgQBnc3dZgOjWcfFX4hi8tw==
-=======
 ipfs-core@^0.12.2:
   version "0.12.2"
   resolved "https://registry.npmmirror.com/ipfs-core/download/ipfs-core-0.12.2.tgz#27216668ca2cc42f65664bc40af669ed6404e967"
   integrity sha512-Lj4GZZ4LKCg1w3V+Y21BzfVS23kkt95+YGjMQ33JL3SAPR2xLdO30yvoqB48SYzyT8RMqjBEuNDbdP9OhIVlCQ==
->>>>>>> test
   dependencies:
     "@chainsafe/libp2p-noise" "^4.0.0"
     "@ipld/car" "^3.1.0"
@@ -11236,16 +11128,16 @@ ipfs-core@^0.12.2:
     hashlru "^2.3.0"
     interface-blockstore "^2.0.2"
     interface-datastore "^6.0.2"
-    ipfs-bitswap "^7.0.0"
-    ipfs-core-config "^0.1.0"
-    ipfs-core-types "^0.8.0"
-    ipfs-core-utils "^0.11.0"
-    ipfs-http-client "^53.0.0"
+    ipfs-bitswap "^7.0.1"
+    ipfs-core-config "^0.1.4"
+    ipfs-core-types "^0.8.4"
+    ipfs-core-utils "^0.12.2"
+    ipfs-http-client "^54.0.2"
     ipfs-repo "^13.0.4"
     ipfs-unixfs "^6.0.3"
     ipfs-unixfs-exporter "^7.0.3"
     ipfs-unixfs-importer "^9.0.3"
-    ipfs-utils "^8.1.4"
+    ipfs-utils "^9.0.2"
     ipns "^0.15.0"
     is-domain-name "^1.0.1"
     is-ipfs "^6.0.1"
@@ -11274,7 +11166,7 @@ ipfs-core@^0.12.2:
     mortice "^2.0.0"
     multiaddr "^10.0.0"
     multiaddr-to-uri "^8.0.0"
-    multiformats "^9.4.1"
+    multiformats "^9.4.13"
     native-abort-controller "^1.0.3"
     pako "^1.0.2"
     parse-duration "^1.0.0"
@@ -11330,17 +11222,10 @@ ipfs-grpc-server@^0.7.4:
     protobufjs "^6.10.2"
     ws "^7.3.1"
 
-<<<<<<< HEAD
-ipfs-http-client@^53.0.0:
-  version "53.0.1"
-  resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-53.0.1.tgz#1ae5afce607c87cec285429c7de665e341a3ec7d"
-  integrity sha512-0hmm5esSxoArEtVE9jeLwLw3pJm6rJA1kWKW+3Nqs2O8TQVSot8u1nzopF/yJ2IJGd5PHJc2JxqtEdVzV+p7nQ==
-=======
 ipfs-http-client@^54.0.2:
   version "54.0.2"
   resolved "https://registry.npmmirror.com/ipfs-http-client/download/ipfs-http-client-54.0.2.tgz#56871a7103e81a69658d796e112e917a2dbf9e48"
   integrity sha512-gPTD+Hy7UdiM+Ez9n+PJmSQ5m1fShhDhIkZ+lTY2L9p7KFOU643qACqUrdZZjlZIRWHg4htHSYNPnTRh2bjOjA==
->>>>>>> test
   dependencies:
     "@ipld/dag-cbor" "^6.0.5"
     "@ipld/dag-pb" "^2.1.3"
@@ -11348,14 +11233,14 @@ ipfs-http-client@^54.0.2:
     any-signal "^2.1.2"
     debug "^4.1.1"
     err-code "^3.0.1"
-    ipfs-core-types "^0.8.1"
-    ipfs-core-utils "^0.11.1"
+    ipfs-core-types "^0.8.4"
+    ipfs-core-utils "^0.12.2"
     ipfs-utils "^9.0.2"
     it-first "^1.0.6"
     it-last "^1.0.4"
     merge-options "^3.0.4"
     multiaddr "^10.0.0"
-    multiformats "^9.4.1"
+    multiformats "^9.4.13"
     native-abort-controller "^1.0.3"
     parse-duration "^1.0.0"
     stream-to-it "^0.2.2"
@@ -11533,53 +11418,6 @@ ipfs-unixfs@^6.0.3, ipfs-unixfs@^6.0.6:
     err-code "^3.0.1"
     protobufjs "^6.10.2"
 
-<<<<<<< HEAD
-ipfs-utils@^8.1.2:
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/ipfs-utils/-/ipfs-utils-8.1.2.tgz#3a526c2615fd99faf65e18641a8a68ac0e398e63"
-  integrity sha512-ataZ23Q+awQ6s01ehpITzEgDZ8YgU17nWkwiQmmZeQAJsS6wZuKfGXJKzdOX00+wn5SWJ8KRpGOG/u9+a4Z8Jw==
-  dependencies:
-    abort-controller "^3.0.0"
-    any-signal "^2.1.0"
-    buffer "^6.0.1"
-    electron-fetch "^1.7.2"
-    err-code "^3.0.1"
-    is-electron "^2.2.0"
-    iso-url "^1.1.5"
-    it-glob "~0.0.11"
-    it-to-stream "^1.0.0"
-    merge-options "^3.0.4"
-    nanoid "^3.1.20"
-    native-abort-controller "^1.0.3"
-    native-fetch "^3.0.0"
-    node-fetch "npm:@achingbrain/node-fetch@^2.6.4"
-    react-native-fetch-api "^1.0.2"
-    stream-to-it "^0.2.2"
-
-ipfs-utils@^8.1.4:
-  version "8.1.6"
-  resolved "https://registry.yarnpkg.com/ipfs-utils/-/ipfs-utils-8.1.6.tgz#431cb1711e3b666fbc7e4ff830c758e2527da308"
-  integrity sha512-V/cwb6113DrDhrjDTWImA6+zmJbpdbUkxdxmEQO7it8ykV76bBmzU1ZXSM0QR0qxGy9VW8dkUlPAC2K10VgSmw==
-  dependencies:
-    abort-controller "^3.0.0"
-    any-signal "^2.1.0"
-    buffer "^6.0.1"
-    electron-fetch "^1.7.2"
-    err-code "^3.0.1"
-    is-electron "^2.2.0"
-    iso-url "^1.1.5"
-    it-glob "~0.0.11"
-    it-to-stream "^1.0.0"
-    merge-options "^3.0.4"
-    nanoid "^3.1.20"
-    native-abort-controller "^1.0.3"
-    native-fetch "^3.0.0"
-    node-fetch "https://registry.npmjs.org/@achingbrain/node-fetch/-/node-fetch-2.6.7.tgz"
-    react-native-fetch-api "^2.0.0"
-    stream-to-it "^0.2.2"
-
-=======
->>>>>>> test
 ipfs-utils@^9.0.1, ipfs-utils@^9.0.2:
   version "9.0.2"
   resolved "https://registry.npmmirror.com/ipfs-utils/download/ipfs-utils-9.0.2.tgz?cache=0&sync_timestamp=1632827687193&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fipfs-utils%2Fdownload%2Fipfs-utils-9.0.2.tgz#7e816a863753c5af1187464839a6b46aa8764e5b"
@@ -17465,17 +17303,10 @@ rc-util@^5.13.2:
     react-is "^16.12.0"
     shallowequal "^1.1.0"
 
-<<<<<<< HEAD
-rc@^1.0.1, rc@^1.1.6:
-  version "1.2.8"
-  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
-  integrity sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==
-=======
-rc@^1.1.2, rc@^1.2.7, rc@^1.2.8:
+rc@^1.0.1, rc@^1.1.2, rc@^1.1.6, rc@^1.2.7, rc@^1.2.8:
   version "1.2.8"
   resolved "https://registry.nlark.com/rc/download/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
   integrity sha1-zZJL9SAKB1uDwYjNa54hG3/A0+0=
->>>>>>> test
   dependencies:
     deep-extend "^0.6.0"
     ini "~1.3.0"
@@ -18251,7 +18082,6 @@ regexpu-core@^4.7.1:
     unicode-match-property-ecmascript "^1.0.4"
     unicode-match-property-value-ecmascript "^1.2.0"
 
-<<<<<<< HEAD
 registry-auth-token@3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/registry-auth-token/-/registry-auth-token-3.3.2.tgz#851fd49038eecb586911115af845260eec983f20"
@@ -18260,13 +18090,6 @@ registry-auth-token@3.3.2:
     rc "^1.1.6"
     safe-buffer "^5.0.1"
 
-registry-url@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/registry-url/-/registry-url-3.1.0.tgz#3d4ef870f73dde1d77f0cf9a381432444e174942"
-  integrity sha1-PU74cPc93h138M+aOBQyRE4XSUI=
-  dependencies:
-    rc "^1.0.1"
-=======
 registry-auth-token@^4.0.0:
   version "4.2.1"
   resolved "https://registry.nlark.com/registry-auth-token/download/registry-auth-token-4.2.1.tgz#6d7b4006441918972ccd5fedcd41dc322c79b250"
@@ -18274,13 +18097,19 @@ registry-auth-token@^4.0.0:
   dependencies:
     rc "^1.2.8"
 
+registry-url@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/registry-url/-/registry-url-3.1.0.tgz#3d4ef870f73dde1d77f0cf9a381432444e174942"
+  integrity sha1-PU74cPc93h138M+aOBQyRE4XSUI=
+  dependencies:
+    rc "^1.0.1"
+
 registry-url@^5.0.0:
   version "5.1.0"
   resolved "https://registry.nlark.com/registry-url/download/registry-url-5.1.0.tgz#e98334b50d5434b81136b44ec638d9c2009c5009"
   integrity sha1-6YM0tQ1UNLgRNrROxjjZwgCcUAk=
   dependencies:
     rc "^1.2.8"
->>>>>>> test
 
 regjsgen@^0.5.1:
   version "0.5.2"
@@ -18980,7 +18809,6 @@ serve-static@1.14.1:
     parseurl "~1.3.3"
     send "0.17.1"
 
-<<<<<<< HEAD
 serve@^13.0.2:
   version "13.0.2"
   resolved "https://registry.yarnpkg.com/serve/-/serve-13.0.2.tgz#b19ccb854dfdf3085613cd3a4033c7807aeaf85b"
@@ -18996,10 +18824,7 @@ serve@^13.0.2:
     serve-handler "6.1.3"
     update-check "1.5.2"
 
-set-blocking@^2.0.0:
-=======
 set-blocking@^2.0.0, set-blocking@~2.0.0:
->>>>>>> test
   version "2.0.0"
   resolved "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz"
   integrity sha1-BF+XgtARrppoA93TgrJDkrPYkPc=
@@ -19591,8 +19416,8 @@ string-width@^1.0.1:
 
 "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.2.2, string-width@^4.2.3:
   version "4.2.3"
-  resolved "https://registry.npmmirror.com/string-width/download/string-width-4.2.3.tgz?cache=0&sync_timestamp=1632421013520&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fstring-width%2Fdownload%2Fstring-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
-  integrity sha1-JpxxF9J7Ba0uU2gwqOyJXvnG0BA=
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
   dependencies:
     emoji-regex "^8.0.0"
     is-fullwidth-code-point "^3.0.0"
@@ -19632,15 +19457,6 @@ string-width@^4.2.0:
     emoji-regex "^8.0.0"
     is-fullwidth-code-point "^3.0.0"
     strip-ansi "^6.0.0"
-
-string-width@^4.2.2:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
-  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
-  dependencies:
-    emoji-regex "^8.0.0"
-    is-fullwidth-code-point "^3.0.0"
-    strip-ansi "^6.0.1"
 
 string.prototype.matchall@^4.0.5:
   version "4.0.5"
@@ -19739,13 +19555,6 @@ strip-ansi@^4.0.0:
 
 strip-ansi@^6.0.1:
   version "6.0.1"
-<<<<<<< HEAD
-  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
-  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
-  dependencies:
-    ansi-regex "^5.0.1"
-
-=======
   resolved "https://registry.npmmirror.com/strip-ansi/download/strip-ansi-6.0.1.tgz?cache=0&sync_timestamp=1632420562057&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fstrip-ansi%2Fdownload%2Fstrip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha1-nibGPTD1NEPpSJSVshBdN7Z6hdk=
   dependencies:
@@ -19758,7 +19567,6 @@ strip-bom@^2.0.0:
   dependencies:
     is-utf8 "^0.2.0"
 
->>>>>>> test
 strip-bom@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/strip-bom/-/strip-bom-3.0.0.tgz"
@@ -19808,8 +19616,7 @@ strip-json-comments@^3.1.0, strip-json-comments@^3.1.1:
 
 strip-json-comments@~2.0.1:
   version "2.0.1"
-<<<<<<< HEAD
-  resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
+  resolved "https://registry.nlark.com/strip-json-comments/download/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
 strip-outer@^1.0.1:
@@ -19818,9 +19625,6 @@ strip-outer@^1.0.1:
   integrity sha512-k55yxKHwaXnpYGsOzg4Vl8+tDrWylxDEpknGjhTiZB8dFRU5rTo9CAzeycivxV3s+zlTKwrs6WxMxR95n26kwg==
   dependencies:
     escape-string-regexp "^1.0.2"
-=======
-  resolved "https://registry.nlark.com/strip-json-comments/download/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
-  integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
 strtok3@^6.2.4:
   version "6.2.4"
@@ -19829,7 +19633,6 @@ strtok3@^6.2.4:
   dependencies:
     "@tokenizer/token" "^0.3.0"
     peek-readable "^4.0.1"
->>>>>>> test
 
 style-loader@1.3.0:
   version "1.3.0"
@@ -20346,19 +20149,17 @@ treeify@^1.1.0:
   resolved "https://registry.yarnpkg.com/treeify/-/treeify-1.1.0.tgz#4e31c6a463accd0943879f30667c4fdaff411bb8"
   integrity sha512-1m4RA7xVAJrSGrrXGs0L3YTwyvBs2S8PbRHaLZAkFw7JR8oIFwYtysxlBZhYIa7xSyiYJKZ3iGrrk55cGA3i9A==
 
-<<<<<<< HEAD
+trim-newlines@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.nlark.com/trim-newlines/download/trim-newlines-1.0.0.tgz?cache=0&sync_timestamp=1623341614526&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftrim-newlines%2Fdownload%2Ftrim-newlines-1.0.0.tgz#5887966bb582a4503a41eb524f7d35011815a613"
+  integrity sha1-WIeWa7WCpFA6QetST301ARgVphM=
+
 trim-repeated@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/trim-repeated/-/trim-repeated-1.0.0.tgz#e3646a2ea4e891312bf7eace6cfb05380bc01c21"
   integrity sha1-42RqLqTokTEr9+rObPsFOAvAHCE=
   dependencies:
     escape-string-regexp "^1.0.2"
-=======
-trim-newlines@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.nlark.com/trim-newlines/download/trim-newlines-1.0.0.tgz?cache=0&sync_timestamp=1623341614526&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftrim-newlines%2Fdownload%2Ftrim-newlines-1.0.0.tgz#5887966bb582a4503a41eb524f7d35011815a613"
-  integrity sha1-WIeWa7WCpFA6QetST301ARgVphM=
->>>>>>> test
 
 trough@^2.0.0:
   version "2.0.2"

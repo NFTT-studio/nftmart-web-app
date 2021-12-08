@@ -108,6 +108,7 @@ const Browsing = () => {
         ? without(selectedCollection, event.currentTarget.id)
         : union(selectedCollection, [event.currentTarget.id]),
     );
+    setSelectedCategoryId('');
   };
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
