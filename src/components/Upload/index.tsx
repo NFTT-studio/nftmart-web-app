@@ -187,7 +187,7 @@ const Upload: FC<UploadProps> = ({
     try {
       if (!ipfs) {
         console.info('ipfs init');
-        //1:
+        // 1:
         const auth = Buffer.from('21zPVzYCCiZdv8HErHmd7R6p9tO:fcddc1ceea96541ba987dbae2a05f0ff').toString('base64');
         ipfs = create({
           host: 'ipfs.infura.io',
@@ -195,7 +195,7 @@ const Upload: FC<UploadProps> = ({
           protocol: 'https',
           headers: { authorization: `Basic ${auth}` },
         });
-        //2:
+        // 2:
         // ipfs = await create();
         // const ipfsid = await ipfs.id();
         // console.info(ipfsid);
@@ -240,6 +240,7 @@ const Upload: FC<UploadProps> = ({
           setShowCrop(false);
         },
       );
+      console.log('upload cos end');
     } catch (e) {
       console.info(e);
       toast({
