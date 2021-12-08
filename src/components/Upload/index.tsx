@@ -186,7 +186,6 @@ const Upload: FC<UploadProps> = ({
     setStateCrop(false);
     try {
       if (!ipfs) {
-        console.info('ipfs init');
         // 1:
         // const auth = Buffer.from('21zPVzYCCiZdv8HErHmd7R6p9tO:fcddc1ceea96541ba987dbae2a05f0ff').toString('base64');
         // ipfs = create({
