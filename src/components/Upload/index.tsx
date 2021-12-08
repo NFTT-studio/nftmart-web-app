@@ -23,9 +23,9 @@ import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import axios from 'axios';
 // 1
-import { create } from 'ipfs-http-client';
+// import { create } from 'ipfs-http-client';
 // 2
-// import { create } from 'ipfs';
+import { create } from 'ipfs';
 import ReactAudioPlayer from 'react-audio-player';
 import {
   Player,
@@ -188,17 +188,17 @@ const Upload: FC<UploadProps> = ({
       if (!ipfs) {
         console.info('ipfs init');
         // 1:
-        const auth = Buffer.from('21zPVzYCCiZdv8HErHmd7R6p9tO:fcddc1ceea96541ba987dbae2a05f0ff').toString('base64');
-        ipfs = create({
-          host: 'ipfs.infura.io',
-          port: 5001,
-          protocol: 'https',
-          headers: { authorization: `Basic ${auth}` },
-        });
+        // const auth = Buffer.from('21zPVzYCCiZdv8HErHmd7R6p9tO:fcddc1ceea96541ba987dbae2a05f0ff').toString('base64');
+        // ipfs = create({
+        //   host: 'ipfs.infura.io',
+        //   port: 5001,
+        //   protocol: 'https',
+        //   headers: { authorization: `Basic ${auth}` },
+        // });
         // 2:
-        // ipfs = await create();
-        // const ipfsid = await ipfs.id();
-        // console.info(ipfsid);
+        ipfs = await create();
+        const ipfsid = await ipfs.id();
+        console.info(ipfsid);
         // end
       }
       if (files.length === 0) {
