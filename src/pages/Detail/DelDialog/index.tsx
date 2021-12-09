@@ -32,9 +32,10 @@ interface Props {
   nftName:string,
   isShowDel: boolean,
   setIsShowDel: React.Dispatch<React.SetStateAction<boolean>>,
+  collectionName:string,
 }
-const OfferDialog: FC<Props> = (({
-  classId, tokenId, nftName, isShowDel, setIsShowDel,
+const DelDialog: FC<Props> = (({
+  classId, tokenId, nftName, isShowDel, setIsShowDel, collectionName,
 }) => {
   const toast = useToast();
   const chainState = useAppSelector((state) => state.chain);
@@ -83,7 +84,7 @@ const OfferDialog: FC<Props> = (({
               });
               setTimeout(() => {
                 setIsSubmitting(false);
-                history.push('/account/owned');
+                history.push(`/collection/${classId}-${encodeURIComponent(collectionName)}`);
               }, 2500);
             }
           },
@@ -217,4 +218,4 @@ const OfferDialog: FC<Props> = (({
     </>
   );
 });
-export default OfferDialog;
+export default DelDialog;
