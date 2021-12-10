@@ -62,7 +62,6 @@ import ShareDetail from '../../components/ShareDetail';
 
 const propertiesArr = [1, 2, 3, 4, 5, 6];
 const OfferssUnitArr = [1, 2, 3, 4, 5, 6];
-
 const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: string, nftName: string, }>) => {
   function number2PerU16(x) {
     return (x / 65535) * 100;
@@ -207,7 +206,8 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
   }, [auctionPrice]);
 
   const ownerId = nftData?.nftInfo?.owner_id;
-  const orderId = nftData?.nftInfo?.order_id;
+  const orderId = nftData?.nftInfo?.sale_id;
+  console.log(nftData?.nftInfo?.sale_id, nftData?.nftInfo?.status_id);
   const termOfValidity = !!((nftData?.nftInfo?.auction?.deadline - remainingTime) > 0);
   const auctionId = nftData?.nftInfo?.auction?.id;
   const nftName = match.params.nftName || nftData?.nftInfo?.metadata?.name;

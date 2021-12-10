@@ -627,6 +627,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
               >
                 {item.name}
                 <Image
+                  cursor="pointer"
                   ml="10px"
                   w="14px"
                   h="14px"
@@ -645,7 +646,6 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
                   resultArr.splice(index, 0, item.id);
                 });
                 formik.values.cate = resultArr.toString();
-                console.log(resultArr);
               }}
             />
 

@@ -160,7 +160,6 @@ const DetailRight: FC<Props> = (({
       timePeriod: selectedTimeValue,
     },
   );
-  console.log(eventDate?.pages[Number(eventDate?.pages?.length) - 1].events, eventDate?.pages[Number(eventDate?.pages?.length) - 1].length);
   const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : null);
   const price = nftData?.nftInfo?.price ? priceStringDivUnit(nftData?.nftInfo?.price) : null;
   const auctionPrice = nftData?.nftInfo?.auction?.price ? priceStringDivUnit(nftData?.nftInfo?.auction?.price) : null;

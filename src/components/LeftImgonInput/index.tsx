@@ -4,6 +4,7 @@ import {
   InputGroup,
   Input,
   InputLeftAddon,
+  Text,
 } from '@chakra-ui/react';
 
 interface Props {
@@ -59,10 +60,12 @@ const LeftAddonInput: FC<Props> = ({
       color="#000000"
       background="none"
       border="0"
+      letterSpacing="1px"
       children={position === 'top' ? null : placeholder}
     />
 
     <Input
+      h="100%"
       p="0"
       border="none"
       fontSize="12px"
@@ -73,6 +76,7 @@ const LeftAddonInput: FC<Props> = ({
       onChange={onChange}
       borderRadius="0px"
       value={value}
+      letterSpacing="1px"
       _placeholder={{
         color: '#999999',
       }}
