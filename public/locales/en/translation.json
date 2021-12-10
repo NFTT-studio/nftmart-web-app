@@ -343,6 +343,7 @@
   },
   "Update": {
     "modifyCollection": "Modify Collection",
+    "modifyNFT": "Modify NFT",
     "burning": "Burning",
     "modify": "Modify",
     "burningConfirm": "Burning confirm",

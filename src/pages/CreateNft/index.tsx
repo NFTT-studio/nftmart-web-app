@@ -132,8 +132,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     setPropertiesArr(propertiesArr);
   };
 
-  const mint = useCallback(async (formValue, cb) => {
-    const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
+  const mint = useCallback(async (formValue, propertiesLet, cb) => {
     const normalizedFormData = {
       address: account?.address,
       metadata: {
@@ -175,13 +174,13 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
 
   const formik = useFormik({
     initialValues: {
-      logoUrl: nftData?.nftInfo?.metadata?.logoUrl || '',
-      previewUrl: nftData?.nftInfo?.metadata?.previewUrl || '',
-      name: nftData?.nftInfo?.metadata?.name || '',
-      stub: trim(nftData?.nftInfo?.metadata?.stub?.replace(/https:\/\//i, '')) || '',
-      description: nftData?.nftInfo?.metadata?.description || '',
-      royalties: number2PerU16(nftData?.nftInfo?.royalty_rate || 0) || number2PerU16(collectionsData?.collection?.royalty_rate || 0),
-      fileType: nftData?.nftInfo?.metadata?.fileType || '',
+      logoUrl: modifyId ? nftData?.nftInfo?.metadata?.logoUrl : '',
+      previewUrl: modifyId ? nftData?.nftInfo?.metadata?.previewUrl : '',
+      name: modifyId ? nftData?.nftInfo?.metadata?.name : '',
+      stub: modifyId ? trim(nftData?.nftInfo?.metadata?.stub?.replace(/https:\/\//i, '')) : '',
+      description: modifyId ? nftData?.nftInfo?.metadata?.description : '',
+      royalties: modifyId ? number2PerU16(nftData?.nftInfo?.royalty_rate || 0) : number2PerU16(collectionsData?.collection?.royalty_rate || 0),
+      fileType: modifyId ? nftData?.nftInfo?.metadata?.fileType : '',
       isRoyalties: !!collectionsData?.collection?.royalty_rate,
     },
     onSubmit: (formValue, formAction) => {
@@ -195,8 +194,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
         return;
       }
       setIsSubmitting(true);
+      const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
       if (modifyId) {
-        const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
         update(formValue, propertiesLet, {
           success: () => {
             toast({
@@ -205,9 +204,9 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                 <ToastBody title="Success" message={t('common.success')} type="success" />
               ),
             });
+            formAction.resetForm();
             setTimeout(() => {
               setIsSubmitting(false);
-              formAction.resetForm();
               history.push(`/items/${nftData?.nftInfo?.id}-${encodeURIComponent(formValue.name)}`);
             }, 3000);
           },
@@ -222,7 +221,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           },
         });
       } else {
-        mint(formValue, {
+        mint(formValue, propertiesLet, {
           success: () => {
             toast({
               position: 'top',
@@ -230,9 +229,9 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                 <ToastBody title="Success" message={t('common.success')} type="success" />
               ),
             });
+            formAction.resetForm();
             setTimeout(() => {
               setIsSubmitting(false);
-              formAction.resetForm();
               history.push(`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`);
             }, 3000);
           },
@@ -252,7 +251,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   });
 
   return (
-    <MainContainer title={t('Create.title')}>
+    <MainContainer title={modifyId ? t('Update.modifyNFT') : t('Create.title')}>
       <Flex
         w="100%"
         h="80px"
@@ -318,7 +317,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           color="#191A24"
           lineHeight="27px"
         >
-          {t('Create.createCollection')}
+          {modifyId ? t('Update.modifyNFT') : t('Create.createCollection')}
         </Text>
 
         <form onSubmit={formik.handleSubmit}>

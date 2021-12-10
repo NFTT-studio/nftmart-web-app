@@ -128,6 +128,11 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
   }
 
   useEffect(() => {
+    if (collectionsData?.collection?.burned === true) {
+      history.push('/');
+    }
+  }, []);
+  useEffect(() => {
     if (collectionsData?.collection?.creator_id === account?.address) {
       setIsPerson(true);
     } else {

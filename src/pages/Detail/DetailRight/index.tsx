@@ -559,60 +559,63 @@ const DetailRight: FC<Props> = (({
                 >
                   {t('Detail.currentPrice')}
                 </Text>
-                <Popover>
-                  <PopoverTrigger>
-                    <Flex
-                      ml="10px"
-                      height="100%"
-                      alignItems="center"
-                    >
-                      <Box
-                        width="0"
-                        height="0"
-                        borderWidth="0 13px 20px"
-                        borderStyle="solid"
-                        borderColor="transparent transparent #FFE0D8"
-                        transform="rotate(270deg)"
-                      />
-                      <Box
-                        position="relative"
-                        left="-5px"
-                        height="24px"
-                        backgroundColor="#FFE0D8"
-                        display="flex"
-                        alignItems="center"
-                        fontSize="12px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#FF6C47"
-                        paddingRight="10px"
+                {nftData?.nftInfo?.royalty_rate
+                  ? (
+                    <Popover>
+                      <PopoverTrigger>
+                        <Flex
+                          ml="10px"
+                          height="100%"
+                          alignItems="center"
+                        >
+                          <Box
+                            width="0"
+                            height="0"
+                            borderWidth="0 13px 20px"
+                            borderStyle="solid"
+                            borderColor="transparent transparent #FFE0D8"
+                            transform="rotate(270deg)"
+                          />
+                          <Box
+                            position="relative"
+                            left="-5px"
+                            height="24px"
+                            backgroundColor="#FFE0D8"
+                            display="flex"
+                            alignItems="center"
+                            fontSize="12px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#FF6C47"
+                            paddingRight="10px"
+                          >
+                            <Box
+                              mr="4px"
+                              width="8px"
+                              height="8px"
+                              borderRadius="50%"
+                              backgroundColor="#FF6C47"
+                              paddingRight="8px"
+                            />
+                            {t('Detail.Royalties')}
+                            {' '}
+                            {Math.ceil(number2PerU16(nftData?.nftInfo?.royalty_rate))}
+                            %
+                          </Box>
+                        </Flex>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        position="absolute"
+                        bottom="45px"
+                        left="-60px"
+                        _focus={{
+                          outline: 'none',
+                        }}
                       >
-                        <Box
-                          mr="4px"
-                          width="8px"
-                          height="8px"
-                          borderRadius="50%"
-                          backgroundColor="#FF6C47"
-                          paddingRight="8px"
-                        />
-                        {t('Detail.Royalties')}
-                        {' '}
-                        {Math.ceil(number2PerU16(nftData?.nftInfo?.royalty_rate))}
-                        %
-                      </Box>
-                    </Flex>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    position="absolute"
-                    bottom="45px"
-                    left="-60px"
-                    _focus={{
-                      outline: 'none',
-                    }}
-                  >
-                    <PopoverBody>{t('Detail.royaltiesTip')}</PopoverBody>
-                  </PopoverContent>
-                </Popover>
+                        <PopoverBody>{t('Detail.royaltiesTip')}</PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                  ) : ''}
               </Flex>
               <Flex flexDirection="column" justifyContent="flex-start">
                 <Flex height="43px" flexDirection="row" alignItems="flex-end">
