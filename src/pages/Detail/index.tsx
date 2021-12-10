@@ -154,6 +154,11 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
   const deadline = nftData?.nftInfo?.auction?.deadline;
   const { data: collectionsData, isLoading: collectionsDateIsLoading } = useCollectionsSinger(collectionsId);
   useEffect(() => {
+    if (!!nftData?.nftInfo?.burned === true) {
+      history.push('/');
+    }
+  }, []);
+  useEffect(() => {
     collectNft('status');
     browse();
     getBlock().then((res) => {
@@ -207,7 +212,6 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
 
   const ownerId = nftData?.nftInfo?.owner_id;
   const orderId = nftData?.nftInfo?.sale_id;
-  console.log(nftData?.nftInfo?.sale_id, nftData?.nftInfo?.status_id);
   const termOfValidity = !!((nftData?.nftInfo?.auction?.deadline - remainingTime) > 0);
   const auctionId = nftData?.nftInfo?.auction?.id;
   const nftName = match.params.nftName || nftData?.nftInfo?.metadata?.name;

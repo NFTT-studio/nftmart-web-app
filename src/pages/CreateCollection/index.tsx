@@ -140,7 +140,7 @@ const Account = () => {
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         </Center>
       ) : (
-        <MainContainer title={`${t('Collection.title')}|${t('Home.title')}`}>
+        <MainContainer title={`${status ? t('Update.modifyCollection') : t('Collection.title')}|${t('Home.title')}`}>
           <Flex maxWidth="1400px" flexDirection="column" position="relative">
             <Box
               maxWidth="1400px"
