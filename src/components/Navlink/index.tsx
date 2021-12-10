@@ -84,7 +84,7 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
               active={active}
               bgSize="cover"
               fontWeight="bold"
-              marginRight="8px"
+              marginRight="10px"
               marginLeft="28px"
               bordered
             />

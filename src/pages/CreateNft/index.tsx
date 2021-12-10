@@ -114,6 +114,11 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       setroyaltiesSl(true);
     }
   }, [collectionsData]);
+  useEffect(() => {
+    if (nftData?.nftInfo?.metadata?.properties?.length > 0) {
+      setPropertiesArr(nftData?.nftInfo?.metadata?.properties);
+    }
+  }, [nftData?.nftInfo?.metadata?.properties?.length]);
   const addMore = () => {
     const arr = propertiesArr.concat({ key: '', value: '' });
     setPropertiesArr(arr);
@@ -147,8 +152,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     };
     mintNft(normalizedFormData);
   }, [account?.address, collectionId]);
-  const update = useCallback(async (formValue, cb) => {
-    const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
+  const update = useCallback(async (formValue, propertiesLet, cb) => {
     const normalizedFormData = {
       address: account?.address,
       metadata: {
@@ -192,7 +196,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       }
       setIsSubmitting(true);
       if (modifyId) {
-        update(formValue, {
+        const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
+        update(formValue, propertiesLet, {
           success: () => {
             toast({
               position: 'top',
@@ -416,7 +421,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           {formik.errors.description && formik.touched.description ? (
             <div style={{ color: 'red' }}>{formik.errors.description}</div>
           ) : null}
-          {/* <Text
+          <Text
             marginTop="30px"
             fontSize="16px"
             fontFamily="TTHoves-Medium, TTHoves"
@@ -471,7 +476,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
                       placeholder="property name"
-                      // value={propertiesArr[index].key}
+                      defaultValue={item.key}
                       onChange={handleInputKey}
                     />
                   </Td>
@@ -481,12 +486,13 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                   >
                     <Input
                       id={index.toString()}
+                      name={index.toString()}
                       fontSize="14px"
                       color="#000000"
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
                       placeholder="property value"
-                      // value={propertiesArr[index].value}
+                      defaultValue={item.value}
                       onChange={handleInputValue}
                     />
                   </Td>
@@ -500,9 +506,10 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             display="inline-block"
             color="#3D00FF"
             onClick={addMore}
+            cursor="pointer"
           >
             Add  more
-          </Text> */}
+          </Text>
           <Flex
             w="100%"
             mt="20px"

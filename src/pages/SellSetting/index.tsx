@@ -83,7 +83,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [fixedPriceSl, setFixedPriceSl] = useState(false);
   const [commissionRateSl, setcommissionRateSl] = useState(false);
 
-  const orderId = nftData?.nftInfo?.order_id;
+  const orderId = nftData?.nftInfo?.sale_id;
   const type = nftData?.nftInfo?.auction?.type || false;
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
