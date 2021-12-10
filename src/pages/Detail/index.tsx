@@ -240,7 +240,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
           <MainContainer title={`${nftName}-${collectionName}${t('Detail.title')}`}>
             {!type && isLoginAddress ? (
               <>
-                {nftData?.nftInfo.status === 'Selling'
+                {nftData?.nftInfo?.status_id === 'ForSale'
                   ? (
                     <Flex
                       w="100vw"
@@ -809,7 +809,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
               <CancelDialog
                 isShowCancel={isShowCancel}
                 setIsShowCancel={setIsShowCancel}
-                orderId={nftData?.nftInfo.status === 'Selling' ? orderId : ''}
+                orderId={nftData?.nftInfo?.status_id === 'ForSale' ? orderId : ''}
                 nftId={`${collectionId}-${nftId}`}
               />
               )}
@@ -828,7 +828,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                 setIsShowDeal={setIsShowDeal}
                 offerId={offerId}
                 offerOwner={offerOwner}
-                orderId={nftData?.nftInfo.status === 'Selling' ? orderId : ''}
+                orderId={nftData?.nftInfo?.status_id === 'ForSale' ? orderId : ''}
               />
               )}
               {isShowRemove && (
@@ -854,6 +854,7 @@ const Detail = ({ match }: RouteComponentProps<{collectionId: string, nftId: str
                 classId={Number(collectionId)}
                 tokenId={Number(nftId)}
                 nftName={nftData?.nftInfo?.metadata?.name}
+                collectionName={collectionName}
               />
               )}
               {isShowRoyalties && (
