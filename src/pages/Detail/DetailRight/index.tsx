@@ -1105,6 +1105,7 @@ const DetailRight: FC<Props> = (({
                             </Text>
                           ) : account?.address === item?.bidder_id && item.type === 'order' ? (
                             <Text
+                              cursor="pointer"
                               w="136px"
                               textAlign="right"
                               fontSize="14px"
