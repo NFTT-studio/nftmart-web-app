@@ -1,9 +1,12 @@
 import { useQuery, useInfiniteQuery } from 'react-query';
 import fetchNfts, { FetchNftParams } from '../../api/fetchNfts';
+import fetchHotNfts, { fetchNftHotParams } from '../../api/fetchHotNfts';
+import fetchPersonalNfts, { fetchPersonalNftsParams } from '../../api/fetchPersonalNfts';
+
 import { QUERY_KEYS } from '../../constants';
 
 const hot = 'most_stared';
-const expensive = 'expensive';
+const expensive = 'dealprice';
 const cheap = 'cheapest';
 
 export default ({
@@ -19,21 +22,22 @@ export default ({
 );
 
 export const useHotNfts = (categoryId?: string) => useQuery(
-  [QUERY_KEYS.hotNFTS, hot, categoryId], () => fetchNfts({
+  [QUERY_KEYS.hotNFTS, hot, categoryId], () => fetchHotNfts({
     sortBy: hot,
     categoryId,
   }),
 );
 
 export const useExpensiveNfts = (categoryId?: string) => useQuery(
-  [QUERY_KEYS.ExpensiveNFTS, expensive, categoryId], () => fetchNfts({
+  [QUERY_KEYS.ExpensiveNFTS, expensive, categoryId], () => fetchPersonalNfts({
     sortBy: expensive,
+    status: ['buyNow'],
     categoryId,
   }),
 );
 
 export const useCheapNfts = (categoryId?: string) => useQuery(
-  [QUERY_KEYS.CheapNFTS, cheap, categoryId], () => fetchNfts({
+  [QUERY_KEYS.CheapNFTS, cheap, categoryId], () => fetchPersonalNfts({
     sortBy: cheap,
     categoryId,
   }),

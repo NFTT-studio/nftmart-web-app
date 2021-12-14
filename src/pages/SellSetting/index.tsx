@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable max-len */
 /* eslint-disable react/no-children-prop */
@@ -61,7 +63,7 @@ import { submitBritishAuction } from '../../polkaSDK/api/submitBritishAuction';
 import MyToast, { ToastBody } from '../../components/MyToast';
 
 const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const toast = useToast();
   const [tax, setTax] = useState(0);
   getTax().then((res) => {
@@ -83,7 +85,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [fixedPriceSl, setFixedPriceSl] = useState(false);
   const [commissionRateSl, setcommissionRateSl] = useState(false);
 
-  const orderId = nftData?.nftInfo?.order_id;
+  const orderId = nftData?.nftInfo?.sale_id;
   const type = nftData?.nftInfo?.auction?.type || false;
 
   const handleSelect: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -146,18 +148,18 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       id: 1,
       title: t('SellSetting.dutchAuction'),
       subtitle: t('SellSetting.sellAtaDecliningPrice'),
-      isDisabled: !!(selectId === 0 && Number(nftData?.nftInfo?.price) && !type),
+      isDisabled: !!(selectId === 0 && Number(nftData?.nftInfo?.price) > 0 && !type),
     },
     {
       id: 2,
       title: t('SellSetting.englishAuction'),
       subtitle: t('SellSetting.auctionToTheHighestBidder'),
-      isDisabled: !!(selectId === 0 && Number(nftData?.nftInfo?.price) && !type),
+      isDisabled: !!(selectId === 0 && Number(nftData?.nftInfo?.price) > 0 && !type),
     },
   ];
   const formik = useFormik({
     initialValues: {
-      price: Number(NumberToString(nftData?.nftInfo?.price) || 0) || '',
+      price: Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.price) : '',
       deposits: '',
       dutchDeposits: '',
       englishDeposits: '',
@@ -328,10 +330,10 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         },
       };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (selectId === 0 && Number(nftData?.nftInfo?.price)) {
+      if (selectId === 0 && Number(nftData?.nftInfo?.price) > 0) {
         settingOrder(settingOrderParams as any);
       }
-      if (selectId === 0 && !Number(nftData?.nftInfo?.price)) {
+      if (selectId === 0 && !(Number(nftData?.nftInfo?.price) > 0)) {
         createOrder(orderParams as any);
       }
       if (selectId === 1) {
@@ -1970,7 +1972,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           </Text>
                         )
                           : null}
-                        {selectId === 1 ? (
+                        {selectId === 1 && i18n.language === 'en' ? (
                           <Text
                             mt="12px"
                             fontSize="14px"
@@ -1993,9 +1995,34 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                             {t('SellSetting.dutchExplainThress')}
                             {actionTime(Number(formik.values.expirationDate) || 0)}
                           </Text>
-                        )
-                          : null}
-                        {selectId === 2 ? (
+                        ) : null}
+                        {selectId === 1 && i18n.language === 'zh' ? (
+                          <Text
+                            mt="12px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="16px"
+                          >
+                            {t('SellSetting.dutchExplainOne')}
+                            {'  '}
+                            {Number(formik.values.startingPrice).toLocaleString() || 0}
+                            {'  '}
+                            NMT
+                            {t('SellSetting.dutchExplainTwo')}
+                            {'  '}
+                            {actionTime(Number(formik.values.expirationDate) || 0)}
+                            {'  '}
+                            {t('SellSetting.dutchExplainThress')}
+                            {Number(formik.values.endingPrice).toLocaleString() || 0}
+                            {'  '}
+                            NMT
+                            {'  '}
+                            {t('SellSetting.dutchExplainFour')}
+                          </Text>
+                        ) : null}
+                        {selectId === 2 && i18n.language === 'en' ? (
                           <Text
                             mt="12px"
                             fontSize="14px"
@@ -2015,6 +2042,27 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           </Text>
                         )
                           : null}
+                        {selectId === 2 && i18n.language === 'zh' ? (
+                          <Text
+                            mt="12px"
+                            fontSize="14px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="16px"
+                          >
+                            {t('SellSetting.englishExplainzhOne')}
+                            {'  '}
+                            {Number(formik.values.startingPrice).toLocaleString() || 0}
+                            {'  '}
+                            NMT
+                            {t('SellSetting.englishExplainzhTwo')}
+                            {'  '}
+                            {actionTime(Number(formik.values.expirationDate) || 0)}
+                            {'  '}
+                            {t('SellSetting.englishExplainzhthree')}
+                          </Text>
+                        ) : null}
                       </Flex>
                       <Button
                         isLoading={isSubmitting}
@@ -2126,76 +2174,79 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       </Flex>
                     )
                       : null}
+                    {nftData?.nftInfo?.royalty_rate
+                      ? (
+                        <Flex
+                          p="20px 0 20px 0"
+                          flexDirection="column"
+                          justifyContent="flex-start"
+                          alignItems="flex-start"
+                          borderBottom="1px solid #E5E5E5"
+                        >
+                          <Flex
+                            w="100%"
+                            flexDirection="column"
+                            justifyContent="center"
+                            alignItems="flex-start"
+                          >
+                            <Text
+                              fontSize="16px"
+                              fontFamily="TTHoves-Regular, TTHoves"
+                              fontWeight="400"
+                              color="#000000"
+                              lineHeight="18px"
+                            >
+                              {t('SellSetting.royalties')}
+                            </Text>
+                            <Text
+                              mt="8px"
+                              fontSize="12px"
+                              fontFamily="TTHoves-Regular, TTHoves"
+                              fontWeight="400"
+                              color="#999999"
+                              lineHeight="14px"
+                            >
+                              {t('SellSetting.royaltiesExplain')}
+                            </Text>
+                          </Flex>
+                          <Flex
+                            m="23px 0 4px 0"
+                            width="100%"
+                            h="16px"
+                            flexDirection="row"
+                            justifyContent="space-between"
+                            alignItems="center"
+                          >
+                            <Text
+                              fontSize="14px"
+                              fontFamily="TTHoves-Regular, TTHoves"
+                              fontWeight="400"
+                              color="#000000"
+                              lineHeight="16px"
+                            >
+                              {t('SellSetting.toTheBeneficiary')}
+                            </Text>
+                            <Progress
+                              width="300px"
+                              height="3px"
+                              borderRadius="2px"
+                              value={Math.ceil(number2PerU16(nftData?.nftInfo?.royalty_rate))}
+                            />
+                            <Text
+                              fontSize="14px"
+                              fontFamily="TTHoves-Regular, TTHoves"
+                              fontWeight="400"
+                              color="#000000"
+                              lineHeight="16px"
+                            >
+                              {nftData?.nftInfo?.royalty_rate ? number2PerU16(nftData?.nftInfo?.royalty_rate).toFixed(1) : 0}
+                              %
+                            </Text>
+                          </Flex>
 
-                    <Flex
-                      p="20px 0 20px 0"
-                      flexDirection="column"
-                      justifyContent="flex-start"
-                      alignItems="flex-start"
-                      borderBottom="1px solid #E5E5E5"
-                    >
-                      <Flex
-                        w="100%"
-                        flexDirection="column"
-                        justifyContent="center"
-                        alignItems="flex-start"
-                      >
-                        <Text
-                          fontSize="16px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#000000"
-                          lineHeight="18px"
-                        >
-                          {t('SellSetting.royalties')}
-                        </Text>
-                        <Text
-                          mt="8px"
-                          fontSize="12px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#999999"
-                          lineHeight="14px"
-                        >
-                          {t('SellSetting.royaltiesExplain')}
-                        </Text>
-                      </Flex>
-                      <Flex
-                        m="23px 0 4px 0"
-                        width="100%"
-                        h="16px"
-                        flexDirection="row"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Text
-                          fontSize="14px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#000000"
-                          lineHeight="16px"
-                        >
-                          {t('SellSetting.toTheBeneficiary')}
-                        </Text>
-                        <Progress
-                          width="300px"
-                          height="3px"
-                          borderRadius="2px"
-                          value={Math.ceil(number2PerU16(nftData?.nftInfo?.royalty_rate))}
-                        />
-                        <Text
-                          fontSize="14px"
-                          fontFamily="TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#000000"
-                          lineHeight="16px"
-                        >
-                          {nftData?.nftInfo?.royalty_rate ? number2PerU16(nftData?.nftInfo?.royalty_rate).toFixed(1) : number2PerU16(collectionsData?.collection?.royalty_rate).toFixed(1)}
-                          %
-                        </Text>
-                      </Flex>
-
-                    </Flex>
+                        </Flex>
+                      )
+                      : ''}
                     <Flex
                       p="20px 0 20px 0"
                       flexDirection="column"

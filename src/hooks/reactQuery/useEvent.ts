@@ -8,7 +8,7 @@ export default ({
 }: fetchPersonalEventParams) => useInfiniteQuery(
   [QUERY_KEYS.Event, nftId, number],
   ({ pageParam = 0 }) => fetchEvent({
-    nftId, number, pageParam,
+    nftId, number: 20, pageParam,
   }),
   {
     getNextPageParam: (lastPage, pages) => (pages.length),

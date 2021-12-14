@@ -34,6 +34,7 @@ import PriceHistoryChart from '../PriceHistoryChart';
 import { priceStringDivUnit, currentPrice, formatNum } from '../../../utils/format';
 import { renderNmtNumberText } from '../../../components/Balance';
 import useEvent from '../../../hooks/reactQuery/useEvent';
+import useHistoryprice from '../../../hooks/reactQuery/useHistoryprice';
 import {
   PINATA_SERVER,
   DEFAULT_PAGE_LIMIT,
@@ -151,7 +152,14 @@ const DetailRight: FC<Props> = (({
   );
   const history = useHistory();
   const [selectedTime, setSelectedTime] = useState('seven');
+  const [selectedTimeValue, setSelectedTimeValue] = useState('7');
 
+  const { data: historyPrice } = useHistoryprice(
+    {
+      id: nftId,
+      timePeriod: selectedTimeValue,
+    },
+  );
   const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : null);
   const price = nftData?.nftInfo?.price ? priceStringDivUnit(nftData?.nftInfo?.price) : null;
   const auctionPrice = nftData?.nftInfo?.auction?.price ? priceStringDivUnit(nftData?.nftInfo?.auction?.price) : null;
@@ -164,7 +172,7 @@ const DetailRight: FC<Props> = (({
   const allowBritishAuction = nftData?.nftInfo?.auction?.allow_british_auction || false;
   const bidCount = nftData?.nftInfo?.auction?.bid_count || false;
 
-  const PriceHistory = nftData?.nftInfo?.history[selectedTime];
+  const PriceHistory = historyPrice?.pages[0];
   const [events, setEvents] = useState(
     {
       times: 0,
@@ -551,60 +559,63 @@ const DetailRight: FC<Props> = (({
                 >
                   {t('Detail.currentPrice')}
                 </Text>
-                <Popover>
-                  <PopoverTrigger>
-                    <Flex
-                      ml="10px"
-                      height="100%"
-                      alignItems="center"
-                    >
-                      <Box
-                        width="0"
-                        height="0"
-                        borderWidth="0 13px 20px"
-                        borderStyle="solid"
-                        borderColor="transparent transparent #FFE0D8"
-                        transform="rotate(270deg)"
-                      />
-                      <Box
-                        position="relative"
-                        left="-5px"
-                        height="24px"
-                        backgroundColor="#FFE0D8"
-                        display="flex"
-                        alignItems="center"
-                        fontSize="12px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="#FF6C47"
-                        paddingRight="10px"
+                {nftData?.nftInfo?.royalty_rate
+                  ? (
+                    <Popover>
+                      <PopoverTrigger>
+                        <Flex
+                          ml="10px"
+                          height="100%"
+                          alignItems="center"
+                        >
+                          <Box
+                            width="0"
+                            height="0"
+                            borderWidth="0 13px 20px"
+                            borderStyle="solid"
+                            borderColor="transparent transparent #FFE0D8"
+                            transform="rotate(270deg)"
+                          />
+                          <Box
+                            position="relative"
+                            left="-5px"
+                            height="24px"
+                            backgroundColor="#FFE0D8"
+                            display="flex"
+                            alignItems="center"
+                            fontSize="12px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#FF6C47"
+                            paddingRight="10px"
+                          >
+                            <Box
+                              mr="4px"
+                              width="8px"
+                              height="8px"
+                              borderRadius="50%"
+                              backgroundColor="#FF6C47"
+                              paddingRight="8px"
+                            />
+                            {t('Detail.Royalties')}
+                            {' '}
+                            {Math.ceil(number2PerU16(nftData?.nftInfo?.royalty_rate))}
+                            %
+                          </Box>
+                        </Flex>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        position="absolute"
+                        bottom="45px"
+                        left="-60px"
+                        _focus={{
+                          outline: 'none',
+                        }}
                       >
-                        <Box
-                          mr="4px"
-                          width="8px"
-                          height="8px"
-                          borderRadius="50%"
-                          backgroundColor="#FF6C47"
-                          paddingRight="8px"
-                        />
-                        {t('Detail.Royalties')}
-                        {' '}
-                        {Math.ceil(number2PerU16(nftData?.nftInfo?.royalty_rate))}
-                        %
-                      </Box>
-                    </Flex>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    position="absolute"
-                    bottom="45px"
-                    left="-60px"
-                    _focus={{
-                      outline: 'none',
-                    }}
-                  >
-                    <PopoverBody>{t('Detail.royaltiesTip')}</PopoverBody>
-                  </PopoverContent>
-                </Popover>
+                        <PopoverBody>{t('Detail.royaltiesTip')}</PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                  ) : ''}
               </Flex>
               <Flex flexDirection="column" justifyContent="flex-start">
                 <Flex height="43px" flexDirection="row" alignItems="flex-end">
@@ -628,7 +639,7 @@ const DetailRight: FC<Props> = (({
                       formatNum(auctionPrice)
                     ) : null}
                     {!types ? (
-                      Number(price) ? formatNum(price) : '-'
+                      Number(price) > 0 ? formatNum(price) : '-'
                     ) : null}
                   </Text>
                   <Text
@@ -651,7 +662,7 @@ const DetailRight: FC<Props> = (({
                       Number(auctionPrice) && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(auctionPrice))})` : 'NMT'
                     ) : null}
                     {!types ? (
-                      Number(price) && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(price))})` : 'NMT'
+                      Number(price) > 0 && token?.price ? `NMT ($${formatNum(Number(token?.price) * Number(price))})` : 'NMT'
                     ) : null}
                   </Text>
                   {types === 'Dutch' && !allowBritishAuction ? (
@@ -678,7 +689,7 @@ const DetailRight: FC<Props> = (({
                       src={IconRankUp.default}
                     />
                   ) : null}
-                  {Number(auctionPrice) && types === 'British'
+                  {Number(auctionPrice) > 0 && types === 'British'
                     ? (
                       <Image
                         m="0 0 8px 10px"
@@ -1094,6 +1105,7 @@ const DetailRight: FC<Props> = (({
                             </Text>
                           ) : account?.address === item?.bidder_id && item.type === 'order' ? (
                             <Text
+                              cursor="pointer"
                               w="136px"
                               textAlign="right"
                               fontSize="14px"
@@ -1135,7 +1147,7 @@ const DetailRight: FC<Props> = (({
       ) : null}
       {selectTabId === 1 ? (
         <Box p="20px">
-          {eventDate?.pages.length ? (
+          {eventDate?.pages?.length ? (
             <Box>
               <Flex w="100%" flexDirection="column" justifyContent="flex-start">
                 <Flex h="40px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
@@ -1208,17 +1220,19 @@ const DetailRight: FC<Props> = (({
 
                 </Flex>
                 <InfiniteScroll
-                  dataLength={eventDate?.pages.length * DEFAULT_PAGE_LIMIT}
+                  dataLength={eventDate?.pages?.length * DEFAULT_PAGE_LIMIT}
                   next={fetchNextPageEventDate}
-                  hasMore={eventDate?.pages.length
-                                * DEFAULT_PAGE_LIMIT < eventDate?.pages[0].pageInfo?.totalNum}
+                  hasMore={eventDate?.pages[Number(eventDate?.pages?.length) - 1]?.events?.length === 20}
                   loader={<h4>Loading...</h4>}
                   initialScrollY={1}
                   height="260px"
                 >
-                  {eventDate?.pages.map((page) => page?.events?.map((item) => (
+                  {eventDate?.pages?.map((page) => page?.events?.map((item) => (
                     item.method === 'BurnnedToken'
                     || item.method === 'BurnRemovedBritishAuctionnedToken'
+                    || item.method === 'UpdatedTokenRoyalty'
+                    || item.method === 'UpdatedToken'
+                    || item.method === 'TransferredToken'
                       ? null : (<Activity events={item} />)
                   )))}
                 </InfiniteScroll>
@@ -1258,7 +1272,11 @@ const DetailRight: FC<Props> = (({
       {selectTabId === 2 ? (
         <Box p="20px 0">
           <Flex flexDirection="row" justifyContent="flex-start" mb="20px">
-            <TimeBy selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+            <TimeBy
+              selectedTime={selectedTime}
+              setSelectedTime={setSelectedTime}
+              setSelectedTimeValue={setSelectedTimeValue}
+            />
             <Flex m="0 20px" textAlign="center" flexDirection="column" justifyContent="center">
               <Text
                 mb="2px"
@@ -1281,7 +1299,7 @@ const DetailRight: FC<Props> = (({
                   color="#000000"
                   lineHeight="18px"
                 >
-                  {renderNmtNumberText(PriceHistory?.average) || '0'}
+                  {PriceHistory?.avgprice ? formatNum(priceStringDivUnit(PriceHistory?.avgprice)) : '0'}
                 </Text>
               </Flex>
             </Flex>
@@ -1307,14 +1325,14 @@ const DetailRight: FC<Props> = (({
                   color="#000000"
                   lineHeight="18px"
                 >
-                  {PriceHistory?.volume || '0'}
+                  {PriceHistory?.totalvolume || '0'}
                 </Text>
               </Flex>
             </Flex>
           </Flex>
-          {PriceHistory?.price_list.length
+          {PriceHistory?.priceList?.length
             ? (
-              <PriceHistoryChart PriceDate={PriceHistory.price_list} />)
+              <PriceHistoryChart PriceDate={PriceHistory?.priceList} />)
             : (
               <NoData widths="100%" />
             )}

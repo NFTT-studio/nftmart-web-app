@@ -13,6 +13,8 @@ import { queryClient } from './apiClient/reactQueryClient';
 import Router from './router';
 import { client } from './apiClient/apolloClient';
 
+require('dotenv').config();
+
 export const App = (): JSX.Element => (
   <ChakraProvider theme={theme}>
     <QueryClientProvider client={queryClient}>

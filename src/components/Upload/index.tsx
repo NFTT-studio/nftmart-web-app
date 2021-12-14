@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable consistent-return */
 /* eslint-disable no-mixed-operators */
@@ -21,7 +22,10 @@ import {
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import axios from 'axios';
-import { create } from 'ipfs-http-client';
+// 1
+// import { create } from 'ipfs-http-client';
+// 2
+import { create } from 'ipfs';
 import ReactAudioPlayer from 'react-audio-player';
 import {
   Player,
@@ -62,6 +66,8 @@ const cos = new COS({
     });
   },
 });
+
+let ipfs;
 
 interface INavProps {
   imgUrl: string;
@@ -144,6 +150,8 @@ export interface UploadProps {
   proportion: number;
   setStateCrop:React.Dispatch<React.SetStateAction<boolean>>,
   fileClass: string;
+  fileName: string;
+  url: string;
 }
 
 const Upload: FC<UploadProps> = ({
@@ -156,11 +164,13 @@ const Upload: FC<UploadProps> = ({
   proportion,
   setStateCrop,
   fileClass,
+  fileName,
+  url,
   ...rest
 }) => {
   const toast = useToast();
-  const [fileType, setFileType] = useState('');
-  const [value, setValue] = useState(valueFromProp?.url || '');
+  const [fileType, setFileType] = useState(fileName || '');
+  const [value, setValue] = useState(url || '');
   const [isLoading, setLoadingStatus] = useState(false);
   const [imgName, setImgName] = useState('');
   const [file, setFile] = useState(null);
@@ -174,57 +184,33 @@ const Upload: FC<UploadProps> = ({
 
   const saveToIpfs = useCallback(async (files: any[]) => {
     setStateCrop(false);
-    // if (REACT_APP_PINATA_ENABLE === 'true') {
-    //   setLoadingStatus(true);
-    //   const formData = new FormData();
-    //   formData.append('file', files[0]);
-
-    //   const owFormData = new FormData();
-    //   owFormData.append('file-0', files[0]);
-
-    //   // const result = await fetch(PINATA_POST_SERVER, {
-    //   //   method: 'POST',
-
-    //   //   headers: {
-    //   //     pinata_api_key: REACT_APP_PINATA_API_KEY!,
-    //   //     pinata_secret_api_key: REACT_APP_PINATA_API_SECRET_KEY!,
-    //   //   },
-
-    //   //   body: formData,
-
-    //   // });
-
-    //   const result = await axios.post(PINATA_POST_SERVER, formData, {
-    //     headers: {
-    //       pinata_api_key: REACT_APP_PINATA_API_KEY!,
-    //       pinata_secret_api_key: REACT_APP_PINATA_API_SECRET_KEY!,
-    //     },
-    //     onUploadProgress: (progress) => {
-    //       // 格式化成百分数
-    //       setProgresses(Math.floor((progress.loaded / progress.total) * 100));
-    //     },
-    //   });
-    //   axios.post(UPLOAD_OWN_SERVER, owFormData);
-
-    //   const responseData = await result;
-    //   setValue(responseData.data.IpfsHash);
-    //   setShowCrop(false);
-    //   setLoadingStatus(false);
-    //   setProgresses(0);
-    //   return;
-    // }
     try {
-      const ipfs = create({ url: IPFS_POST_SERVER });
+      if (!ipfs) {
+        // 1:
+        // const auth = Buffer.from('21zPVzYCCiZdv8HErHmd7R6p9tO:fcddc1ceea96541ba987dbae2a05f0ff').toString('base64');
+        // ipfs = create({
+        //   host: 'ipfs.infura.io',
+        //   port: 5001,
+        //   protocol: 'https',
+        //   headers: { authorization: `Basic ${auth}` },
+        // });
+        // 2:
+        ipfs = await create();
+        const ipfsid = await ipfs.id();
+        console.info(ipfsid);
+        // end
+      }
       if (files.length === 0) {
         return;
       }
       const addOptions = {
-        // onlyHash: true,
-        progress: (arg: any) => {
-          setProgresses(1);
-        },
+        onlyHash: true,
+        // progress: (arg: any) => {
+        //   setProgresses(1);
+        // },
       };
       setLoadingStatus(true);
+      // ipfs.
       const added = await ipfs.add(files[0], addOptions);
       console.log(added.cid.toString());
       await cos.putObject(
@@ -237,7 +223,6 @@ const Upload: FC<UploadProps> = ({
           onProgress(progressData) {
             setProgresses(Math.floor((progressData.percent) * 100));
           },
-
         },
         (err: any, data: any) => {
           if (err) {
@@ -254,7 +239,9 @@ const Upload: FC<UploadProps> = ({
           setShowCrop(false);
         },
       );
+      console.log('upload cos end');
     } catch (e) {
+      console.info(e);
       toast({
         position: 'top',
         render: () => (
@@ -419,7 +406,7 @@ const Upload: FC<UploadProps> = ({
             <>
               {pictureType.indexOf(fileType) > -1
                 ? (
-                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${fileClass}/${value}!preview`} />
+                  <Image w="350px" h="auto" m="16px 0" src={`${PINATA_SERVER}${fileClass}/${value}`} />
                 )
                 : (
                   videoType.indexOf(fileType) > -1
@@ -432,9 +419,13 @@ const Upload: FC<UploadProps> = ({
                     )
                     : audioType.indexOf(fileType) > -1 ? (
                       <Box maxWidth="420px">
-                        <Player width="100%">
+                        <ReactAudioPlayer
+                          src={`${PINATA_SERVER}${fileClass}/${value}`}
+                          controls
+                        />
+                        {/* <Player width="100%">
                           <source style={{ height: 'auto' }} src={`${PINATA_SERVER}${fileClass}/${value}`} />
-                        </Player>
+                        </Player> */}
                       </Box>
                     )
                       : (

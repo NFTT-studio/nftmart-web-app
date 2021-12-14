@@ -104,7 +104,6 @@ const Home = () => {
                 lineHeight="38px"
               >
                 {t('Home.hottest')}
-
               </Text>
               <Flex>
                 <Button
@@ -143,7 +142,7 @@ const Home = () => {
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
-                  isDisabled={!(pageParam < 3) || !hotNftsData?.orders.slice(0 + (pageParam + 1) * 4, 4 + (pageParam + 1) * 4).length}
+                  isDisabled={!(pageParam < 3) || !hotNftsData?.nfts.slice(0 + (pageParam + 1) * 4, 4 + (pageParam + 1) * 4).length}
                   onClick={() => {
                     if (pageParam < 4) {
                       setPageParamr(pageParam + 1);
@@ -165,10 +164,10 @@ const Home = () => {
                 <Center height="396px">
                   <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                 </Center>
-              ) : hotNftsData?.orders.slice(0 + pageParam * 4, 4 + pageParam * 4).length
+              ) : hotNftsData?.nfts.slice(0 + pageParam * 4, 4 + pageParam * 4).length
                 ? (
                   <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
-                    {hotNftsData.orders.slice(0 + pageParam * 4, 4 + pageParam * 4).map((order) => (
+                    {hotNftsData.nfts.slice(0 + pageParam * 4, 4 + pageParam * 4).map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
                   </SimpleGrid>
@@ -258,7 +257,7 @@ const Home = () => {
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
-                  isDisabled={!(pageParamE < 3) || !expensiveNftsData?.orders.slice(0 + (pageParamE + 1) * 4, 4 + (pageParamE + 1) * 4).length}
+                  isDisabled={!(pageParamE < 3) || !expensiveNftsData?.nfts.slice(0 + (pageParamE + 1) * 4, 4 + (pageParamE + 1) * 4).length}
                   onClick={() => {
                     if (pageParamE < 4) {
                       setPageParamE(pageParamE + 1);
@@ -280,10 +279,10 @@ const Home = () => {
                 <Center height="396px">
                   <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                 </Center>
-              ) : (expensiveNftsData && expensiveNftsData.orders.slice(0 + pageParamE * 4, 4 + pageParamE * 4).length
+              ) : (expensiveNftsData && expensiveNftsData.nfts.slice(0 + pageParamE * 4, 4 + pageParamE * 4).length
                 ? (
                   <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
-                    {expensiveNftsData.orders.slice(0 + pageParamE * 4, 4 + pageParamE * 4).map((order) => (
+                    {expensiveNftsData.nfts.slice(0 + pageParamE * 4, 4 + pageParamE * 4).map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
                   </SimpleGrid>
@@ -369,7 +368,7 @@ const Home = () => {
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
-                  isDisabled={!(pageParamC + 1 < 3) || !cheapNftsData?.orders.slice(0 + (pageParamC + 1) * 4, 4 + (pageParamC + 1) * 4).length}
+                  isDisabled={!(pageParamC + 1 < 3) || !cheapNftsData?.nfts.slice(0 + (pageParamC + 1) * 4, 4 + (pageParamC + 1) * 4).length}
                   onClick={() => {
                     if (pageParamC < 3) {
                       setPageParamC(pageParamC + 1);
@@ -388,10 +387,10 @@ const Home = () => {
                 <Center height="396px">
                   <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                 </Center>
-              ) : cheapNftsData?.orders.slice(0 + pageParamC * 4, 4 + pageParamC * 4).length
+              ) : cheapNftsData?.nfts.slice(0 + pageParamC * 4, 4 + pageParamC * 4).length
                 ? (
                   <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
-                    {cheapNftsData.orders.slice(0 + pageParamC * 4, 4 + pageParamC * 4).map((order) => (
+                    {cheapNftsData.nfts.slice(0 + pageParamC * 4, 4 + pageParamC * 4).map((order) => (
                       <OrderCard nft={order} remainingTime={remainingTime} />
                     ))}
                   </SimpleGrid>

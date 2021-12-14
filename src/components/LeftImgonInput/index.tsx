@@ -4,6 +4,7 @@ import {
   InputGroup,
   Input,
   InputLeftAddon,
+  Text,
 } from '@chakra-ui/react';
 
 interface Props {
@@ -21,7 +22,7 @@ const LeftAddonInput: FC<Props> = ({
 }) => (
   <InputGroup
     width="600px"
-    height="42px"
+    height="43px"
     background="#FFFFFF"
     // eslint-disable-next-line no-nested-ternary
     borderRadius={position === 'top' ? '4px 4px 0px 4px'
@@ -34,8 +35,10 @@ const LeftAddonInput: FC<Props> = ({
     fontFamily="TTHoves-Regular, TTHoves"
     fontWeight="400"
     color="#999999"
+    boxSizing="border-box"
   >
     <InputLeftAddon
+      boxSizing="border-box"
       border="none"
       borderRadius="0"
       h="100%"
@@ -47,6 +50,7 @@ const LeftAddonInput: FC<Props> = ({
       {url}
     </InputLeftAddon>
     <InputLeftAddon
+      boxSizing="border-box"
       h="100%"
       m="0"
       p="0 0 0 10px"
@@ -56,10 +60,12 @@ const LeftAddonInput: FC<Props> = ({
       color="#000000"
       background="none"
       border="0"
+      letterSpacing="1px"
       children={position === 'top' ? null : placeholder}
     />
 
     <Input
+      h="100%"
       p="0"
       border="none"
       fontSize="12px"
@@ -70,6 +76,7 @@ const LeftAddonInput: FC<Props> = ({
       onChange={onChange}
       borderRadius="0px"
       value={value}
+      letterSpacing="1px"
       _placeholder={{
         color: '#999999',
       }}

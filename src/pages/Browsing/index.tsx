@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-nested-ternary */
 import React, {
@@ -24,7 +25,7 @@ import CategorySelector from '../../components/CategorySelector';
 import useCategories from '../../hooks/reactQuery/useCategories';
 import StatusSelector from '../../components/StatusSelector';
 import CollectionSelector from '../../components/CollectionSelector';
-import useCollections from '../../hooks/reactQuery/useCollections';
+import useCollections from '../../hooks/reactQuery/useCollectionsRecommend';
 import useNftsAll from '../../hooks/reactQuery/useNftsAll';
 import OrderCard from '../../components/OrderCard';
 import SortBy from '../../components/SortBy';
@@ -52,13 +53,15 @@ const Browsing = () => {
   const { t } = useTranslation();
 
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
-  const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>([]);
+  const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>();
   const [selectedCollection, setSelectedCollectionIdArr] = useState<string[]>([]);
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const [remainingTime, setRemainingTime] = useState(0);
 
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
-  const { data: collectionsData, isLoading: collectionsIsLoading, refetch: fetchCollections } = useCollections({});
+  const { data: collectionsData, isLoading: collectionsIsLoading, refetch: fetchCollections } = useCollections({
+    limit: 1000,
+  });
   const {
     data: nftsData, isLoading: nftsIsLoading, fetchNextPage, refetch: refetchnftsData,
   } = useNftsAll(
@@ -73,9 +76,6 @@ const Browsing = () => {
     getBlock().then((res) => {
       setRemainingTime(res);
     });
-    if (status === null) {
-      refetchnftsData();
-    }
     fetchCollections();
   }, []);
 
@@ -83,11 +83,17 @@ const Browsing = () => {
 
   const handleSelectCategory: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectedCategoryId(event.currentTarget.id);
+    setSelectedCollectionIdArr([]);
   };
 
   const handleSelectStatus: MouseEventHandler<HTMLButtonElement> = (event) => {
     const clickedStatus = event.currentTarget.id;
-    setSelectedStatusArr([clickedStatus]);
+    // setSelectedStatusArr([clickedStatus]);
+    setSelectedStatusArr(
+      selectedStatusArr?.indexOf(clickedStatus) > -1
+        ? without(selectedStatusArr, event.currentTarget.id)
+        : [clickedStatus],
+    );
     // setSelectedStatusArr(
     //   selectedStatusArr.indexOf(clickedStatus) > -1
     //     ? without(selectedStatusArr, event.currentTarget.id)
@@ -102,6 +108,7 @@ const Browsing = () => {
         ? without(selectedCollection, event.currentTarget.id)
         : union(selectedCollection, [event.currentTarget.id]),
     );
+    setSelectedCategoryId('');
   };
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -109,7 +116,7 @@ const Browsing = () => {
       return collection.metadata.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
     }
     if (collectionsData) {
-      setCollectionsArr(collectionsData.collections.filter(check));
+      setCollectionsArr(collectionsData?.pages[0]?.collections.filter(check));
     }
   };
 
@@ -122,24 +129,13 @@ const Browsing = () => {
   }, [status]);
 
   useEffect(() => {
-    if (selectedStatusArr?.length !== 0) {
+    if (selectedStatusArr) {
       refetchnftsData();
     }
-    if (status === null) {
-      refetchnftsData();
-    }
-  }, [selectedStatusArr]);
+  }, [selectedStatusArr, selectedSort, selectedCategoryId, selectedCollection]);
   useEffect(() => {
-    if (selectedStatusArr?.length !== 0) {
-      refetchnftsData();
-    }
-    if (status === null) {
-      refetchnftsData();
-    }
-  }, [selectedSort, selectedCategoryId, selectedCollection]);
-  useEffect(() => {
-    if (collectionsData) {
-      setCollectionsArr(collectionsData.collections);
+    if (collectionsData?.pages[0]?.collections) {
+      setCollectionsArr(collectionsData?.pages[0]?.collections);
     }
   }, [collectionsData]);
 

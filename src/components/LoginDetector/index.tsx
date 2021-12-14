@@ -9,13 +9,12 @@ const LoginDetector = () => {
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
   const { accounts, account, injector } = chainState;
-  console.log(location);
 
   useEffect(() => {
     const flag = !accounts || accounts.length === 0 || !account || !injector;
 
     if (flag) {
-      redirectConnect(location.pathname + location.search, history);
+      redirectConnect(encodeURIComponent(location.pathname + location.search), history);
     }
   }, [accounts, account, injector, location.pathname, history]);
 

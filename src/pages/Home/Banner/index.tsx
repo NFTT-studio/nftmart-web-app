@@ -52,7 +52,7 @@ const Banner = ((
       h: '410px',
     },
     {
-      id: '0',
+      id: '1',
       icon: banner06.default,
       url: '/collection/22-Paper%20P',
       w: '205px',

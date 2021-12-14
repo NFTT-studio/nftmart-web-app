@@ -45,8 +45,9 @@ const ICONS = {
   quickAreaCreated: Collections,
   quickAreaCollections: Created,
 };
-const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
+const AccountPopover: FC<LoginProps> = ({ avatar, address = '' }) => {
   const chainState = useAppSelector((state) => state.chain);
+  const formatAddress = (addr: string) => (addr ? `${addr.slice(0, 4)}...${addr.slice(-4)}` : null);
 
   const { whiteList } = chainState;
   const location = useLocation();
@@ -126,7 +127,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
             overflow="hidden"
             textOverflow="ellipsis"
           >
-            {avatar}
+            {userData?.name || formatAddress(address) }
           </Text>
           {opening ? (
             <Image
@@ -663,7 +664,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = 'no name' }) => {
             color="#5C74FF"
             cursor="pointer"
             as={RouterLink}
-            to={`/connect?callbackUrl=${location.pathname + location.search}`}
+            to={`/connect?callbackUrl=${encodeURIComponent(location.pathname + location.search)}`}
             onClick={() => setOpening(false)}
           >
             {t('header.switchAccounts')}

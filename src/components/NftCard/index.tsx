@@ -189,7 +189,7 @@ const NftCard: FC<NftCardProps> = ({
   const fileType = nft?.metadata?.fileType;
   return (
     <Link
-      key={nft?.metadata.name}
+      key={nft?.id}
       width="24vw"
       maxWidth="320px"
       minWidth="250px"
@@ -409,7 +409,7 @@ const NftCard: FC<NftCardProps> = ({
             display="flex"
             justifyContent="space-between"
           >
-            {Number(nft?.auction?.price) || Number(nft?.price) ? (
+            {Number(nft?.auction?.price) > 0 || Number(nft?.price) > 0 ? (
               <Box textAlign="right" display="flex" justifyContent="center">
                 <Flex flexDirection="column" alignItems="flex-start">
                   <Box
@@ -430,13 +430,13 @@ const NftCard: FC<NftCardProps> = ({
                       renderNmtNumberText((Number(nft?.auction?.price)).toString())
                     ) : null}
                     {!type ? (
-                      Number(nft?.price) ? price : ''
+                      Number(nft?.price) > 0 ? price : ''
                     ) : null}
                     {type === 'British' ? (
                       renderNmtNumberText((Number(nft?.auction?.price)).toString())
                     ) : null}
-                    {Number(nft?.auction?.price) ? 'NMT' : '' }
-                    {Number(nft?.price) ? 'NMT' : '' }
+                    {type && Number(nft?.auction?.price) > 0 ? 'NMT' : '' }
+                    {!type && Number(nft?.price) > 0 ? 'NMT' : '' }
                   </Box>
                   {Number(nft?.auction?.price) || Number(nft?.price) ? (
                     <Box

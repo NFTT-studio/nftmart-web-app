@@ -16,10 +16,12 @@
     "recentlySold": "Recently Sold",
     "endingSoon": "Ending Soon",
     "cheapest": "Cheapest",
-    "mostStarted": "Most Stars ",
+    "mostStarted": "Most Stars",
+    "pledge": "Most pledged",
     "oldest": "Oldest"
   },
   "common": {
+    "nameerror":"The correct name was not entered",
     "category":"Category",
     "cuttingConfirmed":"Cutting needs to be confirmed",
     "currentPrice":"Current price",
@@ -338,6 +340,22 @@
     "sixty": "Last 60 Days",
     "ninety": "Last 90 Days",
     "year": "Last Year"
+  },
+  "Update": {
+    "modifyCollection": "Modify Collection",
+    "modifyNFT": "Modify NFT",
+    "burning": "Burning",
+    "modify": "Modify",
+    "burningConfirm": "Burning confirm",
+    "burningExplain": "The burning operation cannot be undone and cannot be restored. Please check again whether it is really going to be burned.If you are sure, please enter the name of the NFT below: ",
+    "nftName": "Please fill in the item name",
+    "reduceRoyalties": "Reduce royalties",
+    "reduceExplain": "In order to protect the rights of the current owner, you can only reduce the royalties. Please make sure that the percentage of royalties you fill in is less than: ",
+    "submit": "Submit",
+    "delete": "Delete",
+    "deleteConfirm": "Delete confirm",
+    "deleteExplain": "The delete operation cannot be undone and cannot be restored. Please check again whether it is really going to be deleted.If you are sure, please enter the name of the collection below: ",
+    "collectionName": "Please fill in the collection name"
   },
   "Footer": {
     "PrivacyPolicy": "PrivacyPolicy"

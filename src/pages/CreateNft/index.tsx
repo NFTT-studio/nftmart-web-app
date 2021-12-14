@@ -37,6 +37,7 @@ import {
   Td,
   TableCaption,
 } from '@chakra-ui/react';
+import { trim } from 'lodash';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 import Upload from '../../components/Upload';
 import EditFormTitle from '../../components/EditFormTitle';
@@ -48,6 +49,7 @@ import LeftAddonInput from '../../components/LeftAddonInput';
 import { useAppSelector } from '../../hooks/redux';
 import LoginDetector from '../../components/LoginDetector';
 import MainContainer from '../../layout/MainContainer';
+import useNft from '../../hooks/reactQuery/useNft';
 
 import {
   PINATA_SERVER,
@@ -56,6 +58,7 @@ import {
   IconLeft,
 } from '../../assets/images';
 import { mintNft } from '../../polkaSDK/api/mintNft';
+import { updateToken } from '../../polkaSDK/api/updateToken';
 import MyModal from '../../components/MyModal';
 import MyToast, { ToastBody } from '../../components/MyToast';
 
@@ -67,8 +70,9 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     return null;
   }
   const status = GetQueryString('collectionId');
+  const modifyId = GetQueryString('modifyId');
   const [propertiesArr, setPropertiesArr] = useState([{ key: '', value: '' }]);
-
+  const tokenId = modifyId?.split('-')[1];
   function number2PerU16(x) {
     return Math.round((x / 65535.0) * 100);
   }
@@ -91,6 +95,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     }
   }, [account, whiteList.length !== 0]);
   const { data: collectionsData } = useCollectionsSinger(collectionId);
+  const { data: nftData, isLoading: nftDataIsLoading, refetch: refetchNftData } = useNft(modifyId);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateCrop, setStateCrop] = useState(false);
 
@@ -109,6 +114,11 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       setroyaltiesSl(true);
     }
   }, [collectionsData]);
+  useEffect(() => {
+    if (nftData?.nftInfo?.metadata?.properties?.length > 0) {
+      setPropertiesArr(nftData?.nftInfo?.metadata?.properties);
+    }
+  }, [nftData?.nftInfo?.metadata?.properties?.length]);
   const addMore = () => {
     const arr = propertiesArr.concat({ key: '', value: '' });
     setPropertiesArr(arr);
@@ -122,8 +132,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     setPropertiesArr(propertiesArr);
   };
 
-  const mint = useCallback(async (formValue, cb) => {
-    const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
+  const mint = useCallback(async (formValue, propertiesLet, cb) => {
     const normalizedFormData = {
       address: account?.address,
       metadata: {
@@ -142,16 +151,36 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     };
     mintNft(normalizedFormData);
   }, [account?.address, collectionId]);
+  const update = useCallback(async (formValue, propertiesLet, cb) => {
+    const normalizedFormData = {
+      address: account?.address,
+      metadata: {
+        logoUrl: formValue.logoUrl,
+        previewUrl: formValue.previewUrl,
+        fileType: formValue.fileType,
+        name: formValue.name,
+        stub: formValue.stub ? `https://${formValue.stub}` : null,
+        description: formValue.description,
+        properties: propertiesLet,
+      },
+      classId: collectionId,
+      tokenId,
+      quantity: 1,
+      royaltyRate: formValue.isRoyalties ? (Number(formValue.royalties) / 100) : 0,
+      cb,
+    };
+    updateToken(normalizedFormData);
+  }, [account?.address, collectionId]);
 
   const formik = useFormik({
     initialValues: {
-      logoUrl: '',
-      previewUrl: '',
-      name: '',
-      stub: '',
-      description: '',
-      royalties: number2PerU16(collectionsData?.collection?.royalty_rate || 0),
-      fileType: '',
+      logoUrl: modifyId ? nftData?.nftInfo?.metadata?.logoUrl : '',
+      previewUrl: modifyId ? nftData?.nftInfo?.metadata?.previewUrl : '',
+      name: modifyId ? nftData?.nftInfo?.metadata?.name : '',
+      stub: modifyId ? trim(nftData?.nftInfo?.metadata?.stub?.replace(/https:\/\//i, '')) : '',
+      description: modifyId ? nftData?.nftInfo?.metadata?.description : '',
+      royalties: modifyId ? number2PerU16(nftData?.nftInfo?.royalty_rate || 0) : number2PerU16(collectionsData?.collection?.royalty_rate || 0),
+      fileType: modifyId ? nftData?.nftInfo?.metadata?.fileType : '',
       isRoyalties: !!collectionsData?.collection?.royalty_rate,
     },
     onSubmit: (formValue, formAction) => {
@@ -165,36 +194,64 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
         return;
       }
       setIsSubmitting(true);
-      mint(formValue, {
-        success: () => {
-          toast({
-            position: 'top',
-            render: () => (
-              <ToastBody title="Success" message={t('common.success')} type="success" />
-            ),
-          });
-          setTimeout(() => {
-            setIsSubmitting(false);
+      const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
+      if (modifyId) {
+        update(formValue, propertiesLet, {
+          success: () => {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
             formAction.resetForm();
-            history.push(`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`);
-          }, 3000);
-        },
-        error: (error: string) => {
-          toast({
-            position: 'top',
-            render: () => (
-              <ToastBody title="Error" message={error} type="error" />
-            ),
-          });
-          setIsSubmitting(false);
-        },
-      });
+            setTimeout(() => {
+              setIsSubmitting(false);
+              history.push(`/items/${nftData?.nftInfo?.id}-${encodeURIComponent(formValue.name)}`);
+            }, 3000);
+          },
+          error: (error: string) => {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={error} type="error" />
+              ),
+            });
+            setIsSubmitting(false);
+          },
+        });
+      } else {
+        mint(formValue, propertiesLet, {
+          success: () => {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Success" message={t('common.success')} type="success" />
+              ),
+            });
+            formAction.resetForm();
+            setTimeout(() => {
+              setIsSubmitting(false);
+              history.push(`/collection/${collectionId}-${encodeURIComponent(collectionsData?.collection?.metadata.name)}`);
+            }, 3000);
+          },
+          error: (error: string) => {
+            toast({
+              position: 'top',
+              render: () => (
+                <ToastBody title="Error" message={error} type="error" />
+              ),
+            });
+            setIsSubmitting(false);
+          },
+        });
+      }
     },
     validationSchema: schema,
   });
 
   return (
-    <MainContainer title={t('Create.title')}>
+    <MainContainer title={modifyId ? t('Update.modifyNFT') : t('Create.title')}>
       <Flex
         w="100%"
         h="80px"
@@ -260,7 +317,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           color="#191A24"
           lineHeight="27px"
         >
-          {t('Create.createCollection')}
+          {modifyId ? t('Update.modifyNFT') : t('Create.createCollection')}
         </Text>
 
         <form onSubmit={formik.handleSubmit}>
@@ -277,13 +334,16 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             value={formik.values.logoUrl}
             setStateCrop={setStateCrop}
             fileClass="nft"
+            url={formik.values.logoUrl}
+            fileName={nftData?.nftInfo?.metadata?.fileType}
             onChange={(v, b) => {
               formik.setFieldValue('logoUrl', v);
               formik.setFieldValue('fileType', b);
-              if (b !== 'gif' && b !== 'png' && b !== 'jpg' && b !== 'jpg' && b !== '' && b !== 'jpeg') {
+              if (b !== 'gif' && b !== 'png' && b !== 'jpg' && b !== '' && b !== 'jpeg') {
                 setIsPreview(true);
               } else {
                 setIsPreview(false);
+                formik.setFieldValue('previewUrl', '');
               }
             }}
           />
@@ -301,6 +361,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                   rectangle=""
                   proportion={16 / 16}
                   value={formik.values.previewUrl}
+                  url={formik.values.previewUrl}
+                  fileName=""
                   setStateCrop={setStateCrop}
                   fileClass="nft"
                   onChange={(v, b) => {
@@ -358,7 +420,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           {formik.errors.description && formik.touched.description ? (
             <div style={{ color: 'red' }}>{formik.errors.description}</div>
           ) : null}
-          {/* <Text
+          <Text
             marginTop="30px"
             fontSize="16px"
             fontFamily="TTHoves-Medium, TTHoves"
@@ -413,7 +475,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
                       placeholder="property name"
-                      // value={propertiesArr[index].key}
+                      defaultValue={item.key}
                       onChange={handleInputKey}
                     />
                   </Td>
@@ -423,12 +485,13 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
                   >
                     <Input
                       id={index.toString()}
+                      name={index.toString()}
                       fontSize="14px"
                       color="#000000"
                       fontFamily="TTHoves-Regular, TTHoves"
                       fontWeight="400"
                       placeholder="property value"
-                      // value={propertiesArr[index].value}
+                      defaultValue={item.value}
                       onChange={handleInputValue}
                     />
                   </Td>
@@ -442,9 +505,10 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             display="inline-block"
             color="#3D00FF"
             onClick={addMore}
+            cursor="pointer"
           >
             Add  more
-          </Text> */}
+          </Text>
           <Flex
             w="100%"
             mt="20px"

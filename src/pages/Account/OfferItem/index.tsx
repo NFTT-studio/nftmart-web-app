@@ -16,8 +16,9 @@ import {
 
 interface Props {
   offers?: []
+  hide:boolean
 }
-const OfferItem: FC<Props> = (({ offers }) => {
+const OfferItem: FC<Props> = (({ offers, hide }) => {
   const formatAddress = (addr: string) => (addr ? `${addr.slice(0, 4)}...${addr.slice(-4)}` : null);
   const { t } = useTranslation();
 
@@ -149,16 +150,18 @@ const OfferItem: FC<Props> = (({ offers }) => {
         >
           1
         </Text>
-        <Text
-          minWidth="60px"
-          fontSize="14px"
-          fontFamily="TTHoves-Regular, TTHoves"
-          fontWeight="400"
-          color="#000000"
-          lineHeight="20px"
-        >
-          {offers?.user?.name ? offers?.user?.name : formatAddress(offers?.user?.id) }
-        </Text>
+        {hide ? (
+          <Text
+            minWidth="60px"
+            fontSize="14px"
+            fontFamily="TTHoves-Regular, TTHoves"
+            fontWeight="400"
+            color="#000000"
+            lineHeight="20px"
+          >
+            {offers?.user?.name ? offers?.user?.name : formatAddress(offers?.user?.id) }
+          </Text>
+        ) : ''}
         {offers?.deadline - remainingTime > 0 || offers?.deadline - remainingTime > 0
           ? (
             <Text
