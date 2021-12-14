@@ -46,7 +46,7 @@ const Events: FC<Props> = (({
         color="#000000"
         lineHeight="20px"
       >
-        {events?.method === 'MintedToken' ? 'Created' : ''}
+        {/* {events?.method === 'MintedToken' ? 'Created' : ''}
         {events?.method === 'TransferredToken' ? 'Sales' : ''}
         {events?.method === 'CreatedBritishAuction' ? 'Listing' : ''}
         {events?.method === 'CreatedDutchAuction' ? 'Listing' : ''}
@@ -55,13 +55,14 @@ const Events: FC<Props> = (({
         {events?.method === 'RedeemedBritishAuction' ? 'Sales' : ''}
         {events?.method === 'RedeemedDutchAuction' ? 'Sales' : ''}
         {events?.method === 'CreatedOrder' ? 'Listing' : ''}
-        {events?.method === 'CreatedOffer' ? 'Bids' : ''}
+        {events?.method === 'CreatedOffer' ? 'Offer' : ''}
         {events?.method === 'TakenOffer' ? 'Sales' : ''}
         {events?.method === 'TakenOrder' ? 'Sales' : ''}
         {events?.method === 'RemovedDutchAuction' ? 'Cancel' : ''}
         {events?.method === 'RemovedOrder' ? 'Cancel' : ''}
         {events?.method === 'RemovedOffer' ? 'Cancel' : ''}
-        {events?.method === 'RemovedBritishAuction' ? 'Cancel' : ''}
+        {events?.method === 'RemovedBritishAuction' ? 'Cancel' : ''} */}
+        {events?.method}
       </Text>
       <Text
         w="136px"
