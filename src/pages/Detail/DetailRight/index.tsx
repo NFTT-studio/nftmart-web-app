@@ -756,7 +756,7 @@ const DetailRight: FC<Props> = (({
                   fontFamily="TTHoves-Regular, TTHoves"
                   fontWeight="500"
                   color={!isLoginAddress && Number(price) > 0 ? '#FFFFFF' : '#FFFFFF'}
-                  isDisabled={isLoginAddress || Number(price) === 0}
+                  isDisabled={isLoginAddress || Number(price) < 0}
                   onClick={handleBuy}
                   _hover={{
                     background: '#000000',
