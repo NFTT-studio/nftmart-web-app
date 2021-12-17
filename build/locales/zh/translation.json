@@ -21,6 +21,15 @@
     "oldest": "最早发行"
   },
   "common": {
+    "Minted":"创建",
+    "Transfer":"转账",
+    "Burn":"销毁",
+    "List":"上架",
+    "Cancel":"下架",
+    "BidOffer":"竞拍",
+    "Offer":"出价",
+    "Sale":"售出",
+    "CancelOffer":"取消出价",
     "nameerror":"没有输入正确的名称",
     "category":"类别",
     "cuttingConfirmed":"裁剪需要确认",
