@@ -1228,7 +1228,12 @@ const DetailRight: FC<Props> = (({
                   height="260px"
                 >
                   {eventDate?.pages?.map((page) => page?.events?.map((item) => (
-                    <Activity events={item} />
+                    item.method === 'BurnnedToken'
+                    || item.method === 'BurnRemovedBritishAuctionnedToken'
+                    || item.method === 'UpdatedTokenRoyalty'
+                    || item.method === 'UpdatedToken'
+                    || item.method === 'TransferredToken'
+                      ? null : (<Activity events={item} />)
                   )))}
                 </InfiniteScroll>
               </Flex>

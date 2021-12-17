@@ -46,23 +46,23 @@ const Events: FC<Props> = (({
         color="#000000"
         lineHeight="20px"
       >
-        {/* {events?.method === 'MintedToken' ? 'Created' : ''}
-        {events?.method === 'TransferredToken' ? 'Sales' : ''}
-        {events?.method === 'CreatedBritishAuction' ? 'Listing' : ''}
-        {events?.method === 'CreatedDutchAuction' ? 'Listing' : ''}
-        {events?.method === 'BidDutchAuction' ? 'Bids' : ''}
-        {events?.method === 'BidBritishAuction' ? 'Bids' : ''}
-        {events?.method === 'RedeemedBritishAuction' ? 'Sales' : ''}
-        {events?.method === 'RedeemedDutchAuction' ? 'Sales' : ''}
-        {events?.method === 'CreatedOrder' ? 'Listing' : ''}
-        {events?.method === 'CreatedOffer' ? 'Offer' : ''}
-        {events?.method === 'TakenOffer' ? 'Sales' : ''}
-        {events?.method === 'TakenOrder' ? 'Sales' : ''}
-        {events?.method === 'RemovedDutchAuction' ? 'Cancel' : ''}
-        {events?.method === 'RemovedOrder' ? 'Cancel' : ''}
-        {events?.method === 'RemovedOffer' ? 'Cancel' : ''}
-        {events?.method === 'RemovedBritishAuction' ? 'Cancel' : ''} */}
-        {events?.method}
+        {events?.method === 'MintedToken' ? t('common.Minted') : ''}
+        {events?.method === 'TransferredToken' ? t('common.Transfer') : ''}
+        {events?.method === 'CreatedBritishAuction' ? t('common.List') : ''}
+        {events?.method === 'CreatedDutchAuction' ? t('common.List') : ''}
+        {events?.method === 'BidDutchAuction' ? t('common.BidOffer') : ''}
+        {events?.method === 'BidBritishAuction' ? t('common.BidOffer') : ''}
+        {events?.method === 'RedeemedBritishAuction' ? t('common.Sale') : ''}
+        {events?.method === 'RedeemedDutchAuction' ? t('common.Sale') : ''}
+        {events?.method === 'CreatedOrder' ? t('common.List') : ''}
+        {events?.method === 'CreatedOffer' ? t('common.Offer') : ''}
+        {events?.method === 'TakenOffer' ? t('common.Sale') : ''}
+        {events?.method === 'TakenOrder' ? t('common.Sale') : ''}
+        {events?.method === 'RemovedDutchAuction' ? t('common.Cancel') : ''}
+        {events?.method === 'RemovedOrder' ? t('common.Cancel') : ''}
+        {events?.method === 'RemovedOffer' ? t('common.CancelOffer') : ''}
+        {events?.method === 'RemovedBritishAuction' ? t('common.Cancel') : ''}
+        {events?.method === 'BurnnedToken' ? t('common.Burn') : ''}
       </Text>
       <Text
         w="136px"
