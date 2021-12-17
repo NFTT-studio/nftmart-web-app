@@ -21,6 +21,15 @@
     "oldest": "Oldest"
   },
   "common": {
+    "Minted":"Minted",
+    "Transfer":"Transfer",
+    "Burn":"Burn",
+    "List":"List",
+    "Cancel":"Cancel",
+    "Offer":"Offer",
+    "BidOffer":"Offer",
+    "Sale":"Sale",
+    "CancelOffer":"CancelOffer",
     "nameerror":"The correct name was not entered",
     "category":"Category",
     "cuttingConfirmed":"Cutting needs to be confirmed",
