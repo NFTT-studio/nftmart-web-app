@@ -181,6 +181,12 @@ const obj = {
       width: '100% !important',
       maxWidth: '100% !important',
     },
+    '.public-DraftEditor-content': {
+      height: 'auto !important',
+    },
+    '.DraftEditor-editorContainer': {
+      height: 'auto !important',
+    },
   }),
 };
 

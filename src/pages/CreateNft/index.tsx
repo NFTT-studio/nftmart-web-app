@@ -10,6 +10,8 @@ import {
   useHistory, RouteComponentProps, Link as RouterLink,
 } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import BraftEditor from 'braft-editor';
+import 'braft-editor/dist/index.css';
 
 import * as Yup from 'yup';
 import {
@@ -72,6 +74,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const status = GetQueryString('collectionId');
   const modifyId = GetQueryString('modifyId');
   const [propertiesArr, setPropertiesArr] = useState([{ key: '', value: '' }]);
+
   const tokenId = modifyId?.split('-')[1];
   function number2PerU16(x) {
     return Math.round((x / 65535.0) * 100);
@@ -85,6 +88,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const [isShowModal, setIsShowModal] = useState(false);
   const [preview, setIsPreview] = useState(false);
   const [royaltiesSl, setroyaltiesSl] = useState(false);
+  const excludeControls = ['media'];
   const onCloseModal = () => {
     setIsShowModal(false);
     history.push('/');
@@ -96,6 +100,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   }, [account, whiteList.length !== 0]);
   const { data: collectionsData } = useCollectionsSinger(collectionId);
   const { data: nftData, isLoading: nftDataIsLoading, refetch: refetchNftData } = useNft(modifyId);
+  const [editorState, handleChange] = useState(BraftEditor.createEditorState(nftData?.nftInfo?.metadata?.description));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateCrop, setStateCrop] = useState(false);
 
@@ -132,7 +137,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     setPropertiesArr(propertiesArr);
   };
 
-  const mint = useCallback(async (formValue, propertiesLet, cb) => {
+  const mint = useCallback(async (formValue, propertiesLet, description, cb) => {
     const normalizedFormData = {
       address: account?.address,
       metadata: {
@@ -141,7 +146,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
         fileType: formValue.fileType,
         name: formValue.name,
         stub: formValue.stub ? `https://${formValue.stub}` : null,
-        description: formValue.description,
+        description,
         properties: propertiesLet,
       },
       classId: collectionId,
@@ -151,7 +156,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     };
     mintNft(normalizedFormData);
   }, [account?.address, collectionId]);
-  const update = useCallback(async (formValue, propertiesLet, cb) => {
+  const update = useCallback(async (formValue, propertiesLet, description, cb) => {
     const normalizedFormData = {
       address: account?.address,
       metadata: {
@@ -160,7 +165,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
         fileType: formValue.fileType,
         name: formValue.name,
         stub: formValue.stub ? `https://${formValue.stub}` : null,
-        description: formValue.description,
+        description,
         properties: propertiesLet,
       },
       classId: collectionId,
@@ -195,8 +200,9 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       }
       setIsSubmitting(true);
       const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
+      const description = editorState.toHTML();
       if (modifyId) {
-        update(formValue, propertiesLet, {
+        update(formValue, propertiesLet, description, {
           success: () => {
             toast({
               position: 'top',
@@ -221,7 +227,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           },
         });
       } else {
-        mint(formValue, propertiesLet, {
+        mint(formValue, propertiesLet, description, {
           success: () => {
             toast({
               position: 'top',
@@ -416,7 +422,18 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             <EditFormTitle text={t('Create.description')} />
             <EditFromSubTitle text={t('Create.descriptionRule')} />
           </label>
-          <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} />
+          <BraftEditor
+            id="description"
+            style={{
+              border: '1px solid #E5E5E5',
+              height: '300px',
+            }}
+            excludeControls={excludeControls}
+            defaultValue={formik.values.description}
+            value={editorState}
+            onChange={handleChange}
+          />
+          {/* <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} /> */}
           {formik.errors.description && formik.touched.description ? (
             <div style={{ color: 'red' }}>{formik.errors.description}</div>
           ) : null}

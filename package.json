@@ -28,6 +28,7 @@
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
     "bn.js": "^5.2.0",
+    "braft-editor": "^2.3.9",
     "cos-js-sdk-v5": "^1.2.20",
     "cropperjs": "^1.5.12",
     "date": "^1.0.2",

@@ -70,9 +70,9 @@ interface Props {
       category: []
     }
   },
-  collectionsData:{
-    collection:{
-      metadata:{
+  collectionsData: {
+    collection: {
+      metadata: {
         name: string,
         id: string,
         description: string,
@@ -153,7 +153,7 @@ const DetailLeft: FC<Props> = (({
                   color="#3D00FF"
                 >
                   <Image
-                  // cursor="pointer"
+                    // cursor="pointer"
                     maxWidth="520px"
                     objectFit="contain"
                     height="auto"
@@ -334,15 +334,15 @@ const DetailLeft: FC<Props> = (({
                   </Text>
                 </Text>
               </Flex>
-              <Text
-                fontSize="14px"
-                fontFamily="TTHoves-Light, TTHoves"
-                fontWeight="300"
-                color="#000000"
+              {/* <Text
                 lineHeight="22px"
               >
                 <ReactMarkdown children={`${nftData?.nftInfo?.metadata.description}`} remarkPlugins={[remarkGfm]} />
-              </Text>
+              </Text> */}
+              <Box
+                className="braft-output-content"
+                dangerouslySetInnerHTML={{ __html: nftData?.nftInfo?.metadata.description }}
+              />
             </AccordionPanel>
           </AccordionItem>
           {nftData?.nftInfo?.metadata?.properties?.length
