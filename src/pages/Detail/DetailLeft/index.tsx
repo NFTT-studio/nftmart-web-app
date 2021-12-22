@@ -334,15 +334,19 @@ const DetailLeft: FC<Props> = (({
                   </Text>
                 </Text>
               </Flex>
-              {/* <Text
+              <Text
+                fontSize="14px"
+                fontFamily="TTHoves-Light, TTHoves"
+                fontWeight="300"
+                color="#000000"
                 lineHeight="22px"
               >
                 <ReactMarkdown children={`${nftData?.nftInfo?.metadata.description}`} remarkPlugins={[remarkGfm]} />
-              </Text> */}
-              <Box
+              </Text>
+              {/* <Box
                 className="braft-output-content"
                 dangerouslySetInnerHTML={{ __html: nftData?.nftInfo?.metadata.description }}
-              />
+              /> */}
             </AccordionPanel>
           </AccordionItem>
           {nftData?.nftInfo?.metadata?.properties?.length

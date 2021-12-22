@@ -187,6 +187,13 @@ const obj = {
     '.DraftEditor-editorContainer': {
       height: 'auto !important',
     },
+    '.editor-statusbar': {
+      display: 'none',
+    },
+    '.EasyMDEContainer .CodeMirror-scroll': {
+      minHeight: '100px !important',
+      width: '100%',
+    },
   }),
 };
 

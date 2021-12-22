@@ -10,8 +10,8 @@ import {
   useHistory, RouteComponentProps, Link as RouterLink,
 } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import BraftEditor from 'braft-editor';
-import 'braft-editor/dist/index.css';
+import SimpleMDE from 'react-simplemde-editor';
+import 'easymde/dist/easymde.min.css';
 
 import * as Yup from 'yup';
 import {
@@ -89,6 +89,22 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const [preview, setIsPreview] = useState(false);
   const [royaltiesSl, setroyaltiesSl] = useState(false);
   const excludeControls = ['media'];
+  const title2 = {
+    name: 'title2',
+    keyCommand: 'title2',
+    icon: (
+      <svg width="12" height="12" viewBox="0 0 512 512">
+        <path fill="currentColor" d="M496 80V48c0-8.837-7.163-16-16-16H320c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h37.621v128H154.379V96H192c8.837 0 16-7.163 16-16V48c0-8.837-7.163-16-16-16H32c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h37.275v320H32c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h160c8.837 0 16-7.163 16-16v-32c0-8.837-7.163-16-16-16h-37.621V288H357.62v128H320c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h160c8.837 0 16-7.163 16-16v-32c0-8.837-7.163-16-16-16h-37.275V96H480c8.837 0 16-7.163 16-16z" />
+      </svg>
+    ),
+    execute: (editor, selection, position) => {
+      const value = selection ? `## ${selection}` : '## ';
+      editor.replaceSelection(value);
+      position.ch = selection ? position.ch : position.ch + 3;
+      editor.setCursor(position.line, position.ch);
+      editor.focus();
+    },
+  };
   const onCloseModal = () => {
     setIsShowModal(false);
     history.push('/');
@@ -100,7 +116,10 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   }, [account, whiteList.length !== 0]);
   const { data: collectionsData } = useCollectionsSinger(collectionId);
   const { data: nftData, isLoading: nftDataIsLoading, refetch: refetchNftData } = useNft(modifyId);
-  const [editorState, handleChange] = useState(BraftEditor.createEditorState(nftData?.nftInfo?.metadata?.description));
+  const [markdown, setMarkdown] = useState(nftData?.nftInfo?.metadata?.description);
+  const onChange = useCallback((value: string) => {
+    setMarkdown(value);
+  }, []);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateCrop, setStateCrop] = useState(false);
 
@@ -200,7 +219,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       }
       setIsSubmitting(true);
       const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
-      const description = editorState.toHTML();
+      const description = markdown;
       if (modifyId) {
         update(formValue, propertiesLet, description, {
           success: () => {
@@ -422,7 +441,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             <EditFormTitle text={t('Create.description')} />
             <EditFromSubTitle text={t('Create.descriptionRule')} />
           </label>
-          <BraftEditor
+          {/* <BraftEditor
             id="description"
             style={{
               border: '1px solid #E5E5E5',
@@ -432,7 +451,8 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             defaultValue={formik.values.description}
             value={editorState}
             onChange={handleChange}
-          />
+          /> */}
+          <SimpleMDE value={markdown} onChange={onChange} />
           {/* <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} /> */}
           {formik.errors.description && formik.touched.description ? (
             <div style={{ color: 'red' }}>{formik.errors.description}</div>
