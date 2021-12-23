@@ -196,6 +196,7 @@ const obj = {
     },
     '.EasyMDEContainer .CodeMirror h1, h2, h3, h4, h5, h6': {
       fontSize: 'revert',
+      fontWeight: 'revert',
     },
     '.EasyMDEContainer .CodeMirror a': {
       color: 'blue',
