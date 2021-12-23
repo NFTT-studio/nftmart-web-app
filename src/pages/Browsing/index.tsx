@@ -239,9 +239,9 @@ const Browsing = () => {
               fontWeight="400"
               color="#999999"
             >
-              {nftsData?.pages[0].pageInfo.totalNum || 0}
+              {/* {nftsData?.pages[0].pageInfo.totalNum || 0}
               {' '}
-              {t('results')}
+              {t('results')} */}
             </Text>
             <SortBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
           </Flex>

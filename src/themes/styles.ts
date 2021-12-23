@@ -1,5 +1,3 @@
-import { none } from 'ramda';
-
 const obj = {
   global: () => ({
     // font
@@ -180,6 +178,39 @@ const obj = {
     '.container': {
       width: '100% !important',
       maxWidth: '100% !important',
+    },
+    '.public-DraftEditor-content': {
+      height: 'auto !important',
+    },
+    '.DraftEditor-editorContainer': {
+      height: 'auto !important',
+    },
+    '.editor-statusbar': {
+      display: 'none',
+    },
+    '.EasyMDEContainer .CodeMirror-scroll': {
+      minHeight: '100px !important',
+      width: '100%',
+    },
+    '.EasyMDEContainer .CodeMirror h1, h2, h3, h4, h5, h6': {
+      fontSize: 'revert',
+      fontWeight: 'revert',
+    },
+    '.EasyMDEContainer .CodeMirror a': {
+      color: 'blue',
+    },
+    '.cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word)': {
+      background: 'none !important',
+    },
+    '.editor-preview': {
+      padding: '0 20px !important',
+    },
+    '.markdown a': {
+      color: 'blue',
+    },
+    '.markdown h1, h2, h3, h4, h5, h6': {
+      fontSize: 'revert',
+      fontWeight: 'revert',
     },
   }),
 };

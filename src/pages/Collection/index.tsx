@@ -366,17 +366,11 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                     </Text>
                   </Flex>
                 ) : null}
-
-                <Text
-                  mt="10px"
-                  fontSize="15px"
-                  fontFamily="TTHoves-Light, TTHoves"
-                  fontWeight="300"
-                  color="#191A24"
-                  lineHeight="175%"
+                <Box
+                  className="markdown"
                 >
                   <ReactMarkdown children={`${collectionsData?.collection?.metadata.description}`} remarkPlugins={[remarkGfm]} />
-                </Text>
+                </Box>
                 <Flex
                   m="40px 0"
                   width="100%"
@@ -613,7 +607,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
                         p="5px 5px 0 5px"
                         m="0px 0px 20px 0px"
                         minChildWidth="280px"
-                      // gridTemplateColumns="repeat(auto-fit, minmax(280px,320px))"
+                        // gridTemplateColumns="repeat(auto-fit, minmax(280px,320px))"
                         spacing="20px"
                       >
                         {nftsData?.pages.map((page) => page.nfts.map(

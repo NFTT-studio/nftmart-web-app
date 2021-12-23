@@ -18,7 +18,7 @@ import {
 import useCategories from '../../../hooks/reactQuery/useCategories';
 
 interface Props {
-  categories:never[],
+  categories: never[],
   onChange?: () => any;
   setCategories: React.Dispatch<React.SetStateAction<never[]>>,
 }
@@ -44,14 +44,13 @@ const ChangeLanguage: FC<Props> = (({
 
   return (
     <Popover
-      placement="bottom"
       size="sm"
       variant="menu"
       isOpen={opening}
       onOpen={() => setOpening(true)}
       onClose={() => setOpening(false)}
     >
-      <PopoverTrigger>
+      <PopoverTrigger placement="top">
         <Flex
           cursor="pointer"
           display={categories.length === 2 ? 'none' : 'flex'}

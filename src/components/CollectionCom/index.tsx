@@ -3,7 +3,7 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable react/no-children-prop */
 import React, {
-  FC, useCallback, useState, useEffect,
+  FC, useCallback, useState, useEffect, useMemo,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -22,24 +22,21 @@ import {
   Text,
   Box,
   useToast,
-  InputLeftAddon,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
-import { F } from 'ramda';
+import SimpleMDE from 'react-simplemde-editor';
 import Upload from '../Upload';
 import EditFormTitle from '../EditFormTitle';
 import EditFromSubTitle from '../EditFromSubTitle';
 import FormInput from '../FormInput';
-import LeftAddonInput from '../LeftAddonInput';
 import LeftImgonInput from '../LeftImgonInput';
-import FromTextarea from '../FromTextarea';
 import SubmitButton from '../SubmitButton';
 import { createClass } from '../../polkaSDK/api/createClass';
 import { updateClass } from '../../polkaSDK/api/updateClass';
-import { useAppSelector } from '../../hooks/redux';
 import MyModal from '../MyModal';
 import MyToast, { ToastBody } from '../MyToast';
 import SetCategory from './SetCategory';
+import 'easymde/dist/easymde.min.css';
 
 import {
   IconDel,
@@ -53,8 +50,8 @@ import {
 
 export interface Props {
   account: any;
-  whiteList:any;
-  collectionsData:any;
+  whiteList: any;
+  collectionsData: any;
 }
 
 const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) => {
@@ -76,7 +73,31 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
   const [categories, setCategories] = useState([]);
   const [royaltiesSl, setroyaltiesSl] = useState(false);
   const [stateCrop, setStateCrop] = useState(false);
-
+  const autofocusNoSpellcheckerOptions = useMemo(() => ({
+    spellChecker: false,
+    toolbar: [
+      'bold',
+      'italic',
+      'heading',
+      '|',
+      'quote',
+      'code',
+      'table',
+      'horizontal-rule',
+      'unordered-list',
+      'ordered-list',
+      '|',
+      'link',
+      '|',
+      'preview',
+      '|',
+      'guide',
+    ],
+  }), []);
+  const [markdown, setMarkdown] = useState(collectionsData?.collection?.metadata?.description);
+  const onChange = useCallback((value: string) => {
+    setMarkdown(value);
+  }, []);
   const onCloseModal = () => {
     setIsShowModal(false);
     history.push('/');
@@ -98,14 +119,14 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
   const remove = (l) => {
     const index = categories.indexOf(l);
     if (index > -1) {
-      const newcategories:never[] = [];
+      const newcategories: never[] = [];
       const arr = newcategories.concat(categories);
       arr.splice(index, 1);
       setCategories(arr);
     }
   };
 
-  const create = useCallback((formValue, formActions) => {
+  const create = useCallback((formValue, formActions, description) => {
     createClass({
       address: account!.address,
       metadata: {
@@ -114,7 +135,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
         featuredUrl: formValue.featuredUrl,
         name: formValue.name,
         stub: formValue.stub,
-        description: formValue.description,
+        description,
         links: {
           website: formValue.website,
           discord: formValue.discord,
@@ -162,7 +183,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
       },
     });
   }, [account, history, t]);
-  const update = useCallback((formValue, formActions) => {
+  const update = useCallback((formValue, formActions, description) => {
     updateClass({
       classId: Number(status),
       address: account!.address,
@@ -173,7 +194,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
         featuredUrl: formValue.featuredUrl,
         name: formValue.name,
         stub: formValue.stub,
-        description: formValue.description,
+        description,
         links: {
           website: formValue.website,
           discord: formValue.discord,
@@ -264,16 +285,21 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
         return;
       }
       setIsSubmitting(true);
+      const description = markdown;
       if (status) {
-        update(values, formActions);
+        update(values, formActions, description);
       } else {
-        create(values, formActions);
+        create(values, formActions, description);
       }
     },
     validationSchema: schema,
   });
   return (
-    <Flex w="100%" flexDirection="column" alignItems="center">
+    <Flex
+      w="100%"
+      flexDirection="column"
+      alignItems="center"
+    >
       <Flex
         w="100%"
         h="80px"
@@ -389,7 +415,12 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
             <EditFormTitle text={t('Collection.description')} />
             <EditFromSubTitle text={t('Collection.descriptionRule')} />
           </label>
-          <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} />
+          <SimpleMDE
+            options={autofocusNoSpellcheckerOptions}
+            value={markdown}
+            onChange={onChange}
+          />
+          {/* <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} /> */}
           {formik.errors.description && formik.touched.description ? (
             <div style={{ color: 'red' }}>{formik.errors.description}</div>
           ) : null}
@@ -410,7 +441,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
                 h="22px"
                 src={WEBSITE.default}
               />
-)}
+            )}
           />
           <LeftImgonInput
             id="discord"
@@ -424,7 +455,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
                 h="22px"
                 src={DISCORD.default}
               />
-)}
+            )}
           />
           <LeftImgonInput
             id="twitter"
@@ -438,7 +469,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
                 h="22px"
                 src={TWITTER.default}
               />
-)}
+            )}
           />
           <LeftImgonInput
             id="ins"
@@ -452,7 +483,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
                 h="22px"
                 src={IconIns.default}
               />
-)}
+            )}
           />
           <LeftImgonInput
             id="medium"
@@ -466,7 +497,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
                 h="22px"
                 src={medium.default}
               />
-)}
+            )}
           />
           <LeftImgonInput
             id="telegram"
@@ -480,7 +511,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
                 h="22px"
                 src={telegram.default}
               />
-)}
+            )}
           />
           <Flex
             w="100%"
@@ -515,26 +546,20 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
                 lineHeight="16px"
                 flexDirection="column"
               >
-                <Text
+                <Box
                   display="inline-block"
                 >
                   {t('Collection.royaltiesRule')}
-                </Text>
-                <Flex>
-                  <Text
-                    display="inline-block"
-                  >
-                    {t('Collection.royaltiesRuleTwo')}
-                  </Text>
-                  <Text
+                  {t('Collection.royaltiesRuleTwo')}
+                  <Box
                     ml="3px"
                     height="16px"
                     display="inline-block"
                     color="#000000"
                   >
                     20%
-                  </Text>
-                </Flex>
+                  </Box>
+                </Box>
               </Box>
             </Flex>
             <Flex flexDirection="column" justifyContent="space-between" alignItems="flex-end">

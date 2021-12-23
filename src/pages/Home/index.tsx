@@ -142,9 +142,9 @@ const Home = () => {
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
-                  isDisabled={!(pageParam < 3) || !hotNftsData?.nfts.slice(0 + (pageParam + 1) * 4, 4 + (pageParam + 1) * 4).length}
+                  isDisabled={!(pageParam < 4) || !hotNftsData?.nfts.slice(0 + (pageParam + 1) * 4, 4 + (pageParam + 1) * 4).length}
                   onClick={() => {
-                    if (pageParam < 4) {
+                    if (pageParam < 5) {
                       setPageParamr(pageParam + 1);
                     }
                   }}
@@ -257,9 +257,9 @@ const Home = () => {
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
-                  isDisabled={!(pageParamE < 3) || !expensiveNftsData?.nfts.slice(0 + (pageParamE + 1) * 4, 4 + (pageParamE + 1) * 4).length}
+                  isDisabled={!(pageParamE < 4) || !expensiveNftsData?.nfts.slice(0 + (pageParamE + 1) * 4, 4 + (pageParamE + 1) * 4).length}
                   onClick={() => {
-                    if (pageParamE < 4) {
+                    if (pageParamE < 5) {
                       setPageParamE(pageParamE + 1);
                     }
                   }}
@@ -368,9 +368,9 @@ const Home = () => {
                   background="#000000"
                   justifyContent="center"
                   alignItems="center"
-                  isDisabled={!(pageParamC + 1 < 3) || !cheapNftsData?.nfts.slice(0 + (pageParamC + 1) * 4, 4 + (pageParamC + 1) * 4).length}
+                  isDisabled={!(pageParamC < 4) || !cheapNftsData?.nfts.slice(0 + (pageParamC + 1) * 4, 4 + (pageParamC + 1) * 4).length}
                   onClick={() => {
-                    if (pageParamC < 3) {
+                    if (pageParamC < 5) {
                       setPageParamC(pageParamC + 1);
                     }
                   }}

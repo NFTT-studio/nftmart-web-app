@@ -37,8 +37,8 @@ export default async ({
       collectionId: collectionId || undefined,
       status,
       classId,
-      number,
-      page: pageParam,
+      limit: number,
+      offset: 0,
     }, identity),
   });
   return res.data;

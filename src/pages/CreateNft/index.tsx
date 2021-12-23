@@ -4,12 +4,14 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable react/no-children-prop */
 import React, {
-  useState, useEffect, useCallback, ChangeEventHandler,
+  useState, useEffect, useCallback, ChangeEventHandler, useMemo,
 } from 'react';
 import {
   useHistory, RouteComponentProps, Link as RouterLink,
 } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SimpleMDE from 'react-simplemde-editor';
+import 'easymde/dist/easymde.min.css';
 
 import * as Yup from 'yup';
 import {
@@ -72,6 +74,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const status = GetQueryString('collectionId');
   const modifyId = GetQueryString('modifyId');
   const [propertiesArr, setPropertiesArr] = useState([{ key: '', value: '' }]);
+
   const tokenId = modifyId?.split('-')[1];
   function number2PerU16(x) {
     return Math.round((x / 65535.0) * 100);
@@ -85,6 +88,23 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   const [isShowModal, setIsShowModal] = useState(false);
   const [preview, setIsPreview] = useState(false);
   const [royaltiesSl, setroyaltiesSl] = useState(false);
+  const excludeControls = ['media'];
+  const title2 = {
+    name: 'title2',
+    keyCommand: 'title2',
+    icon: (
+      <svg width="12" height="12" viewBox="0 0 512 512">
+        <path fill="currentColor" d="M496 80V48c0-8.837-7.163-16-16-16H320c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h37.621v128H154.379V96H192c8.837 0 16-7.163 16-16V48c0-8.837-7.163-16-16-16H32c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h37.275v320H32c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h160c8.837 0 16-7.163 16-16v-32c0-8.837-7.163-16-16-16h-37.621V288H357.62v128H320c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h160c8.837 0 16-7.163 16-16v-32c0-8.837-7.163-16-16-16h-37.275V96H480c8.837 0 16-7.163 16-16z" />
+      </svg>
+    ),
+    execute: (editor, selection, position) => {
+      const value = selection ? `## ${selection}` : '## ';
+      editor.replaceSelection(value);
+      position.ch = selection ? position.ch : position.ch + 3;
+      editor.setCursor(position.line, position.ch);
+      editor.focus();
+    },
+  };
   const onCloseModal = () => {
     setIsShowModal(false);
     history.push('/');
@@ -96,6 +116,31 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   }, [account, whiteList.length !== 0]);
   const { data: collectionsData } = useCollectionsSinger(collectionId);
   const { data: nftData, isLoading: nftDataIsLoading, refetch: refetchNftData } = useNft(modifyId);
+  const autofocusNoSpellcheckerOptions = useMemo(() => ({
+    spellChecker: false,
+    toolbar: [
+      'bold',
+      'italic',
+      'heading',
+      '|',
+      'quote',
+      'code',
+      'table',
+      'horizontal-rule',
+      'unordered-list',
+      'ordered-list',
+      '|',
+      'link',
+      '|',
+      'preview',
+      '|',
+      'guide',
+    ],
+  }), []);
+  const [markdown, setMarkdown] = useState(nftData?.nftInfo?.metadata?.description);
+  const onChange = useCallback((value: string) => {
+    setMarkdown(value);
+  }, []);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateCrop, setStateCrop] = useState(false);
 
@@ -132,7 +177,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     setPropertiesArr(propertiesArr);
   };
 
-  const mint = useCallback(async (formValue, propertiesLet, cb) => {
+  const mint = useCallback(async (formValue, propertiesLet, description, cb) => {
     const normalizedFormData = {
       address: account?.address,
       metadata: {
@@ -141,7 +186,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
         fileType: formValue.fileType,
         name: formValue.name,
         stub: formValue.stub ? `https://${formValue.stub}` : null,
-        description: formValue.description,
+        description,
         properties: propertiesLet,
       },
       classId: collectionId,
@@ -151,7 +196,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
     };
     mintNft(normalizedFormData);
   }, [account?.address, collectionId]);
-  const update = useCallback(async (formValue, propertiesLet, cb) => {
+  const update = useCallback(async (formValue, propertiesLet, description, cb) => {
     const normalizedFormData = {
       address: account?.address,
       metadata: {
@@ -160,7 +205,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
         fileType: formValue.fileType,
         name: formValue.name,
         stub: formValue.stub ? `https://${formValue.stub}` : null,
-        description: formValue.description,
+        description,
         properties: propertiesLet,
       },
       classId: collectionId,
@@ -195,8 +240,9 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
       }
       setIsSubmitting(true);
       const propertiesLet = propertiesArr.filter((item) => item.key !== '' && item.value !== '');
+      const description = markdown;
       if (modifyId) {
-        update(formValue, propertiesLet, {
+        update(formValue, propertiesLet, description, {
           success: () => {
             toast({
               position: 'top',
@@ -221,7 +267,7 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
           },
         });
       } else {
-        mint(formValue, propertiesLet, {
+        mint(formValue, propertiesLet, description, {
           success: () => {
             toast({
               position: 'top',
@@ -416,7 +462,12 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             <EditFormTitle text={t('Create.description')} />
             <EditFromSubTitle text={t('Create.descriptionRule')} />
           </label>
-          <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} />
+          <SimpleMDE
+            value={markdown}
+            onChange={onChange}
+            options={autofocusNoSpellcheckerOptions}
+          />
+          {/* <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} /> */}
           {formik.errors.description && formik.touched.description ? (
             <div style={{ color: 'red' }}>{formik.errors.description}</div>
           ) : null}

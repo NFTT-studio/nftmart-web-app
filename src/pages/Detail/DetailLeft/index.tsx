@@ -15,7 +15,6 @@ import {
   AccordionIcon,
   AccordionButton,
   Link,
-  AspectRatio,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
@@ -38,7 +37,6 @@ import {
   medium,
   telegram,
   IconProperties,
-  Historyempty,
 } from '../../../assets/images';
 import {
   PINATA_SERVER,
@@ -70,9 +68,9 @@ interface Props {
       category: []
     }
   },
-  collectionsData:{
-    collection:{
-      metadata:{
+  collectionsData: {
+    collection: {
+      metadata: {
         name: string,
         id: string,
         description: string,
@@ -89,9 +87,6 @@ const DetailLeft: FC<Props> = (({
   nftData,
   collectionsData,
 }) => {
-  function number2PerU16(x) {
-    return (x / 65535.0) * 100;
-  }
   const pictureType = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
   const videoType = ['mp4', 'webm'];
   const audioType = ['mp3', 'wav', 'ogg'];
@@ -153,7 +148,7 @@ const DetailLeft: FC<Props> = (({
                   color="#3D00FF"
                 >
                   <Image
-                  // cursor="pointer"
+                    // cursor="pointer"
                     maxWidth="520px"
                     objectFit="contain"
                     height="auto"
@@ -334,15 +329,15 @@ const DetailLeft: FC<Props> = (({
                   </Text>
                 </Text>
               </Flex>
-              <Text
-                fontSize="14px"
-                fontFamily="TTHoves-Light, TTHoves"
-                fontWeight="300"
-                color="#000000"
-                lineHeight="22px"
+              <Box
+                className="markdown"
               >
                 <ReactMarkdown children={`${nftData?.nftInfo?.metadata.description}`} remarkPlugins={[remarkGfm]} />
-              </Text>
+              </Box>
+              {/* <Box
+                className="braft-output-content"
+                dangerouslySetInnerHTML={{ __html: nftData?.nftInfo?.metadata.description }}
+              /> */}
             </AccordionPanel>
           </AccordionItem>
           {nftData?.nftInfo?.metadata?.properties?.length

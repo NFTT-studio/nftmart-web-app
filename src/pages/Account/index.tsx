@@ -56,7 +56,7 @@ import Headers from './Header';
 import Sort from '../../constants/Sort';
 import useUser from '../../hooks/reactQuery/useUser';
 
-const Account = ({ match }: RouteComponentProps<{ address: string, username:string}>) => {
+const Account = ({ match }: RouteComponentProps<{ address: string, username: string }>) => {
   const history = useHistory();
   const { t } = useTranslation();
   const offersMadeButton = [
@@ -69,7 +69,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
       title: t('Account.offersReceived'),
     },
   ];
-  function historyUrl(idTab:string, str:string) {
+  function historyUrl(idTab: string, str: string) {
     if (idTab === '0') {
       const url = window.location.pathname.replace(str, '/owned');
       history.push(encodeURI(url));
@@ -96,7 +96,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
     }
   }
 
-  function historyTabUrl(idTab:string) {
+  function historyTabUrl(idTab: string) {
     if (window.location.href.indexOf('owned') > -1) {
       historyUrl(idTab, '/owned');
       return;
@@ -156,7 +156,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
       categoryId: selectedCategoryId,
       classId: selectedCollection,
       status: selectedStatusArr,
-      sortBy: selectedSort,
     },
   );
   const { data: nftsDataCreate, fetchNextPage: fetchNextPageNftsDataCreate, refetch: fetchNftsDataCreate } = useNftsPersonal(
@@ -165,7 +164,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
       categoryId: selectedCategoryId,
       collectionId: selectedCollection,
       status: selectedStatusArr,
-      sortBy: selectedSort,
     },
   );
   const { data: nftsDataCollecte, fetchNextPage: fetchNextPageNftsDataCollecte, refetch: fetchNftsDataCollecte } = useNftsPersonal(
@@ -174,7 +172,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
       categoryId: selectedCategoryId,
       collectionId: selectedCollection,
       status: selectedStatusArr,
-      sortBy: selectedSort,
     },
   );
 
@@ -597,7 +594,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
                           dataLength={Offersend?.pages.length * DEFAULT_PAGE_LIMIT}
                           next={fetchNextPageOffersend}
                           hasMore={Offersend?.pages.length
-                                * DEFAULT_PAGE_LIMIT < Offersend?.pages[0].pageInfo.totalNum}
+                            * DEFAULT_PAGE_LIMIT < Offersend?.pages[0].pageInfo.totalNum}
                           loader={<h4>Loading...</h4>}
                           initialScrollY={1}
                         >
@@ -644,7 +641,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username:stri
                           dataLength={Offerreceive?.pages.length * DEFAULT_PAGE_LIMIT}
                           next={fetchNextPageOfferreceive}
                           hasMore={Offerreceive?.pages.length
-                                * DEFAULT_PAGE_LIMIT < Offerreceive?.pages[0].pageInfo.totalNum}
+                            * DEFAULT_PAGE_LIMIT < Offerreceive?.pages[0].pageInfo.totalNum}
                           loader={<h4>Loading...</h4>}
                           initialScrollY={1}
                         >
