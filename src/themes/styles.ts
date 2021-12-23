@@ -194,6 +194,15 @@ const obj = {
       minHeight: '100px !important',
       width: '100%',
     },
+    '.EasyMDEContainer .CodeMirror h1, h2, h3, h4, h5, h6': {
+      fontSize: 'revert',
+    },
+    '.EasyMDEContainer .CodeMirror a': {
+      color: 'blue',
+    },
+    '.cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word)': {
+      background: 'none !important',
+    },
   }),
 };
 
