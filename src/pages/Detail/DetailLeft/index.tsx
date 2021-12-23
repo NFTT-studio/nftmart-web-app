@@ -15,7 +15,6 @@ import {
   AccordionIcon,
   AccordionButton,
   Link,
-  AspectRatio,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
@@ -38,7 +37,6 @@ import {
   medium,
   telegram,
   IconProperties,
-  Historyempty,
 } from '../../../assets/images';
 import {
   PINATA_SERVER,
@@ -89,9 +87,6 @@ const DetailLeft: FC<Props> = (({
   nftData,
   collectionsData,
 }) => {
-  function number2PerU16(x) {
-    return (x / 65535.0) * 100;
-  }
   const pictureType = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
   const videoType = ['mp4', 'webm'];
   const audioType = ['mp3', 'wav', 'ogg'];
@@ -336,7 +331,6 @@ const DetailLeft: FC<Props> = (({
               </Flex>
               <Box
                 className="markdown"
-                padding="0 20px !important"
               >
                 <ReactMarkdown children={`${nftData?.nftInfo?.metadata.description}`} remarkPlugins={[remarkGfm]} />
               </Box>

@@ -4,7 +4,7 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable react/no-children-prop */
 import React, {
-  useState, useEffect, useCallback, ChangeEventHandler,
+  useState, useEffect, useCallback, ChangeEventHandler, useMemo,
 } from 'react';
 import {
   useHistory, RouteComponentProps, Link as RouterLink,
@@ -116,6 +116,27 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
   }, [account, whiteList.length !== 0]);
   const { data: collectionsData } = useCollectionsSinger(collectionId);
   const { data: nftData, isLoading: nftDataIsLoading, refetch: refetchNftData } = useNft(modifyId);
+  const autofocusNoSpellcheckerOptions = useMemo(() => ({
+    spellChecker: false,
+    toolbar: [
+      'bold',
+      'italic',
+      'heading',
+      '|',
+      'quote',
+      'code',
+      'table',
+      'horizontal-rule',
+      'unordered-list',
+      'ordered-list',
+      '|',
+      'link',
+      '|',
+      'preview',
+      '|',
+      'guide',
+    ],
+  }), []);
   const [markdown, setMarkdown] = useState(nftData?.nftInfo?.metadata?.description);
   const onChange = useCallback((value: string) => {
     setMarkdown(value);
@@ -441,42 +462,10 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             <EditFormTitle text={t('Create.description')} />
             <EditFromSubTitle text={t('Create.descriptionRule')} />
           </label>
-          {/* <BraftEditor
-            id="description"
-            style={{
-              border: '1px solid #E5E5E5',
-              height: '300px',
-            }}
-            excludeControls={excludeControls}
-            defaultValue={formik.values.description}
-            value={editorState}
-            onChange={handleChange}
-          /> */}
           <SimpleMDE
-            options={{
-              spellChecker: false,
-              toolbar: [
-                'bold',
-                'italic',
-                'heading',
-                '|',
-                'quote',
-                'code',
-                'table',
-                'horizontal-rule',
-                'unordered-list',
-                'ordered-list',
-                '|',
-                'link',
-                'image',
-                '|',
-                'preview',
-                '|',
-                'guide',
-              ],
-            }}
             value={markdown}
             onChange={onChange}
+            options={autofocusNoSpellcheckerOptions}
           />
           {/* <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} /> */}
           {formik.errors.description && formik.touched.description ? (

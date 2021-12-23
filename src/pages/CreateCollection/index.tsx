@@ -41,7 +41,6 @@ import CollectionCom from '../../components/CollectionCom/index';
 import useCollectionsSinger from '../../hooks/reactQuery/useCollectionsSinger';
 
 import {
-  DEFAULT_PAGE_LIMIT,
   PINATA_SERVER,
 } from '../../constants';
 
@@ -135,7 +134,7 @@ const Account = () => {
 
   return (
     <>
-      { !account?.address || whiteList.length === 0 || userDataLoading ? (
+      {!account?.address || whiteList.length === 0 || userDataLoading ? (
         <Center width="100%" height="100vh">
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         </Center>
@@ -252,7 +251,13 @@ const Account = () => {
                 ))}
               </Flex>
             </Flex>
-            <Flex maxWidth="1015px" w="100%" direction="column">
+            <Flex
+              maxWidth="1015px"
+              w="100%"
+              height="auto"
+              direction="column"
+              boxSizing="border-box"
+            >
               {!account && !whiteList
                 ? (
                   <Center width="100%" height="500px">

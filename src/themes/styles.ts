@@ -1,5 +1,3 @@
-import { none } from 'ramda';
-
 const obj = {
   global: () => ({
     // font
