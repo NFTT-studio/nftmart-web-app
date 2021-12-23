@@ -452,7 +452,32 @@ const CreateNft = ({ match }: RouteComponentProps<{ collectionId: string }>) => 
             value={editorState}
             onChange={handleChange}
           /> */}
-          <SimpleMDE value={markdown} onChange={onChange} />
+          <SimpleMDE
+            options={{
+              spellChecker: false,
+              toolbar: [
+                'bold',
+                'italic',
+                'heading',
+                '|',
+                'quote',
+                'code',
+                'table',
+                'horizontal-rule',
+                'unordered-list',
+                'ordered-list',
+                '|',
+                'link',
+                'image',
+                '|',
+                'preview',
+                '|',
+                'guide',
+              ],
+            }}
+            value={markdown}
+            onChange={onChange}
+          />
           {/* <FromTextarea id="description" onChange={formik.handleChange} value={formik.values.description} /> */}
           {formik.errors.description && formik.touched.description ? (
             <div style={{ color: 'red' }}>{formik.errors.description}</div>

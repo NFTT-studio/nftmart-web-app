@@ -204,6 +204,16 @@ const obj = {
     '.cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word)': {
       background: 'none !important',
     },
+    '.editor-preview': {
+      padding: '0 20px !important',
+    },
+    '.markdown a': {
+      color: 'blue',
+    },
+    '.markdown h1, h2, h3, h4, h5, h6': {
+      fontSize: 'revert',
+      fontWeight: 'revert',
+    },
   }),
 };
 
