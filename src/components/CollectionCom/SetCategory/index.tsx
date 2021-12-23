@@ -44,14 +44,13 @@ const ChangeLanguage: FC<Props> = (({
 
   return (
     <Popover
-      placement="top"
       size="sm"
       variant="menu"
       isOpen={opening}
       onOpen={() => setOpening(true)}
       onClose={() => setOpening(false)}
     >
-      <PopoverTrigger>
+      <PopoverTrigger placement="top">
         <Flex
           cursor="pointer"
           display={categories.length === 2 ? 'none' : 'flex'}
