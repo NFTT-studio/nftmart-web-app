@@ -89,7 +89,7 @@ const Banner = ((
       h: '205px',
     },
     {
-      id: '3',
+      id: '4',
       icon: banner04.default,
       url: '/items/58-1-That%20Sea%202%2F60',
       w: '205px',

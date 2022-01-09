@@ -14,6 +14,7 @@ import {
   Link,
   Image,
   useClipboard,
+  Box,
 } from '@chakra-ui/react';
 import Identicon from '@polkadot/react-identicon';
 
@@ -127,7 +128,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = '' }) => {
             overflow="hidden"
             textOverflow="ellipsis"
           >
-            {userData?.name || formatAddress(address) }
+            {userData?.name || formatAddress(address)}
           </Text>
           {opening ? (
             <Image
@@ -180,14 +181,14 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = '' }) => {
                   {t('common.balance')}
                 </Text>
               </Flex>
-              <Text
+              <Box
                 fontSize="14px"
                 fontFamily="PingFangSC-Regular, PingFang SC"
                 fontWeight="400"
                 color="#191A24"
               >
                 {userData ? renderNmtNumberText(userData?.balance?.total) : 0}
-              </Text>
+              </Box>
             </Flex>
             <Text
               width="47px"
@@ -224,14 +225,14 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = '' }) => {
                       {t('Account.transferrable')}
                     </Text>
                   </Flex>
-                  <Text
+                  <Box
                     fontSize="14px"
                     fontFamily="PingFangSC-Regular, PingFang SC"
                     fontWeight="400"
                     color="#999999"
                   >
                     {userData && renderNmtNumberText(userData?.balance?.transferrable)}
-                  </Text>
+                  </Box>
                 </Flex>
                 <Text
                   width="47px"
@@ -267,14 +268,14 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = '' }) => {
                       {t('Account.reserved')}
                     </Text>
                   </Flex>
-                  <Text
+                  <Box
                     fontSize="14px"
                     fontFamily="PingFangSC-Regular, PingFang SC"
                     fontWeight="400"
                     color="#999999"
                   >
                     {userData && renderNmtNumberText(userData?.balance?.reserved)}
-                  </Text>
+                  </Box>
                 </Flex>
                 <Text
                   width="47px"
@@ -311,14 +312,14 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = '' }) => {
                       {t('Account.locked')}
                     </Text>
                   </Flex>
-                  <Text
+                  <Box
                     fontSize="14px"
                     fontFamily="PingFangSC-Regular, PingFang SC"
                     fontWeight="400"
                     color="#999999"
                   >
                     {userData && renderNmtNumberText(userData?.balance?.locked)}
-                  </Text>
+                  </Box>
                 </Flex>
                 <Text
                   width="47px"
@@ -354,14 +355,14 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = '' }) => {
                       {t('Account.bonded')}
                     </Text>
                   </Flex>
-                  <Text
+                  <Box
                     fontSize="14px"
                     fontFamily="PingFangSC-Regular, PingFang SC"
                     fontWeight="400"
                     color="#999999"
                   >
                     {userData && renderNmtNumberText(userData?.balance?.bonded)}
-                  </Text>
+                  </Box>
                 </Flex>
                 <Text
                   width="47px"

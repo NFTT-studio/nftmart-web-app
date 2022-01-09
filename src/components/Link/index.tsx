@@ -2,7 +2,8 @@
 /* eslint-disable max-len */
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import {
-  Text, Link, HTMLChakraProps, LinkProps,
+  Link, HTMLChakraProps, LinkProps,
+  Box,
 } from '@chakra-ui/react';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -37,10 +38,13 @@ const NLink: FC<NLinkProps> = (props) => {
 
   return (
     <>
-      <Text
-        fontSize={16}
+      <Box
+        fontSize="1rem"
         position="relative"
         {...restStyles}
+        minWidth={title === 'common.nav.buynmt' ? '71px' : ''}
+        display="flex"
+        justifyContent="center"
       >
         {title === 'common.nav.buynmt'
           ? (
@@ -60,12 +64,14 @@ const NLink: FC<NLinkProps> = (props) => {
                 textDecoration: 'none',
               }}
               {...linkProps}
+              textAlign="center"
             >
               {t(title)}
             </Link>
           )
           : (
             <Link
+              textAlign="center"
               outline="none"
               as={RouterLink}
               key={title}
@@ -86,7 +92,7 @@ const NLink: FC<NLinkProps> = (props) => {
             </Link>
           )}
 
-      </Text>
+      </Box>
 
     </>
   );

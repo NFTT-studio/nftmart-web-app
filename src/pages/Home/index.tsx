@@ -5,18 +5,16 @@ import { Link as RouterLink } from 'react-router-dom';
 import {
   Spinner,
   Image,
-  Stack,
   Flex,
   Text,
   Center,
-  Box,
   Button,
   SimpleGrid,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import SwiperCore, {
-  Scrollbar,
-} from 'swiper';
+// import SwiperCore, {
+//   Scrollbar,
+// } from 'swiper';
 import CategorySelector from '../../components/CategorySelector';
 import OrderCard from '../../components/OrderCard';
 import { useCheapNfts, useExpensiveNfts, useHotNfts } from '../../hooks/reactQuery/useNfts';
@@ -31,10 +29,10 @@ import {
   IconRightw,
 } from '../../assets/images';
 
-import 'swiper/swiper.min.css';
-import 'swiper/components/scrollbar/scrollbar.min.css';
+// import 'swiper/swiper.min.css';
+// import 'swiper/components/scrollbar/scrollbar.min.css';
 
-SwiperCore.use([Scrollbar]);
+// SwiperCore.use([Scrollbar]);
 
 const Home = () => {
   const { t } = useTranslation();
@@ -46,18 +44,18 @@ const Home = () => {
 
   const {
     data: hotNftsData, isLoading: hotNftsIsLoading,
-    refetch: refetchHot,
+    // refetch: refetchHot,
   } = useHotNfts(selectId);
   const {
     data: expensiveNftsData, isLoading: expensiveNftsIsLoading,
-    refetch: refetchExpensive,
+    // refetch: refetchExpensive,
   } = useExpensiveNfts(selectId);
   const {
     data: cheapNftsData, isLoading: cheapNftsIsLoading,
-    refetch: refetchCheap,
+    // refetch: refetchCheap,
   } = useCheapNfts(selectId);
 
-  const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
+  const { data: categoriesData } = useCategories();
   const [remainingTime, setRemainingTime] = useState(0);
 
   useEffect(() => {
@@ -168,7 +166,11 @@ const Home = () => {
                 ? (
                   <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
                     {hotNftsData.nfts.slice(0 + pageParam * 4, 4 + pageParam * 4).map((order) => (
-                      <OrderCard nft={order} remainingTime={remainingTime} />
+                      <Flex
+                        key={order?.metadata.name}
+                      >
+                        <OrderCard nft={order} remainingTime={remainingTime} />
+                      </Flex>
                     ))}
                   </SimpleGrid>
                 )
@@ -283,7 +285,11 @@ const Home = () => {
                 ? (
                   <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
                     {expensiveNftsData.nfts.slice(0 + pageParamE * 4, 4 + pageParamE * 4).map((order) => (
-                      <OrderCard nft={order} remainingTime={remainingTime} />
+                      <Flex
+                        key={order?.metadata.name}
+                      >
+                        <OrderCard nft={order} remainingTime={remainingTime} />
+                      </Flex>
                     ))}
                   </SimpleGrid>
                 )
@@ -391,7 +397,11 @@ const Home = () => {
                 ? (
                   <SimpleGrid columns={[1, 2, 2, 3, 4]} direction="row" spacing="26px">
                     {cheapNftsData.nfts.slice(0 + pageParamC * 4, 4 + pageParamC * 4).map((order) => (
-                      <OrderCard nft={order} remainingTime={remainingTime} />
+                      <Flex
+                        key={order?.metadata.name}
+                      >
+                        <OrderCard nft={order} remainingTime={remainingTime} />
+                      </Flex>
                     ))}
                   </SimpleGrid>
                 )

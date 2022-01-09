@@ -5,6 +5,7 @@ import {
   Flex,
   Image,
   Text,
+  Box,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { renderNmtNumberText } from '../../../components/Balance';
@@ -16,7 +17,7 @@ import {
 
 interface Props {
   offers?: []
-  hide:boolean
+  hide: boolean
 }
 const OfferItem: FC<Props> = (({ offers, hide }) => {
   const formatAddress = (addr: string) => (addr ? `${addr.slice(0, 4)}...${addr.slice(-4)}` : null);
@@ -27,7 +28,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
     setRemainingTime(res);
   });
 
-  const timeBlock = (index:numer) => {
+  const timeBlock = (index: numer) => {
     const times = (index - remainingTime) * 6;
 
     let theTime = parseInt(times.toString(), 10);
@@ -58,10 +59,9 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
     <Link
       as={RouterLink}
       to={`/items/${offers?.nft_id}-${offers?.nft?.name}`}
-
+      key={offers?.nft_id}
     >
       <Flex
-        key={offers?.nft_id}
         p="0 20px"
         width="100%"
         height="81px"
@@ -117,7 +117,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
             </Text>
           </Flex>
         </Flex>
-        <Text
+        <Box
           minWidth="80px"
           display="flex"
           flexDirection="row"
@@ -139,7 +139,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
           >
             NMT
           </Text>
-        </Text>
+        </Box>
         <Text
           width="60px"
           fontSize="14px"
@@ -159,7 +159,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
             color="#000000"
             lineHeight="20px"
           >
-            {offers?.user?.name ? offers?.user?.name : formatAddress(offers?.user?.id) }
+            {offers?.user?.name ? offers?.user?.name : formatAddress(offers?.user?.id)}
           </Text>
         ) : ''}
         {offers?.deadline - remainingTime > 0 || offers?.deadline - remainingTime > 0

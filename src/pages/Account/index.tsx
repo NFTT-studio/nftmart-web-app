@@ -457,39 +457,24 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
           {selectTabId === 0 ? (
             <NftItem
               nftsData={nftsData}
-              statusArr={statusArr}
-              selectedStatusArr={selectedStatusArr}
-              handleSelectStatus={handleSelectStatus}
               nftsIsLoading={nftsIsLoading}
               fetchNextPageNftsData={fetchNextPageNftsData}
-              selectedSort={selectedSort}
-              setSelectedSort={setSelectedSort}
               remainingTime={remainingTime}
             />
           ) : ''}
           {selectTabId === 1 ? (
             <NftItem
               nftsData={nftsDataCreate}
-              statusArr={statusArr}
-              selectedStatusArr={selectedStatusArr}
-              handleSelectStatus={handleSelectStatus}
               nftsIsLoading={nftsIsLoading}
               fetchNextPageNftsData={fetchNextPageNftsDataCreate}
-              selectedSort={selectedSort}
-              setSelectedSort={setSelectedSort}
               remainingTime={remainingTime}
             />
           ) : ''}
           {selectTabId === 2 ? (
             <NftItem
               nftsData={nftsDataCollecte}
-              statusArr={statusArr}
-              selectedStatusArr={selectedStatusArr}
-              handleSelectStatus={handleSelectStatus}
               nftsIsLoading={nftsIsLoading}
               fetchNextPageNftsData={fetchNextPageNftsDataCollecte}
-              selectedSort={selectedSort}
-              setSelectedSort={setSelectedSort}
               remainingTime={remainingTime}
             />
           ) : ''}
@@ -599,7 +584,12 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                           initialScrollY={1}
                         >
                           {Offersend?.pages.map((page) => page?.offers?.map((item) => (
-                            <OfferItem offers={item} hide={false} />
+                            <Box
+                              key={item?.nft_id}
+                              width="100%"
+                            >
+                              <OfferItem offers={item} hide={false} />
+                            </Box>
                           )))}
                         </InfiniteScroll>
                       ) : (
@@ -646,7 +636,12 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                           initialScrollY={1}
                         >
                           {Offerreceive?.pages.map((page) => page?.offers?.map((item) => (
-                            <OfferItem offers={item} hide />
+                            <Box
+                              key={item?.nft_id}
+                              width="100%"
+                            >
+                              <OfferItem offers={item} hide />
+                            </Box>
                           )))}
                         </InfiniteScroll>
                       ) : (

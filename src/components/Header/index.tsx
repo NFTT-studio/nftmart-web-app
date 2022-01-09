@@ -11,16 +11,16 @@ import { useWindowScroll } from 'react-use';
 import NavLink from '../Navlink';
 import AccountPopover from '../AccountPopover';
 import ChangeLanguage from '../ChangeLanguage';
-import Network from '../Network';
+// import Network from '../Network';
 
 import {
   LogoSrc,
   LogoWhite,
 } from '../../assets/images';
 import { Z_INDEXES } from '../../constants';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import useWhiteList from '../../hooks/reactQuery/useWhiteList';
-import { setWhiteList } from '../../redux/chainSlice';
+import { useAppSelector } from '../../hooks/redux';
+// import useWhiteList from '../../hooks/reactQuery/useWhiteList';
+// import { setWhiteList } from '../../redux/chainSlice';
 
 export interface HeaderProps {
   sticky?: boolean;

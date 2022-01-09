@@ -50,6 +50,12 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
       requiredWhitelist: false,
     },
     {
+      title: 'common.nav.Artist',
+      path: '/artist',
+      requiredLogin: false,
+      requiredWhitelist: false,
+    },
+    {
       title: 'common.nav.buynmt',
       path: i18n.language === 'zh' ? 'https://www.gate.io/cn/trade/NMT_USDT' : 'https://www.gate.io/en/trade/NMT_USDT',
       requiredLogin: false,
@@ -75,7 +81,9 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
         const routePath = location.pathname + location.search;
         const active = routePath === nav.path;
         return (
-          <Fragment key={nav.title}>
+          <Fragment
+            key={nav.title}
+          >
             <NLink
               border="0"
               outline="none"
@@ -84,8 +92,8 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
               active={active}
               bgSize="cover"
               fontWeight="bold"
-              marginRight="10px"
-              marginLeft="28px"
+              marginRight="2px"
+              marginLeft="20px"
               bordered
             />
             <Box

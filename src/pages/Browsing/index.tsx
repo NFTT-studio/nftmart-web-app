@@ -272,7 +272,11 @@ const Browsing = () => {
                     >
                       {nftsData?.pages.map((page) => page.nfts.map(
                         (nft) => (
-                          <OrderCard nft={nft} remainingTime={remainingTime} />
+                          <Flex
+                            key={nft?.id}
+                          >
+                            <OrderCard nft={nft} remainingTime={remainingTime} />
+                          </Flex>
                         ),
                       ))}
                     </SimpleGrid>

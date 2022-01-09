@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 import React, {
-  FC, useState, MouseEventHandler, ChangeEventHandler,
+  FC, MouseEventHandler,
 } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
@@ -15,9 +15,9 @@ import {
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { InfiniteData } from 'react-query';
-import StatusSelectorRow from '../../../components/StatusSelectorRow';
+// import StatusSelectorRow from '../../../components/StatusSelectorRow';
 import NftCard from '../../../components/NftCard';
-import SortBy from '../../../components/SortBy';
+// import SortBy from '../../../components/SortBy';
 
 import {
   Emptyimg,
@@ -37,25 +37,15 @@ type Nfts = {
 }
 
 interface Props {
-  nftsIsLoading:boolean,
-  statusArr: string[],
-  selectedStatusArr: string[],
-  handleSelectStatus: MouseEventHandler<HTMLButtonElement>,
+  nftsIsLoading: boolean,
   nftsData: InfiniteData<Nfts> | undefined
   fetchNextPageNftsData: any,
-  selectedSort: any,
-  setSelectedSort: any,
-  remainingTime:number
+  remainingTime: number
 }
 const NftItem: FC<Props> = (({
   nftsData,
-  statusArr,
-  selectedStatusArr,
-  handleSelectStatus,
   nftsIsLoading,
   fetchNextPageNftsData,
-  selectedSort,
-  setSelectedSort,
   remainingTime,
 }) => {
   const { t } = useTranslation();
@@ -104,7 +94,14 @@ const NftItem: FC<Props> = (({
                 spacing="20px"
               >
                 {nftsData?.pages.map((page) => page.nfts.map(
-                  (nft) => <NftCard nft={nft} remainingTime={remainingTime} />,
+
+                  (nft) => (
+                    <Flex
+                      key={nft?.id}
+                    >
+                      <NftCard nft={nft} remainingTime={remainingTime} />
+                    </Flex>
+                  ),
                 ))}
               </SimpleGrid>
             </InfiniteScroll>
