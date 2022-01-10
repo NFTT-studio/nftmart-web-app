@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import {
   Flex,
   Image,
@@ -17,6 +17,8 @@ import {
   banner04,
   banner05,
   banner06,
+  banner07,
+  banner08,
   banner09,
   banner10,
   bannerLeft,
@@ -26,19 +28,19 @@ const Banner = ((
 ) => {
   const { t } = useTranslation();
   const bannerImgLeft = [
-    // {
-    //   id: '0',
-    //   icon: banner10.default,
-    //   url: `/items/33-2-${encodeURIComponent('G1 1/1')}`,
-    //   w: '205px',
-    //   h: '205px',
-    // },
+    {
+      id: '0',
+      icon: banner08.default,
+      url: '/items/42-5-Smoker%20%2F%20Illusion%20Collection',
+      w: '205px',
+      h: '205px',
+    },
   ];
   const bannerImgMiddle = [
     {
       id: '0',
       icon: banner09.default,
-      url: '/items/54-2-The%20Face%20of%20Facebook%201%2F1',
+      url: "/items/66-0-let's%20dance",
       w: '410px',
       h: '615px',
     },
@@ -46,52 +48,59 @@ const Banner = ((
   const bannerImgRight = [
     {
       id: '0',
-      icon: banner05.default,
-      url: '/items/79-3-Room%20No.4%3A%20I%20Also%20Want%201%2F1',
+      icon: banner04.default,
+      url: '/items/59-3-Sesame%20the%20Fox-004',
       w: '205px',
-      h: '410px',
+      h: '205px',
     },
     {
       id: '1',
-      icon: banner06.default,
-      url: '/collection/22-Paper%20P',
+      icon: banner07.default,
+      url: '/items/76-5-Cash%20Is%20King',
       w: '205px',
-      h: '215px',
+      h: '205px',
+    },
+    {
+      id: '2',
+      icon: banner06.default,
+      url: '/items/35-3-A%20Thousand%20Li%20of%20Rivers%20and%20Mountains',
+      w: '205px',
+      h: '205px',
     },
   ];
   const bannerBottom = [
     {
       id: '0',
       icon: banner01.default,
-      url: '/items/33-4-Pull%20It%20Out%201%2F1',
+      url: '/items/57-11-Designer%203%2F50',
       w: '205px',
       h: '205px',
     },
     {
       id: '1',
       icon: banner02.default,
-      url: '/items/55-4-Twinborn%201%2F10',
-      w: '205px',
+      url: '/items/34-1-Japanese%20Monsters',
+      w: '410px',
       h: '205px',
     },
     {
       id: '2',
-      icon: banner10.default,
-      url: '/items/64-1-Crater%201%2F1',
+      icon: banner03.default,
+      url: '/items/50-10-No.011%20Fool%20kaiju',
       w: '205px',
       h: '205px',
     },
     {
       id: '3',
-      icon: banner03.default,
-      url: '/items/65-18-White%20House%20and%20Black%20House-The%20Stars%20in%201985%201%2F1',
-      w: '410px',
+      icon: banner10.default,
+      url: '/items/81-1-Dressing',
+      w: '205px',
       h: '205px',
     },
     {
       id: '4',
-      icon: banner04.default,
-      url: '/items/58-1-That%20Sea%202%2F60',
+      icon: banner05.default,
+      url: '/items/39-0-Lotus%201%2F1',
       w: '205px',
       h: '205px',
     },
