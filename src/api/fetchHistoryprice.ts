@@ -1,6 +1,5 @@
 import { identity, pickBy } from 'lodash';
 import axiosClient from '../apiClient/axiosClient';
-import { DEFAULT_PAGE_LIMIT } from '../constants';
 
 export type fetchHistorypriceParams = {
   id?: string,

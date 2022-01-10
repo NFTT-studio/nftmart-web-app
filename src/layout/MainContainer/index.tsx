@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Center, Flex, Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import Helmet from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import { scrollTo } from '../../utils/ui';

@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 import React, {
-  useState, MouseEventHandler, useEffect, ChangeEventHandler,
+  useState, MouseEventHandler, useEffect,
 } from 'react';
 import Identicon from '@polkadot/react-identicon';
 import { useTranslation } from 'react-i18next';
 import {
-  Link as RouterLink, RouteComponentProps, useLocation, useHistory,
+  Link as RouterLink, RouteComponentProps, useHistory,
 } from 'react-router-dom';
 import {
   Flex,
@@ -19,7 +19,6 @@ import {
   Center,
   Spinner,
 } from '@chakra-ui/react';
-import { union, without } from 'lodash';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MainContainer from '../../layout/MainContainer';
 import useCollections from '../../hooks/reactQuery/useCollections';
@@ -44,7 +43,6 @@ import {
   DEFAULT_PAGE_LIMIT,
   PINATA_SERVER,
 } from '../../constants';
-import { statusArr } from '../../constants/Status';
 // import useCollections from '../../hooks/reactQuery/useCollections';
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
 import useOffer from '../../hooks/reactQuery/useOffer';

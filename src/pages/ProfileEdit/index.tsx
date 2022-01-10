@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/no-children-prop */
 import React, {
   FC, useState,
@@ -12,6 +13,11 @@ import {
   Modal,
   ModalOverlay,
   useToast,
+  Image,
+  Text,
+  InputGroup,
+  Input,
+  InputLeftAddon,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -26,6 +32,15 @@ import { useAppSelector } from '../../hooks/redux';
 import useUser from '../../hooks/reactQuery/useUser';
 import { CACHE_SERVER_URL } from '../../constants';
 import MainContainer from '../../layout/MainContainer';
+import LeftImgonInput from '../../components/LeftImgonInput';
+import FromTextarea from '../../components/FromTextarea';
+import LeftInput from './LeftInput';
+
+import {
+  WEBSITE,
+  TWITTER,
+  IconIns,
+} from '../../assets/images';
 
 const CreateCollection: FC = () => {
   const { t } = useTranslation();
@@ -37,12 +52,17 @@ const CreateCollection: FC = () => {
 
   const [isShowModal, setIsShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [eventArr, setEventArr] = useState([{ Date: '', Subject: '', Link: '' }]);
 
   const { data: userData } = useUser(account?.address);
 
   const onCloseModal = () => {
     setIsShowModal(false);
     history.push('/');
+  };
+  const addMore = () => {
+    const arr = eventArr.concat({ Date: '', Subject: '', Link: '' });
+    setEventArr(arr);
   };
 
   // const create = useCallback((formValue, formActions) => {
@@ -67,6 +87,12 @@ const CreateCollection: FC = () => {
       featured_image: userData?.featured_image,
       twitter: userData?.twitter,
       email: userData?.email,
+      website: userData?.email,
+      discord: userData?.email,
+      ins: userData?.email,
+      medium: userData?.email,
+      telegram: userData?.email,
+      summary: userData?.summary,
     },
     onSubmit: async (values, formActions) => {
       if (stateCrop) {
@@ -135,6 +161,23 @@ const CreateCollection: FC = () => {
           {formik.errors.avatar && formik.touched.avatar ? (
             <div style={{ color: 'red' }}>{formik.errors.avatar}</div>
           ) : null}
+          <label htmlFor="featured_image">
+            {' '}
+            <EditFormTitle text={t('ProfileEdit.featuredImage')} />
+            <EditFromSubTitle text={t('ProfileEdit.featuredImageRule')} />
+          </label>
+          <UploadPersonal
+            id="featured_image"
+            mediatype="cutting"
+            rectangle="600px"
+            proportion={1400 / 400}
+            value={formik.values.featured_image}
+            edit={userData?.featured_image}
+            setStateCrop={setStateCrop}
+            onChange={(v) => {
+              formik.setFieldValue('featured_image', v);
+            }}
+          />
           <label htmlFor="name">
             {' '}
             <EditFormTitle text={t('ProfileEdit.username')} />
@@ -162,23 +205,104 @@ const CreateCollection: FC = () => {
           {formik.errors.twitter && formik.touched.twitter ? (
             <div style={{ color: 'red' }}>{formik.errors.twitter}</div>
           ) : null}
-          <label htmlFor="featured_image">
+          <label htmlFor="Links">
             {' '}
-            <EditFormTitle text={t('ProfileEdit.featuredImage')} />
-            <EditFromSubTitle text={t('ProfileEdit.featuredImageRule')} />
+            <EditFormTitle text={t('Collection.links')} />
           </label>
-          <UploadPersonal
-            id="featured_image"
-            mediatype="cutting"
-            rectangle="600px"
-            proportion={1400 / 400}
-            value={formik.values.featured_image}
-            edit={userData?.featured_image}
-            setStateCrop={setStateCrop}
-            onChange={(v) => {
-              formik.setFieldValue('featured_image', v);
-            }}
+          <Flex mt="24px" />
+          <LeftImgonInput
+            id="website"
+            value={formik.values.website}
+            onChange={formik.handleChange}
+            position="top"
+            placeholder="http://"
+            url={(
+              <Image
+                w="22px"
+                h="22px"
+                src={WEBSITE.default}
+              />
+            )}
           />
+          <LeftImgonInput
+            id="twitter"
+            position=""
+            value={formik.values.twitter}
+            onChange={formik.handleChange}
+            placeholder="https://twitter.com/"
+            url={(
+              <Image
+                w="22px"
+                h="22px"
+                src={TWITTER.default}
+              />
+            )}
+          />
+          <LeftImgonInput
+            id="ins"
+            position="bottom"
+            value={formik.values.ins}
+            onChange={formik.handleChange}
+            placeholder="https://www.instagram.com/"
+            url={(
+              <Image
+                w="22px"
+                h="22px"
+                src={IconIns.default}
+              />
+            )}
+          />
+          <label htmlFor="summary">
+            {' '}
+            <EditFormTitle text="*Summary" />
+            <EditFromSubTitle text="Introduction of artistic career, including education, tenure, awards, etc" />
+          </label>
+          <FromTextarea id="summary" onChange={formik.handleChange} value={formik.values.summary} />
+          <label htmlFor="event">
+            {' '}
+            <EditFormTitle text="*Event" />
+            <EditFromSubTitle text="Some events in the artistic career, such as participating in exhibitions, auctions, media reports, etc." />
+          </label>
+          {Array.from(eventArr)?.map((item, index) => (
+            <>
+              <Flex mt="25px" />
+              <LeftInput
+                value={formik.values.website}
+                onChange={formik.handleChange}
+                position="top"
+                url="Date"
+                urlOptional=""
+              />
+              <LeftInput
+                value={formik.values.website}
+                onChange={formik.handleChange}
+                position=""
+                url="Subject"
+                urlOptional=""
+              />
+              <LeftInput
+                value={formik.values.website}
+                onChange={formik.handleChange}
+                position="bottom"
+                url="Link"
+                urlOptional="(Optional)"
+              />
+            </>
+          ))}
+          <Text
+            mt="25px"
+            ml="3px"
+            height="16px"
+            display="inline-block"
+            color="#6DD400"
+            fontSize="14px"
+            fontFamily="PingFangSC-Regular, PingFang SC"
+            fontWeight="400"
+            onClick={addMore}
+            cursor="pointer"
+          >
+            +Add
+          </Text>
           <Flex
             w="600px"
             justifyContent="center"
