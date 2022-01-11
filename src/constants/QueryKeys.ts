@@ -22,6 +22,7 @@ export const QUERY_KEYS = {
   CheapNFTS: 'CheapNFTS',
   CATEGORIEINFO: 'CATEGORIEINFO',
   Historyprice: 'Historyprice',
+  Artist: 'Artist',
 };
 
 export const DEFAULT_PAGE_LIMIT = 20;

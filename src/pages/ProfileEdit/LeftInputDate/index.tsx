@@ -5,7 +5,9 @@ import {
   Input,
   InputLeftAddon,
   Text,
+  Flex,
 } from '@chakra-ui/react';
+import DatePicker from 'react-date-picker';
 
 interface Props {
   id: string
@@ -56,12 +58,20 @@ const LeftAddonInput: FC<Props> = ({
         {urlOptional}
       </Text>
     </InputLeftAddon>
-    <Input
+    <DatePicker
+      id={id}
+      name={id}
+      // eslint-disable-next-line react/jsx-indent-props
+      onChange={onChange}
+      // eslint-disable-next-line react/jsx-indent-props
+      value={value}
+    />
+
+    {/* <Input
       id={id}
       height="100%"
       borderRadius="none"
       defaultValue={value}
-      name={id}
       border="none"
       onChange={onChange}
       fontSize="14px"
@@ -69,7 +79,7 @@ const LeftAddonInput: FC<Props> = ({
       fontFamily="TTHoves-Regular, TTHoves"
       fontWeight="400"
       placeholder=""
-    />
+    /> */}
   </InputGroup>
 );
 

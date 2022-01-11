@@ -5,7 +5,7 @@ import React, {
 import Identicon from '@polkadot/react-identicon';
 import { useTranslation } from 'react-i18next';
 import {
-  Link as RouterLink, RouteComponentProps, useLocation, useHistory,
+  Link as RouterLink, useHistory,
 } from 'react-router-dom';
 import {
   Flex,
