@@ -92,6 +92,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       const url = window.location.pathname.replace(str, '/collections');
       history.push(encodeURI(url));
     }
+    if (idTab === '5') {
+      const url = window.location.pathname.replace(str, '/profile');
+      history.push(encodeURI(url));
+    }
   }
 
   function historyTabUrl(idTab: string) {
@@ -113,6 +117,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
     }
     if (window.location.href.indexOf('collections') > -1) {
       historyUrl(idTab, '/collections');
+      return;
+    }
+    if (window.location.href.indexOf('profile') > -1) {
+      historyUrl(idTab, '/profile');
     }
   }
   const chainState = useAppSelector((state) => state.chain);
@@ -238,6 +246,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       setSelectTabId(4);
       setUrlName('collections');
     }
+    if (window.location.href.indexOf('profile') > -1) {
+      setSelectTabId(5);
+      setUrlName('profile');
+    }
   }, [window.location.href]);
 
   useEffect(() => {
@@ -290,6 +302,14 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
   }, [selectedStatusArr, selectedSort]);
 
   const TABS = [
+    {
+      id: '5',
+      icon: IconWallet.default,
+      iconS: IconWalletS.default,
+      title: 'Artist Profile',
+      num: '',
+      requiredWhitelist: false,
+    },
     {
       id: '0',
       icon: IconWallet.default,
@@ -729,7 +749,105 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                   </Container>
                 )}
             </>
-
+          ) : ''}
+          {selectTabId === 5 ? (
+            <>
+              {!userDataLoading
+                ? (
+                  <Center width="100%" height="500px">
+                    <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                  </Center>
+                )
+                : (
+                  <Container>
+                    <Text
+                      w="100%"
+                      fontStyle="oblique"
+                      fontSize="24px"
+                      fontFamily="TTHoves-MediumItalic, TTHoves"
+                      fontWeight="bold"
+                      color="rgba(0, 0, 0, 0.85)"
+                      lineHeight="29px"
+                      letterSpacing="1px"
+                      textAlign="start"
+                    >
+                      Summary
+                    </Text>
+                    <Text
+                      mt="15px"
+                      w="100%"
+                      fontSize="16px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="rgba(0, 0, 0, 0.85)"
+                      lineHeight="28px"
+                      letterSpacing="1px"
+                      textAlign="start"
+                    >
+                      Artist SummaryArtist SummaryArtist SummaryArtist SummaryArtist
+                      SummaryArtist SummaryArtist SummaryArtist SummaryArtist
+                      SummaryArtist SummaryArtist SummaryArtist SummaryArtist SummaryArtist Summary
+                    </Text>
+                    <Text
+                      mt="50px"
+                      w="100%"
+                      fontStyle="oblique"
+                      fontSize="24px"
+                      fontFamily="TTHoves-MediumItalic, TTHoves"
+                      fontWeight="bold"
+                      color="rgba(0, 0, 0, 0.85)"
+                      lineHeight="29px"
+                      letterSpacing="1px"
+                      textAlign="start"
+                    >
+                      Event
+                    </Text>
+                    <Flex
+                      mt="15px"
+                    >
+                      <Text
+                        minWidth="100px"
+                        mr="15px"
+                        fontSize="16px"
+                        fontFamily="TTHoves-Italic, TTHoves"
+                        fontWeight="normal"
+                        color="rgba(0, 0, 0, 0.5)"
+                        lineHeight="28px"
+                        letterSpacing="1px"
+                        textAlign="start"
+                      >
+                        July 6,2012
+                      </Text>
+                      <Box
+                        w="100%"
+                        fontSize="16px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="rgba(0, 0, 0, 0.85)"
+                        lineHeight="28px"
+                        letterSpacing="1px"
+                        textAlign="start"
+                      >
+                        won the first prize of modernist painting in Paris art exhibition.
+                        <Box
+                          display="inline-block"
+                          mr="15px"
+                          fontSize="16px"
+                          fontFamily=" TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#0091FF"
+                          lineHeight="18px"
+                          letterSpacing="1px"
+                          textAlign="start"
+                          ml="9px"
+                        >
+                          Link
+                        </Box>
+                      </Box>
+                    </Flex>
+                  </Container>
+                )}
+            </>
           ) : ''}
         </Flex>
       </Flex>

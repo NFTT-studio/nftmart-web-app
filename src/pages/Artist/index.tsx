@@ -2,20 +2,18 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-nested-ternary */
-import React, {
-  useState, useEffect, MouseEventHandler, ChangeEventHandler,
-} from 'react';
+import React from 'react';
+import {
+  Link as RouterLink,
+} from 'react-router-dom';
 import {
   Spinner,
   Flex,
   Container,
-  Box,
+  Link,
   Text,
-  InputGroup,
-  Input,
   Image,
   Center,
-  SimpleGrid,
 } from '@chakra-ui/react';
 
 import { useTranslation } from 'react-i18next';
@@ -25,9 +23,9 @@ import useArtist from '../../hooks/reactQuery/useArtist';
 import {
   AccountBanner,
   HeadPortrait,
-  IconAllStateone,
-  Emptyimg,
-  Historyempty,
+  WEBSITE,
+  TWITTER,
+  IconIns,
 } from '../../assets/images';
 import {
   DEFAULT_PAGE_LIMIT,
@@ -53,7 +51,6 @@ const Artist = () => {
       >
         {artistData?.map((item, index) => (
           <Flex
-            cursor="pointer"
             width="320px"
             height="420px"
             background="#FFFFFF"
@@ -117,26 +114,87 @@ const Artist = () => {
             >
               {item?.name || formatAddress(item?.id)}
             </Text>
-            <Text
-              p="0 13px"
-              marginTop="60px"
-              w="100%"
-              h="100px"
-              fontSize="14px"
-              fontFamily="PingFangSC-Semibold, PingFang SC"
-              fontWeight="600"
-              color="rgba(0, 0, 0, 0.85)"
-              lineHeight="20px"
-              letterSpacing="1px"
-              overflow="hidden"
-              textOverflow="ellipsis"
-              whiteSpace="nowrap"
-              textAlign="start"
+            <Flex
+              mt="16px"
+              p="0 89px"
+              minHeight="24px"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              Masai毕业于中国中央美术学院，作品参加过各种国际展览。
-              受邀参加2021冬奥会艺术主题创作活动创作的油画《美女的新衣》，
-              在2021年春季佳士得拍卖会成交价32万元人民币。多幅作品被当代艺术馆收藏。
-            </Text>
+              {item?.instagram
+                ? (
+                  <Link
+                    target="_blank"
+                    href={`https://www.instagram.com/${item?.instagram}}`}
+                  >
+                    <Image
+                      cursor="pointer"
+                      width="24px"
+                      height="auto"
+                      src={IconIns.default}
+                    />
+                  </Link>
+                ) : ''}
+              {item?.instagram
+                ? (
+                  <Link
+                    target="_blank"
+                    href={`https://twitter.com/${item.twitter}}`}
+                  >
+                    <Image
+                      cursor="pointer"
+                      width="24px"
+                      height="auto"
+                      src={TWITTER.default}
+                    />
+                  </Link>
+                ) : ''}
+              {item?.website
+                ? (
+                  <Link
+                    target="_blank"
+                    href={item.website}
+                  >
+                    <Image
+                      cursor="pointer"
+                      width="24px"
+                      height="auto"
+                      src={WEBSITE.default}
+                    />
+                  </Link>
+                ) : ''}
+
+            </Flex>
+            <Link
+              as={RouterLink}
+              to={`/account/${item?.id}${item?.name ? `-${encodeURIComponent(item?.name)}` : ''}/profile`}
+            >
+              <Text
+                cursor="pointer"
+                p="0 13px"
+                marginTop="23px"
+                w="100%"
+                h="100px"
+                fontSize="14px"
+                fontFamily="PingFangSC-Semibold, PingFang SC"
+                fontWeight="600"
+                color="rgba(0, 0, 0, 0.85)"
+                lineHeight="20px"
+                letterSpacing="1px"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                display="-webkit-box"
+                style={{
+                  WebkitBoxOrient: 'vertical',
+                  WebkitLineClamp: '5',
+                }}
+                // -webkit-box-orient= "vertical"
+                // -webkit-line-clamp= "2"
+                textAlign="start"
+              >
+                {item.summary}
+              </Text>
+            </Link>
           </Flex>
         ))}
       </Container>
