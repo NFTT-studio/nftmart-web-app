@@ -55,7 +55,7 @@ const Browsing = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [selectedStatusArr, setSelectedStatusArr] = useState<string[]>();
   const [selectedCollection, setSelectedCollectionIdArr] = useState<string[]>([]);
-  const [selectedSort, setSelectedSort] = useState(Sort[1].key);
+  const [selectedSort, setSelectedSort] = useState(Sort[4].key);
   const [remainingTime, setRemainingTime] = useState(0);
 
   const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
