@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import React, { FC, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
@@ -54,6 +55,60 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
     }
     return result;
   };
+  function getDateIn(dateTimeStamp: string) {
+    let result;
+    const minute = 1000 * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+
+    const diffValue = Number(dateTimeStamp);
+    if (diffValue < 0) {
+      return result = '-';
+    }
+    const dayC = diffValue / day;
+    const hourC = diffValue / hour;
+    const minC = diffValue / minute;
+    if (dayC >= 1) {
+      result = `in ${parseInt(dayC.toString(), 10)} day(s) `;
+    } else if (hourC >= 1) {
+      result = `in ${parseInt(hourC.toString(), 10)} hour(s) `;
+    } else if (minC >= 1) {
+      result = `in ${parseInt(minC.toString(), 10)} minute(s) `;
+    } else { result = `in ${parseInt(diffValue.toString(), 10)} second(s) `; }
+    return result;
+  }
+  const add0 = (m) => (m < 10 ? `0${m}` : m);
+  function getDateDiff(dateTimeStamp: string) {
+    let result;
+    const minute = 1000 * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+    const times = new Date(dateTimeStamp);
+    const idata = times.getTime();
+    const now = new Date().getTime();
+    const diffValue = now - idata;
+    const y = times.getFullYear();
+    const m = times.getMonth() + 1;
+    const d = times.getDate();
+    if (diffValue < 0) {
+      return result = '-';
+    }
+    const dayC = diffValue / day;
+    const hourC = diffValue / hour;
+    const minC = diffValue / minute;
+    if (dayC >= 1) {
+      result = `${y}-${add0(m)}-${add0(d)}`;
+    } else if (hourC >= 1) {
+      result = `${parseInt(hourC.toString(), 10)} hour(s) ago`;
+    } else if (minC >= 1) {
+      result = `${parseInt(minC.toString(), 10)} minute(s) ago`;
+    } else { result = `${parseInt(diffValue.toString(), 10)} minute(s) ago`; }
+    return result;
+  }
+  const timeSurplus = (index: numer) => {
+    const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
+    return times;
+  };
 
   return (
     <Link
@@ -100,6 +155,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
             fontWeight="400"
             color="#999999"
             lineHeight="14px"
+            minWidth="100px"
           >
             <Text
               mb="5px"
@@ -109,10 +165,17 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
               fontWeight="400"
               color="#000000"
               lineHeight="20px"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
             >
               {offers?.nft?.name}
             </Text>
-            <Text>
+            <Text
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+            >
               {offers?.nft?.name}
             </Text>
           </Flex>
@@ -162,7 +225,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
             {offers?.user?.name ? offers?.user?.name : formatAddress(offers?.user?.id)}
           </Text>
         ) : ''}
-        {offers?.deadline - remainingTime > 0 || offers?.deadline - remainingTime > 0
+        {offers?.deadline
           ? (
             <Text
               width="120px"
@@ -174,27 +237,14 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
               lineHeight="20px"
               textstroke="1px #979797"
             >
-              in
               {' '}
-              {offers?.deadline - remainingTime > 0 ? timeBlock(offers?.deadline) : null}
-              {offers?.auction?.deadline - remainingTime > 0 ? timeBlock(offers?.auction?.deadline) : null}
+              {Number(offers?.deadline - remainingTime) > 0
+                ? getDateIn(Number(timeSurplus(offers?.deadline)))
+                : '-'}
+              {/* {offers?.deadline - remainingTime > 0 ? timeBlock(offers?.deadline) : null} */}
               {' '}
-              hours
             </Text>
-          ) : (
-            <Text
-              width="120px"
-              textAlign="right"
-              fontSize="14px"
-              fontFamily="TTHoves-Regular, TTHoves"
-              fontWeight="400"
-              color="#000000"
-              lineHeight="20px"
-              textstroke="1px #979797"
-            >
-              -
-            </Text>
-          )}
+          ) : ''}
       </Flex>
     </Link>
   );

@@ -13,16 +13,15 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      zh: {
-        translation: zh,
-      },
       en: {
         translation: en,
+      },
+      zh: {
+        translation: zh,
       },
     },
     lng: `${language.indexOf(localStorage.getItem('i18nextLng') || '') > -1
       ? localStorage.getItem('i18nextLng') : 'en'}`,
-    debug: true,
     interpolation: {
       escapeValue: false,
     },
