@@ -16,7 +16,7 @@ import {
 
 interface Props {
   offers?: []
-  hide:boolean
+  hide: boolean
 }
 const OfferItem: FC<Props> = (({ offers, hide }) => {
   const formatAddress = (addr: string) => (addr ? `${addr.slice(0, 4)}...${addr.slice(-4)}` : null);
@@ -27,7 +27,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
     setRemainingTime(res);
   });
 
-  const timeBlock = (index:numer) => {
+  const timeBlock = (index: numer) => {
     const times = (index - remainingTime) * 6;
 
     let theTime = parseInt(times.toString(), 10);
@@ -100,6 +100,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
             fontWeight="400"
             color="#999999"
             lineHeight="14px"
+            minWidth="100px"
           >
             <Text
               mb="5px"
@@ -109,10 +110,17 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
               fontWeight="400"
               color="#000000"
               lineHeight="20px"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
             >
               {offers?.nft?.name}
             </Text>
-            <Text>
+            <Text
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+            >
               {offers?.nft?.name}
             </Text>
           </Flex>
@@ -159,7 +167,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
             color="#000000"
             lineHeight="20px"
           >
-            {offers?.user?.name ? offers?.user?.name : formatAddress(offers?.user?.id) }
+            {offers?.user?.name ? offers?.user?.name : formatAddress(offers?.user?.id)}
           </Text>
         ) : ''}
         {offers?.deadline - remainingTime > 0 || offers?.deadline - remainingTime > 0
