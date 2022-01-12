@@ -240,7 +240,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
               {' '}
               {Number(offers?.deadline - remainingTime) > 0
                 ? getDateIn(Number(timeSurplus(offers?.deadline)))
-                : getDateDiff(offers?.deadline)}
+                : '-'}
               {/* {offers?.deadline - remainingTime > 0 ? timeBlock(offers?.deadline) : null} */}
               {' '}
             </Text>

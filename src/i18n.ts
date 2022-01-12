@@ -3,15 +3,25 @@ import Backend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+import en from './locales/en.json';
+import zh from './locales/zh.json';
+
 const language = ['zh', 'en'];
 i18n
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    resources: {
+      en: {
+        translation: en,
+      },
+      zh: {
+        translation: zh,
+      },
+    },
     lng: `${language.indexOf(localStorage.getItem('i18nextLng') || '') > -1
       ? localStorage.getItem('i18nextLng') : 'en'}`,
-    debug: true,
     interpolation: {
       escapeValue: false,
     },
