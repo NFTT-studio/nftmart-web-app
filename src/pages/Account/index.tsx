@@ -198,15 +198,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
     },
   );
 
-  const handleSelectStatus: MouseEventHandler<HTMLButtonElement> = (event) => {
-    const clickedStatus = event.currentTarget.id;
-    setSelectedStatusArr([event.currentTarget.id]);
-    // setSelectedStatusArr(
-    //   selectedStatusArr.indexOf(clickedStatus) > -1
-    //     ? without(selectedStatusArr, event.currentTarget.id)
-    //     : union(selectedStatusArr, [event.currentTarget.id]),
-    // );
-  };
+  // const handleSelectStatus: MouseEventHandler<HTMLButtonElement> = (event) => {
+  //   const clickedStatus = event.currentTarget.id;
+  //   setSelectedStatusArr([event.currentTarget.id]);
+  //   // setSelectedStatusArr(
+  //   //   selectedStatusArr.indexOf(clickedStatus) > -1
+  //   //     ? without(selectedStatusArr, event.currentTarget.id)
+  //   //     : union(selectedStatusArr, [event.currentTarget.id]),
+  //   // );
+  // };
   useEffect(() => {
     if (address) {
       if (window.location.href.indexOf('owned') > -1) {
