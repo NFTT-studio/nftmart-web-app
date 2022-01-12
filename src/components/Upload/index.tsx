@@ -74,7 +74,7 @@ interface INavProps {
   name: string;
   uploadHandle: any;
   proportion: any;
-  setStateCrop:React.Dispatch<React.SetStateAction<boolean>>,
+  setStateCrop: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 const CropperCop: React.FC<INavProps> = (props) => {
@@ -148,7 +148,7 @@ export interface UploadProps {
   mediatype: string;
   rectangle: string;
   proportion: number;
-  setStateCrop:React.Dispatch<React.SetStateAction<boolean>>,
+  setStateCrop: React.Dispatch<React.SetStateAction<boolean>>,
   fileClass: string;
   fileName: string;
   url: string;

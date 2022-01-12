@@ -37,6 +37,7 @@ import LeftImgonInput from '../../components/LeftImgonInput';
 import FromTextarea from '../../components/FromTextarea';
 import LeftInput from './LeftInput';
 import LeftInputDate from './LeftInputDate';
+import useIsLoginAddress from '../../hooks/utils/useIsLoginAddress';
 
 import {
   WEBSITE,
@@ -49,16 +50,17 @@ const CreateCollection: FC = () => {
   const toast = useToast();
   const history = useHistory();
   const chainState = useAppSelector((state) => state.chain);
-  const { account } = chainState;
+  const { account, whiteList } = chainState;
   const [stateCrop, setStateCrop] = useState(false);
 
   const [isShowModal, setIsShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [eventArr, setEventArr] = useState([{ Date: '', Subject: '', Link: '' }]);
+
   const handleInputDate: ChangeEventHandler = (item) => {
-    console.log(item);
-    // eventArr[Number(item.target.id)].Date = item.target.value;
-    // setEventArr(eventArr);
+    // console.log(item);
+    eventArr[Number(item.target.id)].Date = item.target.value;
+    setEventArr(eventArr);
   };
   const handleInputSubject: ChangeEventHandler<HTMLInputElement> = (item) => {
     eventArr[Number(item.target.id)].Subject = item.target.value;
@@ -135,7 +137,7 @@ const CreateCollection: FC = () => {
         return;
       }
       setIsSubmitting(false);
-      const eventArrLet = JSON.stringify({ ...eventArr.filter((item) => item.Date !== '' && item.Subject !== '' && item.Link !== '') });
+      const eventArrLet = JSON.stringify({ ...eventArr.filter((item) => item.Date !== '' && item.Subject !== '') });
       // console.log(eventArrLet);
       // return;
       const params = new URLSearchParams();
@@ -242,107 +244,120 @@ const CreateCollection: FC = () => {
             {formik.errors.twitter && formik.touched.twitter ? (
               <div style={{ color: 'red' }}>{formik.errors.twitter}</div>
             ) : null}
-            <label htmlFor="Links">
-              {' '}
-              <EditFormTitle text={t('Collection.links')} />
-            </label>
-            <Flex mt="24px" />
-            <LeftImgonInput
-              id="website"
-              value={formik.values.website}
-              onChange={formik.handleChange}
-              position="top"
-              placeholder="http://"
-              url={(
-                <Image
-                  w="22px"
-                  h="22px"
-                  src={WEBSITE.default}
-                />
-              )}
-            />
-            <LeftImgonInput
-              id="twitter"
-              position=""
-              value={formik.values.twitter}
-              onChange={formik.handleChange}
-              placeholder="https://twitter.com/"
-              url={(
-                <Image
-                  w="22px"
-                  h="22px"
-                  src={TWITTER.default}
-                />
-              )}
-            />
-            <LeftImgonInput
-              id="instagram"
-              position="bottom"
-              value={formik.values.instagram}
-              onChange={formik.handleChange}
-              placeholder="https://www.instagram.com/"
-              url={(
-                <Image
-                  w="22px"
-                  h="22px"
-                  src={IconIns.default}
-                />
-              )}
-            />
-            <label htmlFor="summary">
-              {' '}
-              <EditFormTitle text="*Summary" />
-              <EditFromSubTitle text="Introduction of artistic career, including education, tenure, awards, etc" />
-            </label>
-            <FromTextarea id="summary" onChange={formik.handleChange} value={formik.values.summary} />
-            <label htmlFor="event">
-              {' '}
-              <EditFormTitle text="*Event" />
-              <EditFromSubTitle text="Some events in the artistic career, such as participating in exhibitions, auctions, media reports, etc." />
-            </label>
-            {Array.from(eventArr)?.map((item, index) => (
-              <>
-                <Flex mt="25px" />
-                <LeftInputDate
-                  id={index.toString()}
-                  value={item.Date}
-                  onChange={handleInputDate}
-                  position="top"
-                  url="Date"
-                  urlOptional=""
-                />
-                <LeftInput
-                  id={index.toString()}
-                  value={item.Subject}
-                  onChange={handleInputSubject}
-                  position=""
-                  url="Subject"
-                  urlOptional=""
-                />
-                <LeftInput
-                  id={index.toString()}
-                  value={item.Link}
-                  onChange={handleInputLink}
-                  position="bottom"
-                  url="Link"
-                  urlOptional="(Optional)"
-                />
-              </>
-            ))}
-            <Text
-              mt="25px"
-              ml="3px"
-              height="16px"
-              display="inline-block"
-              color="#6DD400"
-              fontSize="14px"
-              fontFamily="PingFangSC-Regular, PingFang SC"
-              fontWeight="400"
-              onClick={addMore}
-              cursor="pointer"
-            >
-              +Add
-            </Text>
+            {!(whiteList?.indexOf(account?.address) < 0)
+              ? (
+                <>
+                  <label htmlFor="Links">
+                    {' '}
+                    <EditFormTitle text={t('Collection.links')} />
+                  </label>
+                  <Flex mt="24px" />
+                  <LeftImgonInput
+                    id="website"
+                    value={formik.values.website}
+                    onChange={formik.handleChange}
+                    position="top"
+                    placeholder="http://"
+                    url={(
+                      <Image
+                        w="22px"
+                        h="22px"
+                        src={WEBSITE.default}
+                      />
+                    )}
+                  />
+                  <LeftImgonInput
+                    id="twitter"
+                    position=""
+                    value={formik.values.twitter}
+                    onChange={formik.handleChange}
+                    placeholder="https://twitter.com/"
+                    url={(
+                      <Image
+                        w="22px"
+                        h="22px"
+                        src={TWITTER.default}
+                      />
+                    )}
+                  />
+                  <LeftImgonInput
+                    id="instagram"
+                    position="bottom"
+                    value={formik.values.instagram}
+                    onChange={formik.handleChange}
+                    placeholder="https://www.instagram.com/"
+                    url={(
+                      <Image
+                        w="22px"
+                        h="22px"
+                        src={IconIns.default}
+                      />
+                    )}
+                  />
+                  <label htmlFor="summary">
+                    {' '}
+                    <EditFormTitle text="*Summary" />
+                    <EditFromSubTitle text="Introduction of artistic career, including education, tenure, awards, etc" />
+                  </label>
+                  <FromTextarea id="summary" onChange={formik.handleChange} value={formik.values.summary} />
+                  <label htmlFor="event">
+                    {' '}
+                    <EditFormTitle text="*Event" />
+                    <EditFromSubTitle text="Some events in the artistic career, such as participating in exhibitions, auctions, media reports, etc." />
+                  </label>
+                  {Array.from(eventArr)?.map((item, index) => (
+                    <>
+                      <Flex mt="25px" />
+                      <LeftInput
+                        id={index.toString()}
+                        value={item.Date}
+                        onChange={handleInputDate}
+                        position="top"
+                        url="Date"
+                        urlOptional=""
+                      />
+                      {/* <LeftInputDate
+                        id={index.toString()}
+                        value={item.Date}
+                        onChange={handleInputDate}
+                        position="top"
+                        url="Date"
+                        urlOptional=""
+                      /> */}
+                      <LeftInput
+                        id={index.toString()}
+                        value={item.Subject}
+                        onChange={handleInputSubject}
+                        position=""
+                        url="Subject"
+                        urlOptional=""
+                      />
+                      <LeftInput
+                        id={index.toString()}
+                        value={item.Link}
+                        onChange={handleInputLink}
+                        position="bottom"
+                        url="Link"
+                        urlOptional="(Optional)"
+                      />
+                    </>
+                  ))}
+                  <Text
+                    mt="25px"
+                    ml="3px"
+                    height="16px"
+                    display="inline-block"
+                    color="#6DD400"
+                    fontSize="14px"
+                    fontFamily="PingFangSC-Regular, PingFang SC"
+                    fontWeight="400"
+                    onClick={addMore}
+                    cursor="pointer"
+                  >
+                    +Add
+                  </Text>
+                </>
+              ) : ''}
             <Flex
               w="600px"
               justifyContent="center"

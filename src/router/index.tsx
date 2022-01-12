@@ -60,6 +60,7 @@ export default () => (
         <Route exact strict path="/profile" component={EditProfile} />
         <Route exact strict path="/artist" component={Artist} />
         <Route exact strict path="/account/:address-:username/profile" component={Account} />
+        <Route exact strict path="/account/:address/profile" component={Account} />
         <Route exact strict path="/account/profile" component={Account} />
       </Switch>
     </PolkaProvider>

@@ -124,7 +124,7 @@ export interface UploadProps {
   mediatype: string;
   rectangle: string;
   proportion: number;
-  setStateCrop:React.Dispatch<React.SetStateAction<boolean>>,
+  setStateCrop: React.Dispatch<React.SetStateAction<boolean>>,
   edit?: any;
 }
 

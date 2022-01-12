@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 /* eslint-disable max-len */
 import React, {
   useState, MouseEventHandler, useEffect,
@@ -132,6 +134,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
   const [selectedCollection, setSelectedCollectionArr] = useState();
   const [selectedSort, setSelectedSort] = useState(Sort[1].key);
   const [remainingTime, setRemainingTime] = useState(0);
+  const [eventArr, setEventArr] = useState();
 
   const { data: userData, isLoading: userDataLoading, refetch: fetchUserData } = useUser(address);
 
@@ -207,6 +210,19 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
   //   //     : union(selectedStatusArr, [event.currentTarget.id]),
   //   // );
   // };
+  useEffect(() => {
+    const arr = [];
+    try {
+      for (const i in JSON.parse(userData?.events)) {
+        arr.push(JSON.parse(userData?.events)[i]);
+      }
+      if (arr.length > 0) {
+        setEventArr(arr);
+      }
+    } catch (e) {
+      console.log('xxxx解析错误');
+    }
+  }, [userData?.events]);
   useEffect(() => {
     if (address) {
       if (window.location.href.indexOf('owned') > -1) {
@@ -300,6 +316,19 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       }
     }
   }, [selectedStatusArr, selectedSort]);
+  useEffect(() => {
+    if (isPerson && !(whiteList?.indexOf(address) < 0)) {
+      if (window.location.href.indexOf('profile') > -1) {
+        history.push('/account/owned');
+      }
+      if (window.location.href.indexOf('created') > -1) {
+        history.push('/account/owned');
+      }
+      if (window.location.href.indexOf('collections') > -1) {
+        history.push('/account/owned');
+      }
+    }
+  }, [isPerson, address]);
 
   const TABS = [
     {
@@ -308,7 +337,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       iconS: IconWalletS.default,
       title: 'Artist Profile',
       num: '',
-      requiredWhitelist: false,
+      requiredWhitelist: true,
     },
     {
       id: '0',
@@ -752,7 +781,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
           ) : ''}
           {selectTabId === 5 ? (
             <>
-              {!userDataLoading
+              {userDataLoading
                 ? (
                   <Center width="100%" height="500px">
                     <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
@@ -784,9 +813,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                       letterSpacing="1px"
                       textAlign="start"
                     >
-                      Artist SummaryArtist SummaryArtist SummaryArtist SummaryArtist
-                      SummaryArtist SummaryArtist SummaryArtist SummaryArtist
-                      SummaryArtist SummaryArtist SummaryArtist SummaryArtist SummaryArtist Summary
+                      {userData?.summary}
                     </Text>
                     <Text
                       mt="50px"
@@ -802,49 +829,59 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                     >
                       Event
                     </Text>
-                    <Flex
-                      mt="15px"
-                    >
-                      <Text
-                        minWidth="100px"
-                        mr="15px"
-                        fontSize="16px"
-                        fontFamily="TTHoves-Italic, TTHoves"
-                        fontWeight="normal"
-                        color="rgba(0, 0, 0, 0.5)"
-                        lineHeight="28px"
-                        letterSpacing="1px"
-                        textAlign="start"
+                    {eventArr?.map((item, index) => (
+                      <Flex
+                        mt="15px"
                       >
-                        July 6,2012
-                      </Text>
-                      <Box
-                        w="100%"
-                        fontSize="16px"
-                        fontFamily="TTHoves-Regular, TTHoves"
-                        fontWeight="400"
-                        color="rgba(0, 0, 0, 0.85)"
-                        lineHeight="28px"
-                        letterSpacing="1px"
-                        textAlign="start"
-                      >
-                        won the first prize of modernist painting in Paris art exhibition.
-                        <Box
-                          display="inline-block"
+                        <Text
+                          minWidth="100px"
                           mr="15px"
                           fontSize="16px"
-                          fontFamily=" TTHoves-Regular, TTHoves"
-                          fontWeight="400"
-                          color="#0091FF"
-                          lineHeight="18px"
+                          fontFamily="TTHoves-Italic, TTHoves"
+                          fontWeight="normal"
+                          color="rgba(0, 0, 0, 0.5)"
+                          lineHeight="28px"
                           letterSpacing="1px"
                           textAlign="start"
-                          ml="9px"
                         >
-                          Link
+                          July 6,2012
+                        </Text>
+                        <Box
+                          w="100%"
+                          fontSize="16px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="rgba(0, 0, 0, 0.85)"
+                          lineHeight="28px"
+                          letterSpacing="1px"
+                          textAlign="start"
+                        >
+                          {item.Subject}
+                          {item.Link
+                            ? (
+                              <Link
+                                target="_blank"
+                                href={item.Link}
+                              >
+                                <Box
+                                  display="inline-block"
+                                  mr="15px"
+                                  fontSize="16px"
+                                  fontFamily=" TTHoves-Regular, TTHoves"
+                                  fontWeight="400"
+                                  color="#0091FF"
+                                  lineHeight="18px"
+                                  letterSpacing="1px"
+                                  textAlign="start"
+                                  ml="9px"
+                                >
+                                  Link
+                                </Box>
+                              </Link>
+                            ) : ''}
                         </Box>
-                      </Box>
-                    </Flex>
+                      </Flex>
+                    ))}
                   </Container>
                 )}
             </>
