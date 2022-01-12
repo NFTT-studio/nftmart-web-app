@@ -82,9 +82,10 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
     const minute = 1000 * 60;
     const hour = minute * 60;
     const day = hour * 24;
-    const times = new Date(dateTimeStamp);
-    const idata = times.getTime();
     const now = new Date().getTime();
+    const beOverdue = now + dateTimeStamp;
+    const times = new Date(beOverdue);
+    const idata = times.getTime();
     const diffValue = now - idata;
     const y = times.getFullYear();
     const m = times.getMonth() + 1;
@@ -240,7 +241,10 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
               {' '}
               {Number(offers?.deadline - remainingTime) > 0
                 ? getDateIn(Number(timeSurplus(offers?.deadline)))
-                : '-'}
+                : null}
+              {Number(offers?.deadline - remainingTime) < 0
+                ? getDateDiff(Number(timeSurplus(offers?.deadline)))
+                : null}
               {/* {offers?.deadline - remainingTime > 0 ? timeBlock(offers?.deadline) : null} */}
               {' '}
             </Text>
