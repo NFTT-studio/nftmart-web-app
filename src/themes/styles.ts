@@ -56,7 +56,11 @@ const obj = {
       height: '100%',
     },
     '.react-date-picker__wrapper': {
-      border: 'none',
+      border: 'none !important',
+      color: '#000000',
+    },
+    '.react-date-picker__inputGroup__input:invalid': {
+      background: '#FFFFFF',
     },
     '.recharts-cartesian-axis-ticks': {
       background: '#F8F9FA',

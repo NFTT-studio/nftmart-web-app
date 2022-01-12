@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
 /* eslint-disable max-len */
@@ -217,6 +218,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
         arr.push(JSON.parse(userData?.events)[i]);
       }
       if (arr.length > 0) {
+        arr.sort((a, b) => a.Date - b.Date);
         setEventArr(arr);
       }
     } catch (e) {
@@ -317,7 +319,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
     }
   }, [selectedStatusArr, selectedSort]);
   useEffect(() => {
-    if (isPerson && !(whiteList?.indexOf(address) < 0)) {
+    if (address && isPerson && whiteList.length > 0 && (whiteList?.indexOf(address) < 0)) {
       if (window.location.href.indexOf('profile') > -1) {
         history.push('/account/owned');
       }
@@ -328,7 +330,18 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
         history.push('/account/owned');
       }
     }
-  }, [isPerson, address]);
+  }, [isPerson, address, whiteList]);
+  const add0 = (m) => (m < 10 ? `0${m}` : m);
+  const format = (time: string) => {
+    const times = new Date(time);
+    const y = times.getFullYear();
+    const m = times.getMonth() + 1;
+    const d = times.getDate();
+    const h = times.getHours();
+    const mm = times.getMinutes();
+    const s = times.getSeconds();
+    return `${y}/${add0(m)}/${add0(d)}`;
+  };
 
   const TABS = [
     {
@@ -844,7 +857,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                           letterSpacing="1px"
                           textAlign="start"
                         >
-                          July 6,2012
+                          {format(item.Date)}
                         </Text>
                         <Box
                           w="100%"

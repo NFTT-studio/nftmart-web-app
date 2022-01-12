@@ -13,7 +13,6 @@ import {
   Link,
   Image,
 } from '@chakra-ui/react';
-import { Shimmer } from 'react-shimmer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -32,7 +31,7 @@ import MotionBox from '../MotionBox';
 
 type NftCardProps = {
   nft: Order,
-  remainingTime:number,
+  remainingTime: number,
 } & HTMLChakraProps<'div'>
 
 const NftCard: FC<NftCardProps> = ({
@@ -55,7 +54,7 @@ const NftCard: FC<NftCardProps> = ({
   );
 
   const formatAddress = (addr: string) => (addr ? `${addr.slice(0, 4)}...${addr.slice(-4)}` : null);
-  const countFun = (index:number) => {
+  const countFun = (index: number) => {
     const times = (Number(index) - Number(remainingTime)) * 6 * 1000;
     // eslint-disable-next-line no-param-reassign
     const day = (Math.floor((times / 1000 / 3600 / 24)));
@@ -237,7 +236,7 @@ const NftCard: FC<NftCardProps> = ({
               }}
               src={nft?.metadata?.fileType === 'gif' ? `${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}` : `${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
               effect="blur"
-              // fallback={<Shimmer height={219} width="100%" />}
+            // fallback={<Shimmer height={219} width="100%" />}
             />
           )
           : (
@@ -338,24 +337,25 @@ const NftCard: FC<NftCardProps> = ({
                     effect="blur"
                   />
                 ) : (
-                  <LazyLoadImage
-                    wrapperProps={{
-                      style: {
-                        width: '100%',
-                        height: '219px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                      },
-                    }}
-                    style={{
-                      objectFit: 'cover',
+                // eslint-disable-next-line react/jsx-indent
+                <LazyLoadImage
+                  wrapperProps={{
+                    style: {
                       width: '100%',
-                      height: '100%',
-                      borderRadius: '10px 10px 0 0 ',
-                    }}
-                    src={`${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
-                    effect="blur"
-                  />
+                      height: '219px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    },
+                  }}
+                  style={{
+                    objectFit: 'cover',
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '10px 10px 0 0 ',
+                  }}
+                  src={`${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
+                  effect="blur"
+                />
               )
           )}
         <Box
@@ -389,18 +389,18 @@ const NftCard: FC<NftCardProps> = ({
           >
             <Box w="100%">
               {nft?.metadata && (
-              <Text
-                maxWidth="100%"
-                color="#FFFFFF"
-                align="center"
-                fontSize="16px"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                whiteSpace="nowrap"
-                textAlign="start"
-              >
-                {nft?.metadata.name}
-              </Text>
+                <Text
+                  maxWidth="100%"
+                  color="#FFFFFF"
+                  align="center"
+                  fontSize="16px"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  textAlign="start"
+                >
+                  {nft?.metadata.name}
+                </Text>
               )}
             </Box>
           </Box>
@@ -435,8 +435,8 @@ const NftCard: FC<NftCardProps> = ({
                     {type === 'British' ? (
                       renderNmtNumberText((Number(nft?.auction?.price)).toString())
                     ) : null}
-                    {type && Number(nft?.auction?.price) > 0 ? 'NMT' : '' }
-                    {!type && Number(nft?.price) > 0 ? 'NMT' : '' }
+                    {type && Number(nft?.auction?.price) > 0 ? 'NMT' : ''}
+                    {!type && Number(nft?.price) > 0 ? 'NMT' : ''}
                   </Box>
                   {Number(nft?.auction?.price) || Number(nft?.price) ? (
                     <Box
@@ -449,7 +449,7 @@ const NftCard: FC<NftCardProps> = ({
                     >
                       {t('common.currentPrice')}
                     </Box>
-                  ) : '' }
+                  ) : ''}
                 </Flex>
               </Box>
             ) : (
@@ -514,7 +514,7 @@ const NftCard: FC<NftCardProps> = ({
                 whiteSpace="nowrap"
                 textAlign="start"
               >
-                {nft?.creator?.name || formatAddress(nft?.creator?.id) }
+                {nft?.creator?.name || formatAddress(nft?.creator?.id)}
               </Text>
             </Flex>
             {type && Number(events.day) > 2 ? (

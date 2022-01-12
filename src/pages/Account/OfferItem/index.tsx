@@ -28,33 +28,6 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
   getBlock().then((res) => {
     setRemainingTime(res);
   });
-
-  const timeBlock = (index: numer) => {
-    const times = (index - remainingTime) * 6;
-
-    let theTime = parseInt(times.toString(), 10);
-    let middle = 0;
-    let hour = 0;
-
-    if (theTime > 60) {
-      middle = parseInt((theTime / 60).toString(), 10);
-      theTime = parseInt((theTime % 60).toString(), 10);
-      if (middle > 60) {
-        hour = parseInt((middle / 60).toString(), 10);
-        middle = parseInt((middle % 60).toString(), 10);
-      }
-    }
-    let result = null;
-    // let result = `${parseInt(theTime.toString(), 10)}`;
-    // if (middle > 0) {
-    //   result = `${parseInt(middle.toString(), 10)}:${result}`;
-    // }
-    if (hour > 0) {
-      // result = `${parseInt(hour.toString(), 10)}:${result}`;
-      result = `${parseInt(hour.toString(), 10)}`;
-    }
-    return result;
-  };
   function getDateIn(dateTimeStamp: string) {
     let result;
     const minute = 1000 * 60;

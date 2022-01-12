@@ -57,9 +57,8 @@ const CreateCollection: FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [eventArr, setEventArr] = useState([{ Date: '', Subject: '', Link: '' }]);
 
-  const handleInputDate: ChangeEventHandler = (item) => {
-    // console.log(item);
-    eventArr[Number(item.target.id)].Date = item.target.value;
+  const handleInputDate = (item, id) => {
+    eventArr[Number(id)].Date = item;
     setEventArr(eventArr);
   };
   const handleInputSubject: ChangeEventHandler<HTMLInputElement> = (item) => {
@@ -305,18 +304,11 @@ const CreateCollection: FC = () => {
                     <EditFormTitle text="*Event" />
                     <EditFromSubTitle text="Some events in the artistic career, such as participating in exhibitions, auctions, media reports, etc." />
                   </label>
+                  { }
                   {Array.from(eventArr)?.map((item, index) => (
                     <>
                       <Flex mt="25px" />
-                      <LeftInput
-                        id={index.toString()}
-                        value={item.Date}
-                        onChange={handleInputDate}
-                        position="top"
-                        url="Date"
-                        urlOptional=""
-                      />
-                      {/* <LeftInputDate
+                      {/* <LeftInput
                         id={index.toString()}
                         value={item.Date}
                         onChange={handleInputDate}
@@ -324,6 +316,14 @@ const CreateCollection: FC = () => {
                         url="Date"
                         urlOptional=""
                       /> */}
+                      <LeftInputDate
+                        id={index.toString()}
+                        defaultValue={item.Date ? item.Date : ''}
+                        onChange={handleInputDate}
+                        position="top"
+                        url="Date"
+                        urlOptional=""
+                      />
                       <LeftInput
                         id={index.toString()}
                         value={item.Subject}
