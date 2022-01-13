@@ -37,7 +37,6 @@ const Artist = () => {
   const { t } = useTranslation();
   const { data: artistData, isLoading: userDataLoading, refetch: fetchUserData } = useArtist();
   const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : '');
-  console.log(artistData);
   return (
     <MainContainer title={`${t('Browsing.title')}|${t('Home.title')}`}>
       <Container
@@ -89,53 +88,63 @@ const Artist = () => {
                             </Center>
                           )}
                         />
-                        <Image
-                          position="absolute"
-                          background="#FFFFFF"
-                          width="120px"
-                          borderRadius="50%"
-                          height="120px"
-                          left="calc(50% - 60px)"
-                          top="60px"
-                          objectFit="cover"
-                          src={`${PINATA_SERVER}user/${item?.avatar}` || HeadPortrait.default}
-                          fallback={(
-                            <Center
-                              width="120px"
-                              height="120px"
-                              position="absolute"
-                              borderRadius="50%"
-                              left="calc(50% - 60px)"
-                              top="60px"
-                              objectFit="cover"
-                            >
-                              <Spinner />
-                            </Center>
-                          )}
-                        />
-                        <Text
-                          marginTop="60px"
-                          w="100%"
-                          fontSize="18px"
-                          fontFamily="TTHoves-DemiBold, TTHoves"
-                          fontWeight="600"
-                          color="rgba(0, 0, 0, 0.85)"
-                          lineHeight="22px"
-                          letterSpacing="1px"
-                          textAlign="center"
+                        <Link
+                          as={RouterLink}
+                          to={`/account/${item?.id}${item?.name ? `-${encodeURIComponent(item?.name)}` : ''}/profile`}
                         >
-                          {item?.name || formatAddress(item?.id)}
-                        </Text>
+                          <Image
+                            position="absolute"
+                            background="#FFFFFF"
+                            width="120px"
+                            borderRadius="50%"
+                            height="120px"
+                            left="calc(50% - 60px)"
+                            top="60px"
+                            objectFit="cover"
+                            src={`${PINATA_SERVER}user/${item?.avatar}` || HeadPortrait.default}
+                            fallback={(
+                              <Center
+                                width="120px"
+                                height="120px"
+                                position="absolute"
+                                borderRadius="50%"
+                                left="calc(50% - 60px)"
+                                top="60px"
+                                objectFit="cover"
+                              >
+                                <Spinner />
+                              </Center>
+                            )}
+                          />
+                        </Link>
+                        <Link
+                          as={RouterLink}
+                          to={`/account/${item?.id}${item?.name ? `-${encodeURIComponent(item?.name)}` : ''}/profile`}
+                        >
+                          <Text
+                            marginTop="60px"
+                            w="100%"
+                            fontSize="18px"
+                            fontFamily="TTHoves-DemiBold, TTHoves"
+                            fontWeight="600"
+                            color="rgba(0, 0, 0, 0.85)"
+                            lineHeight="22px"
+                            letterSpacing="1px"
+                            textAlign="center"
+                          >
+                            {item?.name || formatAddress(item?.id)}
+                          </Text>
+                        </Link>
                         <Flex
                           mt="16px"
-                          p="0 89px"
                           minHeight="24px"
-                          justifyContent="space-between"
+                          justifyContent="center"
                           alignItems="center"
                         >
                           {item?.instagram
                             ? (
                               <Link
+                                m="0 16.5px"
                                 target="_blank"
                                 href={`https://www.instagram.com/${item?.instagram}}`}
                               >
@@ -150,6 +159,7 @@ const Artist = () => {
                           {item?.instagram
                             ? (
                               <Link
+                                m="0 16.5px"
                                 target="_blank"
                                 href={`https://twitter.com/${item.twitter}}`}
                               >
@@ -164,6 +174,7 @@ const Artist = () => {
                           {item?.website
                             ? (
                               <Link
+                                m="0 16.5px"
                                 target="_blank"
                                 href={item.website}
                               >
@@ -177,36 +188,38 @@ const Artist = () => {
                             ) : ''}
 
                         </Flex>
-                        <Link
-                          as={RouterLink}
-                          to={`/account/${item?.id}${item?.name ? `-${encodeURIComponent(item?.name)}` : ''}/profile`}
-                        >
-                          <Text
-                            cursor="pointer"
-                            p="0 13px"
-                            marginTop="23px"
-                            w="100%"
-                            h="100px"
-                            fontSize="14px"
-                            fontFamily="PingFangSC-Semibold, PingFang SC"
-                            fontWeight="600"
-                            color="rgba(0, 0, 0, 0.85)"
-                            lineHeight="20px"
-                            letterSpacing="1px"
-                            overflow="hidden"
-                            textOverflow="ellipsis"
-                            display="-webkit-box"
-                            style={{
-                              WebkitBoxOrient: 'vertical',
-                              WebkitLineClamp: '5',
-                            }}
-                            // -webkit-box-orient= "vertical"
-                            // -webkit-line-clamp= "2"
-                            textAlign="start"
+                        {item.summary ? (
+                          <Link
+                            as={RouterLink}
+                            to={`/account/${item?.id}${item?.name ? `-${encodeURIComponent(item?.name)}` : ''}/profile`}
                           >
-                            {item.summary}
-                          </Text>
-                        </Link>
+                            <Text
+                              cursor="pointer"
+                              p="0 13px"
+                              marginTop="23px"
+                              w="100%"
+                              h="100px"
+                              fontSize="14px"
+                              fontFamily="PingFangSC-Semibold, PingFang SC"
+                              fontWeight="600"
+                              color="rgba(0, 0, 0, 0.85)"
+                              lineHeight="20px"
+                              letterSpacing="1px"
+                              overflow="hidden"
+                              textOverflow="ellipsis"
+                              display="-webkit-box"
+                              style={{
+                                WebkitBoxOrient: 'vertical',
+                                WebkitLineClamp: '5',
+                              }}
+                              // -webkit-box-orient= "vertical"
+                              // -webkit-line-clamp= "2"
+                              textAlign="start"
+                            >
+                              {item.summary}
+                            </Text>
+                          </Link>
+                        ) : ''}
                       </Flex>
                     ))}
                   </>

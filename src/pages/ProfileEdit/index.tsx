@@ -144,10 +144,10 @@ const CreateCollection: FC = () => {
       params.append('name', values.name);
       params.append('avatar', values.avatar || '');
       params.append('featured_image', values.featured_image || '');
-      params.append('twitter', values.twitter);
-      params.append('website', values.website || userData?.website);
-      params.append('instagram', values.email || userData?.instagram);
-      params.append('summary', values.summary || userData?.summary);
+      params.append('twitter', values.twitter || '');
+      params.append('website', values.website || '');
+      params.append('instagram', values.instagram || '');
+      params.append('summary', values.summary || '');
       params.append('events', eventArrLet || userData?.events);
       // const formData = new FormData();
       // formData.append('id', account?.address || '');
@@ -234,15 +234,15 @@ const CreateCollection: FC = () => {
             {formik.errors.email && formik.touched.email ? (
               <div style={{ color: 'red' }}>{formik.errors.email}</div>
             ) : null}
-            <label htmlFor="twitter">
+            {/* <label htmlFor="twitter">
               {' '}
               <EditFormTitle text={t('ProfileEdit.twitter')} />
               <EditFromSubTitle text={t('ProfileEdit.twitterRule')} />
             </label>
-            <FormInput id="twitter" value={formik.values.twitter} onChange={formik.handleChange} />
-            {formik.errors.twitter && formik.touched.twitter ? (
+            <FormInput id="twitter" value={formik.values.twitter} onChange={formik.handleChange} /> */}
+            {/* {formik.errors.twitter && formik.touched.twitter ? (
               <div style={{ color: 'red' }}>{formik.errors.twitter}</div>
-            ) : null}
+            ) : null} */}
             {!(whiteList?.indexOf(account?.address) < 0)
               ? (
                 <>

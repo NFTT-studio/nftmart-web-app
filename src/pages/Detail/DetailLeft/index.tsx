@@ -332,8 +332,8 @@ const DetailLeft: FC<Props> = (({
               <Box
                 className="markdown"
               >
-                {nftData?.nftInfo?.metadata.description
-                  ? <ReactMarkdown children={`${nftData?.nftInfo?.metadata.description}`} remarkPlugins={[remarkGfm]} /> : ''}
+                {nftData?.nftInfo?.metadata.description ? <ReactMarkdown children={`${nftData?.nftInfo?.metadata.description}`} remarkPlugins={[remarkGfm]} />
+                  : ''}
               </Box>
               {/* <Box
                 className="braft-output-content"
