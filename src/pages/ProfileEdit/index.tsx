@@ -96,7 +96,7 @@ const CreateCollection: FC = () => {
         setEventArr(arr);
       }
     } catch (e) {
-      console.log('xxxx解析错误');
+      console.log('');
     }
   }, [userData?.events]);
 

@@ -77,7 +77,9 @@ const Artist = () => {
                           w="100%"
                           h="120px"
                           objectFit="cover"
-                          src={item?.featured_image ? `${PINATA_SERVER}user/${item?.featured_image}` : AccountBanner.default}
+                          src={item?.featured_image
+                            ? `${PINATA_SERVER}user/${item?.featured_image}?imageMogr2/thumbnail/x120/interlace/0`
+                            : AccountBanner.default}
                           fallback={(
                             <Center
                               borderRadius="10px 10px 0 0"
