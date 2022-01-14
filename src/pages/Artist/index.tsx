@@ -14,6 +14,7 @@ import {
   Text,
   Image,
   Center,
+  SimpleGrid,
 } from '@chakra-ui/react';
 
 import { useTranslation } from 'react-i18next';
@@ -59,7 +60,13 @@ const Artist = () => {
             <>
               {artistData && artistData.length > 0
                 ? (
-                  <>
+                  <SimpleGrid
+                    display="grid"
+                    width="100%"
+                    minChildWidth="320px"
+                    // gridTemplateColumns="repeat(auto-fit, minmax(280px,320px))"
+                    spacing="20px"
+                  >
                     {artistData?.map((item, index) => (
                       <Flex
                         width="320px"
@@ -224,7 +231,7 @@ const Artist = () => {
                         ) : ''}
                       </Flex>
                     ))}
-                  </>
+                  </SimpleGrid>
                 )
                 : (
                   <Flex
