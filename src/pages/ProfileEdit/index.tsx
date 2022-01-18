@@ -295,14 +295,14 @@ const CreateCollection: FC = () => {
                   />
                   <label htmlFor="summary">
                     {' '}
-                    <EditFormTitle text="*Summary" />
-                    <EditFromSubTitle text="Introduction of artistic career, including education, tenure, awards, etc" />
+                    <EditFormTitle text={`*${t('ProfileEdit.Summary')}`} />
+                    <EditFromSubTitle text={t('ProfileEdit.SummaryRule')} />
                   </label>
                   <FromTextarea id="summary" onChange={formik.handleChange} value={formik.values.summary} />
                   <label htmlFor="event">
                     {' '}
-                    <EditFormTitle text="*Event" />
-                    <EditFromSubTitle text="Some events in the artistic career, such as participating in exhibitions, auctions, media reports, etc." />
+                    <EditFormTitle text={`*${t('ProfileEdit.Event')}`} />
+                    <EditFromSubTitle text={t('ProfileEdit.EventRule')} />
                   </label>
                   { }
                   {Array.from(eventArr)?.map((item, index) => (
@@ -321,7 +321,7 @@ const CreateCollection: FC = () => {
                         defaultValue={item.Date ? item.Date : ''}
                         onChange={handleInputDate}
                         position="top"
-                        url="Date"
+                        url={t('ProfileEdit.Date')}
                         urlOptional=""
                       />
                       <LeftInput
@@ -329,7 +329,7 @@ const CreateCollection: FC = () => {
                         value={item.Subject}
                         onChange={handleInputSubject}
                         position=""
-                        url="Subject"
+                        url={t('ProfileEdit.Subject')}
                         urlOptional=""
                       />
                       <LeftInput
@@ -337,8 +337,8 @@ const CreateCollection: FC = () => {
                         value={item.Link}
                         onChange={handleInputLink}
                         position="bottom"
-                        url="Link"
-                        urlOptional="(Optional)"
+                        url={t('ProfileEdit.Link')}
+                        urlOptional={t('ProfileEdit.Optional')}
                       />
                     </>
                   ))}
@@ -354,7 +354,8 @@ const CreateCollection: FC = () => {
                     onClick={addMore}
                     cursor="pointer"
                   >
-                    +Add
+                    +
+                    {t('ProfileEdit.Add')}
                   </Text>
                 </>
               ) : ''}

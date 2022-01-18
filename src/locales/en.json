@@ -65,7 +65,7 @@
       "navLatestCreate": "Not for sale",
       "navLatestStrike": "Sold Recently",
       "buynmt": "Buy NMT",
-      "Artist": "Artist",
+      "Artist": "Artists",
       "navCreate": "Create"
     }
   },
@@ -329,6 +329,15 @@
     "twitter": "Twitter",
     "twitterRule": "80 characters or less.",
     "featuredImage": "Banner image",
+    "Summary": "Summary",
+    "SummaryRule": "Introduction of artistic career, including education, tenure, awards, etc",
+    "Event": "Event",
+    "EventRule": "Some events in the artistic career, such as participating in exhibitions, auctions, media reports, etc.",
+    "Date": "Date",
+    "Subject": "Subject",
+    "Link": "Link",
+    "Optional": "Optional",
+    "Add": "Add",
     "featuredImageRule": "This picture will be displayed on your personal homepage, 1440 x 400 recommended"
   },
   "class": {

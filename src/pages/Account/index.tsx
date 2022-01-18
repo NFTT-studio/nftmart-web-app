@@ -120,11 +120,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
     }
     if (window.location.href.indexOf('collections') > -1) {
       historyUrl(idTab, '/collections');
-      return;
     }
-    if (window.location.href.indexOf('profile') > -1) {
-      historyUrl(idTab, '/profile');
-    }
+    // if (window.location.href.indexOf('profile') > -1) {
+    //   historyUrl(idTab, '/profile');
+    // }
   }
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
@@ -222,7 +221,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
         setEventArr(arr);
       }
     } catch (e) {
-      console.log('xxxx解析错误');
+      console.log('');
     }
   }, [userData?.events]);
   useEffect(() => {
@@ -351,6 +350,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       title: 'Artist Profile',
       num: '',
       requiredWhitelist: true,
+      show: !!userData?.summary,
     },
     {
       id: '0',
@@ -359,6 +359,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       title: t('Account.myWallet'),
       num: userData?.ownerNftscount,
       requiredWhitelist: false,
+      show: true,
     },
     {
       id: '1',
@@ -367,6 +368,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       title: t('Account.Created'),
       num: userData?.createdNftCount,
       requiredWhitelist: true,
+      show: true,
     },
     {
       id: '2',
@@ -375,6 +377,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       title: t('Account.Stars'),
       num: nftsDataCollecte?.pages[0]?.pageInfo?.totalNum,
       requiredWhitelist: false,
+      show: true,
     },
     {
       id: '3',
@@ -383,6 +386,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       title: t('Account.offers'),
       num: Offerreceive?.pages[0].pageInfo.totalNum,
       requiredWhitelist: false,
+      show: true,
     },
     {
       id: '4',
@@ -391,12 +395,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       title: t('Account.collections'),
       num: userData?.createdClassCount,
       requiredWhitelist: true,
+      show: true,
     },
   ];
 
   let filteredTABS = TABS;
   if (account && whiteList?.indexOf(address) < 0) {
     filteredTABS = TABS.filter((nav) => nav.requiredWhitelist === false);
+  } else {
+    filteredTABS = TABS.filter((nav) => nav.show === true);
   }
 
   return (
@@ -813,7 +820,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                       letterSpacing="1px"
                       textAlign="start"
                     >
-                      Summary
+                      {t('ProfileEdit.Summary')}
                     </Text>
                     <Text
                       mt="15px"
@@ -840,7 +847,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                       letterSpacing="1px"
                       textAlign="start"
                     >
-                      Event
+                      {t('ProfileEdit.Event')}
                     </Text>
                     {eventArr?.map((item, index) => (
                       <Flex

@@ -334,6 +334,15 @@
     "twitter": "推特",
     "twitterRule": "80个字符以内。",
     "featuredImage": "题图",
+    "Summary": "介绍",
+    "SummaryRule": "介绍艺术生涯，包括教育、任职、获奖等",
+    "Event": "活动",
+    "EventRule": "艺术生涯中的一些活动，比如参加展览、拍卖、媒体报道等",
+    "Date": "时间",
+    "Subject": "名称/主题",
+    "Link": "链接",
+    "Optional": "可选",
+    "Add": "增加",
     "featuredImageRule": "此图片将显示在您的个人主页上，建议 1440 x 400"
   },
   "class": {

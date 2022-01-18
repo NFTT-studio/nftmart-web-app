@@ -160,7 +160,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const formik = useFormik({
     initialValues: {
       price: Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.price) : '',
-      deposits: '',
+      deposits: selectId === 0 && Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.pledge) : '',
       dutchDeposits: '',
       englishDeposits: '',
       startingPrice: '',
@@ -1141,7 +1141,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               color: '#000000',
                               border: '1px solid #000000',
                             }}
-                      // placeholder={t('SellSetting.price')}
+                            // placeholder={t('SellSetting.price')}
                             _placeholder={{
                               color: '#999999',
                               fontSize: '12px',
@@ -1721,7 +1721,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                               color: '#000000',
                               border: '1px solid #000000',
                             }}
-                          // placeholder={t('SellSetting.price')}
+                            // placeholder={t('SellSetting.price')}
                             _placeholder={{
                               color: '#999999',
                               fontSize: '12px',

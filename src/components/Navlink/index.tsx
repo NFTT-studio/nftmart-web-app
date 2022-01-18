@@ -49,12 +49,12 @@ const NavLink: FC<NavLinkProps> = ({ address }) => {
       requiredLogin: false,
       requiredWhitelist: false,
     },
-    {
-      title: 'common.nav.Artist',
-      path: '/artist',
-      requiredLogin: false,
-      requiredWhitelist: false,
-    },
+    // {
+    //   title: 'common.nav.Artist',
+    //   path: '/artist',
+    //   requiredLogin: false,
+    //   requiredWhitelist: false,
+    // },
     {
       title: 'common.nav.buynmt',
       path: i18n.language === 'zh' ? 'https://www.gate.io/cn/trade/NMT_USDT' : 'https://www.gate.io/en/trade/NMT_USDT',
