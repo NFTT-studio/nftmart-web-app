@@ -51,6 +51,9 @@ const obj = {
     '.swiper-container': {
       width: '100%',
     },
+    '.swiper-wrapper': {
+      width: '207px !important',
+    },
     '.react-date-picker': {
       width: '100%',
       height: '100%',
@@ -132,6 +135,14 @@ const obj = {
       borderRadius: '50%',
       border: '1px solid #FFFFFF',
     },
+    '.userAvatarh5 svg': {
+      marginRight: '4px',
+      background: '#FFFFFF',
+      width: 'auto !important',
+      height: '17px !important',
+      borderRadius: '50%',
+      border: '1px solid #FFFFFF',
+    },
     '.ownerAvatar svg': {
       marginRight: '4px',
       background: '#FFFFFF',
@@ -140,10 +151,26 @@ const obj = {
       borderRadius: '50%',
       border: '1px solid #D3D5DC',
     },
+    '.ownerAvatarh5 svg': {
+      marginRight: '4px',
+      background: '#FFFFFF',
+      width: '25px !important',
+      height: 'auto !important',
+      borderRadius: '50%',
+      border: '1px solid #D3D5DC',
+    },
     '.creatorAvatar svg': {
       marginRight: '4px',
       background: '#FFFFFF',
-      width: '22px !important',
+      width: '50px !important',
+      height: 'auto !important',
+      borderRadius: '50%',
+      border: '1px solid #D3D5DC',
+    },
+    '.creatorAvatarH5 svg': {
+      marginRight: '4px',
+      background: '#FFFFFF',
+      width: '25px !important',
       height: 'auto !important',
       borderRadius: '50%',
       border: '1px solid #D3D5DC',

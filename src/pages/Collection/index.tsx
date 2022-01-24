@@ -19,6 +19,7 @@ import {
   useToast,
   Modal,
   ModalOverlay,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { without } from 'lodash';
@@ -73,6 +74,7 @@ const ICONS = [
 ];
 
 const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) => {
+  const [isLargerThan700] = useMediaQuery('(min-width: 700px)');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isShowDel, setIsShowDel] = useState(false);
   const { t } = useTranslation();
@@ -156,7 +158,7 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
             <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
           </Center>
         )
-        : (
+        : isLargerThan700 ? (
           <MainContainer title={`${collectionsData?.collection?.metadata.name}|${t('Home.title')}`}>
             {isPerson ? (
               <Flex
@@ -670,6 +672,337 @@ const Collection = ({ match }: RouteComponentProps<{ collectionId: string }>) =>
               <ModalOverlay />
             </Modal>
 
+          </MainContainer>
+        ) : (
+          <MainContainer title={`${collectionsData?.collection?.metadata.name}|${t('Home.title')}`}>
+            <Flex w="100%" position="relative">
+              <Box
+                w="100vw"
+              >
+                <Image
+                  width="100%"
+                  height="129px"
+                  objectFit="cover"
+                  src={collectionsData?.collection?.metadata?.banner
+                    ? `${PINATA_SERVER}banner/${collectionsData?.collection?.metadata?.banner}`
+                    : CollectionBackground.default}
+                  alt="banner"
+                  fallback={(
+                    <Center width="100%" height="129px">
+                      <Spinner />
+                    </Center>
+                  )}
+                />
+              </Box>
+              <Avatar
+                position="absolute"
+                left="calc(50% - 50px)"
+                bottom="-50px"
+                border="3px solid #FFFFFF"
+                src={`${PINATA_SERVER}logo/${collectionsData?.collection?.metadata.logoUrl}`}
+                w="100px"
+                h="100px"
+                boxShadow="0px 6px 20px 0px #D3D5DC"
+                fallback={(
+                  <Center width="108px" height="108px">
+                    <Spinner />
+                  </Center>
+                )}
+              />
+            </Flex>
+            <Text
+              mt="60px"
+              fontSize="23px"
+              fontFamily="TTHoves-DemiBold, TTHoves"
+              fontWeight="bold"
+              color="#000000"
+              lineHeight="28px"
+              letterSpacing="1px"
+            >
+              {collectionsData?.collection?.metadata.name}
+            </Text>
+            {dataCreator ? (
+              <Flex alignItems="center" m="10px 0">
+                <Link
+                  as={RouterLink}
+                  to={`/account/${collectionsData?.collection?.creator_id}${dataCreator?.name ? `-${encodeURIComponent(dataCreator?.name)}` : ''}/owned`}
+                >
+                  {dataCreator?.avatar ? (
+                    <Image
+                      mr="4px"
+                      w="25px"
+                      h="auto"
+                      borderRadius="50%"
+                      border="1px solid #D3D5DC"
+                      src={`${PINATA_SERVER}user/${dataCreator?.avatar}`}
+                    />
+                  ) : (
+                    <Identicon
+                      className="creatorAvatarH5"
+                      value={collectionsData?.collection?.creator_id}
+                    />
+                  )}
+                </Link>
+                <Text
+                  fontSize="8px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#999999"
+                  lineHeight="16px"
+                >
+                  <Text
+                    fontSize="8px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#999999"
+                    display="flex"
+                    flexDirection="row"
+                  >
+                    {t('Detail.createdBy')}
+                    <Link
+                      as={RouterLink}
+                      to={`/account/${collectionsData?.collection?.creator_id}${dataCreator?.name ? `-${dataCreator?.name}` : ''}/owned`}
+                      m="0 3px"
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="Bold"
+                      color="#0091FF"
+                    >
+                      {dataCreator?.name || formatAddress(collectionsData?.collection?.creator_id)}
+                    </Link>
+                  </Text>
+                </Text>
+              </Flex>
+            ) : null}
+            <Box
+              p="0 26px"
+              className="markdown"
+            >
+              <ReactMarkdown children={`${collectionsData?.collection?.metadata.description}`} remarkPlugins={[remarkGfm]} />
+            </Box>
+            <Flex
+              mt="25px"
+            >
+              {newLink.map((item, index) => (
+                <Link
+                  target="_blank"
+                  href={item.link}
+                >
+                  <Box
+                    key="index"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Image
+                      ml={index === 0 ? '' : '26px'}
+                      w="22px"
+                      h="22px"
+                      src={item.src}
+                    />
+                  </Box>
+
+                </Link>
+              ))}
+            </Flex>
+            <Flex
+              m="25px 0"
+              width="100%"
+              flexDirection="row"
+              justifyContent="center"
+            >
+              <Flex
+                width="64px"
+                flexDirection="row"
+                justifyContent="flex-end"
+              >
+                <Flex
+                  mr="5px"
+                  fontSize="14px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#000000"
+                  lineHeight="16px"
+                  alignItems="center"
+                >
+                  {nftsData?.pages[0].pageInfo.totalNum || 0}
+                </Flex>
+                <Flex
+                  fontSize="14px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#000000"
+                  lineHeight="16px"
+                  alignItems="center"
+                >
+                  {t('class.Items')}
+                </Flex>
+              </Flex>
+              <Flex
+                color="#979797"
+                width="20px"
+                flexDirection="row"
+                justifyContent="center"
+              >
+                |
+              </Flex>
+              <Flex
+                width="64px"
+                flexDirection="row"
+                justifyContent="flex-start"
+              >
+                <Flex
+                  mr="5px"
+                  fontSize="14px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#000000"
+                  lineHeight="16px"
+                  alignItems="center"
+                >
+                  {collectionsData?.collection?.owner_count || 0}
+                </Flex>
+                <Flex
+                  fontSize="14px"
+                  fontFamily="TTHoves-Regular, TTHoves"
+                  fontWeight="400"
+                  color="#000000"
+                  lineHeight="16px"
+                  alignItems="center"
+                >
+                  {t('class.Owners')}
+                </Flex>
+              </Flex>
+              {/* <Flex
+                    width="25%"
+                    flexDirection="column"
+                    alignContent="center"
+                  >
+                    <Flex
+                      fontSize="14px"
+                      fontFamily="TTHoves-Thin, TTHoves"
+                      fontWeight="100"
+                      color="#000000"
+                      lineHeight="16px"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      {t('class.Viewers')}
+                    </Flex>
+                    <Flex
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#000000"
+                      lineHeight="16px"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      {collectionsData?.collection?.view_count || 0}
+                    </Flex>
+                  </Flex> */}
+              {/* <Flex
+                    width="25%"
+                    flexDirection="column"
+                    alignContent="center"
+                  >
+                    <Flex
+                      fontSize="14px"
+                      fontFamily="TTHoves-Thin, TTHoves"
+                      fontWeight="100"
+                      color="#000000"
+                      lineHeight="16px"
+                      justifyContent="flex-end"
+                      alignItems="center"
+                    >
+                      {t('class.Stars')}
+                    </Flex>
+                    <Flex
+                      fontSize="14px"
+                      fontFamily="TTHoves-Regular, TTHoves"
+                      fontWeight="400"
+                      color="#000000"
+                      lineHeight="16px"
+                      justifyContent="flex-end"
+                      alignItems="center"
+                    >
+                      {collectionsData?.collection?.collect_count || 0}
+                    </Flex>
+                  </Flex> */}
+
+            </Flex>
+            <Box
+              width="calc(100% - 40px)"
+              height="1px"
+              background="#979797"
+              boxSizing="border-box"
+            />
+            {nftsData?.pages[0].pageInfo.totalNum
+              ? (
+                <InfiniteScroll
+                  dataLength={nftsData?.pages.length * DEFAULT_PAGE_LIMIT}
+                  next={fetchNextPage}
+                  hasMore={nftsData?.pages.length * DEFAULT_PAGE_LIMIT < nftsData?.pages[0].pageInfo.totalNum}
+                  loader={<h4>Loading...</h4>}
+                  initialScrollY={1}
+                >
+                  <Flex
+                    width="100%"
+                    flexDirection="column"
+                    alignItems="center"
+                  >
+                    {nftsData?.pages.map((page) => page.nfts.map(
+                      (nft) => (
+                        <Flex
+                          width="100%"
+                          mt="25px"
+                          flexDirection="column"
+                          alignItems="center"
+                          key={nft?.metadata.name}
+                        >
+                          <OrderCard nft={nft} remainingTime={remainingTime} />
+                        </Flex>
+                      ),
+                    ))}
+                  </Flex>
+                </InfiniteScroll>
+              ) : (
+                nftsIsLoading ? (
+                  <Center
+                    width="100%"
+                    height="500px"
+                  >
+                    <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                  </Center>
+                )
+                  : (
+                    <Flex
+                      width="100%"
+                      height="500px"
+                      background="#FFFFFF"
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <Image
+                        w="150px"
+                        h="100px"
+                        borderStyle="dashed"
+                        src={Emptyimg.default}
+                      />
+                      <Text
+                        mt="10px"
+                        fontSize="14px"
+                        fontFamily="TTHoves-Regular, TTHoves"
+                        fontWeight="400"
+                        color="#999999"
+                        lineHeight="20px"
+                      >
+                        {t('common.noDataYet')}
+                      </Text>
+                    </Flex>
+                  )
+              )}
           </MainContainer>
         )}
     </>

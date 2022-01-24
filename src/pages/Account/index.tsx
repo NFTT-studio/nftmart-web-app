@@ -21,6 +21,8 @@ import {
   Link,
   Center,
   Spinner,
+  useMediaQuery,
+  Avatar,
 } from '@chakra-ui/react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MainContainer from '../../layout/MainContainer';
@@ -58,6 +60,8 @@ import Sort from '../../constants/Sort';
 import useUser from '../../hooks/reactQuery/useUser';
 
 const Account = ({ match }: RouteComponentProps<{ address: string, username: string }>) => {
+  const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : '');
+  const [isLargerThan700] = useMediaQuery('(min-width: 700px)');
   const history = useHistory();
   const { t } = useTranslation();
   const offersMadeButton = [
@@ -407,508 +411,575 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
   }
 
   return (
-    <MainContainer title={`${t(`Account.${urlName}`)}-${userData?.name || address}|${t('Home.title')}`}>
-      <Flex maxWidth="1400px" flexDirection="column" position="relative">
-        <Box
-          maxWidth="1400px"
-          w="100vw"
-          minHeight="200px"
-        >
-          <Image
-            w="100%"
-            maxWidth="1400px"
-            h="auto"
-            src={userData?.featured_image ? `${PINATA_SERVER}user/${userData?.featured_image}` : AccountBanner.default}
-            fallback={(
-              <Center width="100%" height="300px">
-                <Spinner />
-              </Center>
-            )}
-          />
-        </Box>
-        {userData?.avatar ? (
-          <Image
-            position="absolute"
-            bottom="-54px"
-            border="3px solid #FFFFFF"
-            m="0 40px"
-            boxShadow="0px 6px 20px 0px #D3D5DC"
-            background="#FFFFFF"
-            width="auto"
-            borderRadius="50%"
-            height="108px"
-            objectFit="cover"
-            src={`${PINATA_SERVER}user/${userData?.avatar}` || HeadPortrait.default}
-            fallback={(
-              <Center width="108px" height="108px">
-                <Spinner />
-              </Center>
-            )}
-          />
-        ) : (
-          <Identicon
-            className="identicon"
-            value={address}
-            style={{
-              width: 'auto !important',
-              height: '108px !important',
-            }}
-          />
-        )}
-      </Flex>
-      <Flex
-        maxWidth="1400px"
-        w="100%"
-        flexDirection="row"
-        justifyContent="space-between"
-        padding="81px 40px 20px 40px"
-      >
-        <Flex width="21.8%" mr="20px" direction="column">
-          {userDataLoading ? (
-            <Center width="100%" height="100px">
-              <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
-            </Center>
-          ) : (
-            <Headers userData={userData} />
-          )}
-          <Flex
-            mt="53px"
-            w="100%"
-            display="flex"
-            flexDirection="column"
-            justifyContent="flex-start"
-            alignItems="flex-start"
-          >
-            {filteredTABS.map((item) => (
-              <Button
-                w="75%"
-                key={item.id}
-                id={item.id}
-                mr="40px"
-                mb="23px"
-                height="36px"
-                borderRadius="2px"
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
-                alignItems="center"
-                onClick={handletabSelect}
-                backgroundColor={selectTabId === Number(item.id) ? '#000000' : '#FFFFFF'}
+    <>
+      {isLargerThan700
+        ? (
+          <MainContainer title={`${t(`Account.${urlName}`)}-${userData?.name || address}|${t('Home.title')}`}>
+            <Flex maxWidth="1400px" flexDirection="column" position="relative">
+              <Box
+                maxWidth="1400px"
+                w="100vw"
+                minHeight="200px"
               >
-                <Flex h="100%" alignItems="center">
-                  <Image w="22px" h="auto" mr="5px" src={selectTabId === Number(item.id) ? item.iconS : item.icon} alt="" />
-                  <Text
-                    fontSize="16px"
-                    fontFamily="TTHoves-Medium, TTHoves"
-                    fontWeight="500"
-                    lineHeight="0px"
-                    color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
-                  >
-                    {item.title}
-                  </Text>
-                </Flex>
-                <Text
-                  fontSize="16px"
-                  fontFamily="TTHoves-Medium, TTHoves"
-                  fontWeight="500"
-                  lineHeight="0px"
-                  color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
-                >
-                  {item.num}
-                </Text>
-              </Button>
-            ))}
-          </Flex>
-        </Flex>
-        <Flex maxWidth="1015px" w="100%" direction="column">
-          {selectTabId === 0 ? (
-            <NftItem
-              nftsData={nftsData}
-              nftsIsLoading={nftsIsLoading}
-              fetchNextPageNftsData={fetchNextPageNftsData}
-              remainingTime={remainingTime}
-            />
-          ) : ''}
-          {selectTabId === 1 ? (
-            <NftItem
-              nftsData={nftsDataCreate}
-              nftsIsLoading={nftsIsLoading}
-              fetchNextPageNftsData={fetchNextPageNftsDataCreate}
-              remainingTime={remainingTime}
-            />
-          ) : ''}
-          {selectTabId === 2 ? (
-            <NftItem
-              nftsData={nftsDataCollecte}
-              nftsIsLoading={nftsIsLoading}
-              fetchNextPageNftsData={fetchNextPageNftsDataCollecte}
-              remainingTime={remainingTime}
-            />
-          ) : ''}
-          {selectTabId === 3 ? (
-            <Flex width="100%" flexDirection="column" justifyContent="flex-start">
-              <Flex h="40px">
-                {offersMadeButton.map((item, index) => (
-                  <Button
-                    mr="10px"
-                    key={item.id}
-                    id={item.id}
-                    minWidth="123px"
-                    height="40px"
-                    borderRadius="4px 4px 0px 0px"
-                    border="1px solid #000000"
-                    onClick={handleButtonSelect}
-                    backgroundColor={offersMadeButtonId === index ? '#000000' : '#FFFFFF'}
-                  >
-                    <Text
-                      fontSize="14px"
-                      fontFamily="TTHoves-Medium, TTHoves"
-                      fontWeight="500"
-                      color={offersMadeButtonId === index ? '#FFFFFF' : '#000000'}
-                      lineHeight="16px"
-                    >
-                      {item.title}
-                    </Text>
-                  </Button>
-                ))}
-              </Flex>
-              <Flex width="100%" flexDirection="column" textAlign="center">
-                <Flex
-                  p="0 20px"
-                  width="100%"
-                  height="40px"
-                  flexFlow="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  flexDirection="row"
-                  borderBottom="1px solid #E5E5E5"
-                >
-                  <Text
-                    width="224px"
-                    textAlign="left"
-                    fontSize="12px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#000000"
-                    lineHeight="20px"
-                  >
-                    {t('Account.Item')}
-                  </Text>
-                  <Text
-                    width="80px"
-                    fontSize="12px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#000000"
-                    lineHeight="20px"
-                  >
-                    {t('Account.unitPrice')}
-                  </Text>
-                  <Text
-                    width="60px"
-                    fontSize="12px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#000000"
-                    lineHeight="20px"
-                  >
-                    {t('Account.quantity')}
-                  </Text>
-                  {offersMadeButtonId === 1 ? (
-                    <Text
-                      width="60px"
-                      fontSize="12px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#000000"
-                      lineHeight="20px"
-                    >
-                      {t('Account.from')}
-                    </Text>
-                  ) : ''}
-                  <Text
-                    width="120px"
-                    textAlign="right"
-                    fontSize="12px"
-                    fontFamily="TTHoves-Regular, TTHoves"
-                    fontWeight="400"
-                    color="#000000"
-                    lineHeight="20px"
-                  >
-                    {t('Account.expiration')}
-                  </Text>
-                </Flex>
-                {offersMadeButtonId === 0
-                  ? (
-                    <>
-                      {Offersend?.pages.length ? (
-                        <InfiniteScroll
-                          dataLength={Offersend?.pages.length * DEFAULT_PAGE_LIMIT}
-                          next={fetchNextPageOffersend}
-                          hasMore={Offersend?.pages.length
-                            * DEFAULT_PAGE_LIMIT < Offersend?.pages[0].pageInfo.totalNum}
-                          loader={<h4>Loading...</h4>}
-                          initialScrollY={1}
-                        >
-                          {Offersend?.pages.map((page) => page?.offers?.map((item) => (
-                            <Box
-                              key={item?.nft_id}
-                              width="100%"
-                            >
-                              <OfferItem offers={item} hide={false} />
-                            </Box>
-                          )))}
-                        </InfiniteScroll>
-                      ) : (
-                        <Flex
-                          width="100%"
-                          height="260px"
-                          background="#FFFFFF"
-                          flexDirection="column"
-                          justifyContent="center"
-                          alignItems="center"
-                        >
-                          <Image
-                            w="150px"
-                            h="100px"
-                            border="1px solid #999999"
-                            borderStyle="dashed"
-                            src={Emptyimg.default}
-                          />
-                          <Text
-                            mt="10px"
-                            fontSize="14px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#999999"
-                            lineHeight="20px"
-                          >
-                            {t('common.noDataYet')}
-                          </Text>
-                        </Flex>
-                      )}
-                    </>
-                  )
-                  : null}
-                {offersMadeButtonId === 1
-                  ? (
-                    <>
-                      {Offerreceive?.pages.length ? (
-                        <InfiniteScroll
-                          dataLength={Offerreceive?.pages.length * DEFAULT_PAGE_LIMIT}
-                          next={fetchNextPageOfferreceive}
-                          hasMore={Offerreceive?.pages.length
-                            * DEFAULT_PAGE_LIMIT < Offerreceive?.pages[0].pageInfo.totalNum}
-                          loader={<h4>Loading...</h4>}
-                          initialScrollY={1}
-                        >
-                          {Offerreceive?.pages.map((page) => page?.offers?.map((item) => (
-                            <Box
-                              key={item?.nft_id}
-                              width="100%"
-                            >
-                              <OfferItem offers={item} hide />
-                            </Box>
-                          )))}
-                        </InfiniteScroll>
-                      ) : (
-                        <Flex
-                          width="100%"
-                          height="260px"
-                          background="#FFFFFF"
-                          flexDirection="column"
-                          justifyContent="center"
-                          alignItems="center"
-                        >
-                          <Image
-                            w="150px"
-                            h="100px"
-                            border="1px solid #999999"
-                            borderStyle="dashed"
-                            src={Emptyimg.default}
-                          />
-                          <Text
-                            mt="10px"
-                            fontSize="14px"
-                            fontFamily="TTHoves-Regular, TTHoves"
-                            fontWeight="400"
-                            color="#999999"
-                            lineHeight="20px"
-                          >
-                            {t('common.noDataYet')}
-                          </Text>
-                        </Flex>
-                      )}
-                    </>
-                  )
-                  : null}
-                {/* {offersMadeArr ? offersMadeArr?.orders?.map((item, index) => (
-
-                    )) : ''} */}
-              </Flex>
+                <Image
+                  w="100%"
+                  maxWidth="1400px"
+                  h="auto"
+                  src={userData?.featured_image ? `${PINATA_SERVER}user/${userData?.featured_image}` : AccountBanner.default}
+                  fallback={(
+                    <Center width="100%" height="300px">
+                      <Spinner />
+                    </Center>
+                  )}
+                />
+              </Box>
+              {userData?.avatar ? (
+                <Image
+                  position="absolute"
+                  bottom="-54px"
+                  border="3px solid #FFFFFF"
+                  m="0 40px"
+                  boxShadow="0px 6px 20px 0px #D3D5DC"
+                  background="#FFFFFF"
+                  width="auto"
+                  borderRadius="50%"
+                  height="108px"
+                  objectFit="cover"
+                  src={`${PINATA_SERVER}user/${userData?.avatar}` || HeadPortrait.default}
+                  fallback={(
+                    <Center width="108px" height="108px">
+                      <Spinner />
+                    </Center>
+                  )}
+                />
+              ) : (
+                <Identicon
+                  className="identicon"
+                  value={address}
+                  style={{
+                    width: 'auto !important',
+                    height: '108px !important',
+                  }}
+                />
+              )}
             </Flex>
-          ) : ''}
-          {selectTabId === 4 ? (
-            <>
-              {collectionsIsLoading
-                ? (
-                  <Center width="100%" height="500px">
+            <Flex
+              maxWidth="1400px"
+              w="100%"
+              flexDirection="row"
+              justifyContent="space-between"
+              padding="81px 40px 20px 40px"
+            >
+              <Flex width="21.8%" mr="20px" direction="column">
+                {userDataLoading ? (
+                  <Center width="100%" height="100px">
                     <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                   </Center>
-                )
-                : (
-                  <Container>
-                    <SimpleGrid
-                      columns={[1, 2, 3, 3, 4]}
-                      spacing={6}
-                    >
-                      {isPerson ? <CreateCard account={account} /> : ''}
-                      {collectionsData ? collectionsData.collections.map((item) => (
-                        <Link
-                          as={RouterLink}
-                          to={`/collection/${item.id}-${encodeURIComponent(item.metadata.name)}`}
-                        >
-                          <Flex
-                            key={item.id}
-                            width="230px"
-                            borderRadius="4px"
-                            border="1px solid #000000"
-                            flexDirection="column"
-                          >
-                            <Image w="100%" h="230px" src={`${PINATA_SERVER}logo/${item.metadata?.logoUrl}`} alt="" />
-                            <Text
-                              w="100%"
-                              background="#000000"
-                              p="0 16px"
-                              lineHeight="54px"
-                              fontSize="16px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#FFFFFF"
-                              overflow="hidden"
-                              textOverflow="ellipsis"
-                              whiteSpace="nowrap"
-                            >
-                              {item.metadata?.name}
-                            </Text>
-                          </Flex>
-                        </Link>
-                      )) : ''}
-                    </SimpleGrid>
-                  </Container>
+                ) : (
+                  <Headers userData={userData} />
                 )}
-            </>
-          ) : ''}
-          {selectTabId === 5 ? (
-            <>
-              {userDataLoading
-                ? (
-                  <Center width="100%" height="500px">
-                    <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
-                  </Center>
-                )
-                : (
-                  <Container>
-                    <Text
-                      w="100%"
-                      fontStyle="oblique"
-                      fontSize="24px"
-                      fontFamily="TTHoves-MediumItalic, TTHoves"
-                      fontWeight="bold"
-                      color="rgba(0, 0, 0, 0.85)"
-                      lineHeight="29px"
-                      letterSpacing="1px"
-                      textAlign="start"
+                <Flex
+                  mt="53px"
+                  w="100%"
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
+                  {filteredTABS.map((item) => (
+                    <Button
+                      w="75%"
+                      key={item.id}
+                      id={item.id}
+                      mr="40px"
+                      mb="23px"
+                      height="36px"
+                      borderRadius="2px"
+                      display="flex"
+                      flexDirection="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      onClick={handletabSelect}
+                      backgroundColor={selectTabId === Number(item.id) ? '#000000' : '#FFFFFF'}
                     >
-                      {t('ProfileEdit.Summary')}
-                    </Text>
-                    <Text
-                      mt="15px"
-                      w="100%"
-                      fontSize="16px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="rgba(0, 0, 0, 0.85)"
-                      lineHeight="28px"
-                      letterSpacing="1px"
-                      textAlign="start"
-                    >
-                      {userData?.summary}
-                    </Text>
-                    <Text
-                      mt="50px"
-                      w="100%"
-                      fontStyle="oblique"
-                      fontSize="24px"
-                      fontFamily="TTHoves-MediumItalic, TTHoves"
-                      fontWeight="bold"
-                      color="rgba(0, 0, 0, 0.85)"
-                      lineHeight="29px"
-                      letterSpacing="1px"
-                      textAlign="start"
-                    >
-                      {t('ProfileEdit.Event')}
-                    </Text>
-                    {eventArr?.map((item, index) => (
+                      <Flex h="100%" alignItems="center">
+                        <Image w="22px" h="auto" mr="5px" src={selectTabId === Number(item.id) ? item.iconS : item.icon} alt="" />
+                        <Text
+                          fontSize="16px"
+                          fontFamily="TTHoves-Medium, TTHoves"
+                          fontWeight="500"
+                          lineHeight="0px"
+                          color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
+                        >
+                          {item.title}
+                        </Text>
+                      </Flex>
+                      <Text
+                        fontSize="16px"
+                        fontFamily="TTHoves-Medium, TTHoves"
+                        fontWeight="500"
+                        lineHeight="0px"
+                        color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
+                      >
+                        {item.num}
+                      </Text>
+                    </Button>
+                  ))}
+                </Flex>
+              </Flex>
+              <Flex maxWidth="1015px" w="100%" direction="column">
+                {selectTabId === 0 ? (
+                  <NftItem
+                    nftsData={nftsData}
+                    nftsIsLoading={nftsIsLoading}
+                    fetchNextPageNftsData={fetchNextPageNftsData}
+                    remainingTime={remainingTime}
+                  />
+                ) : ''}
+                {selectTabId === 1 ? (
+                  <NftItem
+                    nftsData={nftsDataCreate}
+                    nftsIsLoading={nftsIsLoading}
+                    fetchNextPageNftsData={fetchNextPageNftsDataCreate}
+                    remainingTime={remainingTime}
+                  />
+                ) : ''}
+                {selectTabId === 2 ? (
+                  <NftItem
+                    nftsData={nftsDataCollecte}
+                    nftsIsLoading={nftsIsLoading}
+                    fetchNextPageNftsData={fetchNextPageNftsDataCollecte}
+                    remainingTime={remainingTime}
+                  />
+                ) : ''}
+                {selectTabId === 3 ? (
+                  <Flex width="100%" flexDirection="column" justifyContent="flex-start">
+                    <Flex h="40px">
+                      {offersMadeButton.map((item, index) => (
+                        <Button
+                          mr="10px"
+                          key={item.id}
+                          id={item.id}
+                          minWidth="123px"
+                          height="40px"
+                          borderRadius="4px 4px 0px 0px"
+                          border="1px solid #000000"
+                          onClick={handleButtonSelect}
+                          backgroundColor={offersMadeButtonId === index ? '#000000' : '#FFFFFF'}
+                        >
+                          <Text
+                            fontSize="14px"
+                            fontFamily="TTHoves-Medium, TTHoves"
+                            fontWeight="500"
+                            color={offersMadeButtonId === index ? '#FFFFFF' : '#000000'}
+                            lineHeight="16px"
+                          >
+                            {item.title}
+                          </Text>
+                        </Button>
+                      ))}
+                    </Flex>
+                    <Flex width="100%" flexDirection="column" textAlign="center">
                       <Flex
-                        mt="15px"
+                        p="0 20px"
+                        width="100%"
+                        height="40px"
+                        flexFlow="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        flexDirection="row"
+                        borderBottom="1px solid #E5E5E5"
                       >
                         <Text
-                          minWidth="100px"
-                          mr="15px"
-                          fontSize="16px"
-                          fontFamily="TTHoves-Italic, TTHoves"
-                          fontWeight="normal"
-                          color="rgba(0, 0, 0, 0.5)"
-                          lineHeight="28px"
-                          letterSpacing="1px"
-                          textAlign="start"
-                        >
-                          {format(item.Date)}
-                        </Text>
-                        <Box
-                          w="100%"
-                          fontSize="16px"
+                          width="224px"
+                          textAlign="left"
+                          fontSize="12px"
                           fontFamily="TTHoves-Regular, TTHoves"
                           fontWeight="400"
-                          color="rgba(0, 0, 0, 0.85)"
-                          lineHeight="28px"
-                          letterSpacing="1px"
-                          textAlign="start"
+                          color="#000000"
+                          lineHeight="20px"
                         >
-                          {item.Subject}
-                          {item.Link
-                            ? (
-                              <Link
-                                target="_blank"
-                                href={item.Link}
-                              >
-                                <Box
-                                  display="inline-block"
-                                  mr="15px"
-                                  fontSize="16px"
-                                  fontFamily=" TTHoves-Regular, TTHoves"
-                                  fontWeight="400"
-                                  color="#0091FF"
-                                  lineHeight="18px"
-                                  letterSpacing="1px"
-                                  textAlign="start"
-                                  ml="9px"
-                                >
-                                  Link
-                                </Box>
-                              </Link>
-                            ) : ''}
-                        </Box>
+                          {t('Account.Item')}
+                        </Text>
+                        <Text
+                          width="80px"
+                          fontSize="12px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#000000"
+                          lineHeight="20px"
+                        >
+                          {t('Account.unitPrice')}
+                        </Text>
+                        <Text
+                          width="60px"
+                          fontSize="12px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#000000"
+                          lineHeight="20px"
+                        >
+                          {t('Account.quantity')}
+                        </Text>
+                        {offersMadeButtonId === 1 ? (
+                          <Text
+                            width="60px"
+                            fontSize="12px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="20px"
+                          >
+                            {t('Account.from')}
+                          </Text>
+                        ) : ''}
+                        <Text
+                          width="120px"
+                          textAlign="right"
+                          fontSize="12px"
+                          fontFamily="TTHoves-Regular, TTHoves"
+                          fontWeight="400"
+                          color="#000000"
+                          lineHeight="20px"
+                        >
+                          {t('Account.expiration')}
+                        </Text>
                       </Flex>
-                    ))}
-                  </Container>
+                      {offersMadeButtonId === 0
+                        ? (
+                          <>
+                            {Offersend?.pages.length ? (
+                              <InfiniteScroll
+                                dataLength={Offersend?.pages.length * DEFAULT_PAGE_LIMIT}
+                                next={fetchNextPageOffersend}
+                                hasMore={Offersend?.pages.length
+                                  * DEFAULT_PAGE_LIMIT < Offersend?.pages[0].pageInfo.totalNum}
+                                loader={<h4>Loading...</h4>}
+                                initialScrollY={1}
+                              >
+                                {Offersend?.pages.map((page) => page?.offers?.map((item) => (
+                                  <Box
+                                    key={item?.nft_id}
+                                    width="100%"
+                                  >
+                                    <OfferItem offers={item} hide={false} />
+                                  </Box>
+                                )))}
+                              </InfiniteScroll>
+                            ) : (
+                              <Flex
+                                width="100%"
+                                height="260px"
+                                background="#FFFFFF"
+                                flexDirection="column"
+                                justifyContent="center"
+                                alignItems="center"
+                              >
+                                <Image
+                                  w="150px"
+                                  h="100px"
+                                  border="1px solid #999999"
+                                  borderStyle="dashed"
+                                  src={Emptyimg.default}
+                                />
+                                <Text
+                                  mt="10px"
+                                  fontSize="14px"
+                                  fontFamily="TTHoves-Regular, TTHoves"
+                                  fontWeight="400"
+                                  color="#999999"
+                                  lineHeight="20px"
+                                >
+                                  {t('common.noDataYet')}
+                                </Text>
+                              </Flex>
+                            )}
+                          </>
+                        )
+                        : null}
+                      {offersMadeButtonId === 1
+                        ? (
+                          <>
+                            {Offerreceive?.pages.length ? (
+                              <InfiniteScroll
+                                dataLength={Offerreceive?.pages.length * DEFAULT_PAGE_LIMIT}
+                                next={fetchNextPageOfferreceive}
+                                hasMore={Offerreceive?.pages.length
+                                  * DEFAULT_PAGE_LIMIT < Offerreceive?.pages[0].pageInfo.totalNum}
+                                loader={<h4>Loading...</h4>}
+                                initialScrollY={1}
+                              >
+                                {Offerreceive?.pages.map((page) => page?.offers?.map((item) => (
+                                  <Box
+                                    key={item?.nft_id}
+                                    width="100%"
+                                  >
+                                    <OfferItem offers={item} hide />
+                                  </Box>
+                                )))}
+                              </InfiniteScroll>
+                            ) : (
+                              <Flex
+                                width="100%"
+                                height="260px"
+                                background="#FFFFFF"
+                                flexDirection="column"
+                                justifyContent="center"
+                                alignItems="center"
+                              >
+                                <Image
+                                  w="150px"
+                                  h="100px"
+                                  border="1px solid #999999"
+                                  borderStyle="dashed"
+                                  src={Emptyimg.default}
+                                />
+                                <Text
+                                  mt="10px"
+                                  fontSize="14px"
+                                  fontFamily="TTHoves-Regular, TTHoves"
+                                  fontWeight="400"
+                                  color="#999999"
+                                  lineHeight="20px"
+                                >
+                                  {t('common.noDataYet')}
+                                </Text>
+                              </Flex>
+                            )}
+                          </>
+                        )
+                        : null}
+                      {/* {offersMadeArr ? offersMadeArr?.orders?.map((item, index) => (
+
+                  )) : ''} */}
+                    </Flex>
+                  </Flex>
+                ) : ''}
+                {selectTabId === 4 ? (
+                  <>
+                    {collectionsIsLoading
+                      ? (
+                        <Center width="100%" height="500px">
+                          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                        </Center>
+                      )
+                      : (
+                        <Container>
+                          <SimpleGrid
+                            columns={[1, 2, 3, 3, 4]}
+                            spacing={6}
+                          >
+                            {isPerson ? <CreateCard account={account} /> : ''}
+                            {collectionsData ? collectionsData.collections.map((item) => (
+                              <Link
+                                as={RouterLink}
+                                to={`/collection/${item.id}-${encodeURIComponent(item.metadata.name)}`}
+                              >
+                                <Flex
+                                  key={item.id}
+                                  width="230px"
+                                  borderRadius="4px"
+                                  border="1px solid #000000"
+                                  flexDirection="column"
+                                >
+                                  <Image w="100%" h="230px" src={`${PINATA_SERVER}logo/${item.metadata?.logoUrl}`} alt="" />
+                                  <Text
+                                    w="100%"
+                                    background="#000000"
+                                    p="0 16px"
+                                    lineHeight="54px"
+                                    fontSize="16px"
+                                    fontFamily="TTHoves-Regular, TTHoves"
+                                    fontWeight="400"
+                                    color="#FFFFFF"
+                                    overflow="hidden"
+                                    textOverflow="ellipsis"
+                                    whiteSpace="nowrap"
+                                  >
+                                    {item.metadata?.name}
+                                  </Text>
+                                </Flex>
+                              </Link>
+                            )) : ''}
+                          </SimpleGrid>
+                        </Container>
+                      )}
+                  </>
+                ) : ''}
+                {selectTabId === 5 ? (
+                  <>
+                    {userDataLoading
+                      ? (
+                        <Center width="100%" height="500px">
+                          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                        </Center>
+                      )
+                      : (
+                        <Container>
+                          <Text
+                            w="100%"
+                            fontStyle="oblique"
+                            fontSize="24px"
+                            fontFamily="TTHoves-MediumItalic, TTHoves"
+                            fontWeight="bold"
+                            color="rgba(0, 0, 0, 0.85)"
+                            lineHeight="29px"
+                            letterSpacing="1px"
+                            textAlign="start"
+                          >
+                            {t('ProfileEdit.Summary')}
+                          </Text>
+                          <Text
+                            mt="15px"
+                            w="100%"
+                            fontSize="16px"
+                            fontFamily="TTHoves-Regular, TTHoves"
+                            fontWeight="400"
+                            color="rgba(0, 0, 0, 0.85)"
+                            lineHeight="28px"
+                            letterSpacing="1px"
+                            textAlign="start"
+                          >
+                            {userData?.summary}
+                          </Text>
+                          <Text
+                            mt="50px"
+                            w="100%"
+                            fontStyle="oblique"
+                            fontSize="24px"
+                            fontFamily="TTHoves-MediumItalic, TTHoves"
+                            fontWeight="bold"
+                            color="rgba(0, 0, 0, 0.85)"
+                            lineHeight="29px"
+                            letterSpacing="1px"
+                            textAlign="start"
+                          >
+                            {t('ProfileEdit.Event')}
+                          </Text>
+                          {eventArr?.map((item, index) => (
+                            <Flex
+                              mt="15px"
+                            >
+                              <Text
+                                minWidth="100px"
+                                mr="15px"
+                                fontSize="16px"
+                                fontFamily="TTHoves-Italic, TTHoves"
+                                fontWeight="normal"
+                                color="rgba(0, 0, 0, 0.5)"
+                                lineHeight="28px"
+                                letterSpacing="1px"
+                                textAlign="start"
+                              >
+                                {format(item.Date)}
+                              </Text>
+                              <Box
+                                w="100%"
+                                fontSize="16px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="rgba(0, 0, 0, 0.85)"
+                                lineHeight="28px"
+                                letterSpacing="1px"
+                                textAlign="start"
+                              >
+                                {item.Subject}
+                                {item.Link
+                                  ? (
+                                    <Link
+                                      target="_blank"
+                                      href={item.Link}
+                                    >
+                                      <Box
+                                        display="inline-block"
+                                        mr="15px"
+                                        fontSize="16px"
+                                        fontFamily=" TTHoves-Regular, TTHoves"
+                                        fontWeight="400"
+                                        color="#0091FF"
+                                        lineHeight="18px"
+                                        letterSpacing="1px"
+                                        textAlign="start"
+                                        ml="9px"
+                                      >
+                                        Link
+                                      </Box>
+                                    </Link>
+                                  ) : ''}
+                              </Box>
+                            </Flex>
+                          ))}
+                        </Container>
+                      )}
+                  </>
+                ) : ''}
+              </Flex>
+            </Flex>
+          </MainContainer>
+        )
+        : (
+          <MainContainer title={`${t(`Account.${urlName}`)}-${userData?.name || address}|${t('Home.title')}`}>
+            <Flex w="100%" position="relative">
+              <Box
+                w="100vw"
+              >
+                <Image
+                  width="100%"
+                  height="129px"
+                  objectFit="cover"
+                  src={userData?.featured_image ? `${PINATA_SERVER}user/${userData?.featured_image}` : AccountBanner.default}
+                  alt="banner"
+                  fallback={(
+                    <Center width="100%" height="129px">
+                      <Spinner />
+                    </Center>
+                  )}
+                />
+              </Box>
+              <Avatar
+                position="absolute"
+                left="calc(50% - 50px)"
+                bottom="-50px"
+                border="3px solid #FFFFFF"
+                src={`${PINATA_SERVER}user/${userData?.avatar}` || HeadPortrait.default}
+                w="100px"
+                h="100px"
+                boxShadow="0px 6px 20px 0px #D3D5DC"
+                fallback={(
+                  <Center width="100px" height="100px">
+                    <Spinner />
+                  </Center>
                 )}
-            </>
-          ) : ''}
-        </Flex>
-      </Flex>
-    </MainContainer>
+              />
+            </Flex>
+            <Text
+              mt="60px"
+              fontSize="23px"
+              fontFamily="TTHoves-DemiBold, TTHoves"
+              fontWeight="bold"
+              color="#000000"
+              lineHeight="28px"
+              letterSpacing="1px"
+            >
+              {userData?.name || formatAddress(userData?.address)}
+            </Text>
+            <Text
+              width="100%"
+              textAlign="center"
+              mt="10px"
+              fontSize="12px"
+              fontFamily="TTHoves-Regular, TTHoves"
+              fontWeight="400"
+              color="#999999"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+            >
+              {userData.address}
+            </Text>
+          </MainContainer>
+        )}
+    </>
   );
 };
 
