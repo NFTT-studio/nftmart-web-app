@@ -55,6 +55,7 @@ import useOffersend from '../../hooks/reactQuery/useOffersend';
 import CreateCard from './CreateCard';
 import OfferItem from './OfferItem';
 import NftItem from './NftItem';
+import NftItemH5 from './NftItemH5';
 import Headers from './Header';
 import Sort from '../../constants/Sort';
 import useUser from '../../hooks/reactQuery/useUser';
@@ -941,7 +942,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                 left="calc(50% - 50px)"
                 bottom="-50px"
                 border="3px solid #FFFFFF"
-                src={`${PINATA_SERVER}user/${userData?.avatar}` || HeadPortrait.default}
+                src={`${PINATA_SERVER}user/${userData?.avatar}`}
                 w="100px"
                 h="100px"
                 boxShadow="0px 6px 20px 0px #D3D5DC"
@@ -975,8 +976,137 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
               textOverflow="ellipsis"
               whiteSpace="nowrap"
             >
-              {userData.address}
+              {userData?.address}
             </Text>
+            <Flex
+              mt="25px"
+              w="100%"
+              display="flex"
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              {filteredTABS.map((item) => (
+                <>
+                  {
+                    item.id === '3'
+                      || item.id === '5'
+                      ? null : (
+                        <Button
+                          w="78px"
+                          h="52px"
+                          key={item.id}
+                          id={item.id}
+                          borderRadius="2px"
+                          display="flex"
+                          flexDirection="column"
+                          justifyContent="center"
+                          alignItems="center"
+                          backgroundColor={selectTabId === Number(item.id) ? '#000000' : '#FFFFFF'}
+                          onClick={handletabSelect}
+                          _hover={{
+                            backgroundColor: '#000000',
+                          }}
+                        >
+                          <Text
+                            fontSize="16px"
+                            fontFamily="TTHoves-Medium, TTHoves"
+                            fontWeight="500"
+                            lineHeight="16px"
+                            color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
+                          >
+                            {item.num}
+                          </Text>
+                          <Text
+                            fontSize="12px"
+                            fontFamily="TTHoves-Medium, TTHoves"
+                            fontWeight="500"
+                            lineHeight="12px"
+                            color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
+                          >
+                            {item.title}
+                          </Text>
+                        </Button>
+                      )
+                  }
+                </>
+              ))}
+            </Flex>
+            {selectTabId === 0 ? (
+              <NftItemH5
+                nftsData={nftsData}
+                nftsIsLoading={nftsIsLoading}
+                fetchNextPageNftsData={fetchNextPageNftsData}
+                remainingTime={remainingTime}
+              />
+            ) : ''}
+            {selectTabId === 1 ? (
+              <NftItemH5
+                nftsData={nftsDataCreate}
+                nftsIsLoading={nftsIsLoading}
+                fetchNextPageNftsData={fetchNextPageNftsDataCreate}
+                remainingTime={remainingTime}
+              />
+            ) : ''}
+            {selectTabId === 2 ? (
+              <NftItemH5
+                nftsData={nftsDataCollecte}
+                nftsIsLoading={nftsIsLoading}
+                fetchNextPageNftsData={fetchNextPageNftsDataCollecte}
+                remainingTime={remainingTime}
+              />
+            ) : ''}
+            {selectTabId === 4 ? (
+              <>
+                {collectionsIsLoading
+                  ? (
+                    <Center width="100%" height="500px">
+                      <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                    </Center>
+                  )
+                  : (
+                    <Container width="100%">
+                      <Flex
+                        width="100%"
+                        justifyContent="center"
+                      >
+                        {collectionsData ? collectionsData.collections.map((item) => (
+                          <Link
+                            mt="25px"
+                            as={RouterLink}
+                            to={`/collection/${item.id}-${encodeURIComponent(item.metadata.name)}`}
+                          >
+                            <Flex
+                              key={item.id}
+                              width="230px"
+                              borderRadius="4px"
+                              border="1px solid #000000"
+                              flexDirection="column"
+                            >
+                              <Image w="100%" h="230px" src={`${PINATA_SERVER}logo/${item.metadata?.logoUrl}`} alt="" />
+                              <Text
+                                w="100%"
+                                background="#000000"
+                                p="0 16px"
+                                lineHeight="54px"
+                                fontSize="16px"
+                                fontFamily="TTHoves-Regular, TTHoves"
+                                fontWeight="400"
+                                color="#FFFFFF"
+                                overflow="hidden"
+                                textOverflow="ellipsis"
+                                whiteSpace="nowrap"
+                              >
+                                {item.metadata?.name}
+                              </Text>
+                            </Flex>
+                          </Link>
+                        )) : ''}
+                      </Flex>
+                    </Container>
+                  )}
+              </>
+            ) : ''}
           </MainContainer>
         )}
     </>
