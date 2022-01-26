@@ -23,13 +23,16 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useTranslation } from 'react-i18next';
 import MainContainer from '../../layout/MainContainer';
 import CategorySelector from '../../components/CategorySelector';
+import CategorySelectorH5 from '../../components/CategorySelectorH5';
 import useCategories from '../../hooks/reactQuery/useCategories';
 import StatusSelector from '../../components/StatusSelector';
+import StatusSelectorH5 from '../../components/StatusSelectorH5';
 import CollectionSelector from '../../components/CollectionSelector';
 import useCollections from '../../hooks/reactQuery/useCollectionsRecommend';
 import useNftsAll from '../../hooks/reactQuery/useNftsAll';
 import OrderCard from '../../components/OrderCard';
 import SortBy from '../../components/SortBy';
+import SortByH5 from '../../components/SortByH5';
 
 import {
   IconSearch,
@@ -60,7 +63,7 @@ const Browsing = () => {
   const [selectedSort, setSelectedSort] = useState(Sort[4].key);
   const [remainingTime, setRemainingTime] = useState(0);
 
-  const { data: categoriesData, isLoading: categoriesIsLoading } = useCategories();
+  const { data: categoriesData, isLoading: categoriesIsLoad } = useCategories();
   const { data: collectionsData, isLoading: collectionsIsLoading, refetch: fetchCollections } = useCollections({
     limit: 1000,
   });
@@ -85,6 +88,10 @@ const Browsing = () => {
 
   const handleSelectCategory: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelectedCategoryId(event.currentTarget.id);
+    setSelectedCollectionIdArr([]);
+  };
+  const handleSelectCategoryH5 = (event) => {
+    setSelectedCategoryId(event);
     setSelectedCollectionIdArr([]);
   };
 
@@ -318,6 +325,19 @@ const Browsing = () => {
         </MainContainer>
       ) : (
         <MainContainer title={`${t('Browsing.title')}|${t('Home.title')}`}>
+          <Flex
+            width="100%"
+            justifyContent="space-between"
+          >
+            <StatusSelectorH5 statusArr={statusArr} selectedArr={selectedStatusArr} handleSelect={handleSelectStatus} />
+            <CategorySelectorH5
+              list={categoriesData?.categories}
+              selectId={selectedCategoryId}
+              handleSelect={handleSelectCategoryH5}
+            />
+            <SortByH5 selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
+          </Flex>
+
           <Flex
             w="100%"
             justifyContent="center"

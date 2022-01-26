@@ -28,8 +28,8 @@ import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import Identicon from '@polkadot/react-identicon';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import NoData from '../NoData';
-import TimeBy from '../TimeBy';
-import Activity from '../Activity';
+import TimeBy from '../TimeByH5';
+import Activity from '../ActivityH5';
 import PriceHistoryChart from '../PriceHistoryChart';
 import { priceStringDivUnit, currentPrice, formatNum } from '../../../utils/format';
 import { renderNmtNumberText } from '../../../components/Balance';
@@ -248,7 +248,7 @@ const DetailRight: FC<Props> = (({
     const h = times.getHours();
     const mm = times.getMinutes();
     const s = times.getSeconds();
-    return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
+    return `${y}-${add0(m)}-${add0(d)}`;
   };
 
   function getDateDiff(dateTimeStamp: string) {
@@ -342,8 +342,8 @@ const DetailRight: FC<Props> = (({
     >
       <Flex align="flex-start" alignItems="center" color="#FFFFFF">
         <Box
-          width="18px"
-          height="28px"
+          width="14px"
+          height="20px"
           background="red"
           borderRadius="1px"
           display="flex"
@@ -354,8 +354,8 @@ const DetailRight: FC<Props> = (({
           {front(Number(zeroPad(days * 24 + hours)) / 10) || 0}
         </Box>
         <Box
-          width="18px"
-          height="28px"
+          width="14px"
+          height="20px"
           background="red"
           borderRadius="1px"
           display="flex"
@@ -376,8 +376,8 @@ const DetailRight: FC<Props> = (({
           :
         </Text>
         <Box
-          width="18px"
-          height="28px"
+          width="14px"
+          height="20px"
           background="red"
           borderRadius="1px"
           display="flex"
@@ -388,8 +388,8 @@ const DetailRight: FC<Props> = (({
           {front(Number(zeroPad(minutes)) / 10) || 0}
         </Box>
         <Box
-          width="18px"
-          height="28px"
+          width="14px"
+          height="20px"
           background="red"
           borderRadius="1px"
           display="flex"
@@ -411,8 +411,8 @@ const DetailRight: FC<Props> = (({
         </Text>
         <Box
           mr="2px"
-          width="18px"
-          height="28px"
+          width="14px"
+          height="20px"
           background="red"
           borderRadius="1px"
           display="flex"
@@ -422,8 +422,8 @@ const DetailRight: FC<Props> = (({
           {front(Number(zeroPad(seconds)) / 10) || 0}
         </Box>
         <Box
-          width="18px"
-          height="28px"
+          width="14px"
+          height="20px"
           background="red"
           borderRadius="1px"
           display="flex"
@@ -501,12 +501,11 @@ const DetailRight: FC<Props> = (({
                   textAlign="start"
                   fontFamily="TTHoves-Medium, TTHoves"
                   fontWeight="500"
-                  lineHeight="18px"
+                  lineHeight="12px"
                 >
                   {nftData?.nftInfo?.owner?.name || formatAddress(nftData?.nftInfo?.owner_id)}
                 </Text>
                 <Text
-                  mt="2px"
                   color="#999999"
                   align="center"
                   fontSize="8px"
@@ -516,7 +515,7 @@ const DetailRight: FC<Props> = (({
                   textAlign="start"
                   fontFamily="TTHoves-Thin, TTHoves"
                   fontWeight="100"
-                  lineHeight="14px"
+                  lineHeight="12px"
                 >
                   {t('Detail.owner')}
                 </Text>
@@ -699,12 +698,12 @@ const DetailRight: FC<Props> = (({
               <Text
                 color="#000000"
                 align="center"
-                fontSize="16px"
+                fontSize="14px"
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
                 textAlign="right"
-                mb="12px"
+                mb="5px"
               >
                 {t('Detail.AuctionEndsIn')}
               </Text>
@@ -891,18 +890,8 @@ const DetailRight: FC<Props> = (({
                     >
                       {types ? t('Detail.CreationTime') : t('Detail.expiration')}
                     </Text>
-                    <Text
-                      w="136px"
-                      textAlign="right"
-                      fontSize="12px"
-                      fontFamily="TTHoves-Regular, TTHoves"
-                      fontWeight="400"
-                      color="#999999"
-                      lineHeight="20px"
-                    />
-
                   </Flex>
-                  <Box height="400px" overflowY="scroll" boxSizing="border-box">
+                  <Box height="270px" overflowY="scroll" boxSizing="border-box">
                     {OffersArr.map((item) => (
                       <Box
                         key={item.id}
@@ -915,7 +904,7 @@ const DetailRight: FC<Props> = (({
                           align="center"
                         >
                           <Text
-                            w="136px"
+                            w="33.33%"
                             textAlign="left"
                             fontSize="14px"
                             fontFamily="TTHoves-Regular, TTHoves"
@@ -932,7 +921,7 @@ const DetailRight: FC<Props> = (({
                             </Link>
                           </Text>
                           <Text
-                            w="136px"
+                            w="33.33%"
                             display="flex"
                             flexDirection="row"
                             justifyContent="center"
@@ -952,7 +941,7 @@ const DetailRight: FC<Props> = (({
                           </Text>
                           {item?.deadline && item.type === 'order' ? (
                             <Text
-                              minW="136px"
+                              w="33.33%"
                               textAlign="center"
                               fontSize="14px"
                               fontFamily="TTHoves-Regular, TTHoves"
@@ -968,7 +957,7 @@ const DetailRight: FC<Props> = (({
                             </Text>
                           ) : (
                             <Text
-                              w="136px"
+                              w="33.33%"
                               textAlign="center"
                               fontSize="14px"
                               fontFamily="TTHoves-Regular, TTHoves"
@@ -979,52 +968,7 @@ const DetailRight: FC<Props> = (({
                               {item.timestamp ? format(item.timestamp) : '-'}
                             </Text>
                           )}
-                          {!types && Number(item?.deadline - remainingTime) > 0 && isLoginAddress && item.type === 'order' ? (
-                            <Text
-                              w="136px"
-                              textAlign="right"
-                              fontSize="14px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#3D00FF"
-                              lineHeight="20px"
-                              onClick={() => {
-                                handleDeal(item.order_id, item.bidder_id);
-                              }}
-                            >
-                              {' '}
-                              {t('Detail.deal')}
-                            </Text>
-                          ) : account?.address === item?.bidder_id && item.type === 'order' ? (
-                            <Text
-                              cursor="pointer"
-                              w="136px"
-                              textAlign="right"
-                              fontSize="14px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              color="#3D00FF"
-                              lineHeight="20px"
-                              onClick={() => {
-                                handleCancel(item.order_id);
-                              }}
-                            >
-                              {' '}
-                              {t('Detail.cancel')}
-                            </Text>
-                          ) : (
-                            <Text
-                              w="136px"
-                              textAlign="right"
-                              fontSize="14px"
-                              fontFamily="TTHoves-Regular, TTHoves"
-                              fontWeight="400"
-                              lineHeight="20px"
-                            >
-                              {' '}
-                              -
-                            </Text>
-                          )}
+
                         </Flex>
                       </Box>
                     ))}
@@ -1032,19 +976,19 @@ const DetailRight: FC<Props> = (({
                 </>
               )
               : (
-                <NoData widths="732px" />
+                <NoData widths="270px" />
               )}
           </Flex>
         </Box>
       ) : null}
       {selectTabId === 1 ? (
-        <Box p="20px">
+        <Box>
           {eventDate?.pages?.length ? (
             <Box>
               <Flex w="100%" flexDirection="column" justifyContent="flex-start">
                 <Flex h="40px" w="100%" flexDirection="row" justifyContent="space-between" align="center">
                   <Text
-                    w="136px"
+                    w="18%"
                     textAlign="left"
                     fontSize="12px"
                     fontFamily="TTHoves-Regular, TTHoves"
@@ -1055,7 +999,7 @@ const DetailRight: FC<Props> = (({
                     {t('Detail.event')}
                   </Text>
                   <Text
-                    w="136px"
+                    w="22%"
                     textAlign="center"
                     fontSize="12px"
                     fontFamily="TTHoves-Regular, TTHoves"
@@ -1065,7 +1009,7 @@ const DetailRight: FC<Props> = (({
                   >
                     {t('Detail.unitPrice')}
                   </Text>
-                  <Text
+                  {/* <Text
                     w="136px"
                     textAlign="center"
                     fontSize="12px"
@@ -1075,9 +1019,9 @@ const DetailRight: FC<Props> = (({
                     lineHeight="20px"
                   >
                     {t('Detail.quantity')}
-                  </Text>
+                  </Text> */}
                   <Text
-                    w="136px"
+                    w="30%"
                     textAlign="center"
                     fontSize="12px"
                     fontFamily="TTHoves-Regular, TTHoves"
@@ -1088,7 +1032,7 @@ const DetailRight: FC<Props> = (({
                     {t('Detail.from')}
                   </Text>
                   <Text
-                    w="136px"
+                    w="30%"
                     textAlign="center"
                     fontSize="12px"
                     fontFamily="TTHoves-Regular, TTHoves"
@@ -1098,7 +1042,7 @@ const DetailRight: FC<Props> = (({
                   >
                     {t('Detail.to')}
                   </Text>
-                  <Text
+                  {/* <Text
                     w="136px"
                     textAlign="right"
                     fontSize="12px"
@@ -1108,7 +1052,7 @@ const DetailRight: FC<Props> = (({
                     lineHeight="20px"
                   >
                     {t('Detail.date')}
-                  </Text>
+                  </Text> */}
 
                 </Flex>
                 <InfiniteScroll
@@ -1163,62 +1107,65 @@ const DetailRight: FC<Props> = (({
       ) : null}
       {selectTabId === 2 ? (
         <Box p="20px 0">
-          <Flex flexDirection="row" justifyContent="flex-start" mb="20px">
+          <Flex flexDirection="column" alignItems="flex-start" mb="20px">
             <TimeBy
               selectedTime={selectedTime}
               setSelectedTime={setSelectedTime}
               setSelectedTimeValue={setSelectedTimeValue}
             />
-            <Flex m="0 20px" textAlign="center" flexDirection="column" justifyContent="center">
-              <Text
-                mb="2px"
-                fontSize="12px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                color="#999999"
-                lineHeight="14px"
-              >
-                {t(`Detail.${selectedTime}`)}
-                {' '}
-                {t('Detail.average')}
-              </Text>
-              <Flex align="flex-start" alignItems="center">
-                <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
+
+            <Flex flexDirection="row" alignItems="flex-start" m="20px 0">
+              <Flex mr="20px" textAlign="center" flexDirection="column" justifyContent="center">
                 <Text
-                  fontSize="16px"
+                  mb="2px"
+                  fontSize="12px"
                   fontFamily="TTHoves-Regular, TTHoves"
                   fontWeight="400"
-                  color="#000000"
-                  lineHeight="18px"
+                  color="#999999"
+                  lineHeight="14px"
                 >
-                  {PriceHistory?.avgprice ? formatNum(priceStringDivUnit(PriceHistory?.avgprice)) : '0'}
+                  {t(`Detail.${selectedTime}`)}
+                  {' '}
+                  {t('Detail.average')}
                 </Text>
+                <Flex align="flex-start" alignItems="center">
+                  <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
+                  <Text
+                    fontSize="16px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#000000"
+                    lineHeight="18px"
+                  >
+                    {PriceHistory?.avgprice ? formatNum(priceStringDivUnit(PriceHistory?.avgprice)) : '0'}
+                  </Text>
+                </Flex>
               </Flex>
-            </Flex>
-            <Flex textAlign="center" flexDirection="column" justifyContent="center">
-              <Text
-                mb="2px"
-                fontSize="12px"
-                fontFamily="TTHoves-Regular, TTHoves"
-                fontWeight="400"
-                color="#999999"
-                lineHeight="14px"
-              >
-                {t(`Detail.${selectedTime}`)}
-                {' '}
-                {t('Detail.volume')}
-              </Text>
-              <Flex align="flex-start" alignItems="center">
-                <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
+              <Flex textAlign="center" flexDirection="column" justifyContent="center">
                 <Text
-                  fontSize="16px"
+                  mb="2px"
+                  fontSize="12px"
                   fontFamily="TTHoves-Regular, TTHoves"
                   fontWeight="400"
-                  color="#000000"
-                  lineHeight="18px"
+                  color="#999999"
+                  lineHeight="14px"
                 >
-                  {PriceHistory?.totalvolume || '0'}
+                  {t(`Detail.${selectedTime}`)}
+                  {' '}
+                  {t('Detail.volume')}
                 </Text>
+                <Flex align="flex-start" alignItems="center">
+                  <Box w="14px" h="14px" src={IconDetailsDetail.default} as="img" alt="" mr="4px" />
+                  <Text
+                    fontSize="16px"
+                    fontFamily="TTHoves-Regular, TTHoves"
+                    fontWeight="400"
+                    color="#000000"
+                    lineHeight="18px"
+                  >
+                    {PriceHistory?.totalvolume || '0'}
+                  </Text>
+                </Flex>
               </Flex>
             </Flex>
           </Flex>

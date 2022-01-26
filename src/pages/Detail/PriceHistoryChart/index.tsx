@@ -15,7 +15,7 @@ import { renderNmtNumberText } from '../../../components/Balance';
 import { NumberToString, formatNum } from '../../../utils/format';
 
 interface PriceHistoryProps {
-  PriceDate:[]
+  PriceDate: []
 }
 
 const PriceHistoryChart = ({
@@ -30,10 +30,17 @@ const PriceHistoryChart = ({
     const h = times.getHours();
     const mm = times.getMinutes();
     const s = times.getSeconds();
-    // return `${y}-${add0(m)}-${add0(d)} ${add0(h)}:${add0(mm)}:${add0(s)}`;
+    const thisYear = (new Date()).getFullYear();
+    console.log();
+    if (thisYear === y) {
+      return `${y}/${add0(m)}/${add0(d)}`;
+    }
     return `${add0(m)}/${add0(d)}`;
   };
   const PriceDateone = JSON.parse(JSON.stringify(PriceDate));
+  function sortDate(a, b) {
+    return Date.parse(a.d) - Date.parse(b.d);
+  }
   PriceDateone.forEach((item) => {
     const num = Number(NumberToString(item.avgprice));
     // item.price = Number(num);
@@ -47,7 +54,7 @@ const PriceHistoryChart = ({
   return (
     <ResponsiveContainer height={246} width="100%">
       <AreaChart
-        data={PriceDateone}
+        data={PriceDateone.sort(sortDate)}
       >
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -64,7 +71,7 @@ const PriceHistoryChart = ({
           interval={0}
           padding={{
             left: 15,
-            right: 15,
+            right: 30,
           }}
           style={
             {
@@ -80,7 +87,7 @@ const PriceHistoryChart = ({
               fontFamily: 'TTHoves-Regular, TTHoves',
               lineHeight: '14px',
             }
-        }
+          }
         />
         <YAxis
           // TODO: Domain should be dynamically calculated
@@ -104,7 +111,7 @@ const PriceHistoryChart = ({
               fontFamily: 'TTHoves-Regular, TTHoves',
               lineHeight: '14px',
             }
-        }
+          }
         />
         <Tooltip />
         <Area

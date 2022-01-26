@@ -484,7 +484,6 @@ const Home = () => {
                           spaceBetween={20}
                           className="mySwiper"
                         >
-
                           {hotNftsData?.nfts.map((order) => (
                             <SwiperSlide key={order.id}>
                               <OrderCardH5 nft={order} remainingTime={remainingTime} />

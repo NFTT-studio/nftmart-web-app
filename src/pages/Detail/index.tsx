@@ -943,7 +943,7 @@ const Detail = ({ match }: RouteComponentProps<{ collectionId: string, nftId: st
                             ? (
                               <Flex
                                 m="10px"
-                                w="270px"
+                                width="calc(100% - 20px)"
                                 minH="135px"
                                 justifyContent="center"
                               >
@@ -957,7 +957,7 @@ const Detail = ({ match }: RouteComponentProps<{ collectionId: string, nftId: st
                                 >
                                   <Image
                                     // cursor="pointer"
-                                    maxWidth="270px"
+                                    maxWidth="100%"
                                     objectFit="contain"
                                     height="auto"
                                     maxHeight="540px"
@@ -970,8 +970,8 @@ const Detail = ({ match }: RouteComponentProps<{ collectionId: string, nftId: st
                               videoType.indexOf(fileType) > -1
                                 ? (
                                   <Box
-                                    m="20px"
-                                    width="520px"
+                                    m="10px"
+                                    width="calc(100% - 20px)"
                                     height="auto"
                                   >
                                     <video
@@ -986,8 +986,8 @@ const Detail = ({ match }: RouteComponentProps<{ collectionId: string, nftId: st
                                 )
                                 : (
                                   <Box
-                                    m="20px"
-                                    width="520px"
+                                    m="10px"
+                                    width="calc(100% - 20px)"
                                     height="auto"
                                   >
                                     <Link

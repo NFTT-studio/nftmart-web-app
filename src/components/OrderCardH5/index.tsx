@@ -91,8 +91,8 @@ const NftCard: FC<NftCardProps> = ({
   }) => (
     <Flex w="136px" align="flex-start" alignItems="center" position="relative">
       <Box
-        width="18px"
-        height="22px"
+        width="14px"
+        height="16px"
         lineHeight="22px"
         background="#FFFFFF"
         borderRadius="1px"
@@ -104,8 +104,8 @@ const NftCard: FC<NftCardProps> = ({
         {front(Number(zeroPad(days * 24 + hours)) / 10) || 0}
       </Box>
       <Box
-        width="18px"
-        height="22px"
+        width="14px"
+        height="16px"
         lineHeight="22px"
         background="#FFFFFF"
         borderRadius="1px"
@@ -124,8 +124,8 @@ const NftCard: FC<NftCardProps> = ({
       </Box>
       <Box
         ml="3px"
-        width="18px"
-        height="22px"
+        width="14px"
+        height="16px"
         lineHeight="22px"
         background="#FFFFFF"
         borderRadius="1px"
@@ -137,8 +137,8 @@ const NftCard: FC<NftCardProps> = ({
         {front(Number(zeroPad(minutes)) / 10) || 0}
       </Box>
       <Box
-        width="18px"
-        height="22px"
+        width="14px"
+        height="16px"
         lineHeight="22px"
         background="#FFFFFF"
         borderRadius="1px"
@@ -159,8 +159,8 @@ const NftCard: FC<NftCardProps> = ({
       <Box
         mr="2px"
         ml="3px"
-        width="18px"
-        height="22px"
+        width="14px"
+        height="16px"
         lineHeight="22px"
         background="#FFFFFF"
         borderRadius="1px"
@@ -171,8 +171,8 @@ const NftCard: FC<NftCardProps> = ({
         {front(Number(zeroPad(seconds)) / 10) || 0}
       </Box>
       <Box
-        width="18px"
-        height="22px"
+        width="14px"
+        height="16px"
         lineHeight="22px"
         background="#FFFFFF"
         borderRadius="1px"
@@ -237,7 +237,7 @@ const NftCard: FC<NftCardProps> = ({
                 ? (
                   <Box
                     width="100%"
-                    height="157px"
+                    height="146px"
                     position="relative"
                   >
                     <Image
@@ -255,7 +255,7 @@ const NftCard: FC<NftCardProps> = ({
                       wrapperProps={{
                         style: {
                           width: '100%',
-                          height: '219px',
+                          height: '146px',
                           display: 'flex',
                           justifyContent: 'center',
                         },
@@ -263,7 +263,7 @@ const NftCard: FC<NftCardProps> = ({
                       style={{
                         objectFit: 'cover',
                         width: '100%',
-                        height: '100%',
+                        height: '146px',
                         borderRadius: '5px 5px 0 0 ',
                       }}
                       src={`${PINATA_SERVER}nft/${nft?.metadata?.previewUrl}!list`}
@@ -274,8 +274,7 @@ const NftCard: FC<NftCardProps> = ({
                 : audioType.indexOf(fileType) > -1 ? (
                   <Box
                     width="100%"
-                    height="219px"
-                    maxWidth="420px"
+                    height="146px"
                     position="relative"
                   >
                     <Image
@@ -293,7 +292,7 @@ const NftCard: FC<NftCardProps> = ({
                       wrapperProps={{
                         style: {
                           width: '100%',
-                          height: '219px',
+                          height: '146px',
                           display: 'flex',
                           justifyContent: 'center',
                         },
@@ -301,7 +300,7 @@ const NftCard: FC<NftCardProps> = ({
                       style={{
                         objectFit: 'cover',
                         width: '100%',
-                        height: '100%',
+                        height: '146px',
                         borderRadius: '5px 5px 0 0 ',
                       }}
                       src={`${PINATA_SERVER}nft/${nft?.metadata?.previewUrl}!list`}
@@ -313,7 +312,7 @@ const NftCard: FC<NftCardProps> = ({
                     wrapperProps={{
                       style: {
                         width: '100%',
-                        height: '219px',
+                        height: '146px',
                         display: 'flex',
                         justifyContent: 'center',
                       },
@@ -321,7 +320,7 @@ const NftCard: FC<NftCardProps> = ({
                     style={{
                       objectFit: 'cover',
                       width: '100%',
-                      height: '100%',
+                      height: '146px',
                       borderRadius: '5px 5x 0 0 ',
                     }}
                     src={`${PINATA_SERVER}nft/${nft?.metadata?.logoUrl}!list`}
@@ -333,7 +332,7 @@ const NftCard: FC<NftCardProps> = ({
                   wrapperProps={{
                     style: {
                       width: '100%',
-                      height: '219px',
+                      height: '146px',
                       display: 'flex',
                       justifyContent: 'center',
                     },
@@ -505,7 +504,10 @@ const NftCard: FC<NftCardProps> = ({
               <Box textAlign="right" display="flex" justifyContent="center">
                 <Flex align="flex-start" alignItems="center">
                   <Box w="16px" h="16px" src={IconTime.default} as="img" alt="" mr="4px" />
-                  <Box color="#FFFFFF">
+                  <Box
+                    color="#FFFFFF"
+                    fontSize="12px"
+                  >
                     {events.day}
                     {' '}
                     {t('common.daysLeft')}

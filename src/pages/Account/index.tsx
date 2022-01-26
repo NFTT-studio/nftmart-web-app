@@ -24,6 +24,7 @@ import {
   useMediaQuery,
   Avatar,
 } from '@chakra-ui/react';
+import { useWindowScroll } from 'react-use';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MainContainer from '../../layout/MainContainer';
 import useCollections from '../../hooks/reactQuery/useCollections';
@@ -65,6 +66,8 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
   const [isLargerThan700] = useMediaQuery('(min-width: 700px)');
   const history = useHistory();
   const { t } = useTranslation();
+  const { y } = useWindowScroll();
+  console.log(y);
   const offersMadeButton = [
     {
       id: '0',
@@ -338,13 +341,13 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
   const add0 = (m) => (m < 10 ? `0${m}` : m);
   const format = (time: string) => {
     const times = new Date(time);
-    const y = times.getFullYear();
+    const year = times.getFullYear();
     const m = times.getMonth() + 1;
     const d = times.getDate();
     const h = times.getHours();
     const mm = times.getMinutes();
     const s = times.getSeconds();
-    return `${y}/${add0(m)}/${add0(d)}`;
+    return `${year}/${add0(m)}/${add0(d)}`;
   };
 
   const TABS = [
@@ -979,12 +982,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
               {userData?.address}
             </Text>
             <Flex
-              mt="25px"
+              mt={y < 270 ? '25px' : '0'}
               w="100%"
               display="flex"
               flexDirection="row"
               justifyContent="center"
               alignItems="center"
+              position={y > 270 ? 'fixed' : 'relative'}
+              zIndex="5"
+              background="#FFFFFF"
             >
               {filteredTABS.map((item) => (
                 <>
@@ -993,11 +999,12 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                       || item.id === '5'
                       ? null : (
                         <Button
-                          w="78px"
+                          w="25%"
                           h="52px"
                           key={item.id}
                           id={item.id}
-                          borderRadius="2px"
+                          borderRadius="none"
+                          border="none"
                           display="flex"
                           flexDirection="column"
                           justifyContent="center"
@@ -1068,7 +1075,8 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                     <Container width="100%">
                       <Flex
                         width="100%"
-                        justifyContent="center"
+                        flexDirection="column"
+                        alignItems="center"
                       >
                         {collectionsData ? collectionsData.collections.map((item) => (
                           <Link

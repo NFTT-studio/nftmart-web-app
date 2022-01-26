@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const ISProd = window.location.origin === 'https://app.nftmart.io';
+const ISProd = 1;
 const NODE_URLPROD = 'wss://mainnet.nftmart.io/rpc/ws';
 const NODE_URLTEST = 'wss://staging.nftmart.io/rpc/ws';
 const CACHE_SERVER_URLPROD = 'https://cache.nftmart.io/api/';
