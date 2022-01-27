@@ -9,6 +9,7 @@ import {
   DrawerBody,
   Text,
   Link,
+  Box,
 } from '@chakra-ui/react';
 
 import { useTranslation } from 'react-i18next';
@@ -204,7 +205,11 @@ const Header: FC<HeaderProps> = () => {
                 color="#F4F4F4"
                 fontSize="16px"
               >
-                NFTMart
+                {location.pathname === '/' ? 'NFTMart' : ''}
+                {window.location.href.indexOf('browsing') > -1 ? 'Browsing' : ''}
+                {window.location.href.indexOf('items') > -1 ? 'NFT Detail' : ''}
+                {window.location.href.indexOf('account') > -1 ? 'User Detail' : ''}
+                {window.location.href.indexOf('collection') > -1 ? 'Collection Detail' : ''}
               </Text>
               <Flex justifyContent="flex-end">
                 <Image
@@ -231,7 +236,9 @@ const Header: FC<HeaderProps> = () => {
                   p="0px"
                 >
                   {NAV_MAP.map((item, index) => (
-                    <>
+                    <Box
+                      key={item.title}
+                    >
                       {
                         item.title === 'common.nav.buynmt'
                           ? (
@@ -287,7 +294,7 @@ const Header: FC<HeaderProps> = () => {
                             </Link>
                           )
                       }
-                    </>
+                    </Box>
                   ))}
                 </DrawerBody>
               </DrawerContent>

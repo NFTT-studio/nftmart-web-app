@@ -127,6 +127,18 @@ const obj = {
       height: '108px !important',
       objectFit: 'cover',
     },
+    '.identiconH5 svg': {
+      position: 'absolute',
+      bottom: '-50px',
+      left: 'calc(50% - 50px)',
+      border: '3px solid #FFFFFF',
+      boxShadow: '0px 6px 20px 0px #D3D5DC',
+      background: '#FFFFFF',
+      borderRadius: '50%',
+      width: 'auto !important',
+      height: '100px !important',
+      objectFit: 'cover',
+    },
     '.userAvatar svg': {
       marginRight: '4px',
       background: '#FFFFFF',

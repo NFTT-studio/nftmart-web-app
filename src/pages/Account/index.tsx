@@ -67,7 +67,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
   const history = useHistory();
   const { t } = useTranslation();
   const { y } = useWindowScroll();
-  console.log(y);
   const offersMadeButton = [
     {
       id: '0',
@@ -940,21 +939,30 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                   )}
                 />
               </Box>
-              <Avatar
-                position="absolute"
-                left="calc(50% - 50px)"
-                bottom="-50px"
-                border="3px solid #FFFFFF"
-                src={`${PINATA_SERVER}user/${userData?.avatar}`}
-                w="100px"
-                h="100px"
-                boxShadow="0px 6px 20px 0px #D3D5DC"
-                fallback={(
-                  <Center width="100px" height="100px">
-                    <Spinner />
-                  </Center>
+              {userData?.avatar
+                ? (
+                  <Avatar
+                    position="absolute"
+                    left="calc(50% - 50px)"
+                    bottom="-50px"
+                    border="3px solid #FFFFFF"
+                    src={`${PINATA_SERVER}user/${userData?.avatar}`}
+                    w="100px"
+                    h="100px"
+                    boxShadow="0px 6px 20px 0px #D3D5DC"
+                    fallback={(
+                      <Center width="100px" height="100px">
+                        <Spinner />
+                      </Center>
+                    )}
+                  />
+                ) : (
+                  <Identicon
+                    className="identiconH5"
+                    value={address}
+                  />
                 )}
-              />
+
             </Flex>
             <Text
               mt="60px"
@@ -981,64 +989,127 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
             >
               {userData?.address}
             </Text>
-            <Flex
-              mt={y < 270 ? '25px' : '0'}
-              w="100%"
-              display="flex"
-              flexDirection="row"
-              justifyContent="center"
-              alignItems="center"
-              position={y > 270 ? 'fixed' : 'relative'}
-              zIndex="5"
-              background="#FFFFFF"
-            >
-              {filteredTABS.map((item) => (
-                <>
-                  {
-                    item.id === '3'
-                      || item.id === '5'
-                      ? null : (
-                        <Button
-                          w="25%"
-                          h="52px"
-                          key={item.id}
-                          id={item.id}
-                          borderRadius="none"
-                          border="none"
-                          display="flex"
-                          flexDirection="column"
-                          justifyContent="center"
-                          alignItems="center"
-                          backgroundColor={selectTabId === Number(item.id) ? '#000000' : '#FFFFFF'}
-                          onClick={handletabSelect}
-                          _hover={{
-                            backgroundColor: '#000000',
-                          }}
-                        >
-                          <Text
-                            fontSize="16px"
-                            fontFamily="TTHoves-Medium, TTHoves"
-                            fontWeight="500"
-                            lineHeight="16px"
-                            color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
-                          >
-                            {item.num}
-                          </Text>
-                          <Text
-                            fontSize="12px"
-                            fontFamily="TTHoves-Medium, TTHoves"
-                            fontWeight="500"
-                            lineHeight="12px"
-                            color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
-                          >
-                            {item.title}
-                          </Text>
-                        </Button>
-                      )
-                  }
-                </>
-              ))}
-            </Flex>
+            {account && whiteList?.indexOf(address) < 0
+              ? (
+                <Flex
+                  mt={y < 270 ? '25px' : '0'}
+                  w="100%"
+                  display="flex"
+                  flexDirection="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  position={y > 270 ? 'fixed' : 'relative'}
+                  zIndex="5"
+                  background="#FFFFFF"
+                >
+                  {filteredTABS.map((item) => (
+                    <>
+                      {
+                        item.id === '3'
+                          || item.id === '5'
+                          ? null : (
+                            <Button
+                              w="50%"
+                              h="52px"
+                              key={item.id}
+                              id={item.id}
+                              borderRadius="none"
+                              border="none"
+                              display="flex"
+                              flexDirection="column"
+                              justifyContent="center"
+                              alignItems="center"
+                              backgroundColor={selectTabId === Number(item.id) ? '#000000' : '#FFFFFF'}
+                              onClick={handletabSelect}
+                              _hover={{
+                                backgroundColor: '#000000',
+                              }}
+                            >
+                              <Text
+                                fontSize="16px"
+                                fontFamily="TTHoves-Medium, TTHoves"
+                                fontWeight="500"
+                                lineHeight="16px"
+                                color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
+                              >
+                                {item.num}
+                              </Text>
+                              <Text
+                                fontSize="12px"
+                                fontFamily="TTHoves-Medium, TTHoves"
+                                fontWeight="500"
+                                lineHeight="12px"
+                                color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
+                              >
+                                {item.title}
+                              </Text>
+                            </Button>
+                          )
+                      }
+                    </>
+                  ))}
+                </Flex>
+              )
+              : (
+                <Flex
+                  mt={y < 270 ? '25px' : '0'}
+                  w="100%"
+                  display="flex"
+                  flexDirection="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  position={y > 270 ? 'fixed' : 'relative'}
+                  zIndex="5"
+                  background="#FFFFFF"
+                >
+                  {filteredTABS.map((item) => (
+                    <>
+                      {
+                        item.id === '3'
+                          || item.id === '5'
+                          ? null : (
+                            <Button
+                              w="25%"
+                              h="52px"
+                              key={item.id}
+                              id={item.id}
+                              borderRadius="none"
+                              border="none"
+                              display="flex"
+                              flexDirection="column"
+                              justifyContent="center"
+                              alignItems="center"
+                              backgroundColor={selectTabId === Number(item.id) ? '#000000' : '#FFFFFF'}
+                              onClick={handletabSelect}
+                              _hover={{
+                                backgroundColor: '#000000',
+                              }}
+                            >
+                              <Text
+                                fontSize="16px"
+                                fontFamily="TTHoves-Medium, TTHoves"
+                                fontWeight="500"
+                                lineHeight="16px"
+                                color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
+                              >
+                                {item.num}
+                              </Text>
+                              <Text
+                                fontSize="12px"
+                                fontFamily="TTHoves-Medium, TTHoves"
+                                fontWeight="500"
+                                lineHeight="12px"
+                                color={selectTabId === Number(item.id) ? '#FFFFFF' : '#999999'}
+                              >
+                                {item.title}
+                              </Text>
+                            </Button>
+                          )
+                      }
+                    </>
+                  ))}
+                </Flex>
+              )}
             {selectTabId === 0 ? (
               <NftItemH5
                 nftsData={nftsData}
