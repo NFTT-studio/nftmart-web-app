@@ -150,7 +150,7 @@ const OfferItem: FC<Props> = (({ offers, hide }) => {
               textOverflow="ellipsis"
               whiteSpace="nowrap"
             >
-              {offers?.nft?.name}
+              {offers?.class?.metadata?.name}
             </Text>
           </Flex>
         </Flex>

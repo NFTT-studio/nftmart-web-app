@@ -128,9 +128,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
     if (window.location.href.indexOf('collections') > -1) {
       historyUrl(idTab, '/collections');
     }
-    // if (window.location.href.indexOf('profile') > -1) {
-    //   historyUrl(idTab, '/profile');
-    // }
+    if (window.location.href.indexOf('profile') > -1) {
+      historyUrl(idTab, '/profile');
+    }
   }
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
