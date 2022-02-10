@@ -105,6 +105,5 @@ export * as play from './play.png';
 export * as Emptyimg from './empty.png';
 export * as Historyempty from './historyempty.png';
 export * as Offersempty from './offersempty.png';
-
-// logo
-export * as NFTLogo from './NFT_logo.png';
+export * as Transaction from './Transaction.png';
+export * as TransactionS from './TransactionS.png';

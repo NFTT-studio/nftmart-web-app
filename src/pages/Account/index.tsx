@@ -44,6 +44,8 @@ import {
   Emptyimg,
   IconDetailsCollection,
   IconDetailsCollectionN,
+  Transaction,
+  TransactionS,
 } from '../../assets/images';
 import {
   DEFAULT_PAGE_LIMIT,
@@ -53,8 +55,10 @@ import {
 import useNftsPersonal from '../../hooks/reactQuery/useNftsPersonal';
 import useOffer from '../../hooks/reactQuery/useOffer';
 import useOffersend from '../../hooks/reactQuery/useOffersend';
+import useTransaction from '../../hooks/reactQuery/useTransaction';
 import CreateCard from './CreateCard';
 import OfferItem from './OfferItem';
+import Transactions from './Transaction';
 import NftItem from './NftItem';
 import NftItemH5 from './NftItemH5';
 import Headers from './Header';
@@ -106,6 +110,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       const url = window.location.pathname.replace(str, '/profile');
       history.push(encodeURI(url));
     }
+    if (idTab === '6') {
+      const url = window.location.pathname.replace(str, '/transaction');
+      history.push(encodeURI(url));
+    }
   }
 
   function historyTabUrl(idTab: string) {
@@ -131,6 +139,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
     if (window.location.href.indexOf('profile') > -1) {
       historyUrl(idTab, '/profile');
     }
+    if (window.location.href.indexOf('transaction') > -1) {
+      historyUrl(idTab, '/transaction');
+    }
   }
   const chainState = useAppSelector((state) => state.chain);
   const { account, whiteList } = chainState;
@@ -144,6 +155,13 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
   const [eventArr, setEventArr] = useState();
 
   const { data: userData, isLoading: userDataLoading, refetch: fetchUserData } = useUser(address);
+  const {
+    data: transactionDate, fetchNextPage: fetchNextPageTransaction, refetch: fetchTransaction,
+  } = useTransaction(
+    {
+      address,
+    },
+  );
 
   useEffect(() => {
     getBlock().then((res) => {
@@ -249,6 +267,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       if (window.location.href.indexOf('collections') > -1) {
         fetchCollections();
       }
+      if (window.location.href.indexOf('transaction') > -1) {
+        fetchTransaction();
+      }
     }
     if (window.location.href.indexOf('owned') > -1) {
       setSelectTabId(0);
@@ -273,6 +294,10 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
     if (window.location.href.indexOf('profile') > -1) {
       setSelectTabId(5);
       setUrlName('profile');
+    }
+    if (window.location.href.indexOf('transaction') > -1) {
+      setSelectTabId(6);
+      setUrlName('Transactions');
     }
   }, [window.location.href]);
 
@@ -301,6 +326,9 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       }
       if (window.location.href.indexOf('collections') > -1) {
         fetchCollections();
+      }
+      if (window.location.href.indexOf('transaction') > -1) {
+        fetchTransaction();
       }
     }
   }, [address]);
@@ -378,6 +406,15 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       show: true,
     },
     {
+      id: '6',
+      icon: Transaction.default,
+      iconS: TransactionS.default,
+      title: t('Account.Transactions'),
+      num: '',
+      requiredWhitelist: false,
+      show: true,
+    },
+    {
       id: '2',
       icon: IconDetailsCollection.default,
       iconS: IconDetailsCollectionN.default,
@@ -412,7 +449,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
   } else {
     filteredTABS = TABS.filter((nav) => nav.show === true);
   }
-
   return (
     <>
       {isLargerThan700
@@ -915,6 +951,139 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                         </Container>
                       )}
                   </>
+                ) : ''}
+                {selectTabId === 6 ? (
+                  <Flex width="100%" flexDirection="column" justifyContent="flex-start">
+                    <Flex width="100%" flexDirection="column" textAlign="center">
+                      <Flex
+                        p="0 20px"
+                        width="100%"
+                        height="40px"
+                        flexFlow="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        flexDirection="row"
+                        borderBottom="1px solid #E5E5E5"
+                      >
+                        <Text
+                          width="224px"
+                          textAlign="left"
+                          fontSize="15px"
+                          fontFamily="TTHoves-DemiBold, TTHoves"
+                          fontWeight="600"
+                          color="#000000"
+                          letterSpacing="1px"
+                          lineHeight="20px"
+                        >
+                          {t('Account.Item')}
+                        </Text>
+                        <Text
+                          width="62px"
+                          textAlign="left"
+                          fontSize="15px"
+                          fontFamily="TTHoves-DemiBold, TTHoves"
+                          fontWeight="600"
+                          color="#000000"
+                          letterSpacing="1px"
+                          lineHeight="20px"
+                        >
+                          {t('Account.Method')}
+                        </Text>
+                        <Text
+                          width="70px"
+                          fontSize="15px"
+                          fontFamily="TTHoves-DemiBold, TTHoves"
+                          fontWeight="600"
+                          color="#000000"
+                          letterSpacing="1px"
+                          lineHeight="20px"
+                        >
+                          {t('Account.quantity')}
+                        </Text>
+                        <Text
+                          width="120px"
+                          fontSize="15px"
+                          fontFamily="TTHoves-DemiBold, TTHoves"
+                          fontWeight="600"
+                          color="#000000"
+                          letterSpacing="1px"
+                          lineHeight="20px"
+                        >
+                          {t('Account.Price')}
+                        </Text>
+                        <Text
+                          width="100px"
+                          fontSize="15px"
+                          fontFamily="TTHoves-DemiBold, TTHoves"
+                          fontWeight="600"
+                          color="#000000"
+                          letterSpacing="1px"
+                          lineHeight="20px"
+                        >
+                          {t('Account.With')}
+                        </Text>
+                        <Text
+                          width="120px"
+                          textAlign="right"
+                          fontSize="15px"
+                          fontFamily="TTHoves-DemiBold, TTHoves"
+                          fontWeight="600"
+                          color="#000000"
+                          letterSpacing="1px"
+                          lineHeight="20px"
+                        >
+                          {t('Account.Date')}
+                        </Text>
+                      </Flex>
+                      <>
+                        {transactionDate?.pages.length ? (
+                          <InfiniteScroll
+                            dataLength={transactionDate?.pages?.length * DEFAULT_PAGE_LIMIT}
+                            next={fetchNextPageTransaction}
+                            hasMore={transactionDate?.pages[Number(transactionDate?.pages?.length) - 1]?.transactions?.length === 20}
+                            loader={<h4>Loading...</h4>}
+                            initialScrollY={1}
+                          >
+                            {transactionDate?.pages.map((page) => page?.transactions?.map((item) => (
+                              <Box
+                                key={item?.id}
+                                width="100%"
+                              >
+                                <Transactions offers={item} />
+                              </Box>
+                            )))}
+                          </InfiniteScroll>
+                        ) : (
+                          <Flex
+                            width="100%"
+                            height="260px"
+                            background="#FFFFFF"
+                            flexDirection="column"
+                            justifyContent="center"
+                            alignItems="center"
+                          >
+                            <Image
+                              w="150px"
+                              h="100px"
+                              border="1px solid #999999"
+                              borderStyle="dashed"
+                              src={Emptyimg.default}
+                            />
+                            <Text
+                              mt="10px"
+                              fontSize="14px"
+                              fontFamily="TTHoves-Regular, TTHoves"
+                              fontWeight="400"
+                              color="#999999"
+                              lineHeight="20px"
+                            >
+                              {t('common.noDataYet')}
+                            </Text>
+                          </Flex>
+                        )}
+                      </>
+                    </Flex>
+                  </Flex>
                 ) : ''}
               </Flex>
             </Flex>

@@ -23,6 +23,7 @@ export const QUERY_KEYS = {
   CATEGORIEINFO: 'CATEGORIEINFO',
   Historyprice: 'Historyprice',
   Artist: 'Artist',
+  Transaction: 'Transaction',
 };
 
 export const DEFAULT_PAGE_LIMIT = 20;

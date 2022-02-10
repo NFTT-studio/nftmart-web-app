@@ -321,6 +321,11 @@
     "bonded": "抵押的",
     "reserved": "保留的",
     "Created": "创作的",
+    "Method": "买/卖",
+    "Price": "价格",
+    "With": "买/卖家",
+    "Date": "日期",
+    "Transactions": "成交记录",
     "expiration": "有效期"
   },
   "ProfileEdit": {

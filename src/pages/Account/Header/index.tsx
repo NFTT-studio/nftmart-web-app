@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Flex,
@@ -8,11 +8,11 @@ import {
   Link,
 } from '@chakra-ui/react';
 import {
-  IconDetailshaSre,
   IconPen,
 } from '../../../assets/images';
 import ShareAccount from '../../../components/ShareAccount';
 import useIsLoginAddress from '../../../hooks/utils/useIsLoginAddress';
+import { useAppSelector } from '../../../hooks/redux';
 
 interface Props {
   userData?: [],
@@ -20,6 +20,8 @@ interface Props {
 const Header: FC<Props> = (({ userData }) => {
   const formatAddress = (addr: string) => (addr ? `${addr?.slice(0, 4)}...${addr?.slice(-4)}` : '');
   const isPerson = useIsLoginAddress(userData?.address);
+  const chainState = useAppSelector((state) => state.chain);
+  const { account } = chainState;
 
   return (
     <Flex
@@ -44,7 +46,9 @@ const Header: FC<Props> = (({ userData }) => {
           color="#191A24"
           lineHeight="33px"
         >
-          {userData?.name || formatAddress(userData?.address)}
+          {isPerson
+            ? <>{userData?.name || account?.meta.name || formatAddress(userData?.address)}</>
+            : <>{userData?.name || formatAddress(userData?.address)}</>}
         </Text>
         <Text
           w="100%"

@@ -62,6 +62,7 @@ export default () => (
         <Route exact strict path="/account/:address-:username/profile" component={Account} />
         <Route exact strict path="/account/:address/profile" component={Account} />
         <Route exact strict path="/account/profile" component={Account} />
+        <Route exact strict path="/account/transaction" component={Account} />
       </Switch>
     </PolkaProvider>
     <Footer />

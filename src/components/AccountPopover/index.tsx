@@ -128,7 +128,7 @@ const AccountPopover: FC<LoginProps> = ({ avatar, address = '' }) => {
             overflow="hidden"
             textOverflow="ellipsis"
           >
-            {userData?.name || formatAddress(address)}
+            {userData?.name || avatar || formatAddress(address)}
           </Text>
           {opening ? (
             <Image
