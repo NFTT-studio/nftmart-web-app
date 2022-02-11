@@ -163,7 +163,8 @@ const Transaction: FC<Props> = (({ offers }) => {
           textOverflow="ellipsis"
           whiteSpace="nowrap"
         >
-          {offers?.direction === 'buy' ? formatAddress(offers?.from_id) : formatAddress(offers?.to_id)}
+          {offers?.counterparty?.name || formatAddress(offers?.counterparty?.id)}
+          {/* {offers?.direction === 'buy' ? formatAddress(offers?.from_id) : formatAddress(offers?.to_id)} */}
         </Text>
         <Text
           width="120px"

@@ -1236,6 +1236,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                       {
                         item.id === '3'
                           || item.id === '5'
+                          || item.id === '6'
                           ? null : (
                             <Button
                               w="25%"
