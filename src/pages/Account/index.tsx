@@ -293,7 +293,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
     }
     if (window.location.href.indexOf('profile') > -1) {
       setSelectTabId(5);
-      setUrlName('profile');
+      setUrlName('ArtistProfile');
     }
     if (window.location.href.indexOf('transaction') > -1) {
       setSelectTabId(6);
@@ -382,7 +382,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
       id: '5',
       icon: IconWallet.default,
       iconS: IconWalletS.default,
-      title: 'Artist Profile',
+      title: t('Account.ArtistProfile'),
       num: '',
       requiredWhitelist: true,
       show: !!userData?.summary,
