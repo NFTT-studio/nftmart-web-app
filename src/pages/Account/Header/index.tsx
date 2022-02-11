@@ -39,12 +39,15 @@ const Header: FC<Props> = (({ userData }) => {
         alignItems="flex-start"
       >
         <Text
-          w="100%"
+          w="70%"
           fontSize="28px"
           fontFamily="TTHoves-Bold, TTHoves"
           fontWeight="bold"
           color="#191A24"
           lineHeight="33px"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          whiteSpace="nowrap"
         >
           {isPerson
             ? <>{userData?.name || account?.meta.name || formatAddress(userData?.address)}</>
@@ -63,7 +66,12 @@ const Header: FC<Props> = (({ userData }) => {
           {userData?.address}
         </Text>
       </Flex>
-      <Flex position="absolute" right="0px" top="0px">
+      <Flex
+        position="absolute"
+        right="0px"
+        top="0px"
+        background="#FFFFFF"
+      >
         {isPerson ? (
           <Link
             as={RouterLink}
