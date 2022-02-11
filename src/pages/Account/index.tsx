@@ -687,7 +687,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                       {offersMadeButtonId === 0
                         ? (
                           <>
-                            {Offersend?.pages.length ? (
+                            {Offersend?.pages[0]?.offers?.length ? (
                               <InfiniteScroll
                                 dataLength={Offersend?.pages.length * DEFAULT_PAGE_LIMIT}
                                 next={fetchNextPageOffersend}
@@ -717,8 +717,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                                 <Image
                                   w="150px"
                                   h="100px"
-                                  border="1px solid #999999"
-                                  borderStyle="dashed"
                                   src={Emptyimg.default}
                                 />
                                 <Text
@@ -739,7 +737,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                       {offersMadeButtonId === 1
                         ? (
                           <>
-                            {Offerreceive?.pages.length ? (
+                            {Offerreceive?.pages[0]?.offers?.length ? (
                               <InfiniteScroll
                                 dataLength={Offerreceive?.pages.length * DEFAULT_PAGE_LIMIT}
                                 next={fetchNextPageOfferreceive}
@@ -769,8 +767,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                                 <Image
                                   w="150px"
                                   h="100px"
-                                  border="1px solid #999999"
-                                  borderStyle="dashed"
                                   src={Emptyimg.default}
                                 />
                                 <Text
@@ -1036,7 +1032,7 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                         </Text>
                       </Flex>
                       <>
-                        {transactionDate?.pages.length ? (
+                        {transactionDate?.pages[0]?.transactions?.length ? (
                           <InfiniteScroll
                             dataLength={transactionDate?.pages?.length * DEFAULT_PAGE_LIMIT}
                             next={fetchNextPageTransaction}
@@ -1065,8 +1061,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
                             <Image
                               w="150px"
                               h="100px"
-                              border="1px solid #999999"
-                              borderStyle="dashed"
                               src={Emptyimg.default}
                             />
                             <Text
