@@ -99,9 +99,11 @@ const Artist = () => {
                         />
                         <Link
                           as={RouterLink}
-                          to={`/account/${item?.id}${item?.name ? `-${encodeURIComponent(item?.name)}` : ''}/profile`}
+                          to={`/account/${item?.id}${item?.name ? `-${encodeURIComponent(item?.name)}` : ''}/collections`}
                         >
                           <Image
+                            border="3px solid #FFFFFF"
+                            boxShadow="0px 6px 20px 0px #D3D5DC"
                             position="absolute"
                             background="#FFFFFF"
                             width="120px"
@@ -128,10 +130,10 @@ const Artist = () => {
                         </Link>
                         <Link
                           as={RouterLink}
-                          to={`/account/${item?.id}${item?.name ? `-${encodeURIComponent(item?.name)}` : ''}/profile`}
+                          to={`/account/${item?.id}${item?.name ? `-${encodeURIComponent(item?.name)}` : ''}/collections`}
                         >
                           <Text
-                            marginTop="60px"
+                            marginTop="76px"
                             w="100%"
                             fontSize="18px"
                             fontFamily="TTHoves-DemiBold, TTHoves"
@@ -140,6 +142,9 @@ const Artist = () => {
                             lineHeight="22px"
                             letterSpacing="1px"
                             textAlign="center"
+                            overflow="hidden"
+                            textOverflow="ellipsis"
+                            whiteSpace="nowrap"
                           >
                             {item?.name || formatAddress(item?.id)}
                           </Text>
