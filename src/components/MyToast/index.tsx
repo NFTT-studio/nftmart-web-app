@@ -8,6 +8,7 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 import { IconMap } from '../../constants';
 
@@ -18,6 +19,7 @@ type ToastBody = {
 }
 
 export const ToastBody: FC<ToastBody> = ({ message, title, type }) => {
+  const { t } = useTranslation();
   const toast = useToast();
   function closeAll() {
     toast.closeAll();
@@ -25,6 +27,7 @@ export const ToastBody: FC<ToastBody> = ({ message, title, type }) => {
   useEffect(() => () => {
     closeAll();
   }, []);
+
   return (
     <Flex
       minWidth="400px"
@@ -39,7 +42,6 @@ export const ToastBody: FC<ToastBody> = ({ message, title, type }) => {
       <Flex
         flexDirection="column"
         ml="10px"
-
       >
         <Text
           display="inline-block"
@@ -61,7 +63,8 @@ export const ToastBody: FC<ToastBody> = ({ message, title, type }) => {
           color="#999999"
           lineHeight="16px"
         >
-          {message}
+          {message === 'Error: 1010: Invalid Transaction: Inability to pay some fees , e.g. account balance too low'
+            ? t('message.balance') : message}
         </Text>
       </Flex>
       <Image
