@@ -36,9 +36,9 @@ export const bidDutchAuction = async ({
     const injector = await web3FromAddress(address);
     // eslint-disable-next-line prefer-const
     let [auction, bid, block] = await Promise.all([
-      PolkaSDK.api.query.nftmartAuction.dutchAuctions(auctionCreatorAddress, auctionId),
-      PolkaSDK.api.query.nftmartAuction.dutchAuctionBids(auctionId),
-      PolkaSDK.api.rpc.chain.getBlock(),
+      (await PolkaSDK.getSaveInstance()).api.query.nftmartAuction.dutchAuctions(auctionCreatorAddress, auctionId),
+      (await PolkaSDK.getSaveInstance()).api.query.nftmartAuction.dutchAuctionBids(auctionId),
+      (await PolkaSDK.getSaveInstance()).api.rpc.chain.getBlock(),
     ]);
     const currentBlock = Number(block.block.header.number);
     if (auction.isSome && bid.isSome) {

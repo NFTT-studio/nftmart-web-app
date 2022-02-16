@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
@@ -246,7 +247,6 @@ const Account = ({ match }: RouteComponentProps<{ address: string, username: str
         setEventArr(arr);
       }
     } catch (e) {
-      console.log('');
     }
   }, [userData?.events]);
   useEffect(() => {
