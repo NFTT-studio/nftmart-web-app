@@ -33,7 +33,7 @@ import {
 } from '../../../constants';
 
 interface Props {
-  isShowBritish:boolean
+  isShowBritish: boolean
   auctionId: string,
   setIsShowBritish: React.Dispatch<React.SetStateAction<boolean>>,
   moreThan: number,
@@ -59,7 +59,7 @@ const OfferDialog: FC<Props> = (({
 
   const formik = useFormik({
     initialValues: {
-      price: '',
+      price: moreThan,
     },
     onSubmit: (formValue, formAction) => {
       setIsSubmitting(true);
@@ -211,7 +211,7 @@ const OfferDialog: FC<Props> = (({
                   fontWeight="400"
                   color="#999999"
                   lineHeight="14px"
-                // eslint-disable-next-line react/no-children-prop
+                  // eslint-disable-next-line react/no-children-prop
                   children="NMT"
                 />
               </InputGroup>

@@ -63,6 +63,10 @@ import { submitBritishAuction } from '../../polkaSDK/api/submitBritishAuction';
 import MyToast, { ToastBody } from '../../components/MyToast';
 
 const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
+  const defaultOrderValue = JSON.parse(localStorage.getItem('orderValue'));
+  const defaultDutchValue = JSON.parse(localStorage.getItem('dutchValue'));
+  const defaultBritishValue = JSON.parse(localStorage.getItem('britishValue'));
+
   const { i18n, t } = useTranslation();
   const toast = useToast();
   const [tax, setTax] = useState(0);
@@ -80,9 +84,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const { data: nftData } = useNft(nftId);
   const { data: collectionsData } = useCollectionsSinger(collectionsId);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [turnToEnglishAuction, setTurnToEnglishAuction] = useState(false);
-  const [automaticDelay, setAutomaticDelay] = useState(false);
-  const [fixedPriceSl, setFixedPriceSl] = useState(false);
+  const [turnToEnglishAuction, setTurnToEnglishAuction] = useState(defaultDutchValue?.turnToEnglishAuction || false);
+  const [automaticDelay, setAutomaticDelay] = useState(true);
+  const [fixedPriceSl, setFixedPriceSl] = useState(!!defaultBritishValue?.hammerPrice);
   const [commissionRateSl, setcommissionRateSl] = useState(false);
 
   const orderId = nftData?.nftInfo?.sale_id;
@@ -159,19 +163,22 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   ];
   const formik = useFormik({
     initialValues: {
-      price: Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.price) : '',
-      deposits: selectId === 0 && Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.pledge) : '',
-      dutchDeposits: '',
-      englishDeposits: '',
-      startingPrice: '',
-      endingPrice: '',
-      expirationDate: '',
-      minimumMarkup: 1,
-      automaticDelay: false,
-      turnToEnglishAuction: false,
+      price: Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.price) : (defaultOrderValue?.price || ''),
+      deposits: selectId === 0 && Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.pledge) : (defaultOrderValue?.deposits || 1),
+      dutchDeposits: defaultDutchValue?.dutchDeposits || 1,
+      englishDeposits: defaultBritishValue?.englishDeposits || 1,
+      startingPrice: defaultDutchValue?.startingPrice || '',
+      britishPrice: defaultBritishValue?.britishPrice || '',
+      endingPrice: defaultDutchValue?.endingPrice || '',
+      expirationDate: defaultDutchValue?.expirationDate || 5,
+      minimumMarkup: defaultDutchValue?.minimumMarkup || 1,
+      expirationDateEn: defaultBritishValue?.expirationDateEn || 5,
+      minimumMarkupEn: defaultBritishValue?.minimumMarkupEn || 1,
+      automaticDelay: defaultBritishValue?.automaticDelay || false,
+      turnToEnglishAuction: defaultDutchValue?.turnToEnglishAuction || false,
       fixedPriceSl: false,
       commissionRate: 0,
-      fixedPrice: '',
+      fixedPrice: defaultBritishValue?.hammerPrice || '',
     },
     onSubmit: (formValue, formAction) => {
       setIsSubmitting(true);
@@ -292,11 +299,11 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       };
       const britishParams = {
         address: account!.address,
-        InitPrice: formValue.startingPrice,
+        InitPrice: formValue.britishPrice,
         hammerPrice: Number(formValue.fixedPrice),
-        expirationDate: formValue.expirationDate,
-        allow_british_auction: formValue.automaticDelay,
-        range: Number(formValue.minimumMarkup) / 100,
+        expirationDate: formValue.expirationDateEn,
+        allow_delay: formValue.automaticDelay,
+        range: Number(formValue.minimumMarkupEn) / 100,
         tokens: [[nftData?.nftInfo.class_id, nftData?.nftInfo.token_id, 1]],
         commissionRate: formValue.commissionRate / 100,
         englishDeposits: formValue.englishDeposits,
@@ -334,9 +341,21 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         settingOrder(settingOrderParams as any);
       }
       if (selectId === 0 && !(Number(nftData?.nftInfo?.price) > 0)) {
+        const orderValue = { price: formValue.price, deposits: formValue.deposits };
+        localStorage.setItem('orderValue', JSON.stringify(orderValue));
         createOrder(orderParams as any);
       }
       if (selectId === 1) {
+        const dutchValue = {
+          startingPrice: formValue.startingPrice,
+          endingPrice: formValue.endingPrice,
+          expirationDate: formValue.expirationDate,
+          minimumMarkup: formValue.minimumMarkup,
+          commissionRate: formValue.commissionRate,
+          dutchDeposits: formValue.dutchDeposits,
+          turnToEnglishAuction: formValue.turnToEnglishAuction,
+        };
+        localStorage.setItem('dutchValue', JSON.stringify(dutchValue));
         if (Number(formValue.startingPrice) < Number(formValue.endingPrice)) {
           toast({
             position: 'top',
@@ -350,6 +369,16 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
         submitDutchAuction(dutchParams as any);
       }
       if (selectId === 2) {
+        const britishValue = {
+          britishPrice: formValue.britishPrice,
+          hammerPrice: formValue.fixedPrice,
+          expirationDateEn: formValue.expirationDateEn,
+          automaticDelay: formValue.automaticDelay,
+          minimumMarkupEn: formValue.minimumMarkupEn,
+          commissionRate: formValue.commissionRate,
+          englishDeposits: formValue.englishDeposits,
+        };
+        localStorage.setItem('britishValue', JSON.stringify(britishValue));
         submitBritishAuction(britishParams as any);
       }
     },
@@ -1356,9 +1385,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                     >
                       <Input
-                        id="startingPrice"
-                        name="startingPrice"
-                        value={formik.values.startingPrice}
+                        id="britishPrice"
+                        name="britishPrice"
+                        value={formik.values.britishPrice}
                         onChange={formik.handleChange}
                         fontSize="16px"
                         fontFamily="TTHoves-Regular, TTHoves"
@@ -1396,8 +1425,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       />
                     </InputGroup>
                   </Flex>
-                  {formik.errors.startingPrice && formik.touched.startingPrice ? (
-                    <div style={{ color: 'red' }}>{formik.errors.startingPrice}</div>
+                  {formik.errors.britishPrice && formik.touched.britishPrice ? (
+                    <div style={{ color: 'red' }}>{formik.errors.britishPrice}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -1459,9 +1488,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                         }}
                       >
                         <Input
-                          id="expirationDate"
-                          name="expirationDate"
-                          value={formik.values.expirationDate}
+                          id="expirationDateEn"
+                          name="expirationDateEn"
+                          value={formik.values.expirationDateEn}
                           onChange={formik.handleChange}
                           fontSize="16px"
                           fontFamily="TTHoves-Regular, TTHoves"
@@ -1500,8 +1529,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       </InputGroup>
                     </Flex>
                   </Flex>
-                  {formik.errors.expirationDate && formik.touched.expirationDate ? (
-                    <div style={{ color: 'red' }}>{formik.errors.expirationDate}</div>
+                  {formik.errors.expirationDateEn && formik.touched.expirationDateEn ? (
+                    <div style={{ color: 'red' }}>{formik.errors.expirationDateEn}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -1598,9 +1627,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       }}
                     >
                       <Input
-                        id="minimumMarkup"
-                        name="minimumMarkup"
-                        value={formik.values.minimumMarkup}
+                        id="minimumMarkupEn"
+                        name="minimumMarkupEn"
+                        value={formik.values.minimumMarkupEn}
                         onChange={formik.handleChange}
                         fontSize="16px"
                         fontFamily="TTHoves-Regular, TTHoves"
@@ -1638,8 +1667,8 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                       />
                     </InputGroup>
                   </Flex>
-                  {formik.errors.minimumMarkup && formik.touched.minimumMarkup ? (
-                    <div style={{ color: 'red' }}>{formik.errors.minimumMarkup}</div>
+                  {formik.errors.minimumMarkupEn && formik.touched.minimumMarkupEn ? (
+                    <div style={{ color: 'red' }}>{formik.errors.minimumMarkupEn}</div>
                   ) : null}
                   <Flex
                     w="100%"
@@ -2033,7 +2062,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           >
                             {t('SellSetting.englishExplainOne')}
                             {'  '}
-                            {Number(formik.values.startingPrice).toLocaleString() || 0}
+                            {Number(formik.values.britishPrice).toLocaleString() || 0}
                             {'  '}
                             NMT
                             {t('SellSetting.englishExplainTwo')}
@@ -2053,7 +2082,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
                           >
                             {t('SellSetting.englishExplainzhOne')}
                             {'  '}
-                            {Number(formik.values.startingPrice).toLocaleString() || 0}
+                            {Number(formik.values.britishPrice).toLocaleString() || 0}
                             {'  '}
                             NMT
                             {t('SellSetting.englishExplainzhTwo')}

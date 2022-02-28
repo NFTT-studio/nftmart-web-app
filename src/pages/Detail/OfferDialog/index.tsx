@@ -1,7 +1,6 @@
 import React, { FC, useRef, useState } from 'react';
 import {
   Flex,
-  Image,
   Text,
   Button,
   AlertDialog,
@@ -20,9 +19,6 @@ import {
   useFormik,
 } from 'formik';
 import { useTranslation } from 'react-i18next';
-import DatePicker from 'react-date-picker';
-
-import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useQueryClient } from 'react-query';
 import { submitOffer } from '../../../polkaSDK/api/submitOffer';
@@ -31,9 +27,6 @@ import useAccount from '../../../hooks/reactQuery/useAccount';
 import MyToast, { ToastBody } from '../../../components/MyToast';
 import useToken from '../../../hooks/reactQuery/useToken';
 import { priceStringDivUnit, formatNum } from '../../../utils/format';
-import {
-  IconCalendar,
-} from '../../../assets/images';
 import {
   QUERY_KEYS,
 } from '../../../constants';
@@ -51,7 +44,6 @@ const OfferDialog: FC<Props> = (({
   const toast = useToast();
   const queryCliet = useQueryClient();
   const chainState = useAppSelector((state) => state.chain);
-  const history = useHistory();
   const { data: token } = useToken();
 
   const { account } = chainState;
@@ -59,6 +51,7 @@ const OfferDialog: FC<Props> = (({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation();
   const cancelRef = useRef<HTMLDivElement>(null);
+  const defaultValue = JSON.parse(localStorage.getItem('offerValue'));
 
   const schema = Yup.object().shape({
     price: Yup.number().moreThan(0).required(t('Create.required')),
@@ -71,11 +64,13 @@ const OfferDialog: FC<Props> = (({
       classId,
       tokenId,
       quantity: 1,
-      price: '',
-      during: '',
+      price: defaultValue?.price || '',
+      during: defaultValue?.during || 5,
     },
     onSubmit: (formValue, formAction) => {
       setIsSubmitting(true);
+      const offerValue = { price: Number(formValue?.price), during: Number(formValue?.during) };
+      localStorage.setItem('offerValue', JSON.stringify(offerValue));
       submitOffer({
         address: account!.address,
         categoryId: Number(categoryId),
@@ -225,14 +220,14 @@ const OfferDialog: FC<Props> = (({
                   fontWeight="400"
                   color="#999999"
                   lineHeight="14px"
-                // eslint-disable-next-line react/no-children-prop
+                  // eslint-disable-next-line react/no-children-prop
                   children="NMT"
                 />
               </InputGroup>
               {formik.errors.price && formik.touched.price ? (
                 <div style={{ color: 'red' }}>{formik.errors.price}</div>
               ) : null}
-              { token?.price
+              {token?.price
                 ? (
                   <Text
                     mb="23px"
@@ -276,7 +271,7 @@ const OfferDialog: FC<Props> = (({
                   fontWeight="400"
                   color="#999999"
                   lineHeight="14px"
-                // eslint-disable-next-line react/no-children-prop
+                  // eslint-disable-next-line react/no-children-prop
                   children={t('Detail.inAday')}
                 />
                 <Input
