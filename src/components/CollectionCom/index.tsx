@@ -298,7 +298,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
         create(values, formActions, description);
       }
     },
-    // validationSchema: schema,
+    validationSchema: schema,
   });
   return (
     <Flex
