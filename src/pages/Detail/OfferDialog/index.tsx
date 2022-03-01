@@ -64,7 +64,7 @@ const OfferDialog: FC<Props> = (({
       classId,
       tokenId,
       quantity: 1,
-      price: defaultValue?.price || '',
+      price: '',
       during: defaultValue?.during || 5,
     },
     onSubmit: (formValue, formAction) => {
@@ -166,7 +166,7 @@ const OfferDialog: FC<Props> = (({
                   {t('Detail.balance')}
                   :
                   {' '}
-                  {formatNum(priceStringDivUnit(data?.balance?.transferrable)) || 0}
+                  {data?.balance?.transferrable ? formatNum(priceStringDivUnit(data?.balance?.transferrable)) : 0}
                   {' '}
                   NMT
                 </Text>

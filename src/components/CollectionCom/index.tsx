@@ -55,6 +55,7 @@ export interface Props {
 }
 
 const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) => {
+  const defaultCreateValue = JSON.parse(localStorage.getItem('createValue'));
   function number2PerU16(x) {
     return (x / 65535.0) * 100;
   }
@@ -71,7 +72,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
   const [isShowModal, setIsShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [royaltiesSl, setroyaltiesSl] = useState(false);
+  const [royaltiesSl, setroyaltiesSl] = useState(!!defaultCreateValue?.royaltiesSl);
   const [stateCrop, setStateCrop] = useState(false);
   const autofocusNoSpellcheckerOptions = useMemo(() => ({
     spellChecker: false,
@@ -264,7 +265,7 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
       name: collectionsData?.collection?.metadata?.name || '',
       stub: collectionsData?.collection?.metadata?.stub || '',
       description: collectionsData?.collection?.metadata?.description || '',
-      royalties: Math.ceil(number2PerU16(collectionsData?.collection?.royalty_rate)) || 0,
+      royalties: Math.ceil(number2PerU16(collectionsData?.collection?.royalty_rate)) || (defaultCreateValue?.royaltiesSl ? defaultCreateValue?.royalties : 0),
       cate: collectionsData?.collection?.metadata?.cate || '',
       website: collectionsData?.collection?.metadata?.links?.website || '',
       discord: collectionsData?.collection?.metadata?.links?.discord || '',
@@ -289,10 +290,15 @@ const CreateCollection: FC<Props> = ({ account, whiteList, collectionsData }) =>
       if (status) {
         update(values, formActions, description);
       } else {
+        const createValue = {
+          royalties: royaltiesSl ? values.royalties : 0,
+          royaltiesSl,
+        };
+        localStorage.setItem('createValue', JSON.stringify(createValue));
         create(values, formActions, description);
       }
     },
-    validationSchema: schema,
+    // validationSchema: schema,
   });
   return (
     <Flex

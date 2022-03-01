@@ -86,7 +86,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnToEnglishAuction, setTurnToEnglishAuction] = useState(defaultDutchValue?.turnToEnglishAuction || false);
   const [automaticDelay, setAutomaticDelay] = useState(true);
-  const [fixedPriceSl, setFixedPriceSl] = useState(!!defaultBritishValue?.hammerPrice);
+  const [fixedPriceSl, setFixedPriceSl] = useState(false);
   const [commissionRateSl, setcommissionRateSl] = useState(false);
 
   const orderId = nftData?.nftInfo?.sale_id;
@@ -109,9 +109,9 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
     dutchDeposits: Yup.number().min(1, `${t('common.pledgeRule')}1`).required(t('Create.required')),
   });
   const schemaEnglish = Yup.object().shape({
-    startingPrice: Yup.number().moreThan(0).required(t('Create.required')),
-    expirationDate: Yup.string().required(t('Create.required')),
-    minimumMarkup: Yup.number().moreThan(0, t('SellSetting.minimumMarkupRule')).required(t('Create.required')),
+    britishPrice: Yup.number().moreThan(0).required(t('Create.required')),
+    expirationDateEn: Yup.string().required(t('Create.required')),
+    minimumMarkupEn: Yup.number().moreThan(0, t('SellSetting.minimumMarkupRule')).required(t('Create.required')),
     automaticDelay: Yup.boolean().required(t('Create.required')),
     englishDeposits: Yup.number().min(1, `${t('common.pledgeRule')}1`).required(t('Create.required')),
   });
@@ -163,13 +163,13 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
   ];
   const formik = useFormik({
     initialValues: {
-      price: Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.price) : (defaultOrderValue?.price || ''),
+      price: Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.price) : '',
       deposits: selectId === 0 && Number(nftData?.nftInfo?.price) > 0 ? NumberToString(nftData?.nftInfo?.pledge) : (defaultOrderValue?.deposits || 1),
-      dutchDeposits: defaultDutchValue?.dutchDeposits || 1,
-      englishDeposits: defaultBritishValue?.englishDeposits || 1,
-      startingPrice: defaultDutchValue?.startingPrice || '',
-      britishPrice: defaultBritishValue?.britishPrice || '',
-      endingPrice: defaultDutchValue?.endingPrice || '',
+      dutchDeposits: 1,
+      englishDeposits: 1,
+      startingPrice: '',
+      britishPrice: '',
+      endingPrice: '',
       expirationDate: defaultDutchValue?.expirationDate || 5,
       minimumMarkup: defaultDutchValue?.minimumMarkup || 1,
       expirationDateEn: defaultBritishValue?.expirationDateEn || 5,
@@ -178,7 +178,7 @@ const SellSetting = ({ match }: RouteComponentProps<{ nftId: string }>) => {
       turnToEnglishAuction: defaultDutchValue?.turnToEnglishAuction || false,
       fixedPriceSl: false,
       commissionRate: 0,
-      fixedPrice: defaultBritishValue?.hammerPrice || '',
+      fixedPrice: '',
     },
     onSubmit: (formValue, formAction) => {
       setIsSubmitting(true);
